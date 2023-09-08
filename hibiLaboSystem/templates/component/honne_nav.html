@@ -1,0 +1,44 @@
+{% with request.resolver_match.url_name as url_name %}
+<div class="col-md-2">
+    <div class="sidebar">
+        <ul class="nav">
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_total' %}active{% endif %}"  href="{% url 'honne_total' %}">
+                    <p>HONNE ANALYSIS</p>
+                    <span>総合分析</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_type_staticks' %}active{% endif %}" href="{% url 'honne_type_staticks' %}">
+                    <p>HONNE BY type</p>
+                    <span>タイプ別分析</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_index_staticks' %}active{% endif %}" href="{% url 'honne_index_staticks' %}">
+                    <p>HONNE TABLE</p>
+                    <span>カルテット指数分布表</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_chart' %}active{% endif %}"  href="{% url 'honne_chart' %}">
+                    <p>HONNE INDEX</p>
+                    <span>カルテット指数チャートリスト</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_qr_staticks' %}active{% endif %}" href="{% url 'honne_qr_staticks' %}">
+                    <p>QUESTION TABLE</p>
+                    <span>質問分布表</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_type_personal_graph' %}active{% endif %}" href="{% url 'honne_type_personal_graph' %}">
+                    <p>PERSONAL GRAPH</p>
+                    <span>個人推移グラフ</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endwith %}

@@ -1,0 +1,99 @@
+<!doctype html>
+{% load static %}
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <title>HIBI_LABOインナーマーケティング</title>
+    <!-- ファビコン -->
+	<link rel=”icon” href="{% static 'assets/favicon1.png' %}">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <!-- 互換表示の解除 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta id="HandheldFriendly" content="True" />
+
+	<!-- chromeでキャッシュが効いていると最新のcss等が反映されないその場合には、ctrl+shift+R　-->
+
+      <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/custom-style.css' %}">
+
+  	{% block header %}{% endblock %}
+  </head>
+
+
+
+  <body>
+      <div class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="#">
+                    <img src="{% static 'assets/images/logo.svg' %}" alt="">
+                </a>
+                <h2>WATASHEET</h2>
+            </div>
+        </div>
+    </div>
+    <div class="header_menu">
+        <div class="container">
+            <div class="menu">
+                <ul>
+                    <li><a href="{% url 'home' %}">TOP</a></li>
+                      {% if not user.is_authenticated %}
+                         <li>
+                          <a href="{% url 'login' %}">Log in</a>
+                         </li>
+                        　<li>
+                          <a href="{% url 'register' %}">Sign up</a>
+                        　</li>
+                      {% else %}
+                         <li>
+                           <a href="#">My Menu</a>
+                         </li>
+                         <li>
+                           <a href="{% url 'my_info' %}">My Info</a>
+                         </li>
+                         <li>
+                          <a href="{% url 'logout' %}">Log out</a>
+                         </li>
+                      {% endif %}
+                </ul>
+                <p>
+                  {% if not user.is_authenticated %}
+                    こんにちは！ ゲスト さん
+                  {% else %}
+                    {{ user.last_name }}  {{ user.first_name }} さん　向け
+                  {% endif %}
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- コンテンツ -->
+    {% block content %}{% endblock %}
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="text">
+            <p></p>
+            <p>サービス提供：日々研究所</p>
+            <p></p>
+        </div>
+    </div>
+</footer>
+
+    <script type="text/javascript" src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/main.js' %}"></script>
+    <script>
+
+    </script>
+
+</body>
+</html>

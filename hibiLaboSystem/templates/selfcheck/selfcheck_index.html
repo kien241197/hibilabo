@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/selfcheck_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab1">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>SELF CHECK TABLE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2">
+                                    <table class="table table2" id="td1">
+                                        <tr>
+                                            <th></th>
+                                            <th>指数</th>
+                                            <th>決断力</th>
+                                            <th>専門性</th>
+                                            <th>自己管理</th>
+                                            <th>広報力</th>
+                                            <th>連携力</th>
+                                            <th>人間関係</th>
+                                            <th>患者対応</th>
+                                            <th>チームワーク</th>
+                                            <th>総合管理</th>
+                                            <th>理念浸透</th>
+                                            <th>自己啓発</th>
+                                            <th>思考</th>
+                                        </tr>
+                                        <tbody>
+                                            {% for record in orderby_records %}
+                                              <tr>
+                                                  <td>{{ forloop.counter }}</td>
+                                                  <td >{{ record.user.full_name }}</td>
+                                                  <td >{{ record.selfcheck_index1 }}</td>
+                                                  <td >{{ record.selfcheck_index2 }}</td>
+                                                  <td >{{ record.selfcheck_index3 }}</td>
+                                                  <td >{{ record.selfcheck_index4 }}</td>
+                                                  <td >{{ record.selfcheck_index5 }}</td>
+                                                  <td >{{ record.selfcheck_index6 }}</td>
+                                                  <td >{{ record.selfcheck_index7 }}</td>
+                                                  <td >{{ record.selfcheck_index8 }}</td>
+                                                  <td >{{ record.selfcheck_index9 }}</td>
+                                                  <td >{{ record.selfcheck_index10 }}</td>
+                                                  <td >{{ record.selfcheck_index11 }}</td>
+                                                  <td >{{ record.selfcheck_index12 }}</td>
+                                              </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

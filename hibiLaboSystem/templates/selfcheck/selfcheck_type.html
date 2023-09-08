@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+				{% include "component/selfcheck_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab1">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>SELF CHECK BY TYPE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2 content-chart-2-gray">
+                                    <table class="table table2" id="td1">
+                                        <tr>
+                                            <th colspan="2" rowspan="2">TYPE</th>
+                                            <th><img src="{% static 'assets/circle.png' %}"></th>
+                                            <th><img src="{% static 'assets/squer.png' %}"></th>
+                                            <th><img src="{% static 'assets/triangle.png' %}"></th>
+                                        </tr>
+                                        <tr>
+                                            <th>人に合わせるタイプ</th>
+                                            <th>バランスタイプ</th>
+                                            <th>自分の感情を大事にするタイプ</th>
+                                        </tr>
+                                        <tbody>
+                                            {% for record in orderby_records %}
+                                            <tr>
+                                              <td>{{ forloop.counter }}</td>
+	                                          <td >{{ record.user.full_name }}</td>
+                                              <td >{{ record.selfcheck_circl }}</td>
+                                              <td >{{ record.selfcheck_square }}</td>
+                                              <td >{{ record.selfcheck_traiangle }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

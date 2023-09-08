@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+            	{% include "component/honne_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab1">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>HONNE FEEDBACK</h2>
+                                    <p>カルテット分析総合結果</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        <p hidden>{{ form.user_id }}</p>
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content">
+                                    <p class="text">あなたの会社はTYPE<label class="total_type" id="type_sum">{% if max_type %}{{ max_type }}{% else %}?{% endif %}</label></p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="number-custom">
+                                            <span class="text-ab ab1">COTO</span>
+                                            <span class="text-ab ab2">HITO</span>
+                                            <ul>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>A</span>
+                                                        <h3 id ="type-a">{{ result.A }}</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>B</span>
+                                                        <h3 id ="type-b">{{ result.B }}</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>C</span>
+                                                        <h3 id ="type-c">{{ result.C }}</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>D</span>
+                                                        <h3 id ="type-d">{{ result.D }}</h3>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="number-custom">
+                                            <span class="text-ab ab1">COTO</span>
+                                            <span class="text-ab ab2">HITO</span>
+                                            <ul>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>A</span>
+                                                        <h3>TYPE A</h3>
+                                                        <p>人望高・革命的<br>
+                                                        思考的・信用高</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>B</span>
+                                                        <h3>TYPE B</h3>
+                                                        <p>共同体感覚・価値<br>
+                                                        コミュニティ高</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>C</span>
+                                                        <h3>TYPE C</h3>
+                                                        <p>MUST 業務高<br>
+                                                        のびしろ・期待度高</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>D</span>
+                                                        <h3>TYPE D</h3>
+                                                        <p>WANT 業務高<br>
+                                                        機械的・信用高</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

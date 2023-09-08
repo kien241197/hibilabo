@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/honne_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab3">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>HONNE TABLE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action=""  method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2 content-chart-vetical">
+                                    <table class="table table2">
+                                        <tr>
+                                            <th></th>
+                                            <th>社 員 名</th>
+                                            <th>HPの見える化</th>
+                                            <th>ヴィジョン<br>コンセプト</th>
+                                            <th> 幹 部 育 成<br>リーダー育成</th>
+                                            <th>面接・人生設計</th>
+                                            <th>社内共有指数</th>
+                                            <th>組織力指数</th>
+                                            <th>評価制度指数</th>
+                                            <th>個人チャート<br>自己分析指数</th>
+                                        </tr>
+                                        {% for record in orderby_records %}
+
+                                          <td>{{ forloop.counter }}</td>
+                                          <td >{{ record.user.full_name }}</td>
+                                          <td >{{ record.kartet_index1 }}</td>
+                                          <td >{{ record.kartet_index2 }}</td>
+                                          <td >{{ record.kartet_index3 }}</td>
+                                          <td >{{ record.kartet_index4 }}</td>
+                                          <td >{{ record.kartet_index5 }}</td>
+                                          <td >{{ record.kartet_index6 }}</td>
+                                          <td >{{ record.kartet_index7 }}</td>
+                                          <td >{{ record.kartet_index8 }}</td>
+                                          </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

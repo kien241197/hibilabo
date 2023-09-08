@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+    <!-- グラフツール -->
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+	integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+	crossorigin="anonymous"></script>
+  	<script
+	src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="{% static 'js/selfcheck-type-chart.js' %}"></script>
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/selfcheck_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab1">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>SELF CHECK INDEX</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2 content-chart-2-gray">
+                                    <div>
+                                      <table class="table_statics" id="td1" hidden>
+                                        <tr><th></th><th>タイプ</th><th>人に合わせるタイプ</th><th>バランスタイプ</th><th>自分の感情を大事にするタイプ</th></tr>
+                                        <tbody>
+                                            {% for record in orderby_records %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td >{{ record.user.full_name }}</td>
+                                                <td >{{ record.selfcheck_circl }}</td>
+                                                <td >{{ record.selfcheck_square }}</td>
+                                                <td >{{ record.selfcheck_traiangle }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class="content-chart">
+                                        <div class="row">
+                                            {% for record in orderby_records %}
+                                            <div class="col-md-4">
+                                                <div class="images">
+                                                    <p>{{ record.user.full_name }}</p>
+                                                    <canvas id="mycanvas-{{ record.user.id }}"></canvas>
+                                                </div>
+                                            </div>
+                                            <script>window.onload=create_chart({{ record.user.id }}, {{ record.type_list|safe }})</script>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

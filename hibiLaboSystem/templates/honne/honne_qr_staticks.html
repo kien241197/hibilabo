@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/honne_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab2">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>QUESTION TABLE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action=""  method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2">
+                                    <table class="table table2">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>質問</th>
+                                            {% for obj in staff_list %}
+                                              <th>{{ obj.full_name }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        <tbody>
+                                        <!-- 質問結果のデータを展開する -->
+                                        {% for obj in qr_list %}
+                                        <tr>
+                                          <td class="tatefixed">{{ forloop.counter }}</td>
+                                          {% for i in obj %}
+                                          <td class="tatefixed {% if forloop.counter == 1 %}text-left{% endif %}">{{ i }}</td>
+                                          <!-- 回答内容を展開 -->
+                                          {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

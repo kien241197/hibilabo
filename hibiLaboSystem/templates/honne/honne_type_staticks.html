@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/honne_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab2">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>HONNE FEEDBACK</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2">
+                                    <table class="table table2">
+                                        <tr>
+                                            <th>{{key_Usercd}}</th>
+                                            <th>社 員 名</th>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
+                                        </tr>
+                                       {% for record in orderby_records %}
+                                          <td>{{ forloop.counter }}</td>
+                                          <td >{{ record.user.full_name }}</td>
+                                          <td >{{ record.kartet_type_a }}</td>
+                                          <td >{{ record.kartet_type_b }}</td>
+                                          <td >{{ record.kartet_type_c }}</td>
+                                          <td >{{ record.kartet_type_d }}</td>
+                                          </tr>
+                                       {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

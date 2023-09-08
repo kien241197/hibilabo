@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+<!-- コンテンツ -->
+{% block content %}
+<div class="container">
+  <div class="col-md-6 offset-md-3">
+    <div class="card mt-3 mb-3 bg-light">
+      <!-- カードヘッダー -->
+      <div class="card-header bg-system-default text-light">
+        <h4>{{ process_name }}</h4>
+      </div>
+      <!-- カードボディー -->
+      <div class="">
+        <form action="" method="POST">
+            <div class="form-group">
+              <table>
+                <tr><th colspan="2">勤務希望曜日</th><th>勤務希望シフト</th></tr>
+                <tr><td>日</td><td>{{ form.preferred_day }}</td><td>{{ form.preferred_hour }}</td></tr>
+                <tr><td>月</td><td>{{ form.preferred_day2 }}</td><td>{{ form.preferred_hour2 }}</td></tr>
+                <tr><td>火</td><td>{{ form.preferred_day3 }}</td><td>{{ form.preferred_hour3 }}</td></tr>
+                <tr><td>水</td><td>{{ form.preferred_day4 }}</td><td>{{ form.preferred_hour4 }}</td></tr>
+                <tr><td>木</td><td>{{ form.preferred_day5 }}</td><td>{{ form.preferred_hour5 }}</td></tr>
+                <tr><td>金</td><td>{{ form.preferred_day6 }}</td><td>{{ form.preferred_hour6 }}</td></tr>
+                <tr><td>土</td><td>{{ form.preferred_day7 }}</td><td>{{ form.preferred_hour7 }}</td></tr>
+              </table>
+            </div>
+          {% csrf_token %}
+          <!-- ボタン -->
+          <button type="button" class="btn btn-outline-secondary btn-lg btn-block mt-4" onclick="history.back()">キャンセル</button>
+          <button type="submit" class="btn bg-system-default btn-lg btn-block mt-2" >更新</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

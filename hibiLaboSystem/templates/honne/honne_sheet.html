@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<!-- chartの呼び出し -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+
+<script>
+    var myChart;
+</script>
+{% load static %}
+<script src="{% static 'js/honne-sheet.js' %}"></script>
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+  <div class="text-center text-danger"><label><h5>{{ message }}</h5></label></div>
+  <form  class="" action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+    <section class="site-chart pd-main" >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-content">
+                        <table class="table" id="td1">
+                            <tr>
+                                <th>No</th>
+                                <th>質   問</th>
+                                <th>該当○ <br> 非該当×</th>
+                                <th hidden>HP見える化</th>
+                                <th hidden>コンセプト・ヴィジョン</th>
+                                <th hidden>リーダー育成・　幹部育成</th>
+                                <th hidden>面接・人生設計</th>
+                                <th hidden>社内共有</th>
+                                <th hidden>組織力</th>
+                                <th hidden>評価制度</th>
+                                <th hidden>個人チャート・自己分析</th>
+                            </tr>
+                            {% for record in questions %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{ record.question }}</td>
+                                <td>
+                                    <select id=result{{record.id}} name=kartet_answer_{{record.id}} onchange='func_count(this, {{ q_list|safe }});' {{ disabled }}>
+                                        <option>-</option>
+                                        <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
+                                        <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
+                                    </select>
+                                    <input type="hidden" id="index-{{record.id}}" value="{{record.acc1}},{{record.acc2}},{{record.acc3}},{{record.acc4}},{{record.acc5}},{{record.acc6}},{{record.acc7}},{{record.acc8}}">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="content-chart">
+                        <div class="title title-tg">
+                            <h2 class="heading">HONNE INDEX</h2>
+                        </div>
+                        <div class="feedback">FEEDBACK <strong>04</strong></div>
+                        <div class="chart">
+                            <canvas id="mycanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="button-chart">
+                        <div class="checkbox">
+                            {{ form.flg_finished }}{{ form.flg_finished.label }}
+                        </div>
+                        <div class="flex-chart">
+                            <button class="btn-custom-button" type="submit">一時保存</button>
+                            <button class="btn-custom-button" type="submit">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </form>
+
+</main>
+{% load static %}
+<script>window.onload=drwa_chart({{ index_list|safe }})</script>
+{% endblock %}
