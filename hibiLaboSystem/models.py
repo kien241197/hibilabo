@@ -488,3 +488,153 @@ class ThinkQuestion(models.Model):
 
 	def __str__(self):
 		return str(self.question)
+
+class BonknowEvaluationPeriod(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='bonknow_evaluation_periods',
+	    blank=True,
+	    null=True
+	)
+	evaluation_name = models.TextField()
+	evaluation_start = models.DateField(blank=True, null=True)
+	evaluation_end = models.DateField(blank=True, null=True)
+	respons_questions = models.ManyToManyField(
+		ResponsQuestion,
+	    related_name='bonknow_evaluation_periods',
+	    blank=True,
+	)
+	think_questions = models.ManyToManyField(
+		ThinkQuestion,
+	    related_name='bonknow_evaluation_periods',
+	    blank=True,
+	)
+
+	class Meta:
+		db_table = 'bonknow_evaluation_periods'
+
+	def __str__(self):
+		return f"{self.evaluation_name}"
+
+class ResponsAnswer(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='respons_answers',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.DO_NOTHING,
+	    related_name='respons_answers',
+	    blank=True,
+	    null=True
+	)
+	respons_question = models.ForeignKey(
+	    ResponsQuestion,
+	    on_delete=models.CASCADE,
+	    related_name='respons_answers'
+	)
+	evaluation_period = models.ForeignKey(
+	    BonknowEvaluationPeriod,
+	    on_delete=models.DO_NOTHING,
+	    related_name='respons_answers',
+	    blank=True,
+	    null=True
+	)
+	answer = models.IntegerField(blank=True, null=True)
+	answer_date = models.DateField(blank=True, null=True)
+
+	class Meta:
+		db_table = 'respons_answers'
+
+class ThinkAnswer(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='think_answers',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.DO_NOTHING,
+	    related_name='think_answers',
+	    blank=True,
+	    null=True
+	)
+	think_question = models.ForeignKey(
+	    ThinkQuestion,
+	    on_delete=models.CASCADE,
+	    related_name='think_answers'
+	)
+	evaluation_period = models.ForeignKey(
+	    BonknowEvaluationPeriod,
+	    on_delete=models.DO_NOTHING,
+	    related_name='think_answers',
+	    blank=True,
+	    null=True
+	)
+	answer = models.IntegerField(blank=True, null=True)
+	answer_date = models.DateField(blank=True, null=True)
+
+	class Meta:
+		db_table = 'think_answers'
+
+class ResponsResult(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='respons_results',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.DO_NOTHING,
+	    related_name='respons_results',
+	    blank=True,
+	    null=True
+	)
+	evaluation_period = models.ForeignKey(
+	    BonknowEvaluationPeriod,
+	    on_delete=models.DO_NOTHING,
+	    related_name='respons_results',
+	    blank=True,
+	    null=True
+	)
+	logic = models.IntegerField(blank=True, null=True, default=0)
+	sense = models.IntegerField(blank=True, null=True, default=0)
+
+	class Meta:
+		db_table = 'respons_results'
+
+class ThinkResult(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='think_results',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.DO_NOTHING,
+	    related_name='think_results',
+	    blank=True,
+	    null=True
+	)
+	evaluation_period = models.ForeignKey(
+	    BonknowEvaluationPeriod,
+	    on_delete=models.DO_NOTHING,
+	    related_name='think_results',
+	    blank=True,
+	    null=True
+	)
+	must = models.IntegerField(blank=True, null=True, default=0)
+	want = models.IntegerField(blank=True, null=True, default=0)
+
+	class Meta:
+		db_table = 'think_results'

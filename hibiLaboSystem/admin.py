@@ -14,10 +14,6 @@ admin.site.register(models.Company)
 admin.site.register(models.Partner)
 admin.site.register(models.Branch)
 # admin.site.register(models.Hierarchy)
-admin.site.register(models.HonneQuestion)
-admin.site.register(models.SelfcheckQuestion)
-admin.site.register(models.HonneEvaluationPeriod)
-admin.site.register(models.SelfcheckEvaluationPeriod)
 
 @admin.register(models.User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
@@ -69,3 +65,13 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         return render(
             request, "admin/import_users.html", context
         )
+# Honne
+admin.site.register(models.HonneQuestion)
+admin.site.register(models.HonneEvaluationPeriod)
+# Selfcheck
+admin.site.register(models.SelfcheckQuestion)
+admin.site.register(models.SelfcheckEvaluationPeriod)
+# Bonknow
+admin.site.register(models.ResponsQuestion)
+admin.site.register(models.ThinkQuestion)
+admin.site.register(models.BonknowEvaluationPeriod)
