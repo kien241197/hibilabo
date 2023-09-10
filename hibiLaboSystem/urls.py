@@ -14,7 +14,6 @@ urlpatterns = [
 	path('my-info/password-change_done/', views.PasswordChangeDone.as_view(), name='password_change_done'),
 
 	path('honne-sheet/<evaluationUnit>', views.HonneSheet.as_view(), name='honne_sheet'),
-
 	path('honne-total', views.HonneTotal.as_view(), name='honne_total'),
 	path('honne-type-staticks', views.HonneTypeStaticks.as_view(), name='honne_type_staticks'),
 	path('honne-index-staticks', views.HonneIndexStaticks.as_view(), name='honne_index_staticks'),
@@ -28,4 +27,8 @@ urlpatterns = [
 	path('selfcheck', views.SelfcheckIndex.as_view(), name='selfcheck_index'),
 	path('selfcheck-index-chart', views.SelfcheckIndexChart.as_view(), name='selfcheck_index_chart'),
 	path('selfcheck-questions', views.SelfcheckQuestions.as_view(), name='selfcheck_questions'),
+
+	path('bonknow-sheet/<evaluationUnit>', views.BonknowSheet.as_view(), name='bonknow_sheet'),
+	path('bonknow-think', views.BonknowThink.as_view(), name='bonknow_think'),
+	path('bonknow-respons', views.BonknowRespons.as_view(), name='bonknow_respons'),
 ]

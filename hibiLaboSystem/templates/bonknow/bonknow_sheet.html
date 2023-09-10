@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<!-- chartの呼び出し -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+{% load static %}
+<script src="{% static 'js/bonknow-sheet.js' %}"></script>
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+  <div class="text-center text-danger"><label><h5>{{ message }}</h5></label></div>
+  <form  class="" action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+    <section class="site-chart" >
+        <div class="container">
+	    	<div class="pb-3">
+	            <h2 class="bg-warning bg-gradient heading w-25 text-center p-2"><b>BONKNOW</b></h2>
+	        </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-content">
+                        <table class="table" id="td1">
+                            <tr>
+                                <th>No</th>
+                                <th>質   問</th>
+                                <th>該当○ <br> 非該当×</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="content-chart">
+                        <div class="chart">
+                            <canvas id="mycanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="button-chart">
+                        <div class="flex-chart">
+                            <button class="btn-custom-button" type="submit">一時保存</button>
+                            <button class="btn-custom-button" type="submit">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </form>
+
+</main>
+{% endblock %}

@@ -1,5 +1,5 @@
 from . import forms
-from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult
+from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponse, JsonResponse
@@ -27,6 +27,7 @@ class Home(TemplateView):
         context = super().get_context_data(**kwargs)
         context["period_honne"] = HonneEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today()).first()
         context["period_selfcheck"] = SelfcheckEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today()).first()
+        context["period_bonknow"] = BonknowEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today()).first()
         return context
 
 class Login(LoginView):
@@ -795,5 +796,54 @@ class SelfcheckSheet(TemplateView):
 
             context = self.get_context_data(**kwargs)
             context["message"] = '-- 保存しました。--'
+
+        return self.render_to_response(context)
+
+#Bonknow
+class BonknowSheet(TemplateView):
+    template_name = "bonknow/bonknow_sheet.html"
+    form_class = forms.HonneForm
+
+    def get_context_data(self, **kwargs):
+        evaluation_unit = self.kwargs['evaluationUnit']
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        evaluation_period = get_object_or_404(
+            BonknowEvaluationPeriod,
+            pk=evaluation_unit,
+            company_id=company_id,
+            evaluation_start__lte=datetime.date.today(),
+            evaluation_end__gte=datetime.date.today()
+        )
+
+
+        kwargs = super(BonknowSheet, self).get_context_data(**kwargs)
+        kwargs['evaluation_unit'] = evaluation_unit
+        return kwargs
+
+        return self.render_to_response(context)
+
+class BonknowRespons(TemplateView):
+    template_name = "bonknow/bonknow_respons.html"
+    form_class = forms.HonneForm
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        kwargs = super(BonknowRespons, self).get_context_data(**kwargs)
+        return kwargs
+
+        return self.render_to_response(context)
+
+class BonknowThink(TemplateView):
+    template_name = "bonknow/bonknow_think.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        kwargs = super(BonknowThink, self).get_context_data(**kwargs)
+        return kwargs
 
         return self.render_to_response(context)
