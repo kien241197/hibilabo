@@ -453,8 +453,8 @@ class ResponsQuestion(models.Model):
 		max_length=1,
 		null=True,
 		choices=[
-			(1, 'Logic'),
-			(2, 'Sense'),
+			('1', 'Logic'),
+			('2', 'Sense'),
 		]
 	)
 	apply_start_date = models.DateField(blank=True, null=True)
@@ -476,8 +476,8 @@ class ThinkQuestion(models.Model):
 		max_length=1,
 		null=True,
 		choices=[
-			(1, 'Must'),
-			(2, 'Want'),
+			('1', 'Must'),
+			('2', 'Want'),
 		]
 	)
 	apply_start_date = models.DateField(blank=True, null=True)

@@ -15,7 +15,21 @@
             <div class="row">
                 {% include "component/bonknow_nav.html" %}
                 <div class="col-md-10">
-                    
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab1">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>DO YOU KNOW <span class="text-muted">&nbsp;THINK</span></h2>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

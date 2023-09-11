@@ -1145,4 +1145,12 @@ select {
       float: left;
   }
 }
+
+.nav-bonknow .nav-link.active {
+  color: #fff;
+  background-color: #0dc5ce;
+}
+.bg-title-custom {
+  background: #EFE9A2;
+}
 /*# sourceMappingURL=style.css.map */

@@ -1,5 +1,5 @@
 from . import forms
-from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod
+from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponse, JsonResponse
@@ -816,9 +816,44 @@ class BonknowSheet(TemplateView):
             evaluation_end__gte=datetime.date.today()
         )
 
+        respons_questions = evaluation_period.respons_questions.prefetch_related(
+            Prefetch(
+                'respons_answers',
+                queryset=(
+                    ResponsAnswer.objects
+                        .filter(evaluation_period_id=evaluation_unit,user_id=user_id,company_id=company_id)
+                )
+            )
+        ).all().annotate(
+            answer_value=ResponsAnswer.objects.filter(
+                respons_question=OuterRef("pk"),
+                evaluation_period_id=evaluation_unit,
+                company_id=company_id,
+                user_id=user_id
+            ).values('answer')[:1]
+        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
+
+        think_questions = evaluation_period.think_questions.prefetch_related(
+            Prefetch(
+                'think_answers',
+                queryset=(
+                    ThinkAnswer.objects
+                        .filter(evaluation_period_id=evaluation_unit,user_id=user_id,company_id=company_id)
+                )
+            )
+        ).all().annotate(
+            answer_value=ThinkAnswer.objects.filter(
+                think_question=OuterRef("pk"),
+                evaluation_period_id=evaluation_unit,
+                company_id=company_id,
+                user_id=user_id
+            ).values('answer')[:1]
+        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
 
         kwargs = super(BonknowSheet, self).get_context_data(**kwargs)
         kwargs['evaluation_unit'] = evaluation_unit
+        kwargs['respons_questions'] = respons_questions
+        kwargs['think_questions'] = think_questions
         return kwargs
 
         return self.render_to_response(context)
