@@ -1,5 +1,5 @@
 from . import forms
-from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer
+from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponse, JsonResponse
@@ -802,7 +802,6 @@ class SelfcheckSheet(TemplateView):
 #Bonknow
 class BonknowSheet(TemplateView):
     template_name = "bonknow/bonknow_sheet.html"
-    form_class = forms.HonneForm
 
     def get_context_data(self, **kwargs):
         evaluation_unit = self.kwargs['evaluationUnit']
@@ -856,7 +855,84 @@ class BonknowSheet(TemplateView):
         kwargs['think_questions'] = think_questions
         return kwargs
 
+    def post(self, request, *args, **kwargs):
+        key_evaluation_unit = self.kwargs['evaluationUnit']
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        evaluation_unit = BonknowEvaluationPeriod.objects.filter(
+            id=key_evaluation_unit,
+            company_id=company_id
+        ).first()
+        respons_questions = evaluation_unit.respons_questions.all().order_by('sort_no')
+        think_questions = evaluation_unit.think_questions.all().order_by('sort_no')
+        sense = 0
+        logic = 0
+        for rq in respons_questions:
+            strparam = 'respons_answer_' + str(rq.id)
+            if len(self.request.POST.getlist(strparam)) == 0 or self.request.POST.getlist(strparam)[0] == '':
+                continue
+            answer = int(self.request.POST.getlist(strparam)[0])
+            if (rq.question_type == '1' and answer == 1) or (rq.question_type == '2' and answer == 0):
+                logic += 1
+            if (rq.question_type == '2' and answer == 1) or (rq.question_type == '1' and answer == 0):
+                sense += 1
+            obj = ResponsAnswer.objects.update_or_create(
+                company_id=company_id,
+                user_id=user_id,
+                evaluation_period_id=key_evaluation_unit,
+                respons_question_id=rq.id,
+                defaults={
+                    "answer": answer,
+                    "answer_date": datetime.date.today(),
+                }
+            )
+        obj = ResponsResult.objects.update_or_create(
+            company_id=company_id,
+            user_id=user_id,
+            evaluation_period_id=key_evaluation_unit,
+            defaults={
+                "logic": logic,
+                "sense": sense
+            }
+        )
+
+        must = 0
+        want = 0
+        for tq in think_questions:
+            strparam = 'think_answer_' + str(tq.id)
+            if len(self.request.POST.getlist(strparam)) == 0 or self.request.POST.getlist(strparam)[0] == '':
+                continue
+            answer = int(self.request.POST.getlist(strparam)[0])
+            if (rq.question_type == '1' and answer == 1) or (rq.question_type == '2' and answer == 0):
+                must += 1
+            if (rq.question_type == '2' and answer == 1) or (rq.question_type == '1' and answer == 0):
+                want += 1
+
+            obj = ThinkAnswer.objects.update_or_create(
+                company_id=company_id,
+                user_id=user_id,
+                evaluation_period_id=key_evaluation_unit,
+                think_question_id=tq.id,
+                defaults={
+                    "answer": answer,
+                    "answer_date": datetime.date.today(),
+                }
+            )
+        obj = ThinkResult.objects.update_or_create(
+            company_id=company_id,
+            user_id=user_id,
+            evaluation_period_id=key_evaluation_unit,
+            defaults={
+                "must": must,
+                "want": want
+            }
+        )
+
+        context = self.get_context_data(**kwargs)
+        context["message"] = '-- 保存しました。--'
+
         return self.render_to_response(context)
+
 
 class BonknowRespons(TemplateView):
     template_name = "bonknow/bonknow_respons.html"
