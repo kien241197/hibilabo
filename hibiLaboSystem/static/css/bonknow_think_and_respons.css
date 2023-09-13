@@ -1,0 +1,75 @@
+.select {
+
+  background-color: none;
+  background: none !important;
+  font-weight: 700;
+}
+
+.to {
+  color: #b0b1b3;
+  font-weight: 700;
+
+}
+
+#mycanvas {
+
+  height: 600px !important;
+}
+
+
+
+@media screen and (min-width: 2400px) {
+  .select {
+    font-size: 130% !important;
+  }
+  
+  #mycanvas {
+
+    height: 750px !important;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  
+  .select {
+    font-size: 150% !important;
+  }
+  #mycanvas {
+
+    height: 800px !important;
+  }
+}
+
+@media screen and (min-width: 2880px) {
+  .select {
+    font-size: 170% !important;
+  }
+  #mycanvas {
+
+    height: 950px !important;
+  }
+}
+
+@media screen and (max-width: 1746px) {
+
+  #mycanvas {
+
+    height: 500px !important;
+  }
+}
+
+@media screen and (max-width: 1537px) {
+
+  #mycanvas {
+
+    height: 430px !important;
+  }
+}
+
+@media screen and (max-width: 1281px) {
+
+  #mycanvas {
+
+    height: 300px !important;
+  }
+}
