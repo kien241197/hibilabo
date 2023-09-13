@@ -63,10 +63,8 @@
                                                 <select id=respons_result{{record.id}}
                                                     name=respons_answer_{{record.id}}>
                                                     <option value="">-</option>
-                                                    <option value="1" {% if record.answer_value==True %}selected{% endif
-                                                        %}>〇</option>
-                                                    <option value="0" {% if record.answer_value==False %}selected{%
-                                                        endif %}>×</option>
+                                                    <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
+                                                    <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
                                                 </select>
                                                 <input type="hidden" id="respons-type-{{record.id}}"
                                                     value="{{record.question_type}}">
@@ -116,10 +114,8 @@
                                                 <select id=respons_result{{record.id}}
                                                     name=respons_answer_{{record.id}}>
                                                     <option value="">-</option>
-                                                    <option value="1" {% if record.answer_value==True %}selected{% endif
-                                                        %}>〇</option>
-                                                    <option value="0" {% if record.answer_value==False %}selected{%
-                                                        endif %}>×</option>
+                                                    <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
+                                                    <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
                                                 </select>
                                                 <input type="hidden" id="think-type-{{record.id}}"
                                                     value="{{record.question_type}}">
@@ -172,7 +168,7 @@
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [50, 50],
+                data: [60, 40],
                 backgroundColor: ['#2CAEB5', '#EAA9CA'],
                 borderWidth: 0
             }]
@@ -216,7 +212,7 @@
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [50, 50],
+                data: [40, 60],
                 backgroundColor: ['#2CAEB5', '#EAA9CA'],
                 borderWidth: 0,
                 hoverOffset: 4
