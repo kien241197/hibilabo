@@ -60,7 +60,7 @@
     Chart.register(ChartDataLabels);
 
     const mycanvas = document.getElementById('mycanvas').getContext('2d');
-    const chart3 = new Chart(mycanvas, {
+    const chart = new Chart(mycanvas, {
         type: 'bar',
         data: {
             labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
@@ -88,7 +88,7 @@
                         color: '#333',
                     },
                     color: "#ffffff",
-                    font: { size: 30, weight: 700 },
+                    font: { size: window.innerWidth <=500 ? 20 : 30, weight: 700 },
 
                 },
                 legend: {
@@ -104,7 +104,7 @@
                     stacked: true,
                     ticks: {
                         color: '#000000',
-                        font: {size: window.innerWidth <= 500 ? 12 : 20}
+                        font: { size: window.innerWidth <= 500 ? 12 : 20 }
                     }
                 },
                 y: {
@@ -114,7 +114,7 @@
                     stacked: true,
                     ticks: {
                         color: '#000000',
-                        font: {size: window.innerWidth <= 500 ? 12: 20}
+                        font: { size: window.innerWidth <= 500 ? 12 : 20 }
                     }
                 }
             },
@@ -132,5 +132,18 @@
     });
 
     console.log(window.innerWidth)
+
+    window.addEventListener('resize', () => {
+
+        if (window.innerWidth <= 500) {
+            chart.options.scales.x.ticks.font.size = 12;
+            chart.options.scales.y.ticks.font.size = 12;
+            chart.options.plugins.datalabels.font.size = 20;
+        } else {
+            chart.options.scales.x.ticks.font.size = 20;
+            chart.options.scales.y.ticks.font.size = 20;
+            chart.options.plugins.datalabels.font.size = 30;
+        }
+    })
 </script>
 {% endblock %}
