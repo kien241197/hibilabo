@@ -14,9 +14,9 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView, CreateView, TemplateView, DetailView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .constants import SELFCHECK_ANSWER, CIRCL, SQUARE, TRAIANGLE
 import datetime
 import pdb
-from .constants import SELFCHECK_ANSWER, CIRCL, SQUARE, TRAIANGLE
 
 User = get_user_model()
 # Create your views here.
@@ -853,6 +853,8 @@ class BonknowSheet(TemplateView):
         kwargs['evaluation_unit'] = evaluation_unit
         kwargs['respons_questions'] = respons_questions
         kwargs['think_questions'] = think_questions
+        kwargs['think_list'] = list(think_questions.values_list('id', flat=True))
+        kwargs['res_list'] = list(respons_questions.values_list('id', flat=True))
         return kwargs
 
     def post(self, request, *args, **kwargs):

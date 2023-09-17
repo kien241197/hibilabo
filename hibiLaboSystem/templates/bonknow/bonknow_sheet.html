@@ -12,6 +12,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 {% load static %}
 <link rel="stylesheet" href="{% static '/css/bonknow.css' %}">
+<script>
+    var resList = {{ res_list|safe }};
+    var thinkList = {{ think_list|safe }};
+</script>
 <script src="{% static 'js/bonknow-sheet.js' %}"></script>
 
 {% endblock %}
@@ -61,7 +65,7 @@
                                             <td>{{ record.question }}</td>
                                             <td>
                                                 <select id=respons_result{{record.id}}
-                                                    name=respons_answer_{{record.id}}>
+                                                    name=respons_answer_{{record.id}} onchange='func_count_res(this, {{ res_list|safe }});'>
                                                     <option value="">-</option>
                                                     <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
                                                     <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
@@ -111,8 +115,8 @@
                                             <td>{{forloop.counter}}</td>
                                             <td>{{ record.question }}</td>
                                             <td>
-                                                <select id=respons_result{{record.id}}
-                                                    name=respons_answer_{{record.id}}>
+                                                <select id=think_result{{record.id}}
+                                                    name=think_answer_{{record.id}} onchange='func_count_think(this, {{ think_list|safe }});'>
                                                     <option value="">-</option>
                                                     <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
                                                     <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
@@ -158,133 +162,4 @@
     </form>
 
 </main>
-
-<script>
-    Chart.register(ChartDataLabels);
-
-
-    const mycanvas = document.getElementById('mycanvas');
-    const chart2 = new Chart(mycanvas, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [60, 40],
-                backgroundColor: ['#2CAEB5', '#EAA9CA'],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            datasets: {
-                doughnut: {
-                    cutout: '66%'
-                }
-            },
-            events: ["mouseout", "touchstart", "touchmove", "touchend"],
-            plugins: {
-                datalabels: {
-                    color: 'white',
-                    display: true,
-                    font: { size: window.innerWidth <= 1097 ? 13 : 20, weight: 700 },
-                    offset: 0,
-                    formatter: (value, context) => {
-                        if (context.dataIndex === 0) {
-                            if(value !== 0){
-
-                                return 'SENSE\n   ' + value.toString() + "%";
-                            } else {
-                                return null;
-                            }
-                        } else if (context.dataIndex === 1) {
-                            if(value !== 0){
-
-                                return ' LOGIC\n   ' + value.toString() + "%";
-                            } else{
-                                return null;
-                            }
-                           
-                        }
-                    },
-                },
-            },
-            legend: {
-                display: false,
-            },
-            tooltips: {
-                enabled: false,
-            },
-
-        },
-
-    });
-
-    const mycanvas2 = document.getElementById('mycanvas2');
-    const chart1 = new Chart(mycanvas2, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [40, 60],
-                backgroundColor: ['#2CAEB5', '#EAA9CA'],
-                borderWidth: 0,
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            datasets: {
-                doughnut: {
-                    cutout: '66%'
-                }
-            },
-            events: ["mouseout", "touchstart", "touchmove", "touchend"],
-            hover: {
-                mode: 'nearest',
-            },
-            plugins: {
-                datalabels: {
-                    color: 'white',
-                    display: true,
-                    font: { size: window.innerWidth <= 1097 ? 13 : 20, weight: 700 },
-                    offset: 0,
-                    formatter: (value, context) => {
-                        if (context.dataIndex === 0) {
-                            if(value !== 0){
-
-                                return 'WANT\n  ' + value.toString() + "%";
-                            } else {
-
-                                return null;
-                            }
-                        } else if (context.dataIndex === 1) {
-                            if(value !== 0){
-
-                                return 'MUST\n  ' + value.toString() + "%";
-                            } else{
-
-                                return null;
-                            }
-                            
-                        }
-                        return value.toString();
-                    },
-                },
-            },
-            legend: {
-                display: false,
-            },
-            tooltips: {
-                enabled: false,
-            },
-
-        },
-    });
-    window.addEventListener('resize', () => {
-
-        if (window.innerWidth <= 1097) {
-            chart1.options.plugins.datalabels.font.size = 13;
-            chart2.options.plugins.datalabels.font.size = 13;
-        } else {
-            chart1.options.plugins.datalabels.font.size = 20;
-            chart2.options.plugins.datalabels.font.size = 20;
-        }
-    })
-</script>
 {% endblock %}
