@@ -867,17 +867,17 @@ class BonknowSheet(TemplateView):
         ).first()
         respons_questions = evaluation_unit.respons_questions.all().order_by('sort_no')
         think_questions = evaluation_unit.think_questions.all().order_by('sort_no')
-        sense = 0
-        logic = 0
+        sense = self.request.POST.getlist('sense')[0]
+        logic = self.request.POST.getlist('logic')[0]
         for rq in respons_questions:
             strparam = 'respons_answer_' + str(rq.id)
             if len(self.request.POST.getlist(strparam)) == 0 or self.request.POST.getlist(strparam)[0] == '':
                 continue
             answer = int(self.request.POST.getlist(strparam)[0])
-            if (rq.question_type == '1' and answer == 1) or (rq.question_type == '2' and answer == 0):
-                logic += 1
-            if (rq.question_type == '2' and answer == 1) or (rq.question_type == '1' and answer == 0):
-                sense += 1
+            # if (rq.question_type == '1' and answer == 1) or (rq.question_type == '2' and answer == 0):
+            #     logic += 1
+            # if (rq.question_type == '2' and answer == 1) or (rq.question_type == '1' and answer == 0):
+            #     sense += 1
             obj = ResponsAnswer.objects.update_or_create(
                 company_id=company_id,
                 user_id=user_id,
@@ -898,17 +898,17 @@ class BonknowSheet(TemplateView):
             }
         )
 
-        must = 0
-        want = 0
+        must = self.request.POST.getlist('must')[0]
+        want = self.request.POST.getlist('want')[0]
         for tq in think_questions:
             strparam = 'think_answer_' + str(tq.id)
             if len(self.request.POST.getlist(strparam)) == 0 or self.request.POST.getlist(strparam)[0] == '':
                 continue
             answer = int(self.request.POST.getlist(strparam)[0])
-            if (rq.question_type == '1' and answer == 1) or (rq.question_type == '2' and answer == 0):
-                must += 1
-            if (rq.question_type == '2' and answer == 1) or (rq.question_type == '1' and answer == 0):
-                want += 1
+            # if (rq.question_type == '1' and answer == 1) or (rq.question_type == '2' and answer == 0):
+            #     must += 1
+            # if (rq.question_type == '2' and answer == 1) or (rq.question_type == '1' and answer == 0):
+            #     want += 1
 
             obj = ThinkAnswer.objects.update_or_create(
                 company_id=company_id,

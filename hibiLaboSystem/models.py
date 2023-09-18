@@ -605,8 +605,8 @@ class ResponsResult(models.Model):
 	    blank=True,
 	    null=True
 	)
-	logic = models.IntegerField(blank=True, null=True, default=0)
-	sense = models.IntegerField(blank=True, null=True, default=0)
+	logic = models.FloatField(blank=True, null=True, default=0)
+	sense = models.FloatField(blank=True, null=True, default=0)
 
 	class Meta:
 		db_table = 'respons_results'
@@ -633,8 +633,8 @@ class ThinkResult(models.Model):
 	    blank=True,
 	    null=True
 	)
-	must = models.IntegerField(blank=True, null=True, default=0)
-	want = models.IntegerField(blank=True, null=True, default=0)
+	must = models.FloatField(blank=True, null=True, default=0)
+	want = models.FloatField(blank=True, null=True, default=0)
 
 	class Meta:
 		db_table = 'think_results'

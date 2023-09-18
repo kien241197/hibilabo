@@ -20,6 +20,8 @@ function func_count_res(element, listQ){
 }
 
 function drwa_chart_res(chartValue){
+    $('#sense').val(chartValue[0]);
+    $('#logic').val(chartValue[1]);
     if (chart){
         chart.destroy();
     }
@@ -97,6 +99,8 @@ function func_count_think(element, listQ){
 }
 
 function drwa_chart_think(chartValue){
+    $('#must').val(chartValue[0]);
+    $('#want').val(chartValue[1]);
     if (chart2){
         chart2.destroy();
     }
@@ -174,7 +178,7 @@ window.addEventListener('resize', () => {
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     var logic_first = 0, sense_first = 0, must_first = 0, want_first = 0;
-    var respons_first = [50,50], think_first = [50,50];
+    var respons_first = [0,0], think_first = [0,0];
     if(resList.length > 0) {
         resList.forEach(key => {
             let value = $('#respons_result'+key).val();
