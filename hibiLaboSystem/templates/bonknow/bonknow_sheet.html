@@ -2,16 +2,20 @@
 
 {% block header %}
 <!-- chartの呼び出し -->
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
     integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
     crossorigin="anonymous"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 {% load static %}
+<link rel="stylesheet" href="{% static '/css/bonknow.css' %}">
+<script>
+    var resList = {{ res_list|safe }};
+    var thinkList = {{ think_list|safe }};
+</script>
 <script src="{% static 'js/bonknow-sheet.js' %}"></script>
 
 {% endblock %}
@@ -19,102 +23,136 @@
 <!-- コンテンツ -->
 {% block content %}
 <main class="bg-main bg-gray">
-  <div class="text-center text-danger"><label><h5>{{ message }}</h5></label></div>
-  <form  class="" action="" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-    <section class="site-chart" >
-        <div class="container">
-	    	<div class="pb-3 d-flex">
-	            <h2 class="bg-title-custom heading w-25 text-center p-2"><b>BONKNOW</b></h2>
-                <div class="nav nav-tabs w-75 justify-content-center border-0 nav-bonknow" id="nav-tab" role="tablist">
-                    <button class="nav-link rounded-circle border active" id="nav-respons-tab" data-bs-toggle="tab" data-bs-target="#nav-respons" type="button" role="tab" aria-controls="nav-respons" aria-selected="true">1</button>
-                    <button class="nav-link rounded-circle border" id="nav-think-tab" data-bs-toggle="tab" data-bs-target="#nav-think" type="button" role="tab" aria-controls="nav-think" aria-selected="false">2</button>
-                </div>
-	        </div>
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="nav-respons" role="tabpanel" aria-labelledby="nav-respons-tab">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p><b>自分の脳を知ろう（感性的　SENSE　/　論理的　LOGIC　）</b></p>
-                        </div>
+    <div class="text-center text-danger"><label>
+            <h5>{{ message }}</h5>
+        </label></div>
+    <form class="" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <section class="site-chart">
+            <div class="container">
+                <div class="pb-3 d-flex">
+                    <h2 class="bg-title-custom heading w-25 text-center p-2"><b>BONKNOW</b></h2>
+                    <div class="nav nav-tabs w-75 justify-content-center border-0 nav-bonknow" id="nav-tab"
+                        role="tablist">
+                        <button class="nav-link rounded-circle border active" id="nav-respons-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-respons" type="button" role="tab" aria-controls="nav-respons"
+                            aria-selected="true">1</button>
+                        <button class="nav-link rounded-circle border" id="nav-think-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-think" type="button" role="tab" aria-controls="nav-think"
+                            aria-selected="false">2</button>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="table-content">
-                                <table class="table" id="td1">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>質   問</th>
-                                        <th>該当○ <br> 非該当×</th>
-                                    </tr>
-                                    {% for record in respons_questions %}
-                                    <tr>
-                                        <td>{{forloop.counter}}</td>
-                                        <td>{{ record.question }}</td>
-                                        <td>
-                                            <select id=respons_result{{record.id}} name=respons_answer_{{record.id}}>
-                                                <option value="">-</option>
-                                                <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
-                                                <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
-                                            </select>
-                                            <input type="hidden" id="respons-type-{{record.id}}" value="{{record.question_type}}">
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </table>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="nav-respons" role="tabpanel"
+                        aria-labelledby="nav-respons-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p><b>自分の脳を知ろう（感性的　SENSE　/　論理的　LOGIC　）</b></p>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <h2 class="bg-title-custom heading text-center p-2 w-50 m-auto"><b>DO YOU KNOW <span class="text-muted">&nbsp;RESPONS</span></b></h2>
-                            <div class="content-chart">
-                                <div class="chart">
-                                    <canvas id="mycanvas"></canvas>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="table-content">
+                                    <table class="table" id="td1">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>質 問</th>
+                                            <th>該当○ <br> 非該当×</th>
+                                        </tr>
+                                        {% for record in respons_questions %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{ record.question }}</td>
+                                            <td>
+                                                <select id=respons_result{{record.id}}
+                                                    name=respons_answer_{{record.id}} onchange='func_count_res(this, {{ res_list|safe }});'>
+                                                    <option value="">-</option>
+                                                    <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
+                                                    <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
+                                                </select>
+                                                <input type="hidden" id="respons-type-{{record.id}}"
+                                                    value="{{record.question_type}}">
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="bg-title-custom heading text-center p-2 w-50 m-auto"><b>DO YOU KNOW <span
+                                            class="text-muted">&nbsp;RESPONS</span></b></h2>
+                                <div class="content-chart p-4">
+                                    <div class="chart position-relative">
+                                        <div
+                                            class="desc-chart position-absolute w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                                            <b class="desc-content-top font-weight-bold text-muted mb-4">DO YOU KNOW</b>
+                                            <b class="desc-content-mid font-weight-bold mb-4">RESPONS</b>
+                                            <p class="desc-content-bottom text-muted">どうゆう脳？</p>
+                                        </div>
+                                        <canvas id="mycanvas"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>               
-                </div>
-                <div class="tab-pane fade" id="nav-think" role="tabpanel" aria-labelledby="nav-think-tab">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p><b>自分の脳を知ろう（受動的脳　WANT　/　能動的脳　MUST）</b></p>
-                        </div>
+                        <input type="hidden" name="logic" id="logic">
+                        <input type="hidden" name="sense" id="sense">
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="table-content">
-                                <table class="table" id="td2">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>質   問</th>
-                                        <th>該当○ <br> 非該当×</th>
-                                    </tr>
-                                    {% for record in think_questions %}
-                                    <tr>
-                                        <td>{{forloop.counter}}</td>
-                                        <td>{{ record.question }}</td>
-                                        <td>
-                                            <select id=think_result{{record.id}} name=think_answer_{{record.id}}>
-                                                <option value="">-</option>
-                                                <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
-                                                <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
-                                            </select>
-                                            <input type="hidden" id="think-type-{{record.id}}" value="{{record.question_type}}">
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </table>
+                    <div class="tab-pane fade" id="nav-think" role="tabpanel" aria-labelledby="nav-think-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p><b>自分の脳を知ろう（受動的脳　WANT　/　能動的脳　MUST）</b></p>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="content-chart">
-                                <h2 class="bg-title-custom heading text-center p-2 w-50 m-auto"><b>DO YOU KNOW <span class="text-muted">&nbsp;THINK</span></b></h2>
-                                <div class="chart">
-                                    <canvas id="mycanvas2"></canvas>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="table-content">
+                                    <table class="table" id="td2">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>質 問</th>
+                                            <th>該当○ <br> 非該当×</th>
+                                        </tr>
+                                        {% for record in think_questions %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{ record.question }}</td>
+                                            <td>
+                                                <select id=think_result{{record.id}}
+                                                    name=think_answer_{{record.id}} onchange='func_count_think(this, {{ think_list|safe }});'>
+                                                    <option value="">-</option>
+                                                    <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
+                                                    <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
+                                                </select>
+                                                <input type="hidden" id="think-type-{{record.id}}"
+                                                    value="{{record.question_type}}">
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="content-chart">
+                                    <h2 class="bg-title-custom heading text-center p-2 w-50 m-auto"><b>DO YOU KNOW <span
+                                                class="text-muted">&nbsp;THINK</span></b></h2>
+                                    <div class="chart p-4">
+                                        <div class="chart position-relative">
+                                            <div
+                                                class="desc-chart position-absolute w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                                                <b class="desc-content-top font-weight-bold text-muted mb-4">DO YOU
+                                                    KNOW</b>
+                                                <b class="desc-content-mid font-weight-bold mb-4">THINK</b>
+                                                <p class="desc-content-bottom text-muted">どうゆう脳？</p>
+                                            </div>
+                                            <canvas id="mycanvas2"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>               
+                        <input type="hidden" name="must" id="must">
+                        <input type="hidden" name="want" id="want">
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <div class="button-chart">
@@ -124,10 +162,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-  </form>
+        </section>
+    </form>
 
 </main>
 {% endblock %}

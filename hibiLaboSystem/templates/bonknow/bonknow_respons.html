@@ -3,7 +3,16 @@
 {% block header %}
 
 {% load static %}
+<link rel="stylesheet" href="{% static '/css/bonknow_think_and_respons.css' %}">
 <link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 {% endblock %}
 
@@ -19,13 +28,25 @@
                         <div class="tab-pane fade active show" id="tab1">
                             <div class="feedback-content">
                                 <div class="title">
-                                    <h2>DO YOU KNOW <span class="text-muted">&nbsp;RESPONS</span></h2>
+                                    <h2 class="text-dark"> DO YOU KNOW <span class="text-muted">&nbsp;RESPONS</span></h2>
                                 </div>
                                 <div class="filter">
                                     <form action="" method="post" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <button type="submit" name="submit">表示</button>
+                                        <div class="item-select d-flex align-items-center gap-2" style="display: flex;">
+                                            <select class="select border-0" name="" id="">
+                                                <option value="">2023年3月</option>
+                                            </select>
+                                            <p class="to m-0 px-3">～</p>
+                                            <select class="select border-0" name="" id="">
+                                                <option value="">2023年9月</option>
+                                            </select>
+                                            {% csrf_token %}
+                                            <button class="mx-3" type="submit" name="submit">表示</button>
+                                        </div>
                                     </form>
+                                </div>
+                                <div>
+                                    <canvas id="mycanvas"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -35,4 +56,92 @@
         </div>
     </section>
 </main>
+<script>
+    Chart.register(ChartDataLabels);
+
+    const mycanvas = document.getElementById('mycanvas').getContext('2d');
+    const chart = new Chart(mycanvas, {
+        type: 'bar',
+        data: {
+            labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+            datasets: [
+                {
+                    label: '',
+                    data: [48, 47, 66, 78, 73, 70, 82],
+                    backgroundColor: '#2CAEB5',
+                    borderWidth: 0
+                },
+                {
+                    label: '',
+                    data: [52, 53, 34, 22, 27, 30, 18],
+                    backgroundColor: '#EAA9CA',
+                    borderWidth: 0
+                }
+            ]
+        },
+        options: {
+            // events: [],
+            plugins: {
+                datalabels: {
+                    text: {
+                        display: true,
+                        color: '#333',
+                    },
+                    color: "#ffffff",
+                    font: { size: window.innerWidth <=500 ? 20 : 30, weight: 700 },
+
+                },
+                legend: {
+                    display: false,
+                },
+            },
+
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    stacked: true,
+                    ticks: {
+                        color: '#000000',
+                        font: { size: window.innerWidth <= 500 ? 12 : 20 }
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    },
+                    stacked: true,
+                    ticks: {
+                        color: '#000000',
+                        font: { size: window.innerWidth <= 500 ? 12 : 20 }
+                    }
+                }
+            },
+            elements: {
+                bar: {
+                    barPercentage: 1,
+                    categoryPercentage: 1,
+                }
+            },
+            hover: {
+                mode: 'nearest',
+            },
+
+        },
+    });
+
+    window.addEventListener('resize', () => {
+
+        if (window.innerWidth <= 500) {
+            chart.options.scales.x.ticks.font.size = 12;
+            chart.options.scales.y.ticks.font.size = 12;
+            chart.options.plugins.datalabels.font.size = 20;
+        } else {
+            chart.options.scales.x.ticks.font.size = 20;
+            chart.options.scales.y.ticks.font.size = 20;
+            chart.options.plugins.datalabels.font.size = 30;
+        }
+    })
+</script>
 {% endblock %}
