@@ -15,6 +15,7 @@ from django.views.generic import ListView, CreateView, TemplateView, DetailView,
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .constants import SELFCHECK_ANSWER, CIRCL, SQUARE, TRAIANGLE
+import calendar
 import datetime
 import pdb
 
@@ -894,7 +895,8 @@ class BonknowSheet(TemplateView):
             evaluation_period_id=key_evaluation_unit,
             defaults={
                 "logic": logic,
-                "sense": sense
+                "sense": sense,
+                "review_date": datetime.date.today(),
             }
         )
 
@@ -926,7 +928,8 @@ class BonknowSheet(TemplateView):
             evaluation_period_id=key_evaluation_unit,
             defaults={
                 "must": must,
-                "want": want
+                "want": want,
+                "review_date": datetime.date.today(),
             }
         )
 
@@ -938,25 +941,76 @@ class BonknowSheet(TemplateView):
 
 class BonknowRespons(TemplateView):
     template_name = "bonknow/bonknow_respons.html"
-    form_class = forms.HonneForm
+    form_class = forms.BonknowForm
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
 
         kwargs = super(BonknowRespons, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request.GET or None)
         return kwargs
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = self.form_class(request.POST)
+        context["form"] = form
+        start_time = request.POST['start']
+        end_time = request.POST['end']
+        results = ResponsResult.objects.all().filter(company_id=request.user.company_id,user_id=request.user.id).order_by('review_date')
+        if start_time != '':
+            start_format = datetime.datetime.strptime(start_time + '-01', "%Y-%m-%d").date()
+            results = results.filter(review_date__gte=start_format)
+        if end_time != '':
+            convert = list(end_time.split("-"))
+            days = calendar.monthrange(int(convert[0]), int(convert[1]))
+            end_format = datetime.datetime.strptime(end_time + '-' + str(days[1]), "%Y-%m-%d").date()
+            results = results.filter(review_date__lte=end_format)
+        context['times'] = [];
+        context['logic'] = [];
+        context['sense'] = [];
+        for result in results:
+            str_time = result.review_date.strftime('%Y/%m')
+            context['times'].append(str_time)
+            context['logic'].append(result.logic)
+            context['sense'].append(result.sense)
 
         return self.render_to_response(context)
 
 class BonknowThink(TemplateView):
     template_name = "bonknow/bonknow_think.html"
+    form_class = forms.BonknowForm
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
 
         kwargs = super(BonknowThink, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request.GET or None)
         return kwargs
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = self.form_class(request.POST)
+        context["form"] = form
+        start_time = request.POST['start']
+        end_time = request.POST['end']
+        results = ThinkResult.objects.all().filter(company_id=request.user.company_id,user_id=request.user.id).order_by('review_date')
+        if start_time != '':
+            start_format = datetime.datetime.strptime(start_time + '-01', "%Y-%m-%d").date()
+            results = results.filter(review_date__gte=start_format)
+        if end_time != '':
+            convert = list(end_time.split("-"))
+            days = calendar.monthrange(int(convert[0]), int(convert[1]))
+            end_format = datetime.datetime.strptime(end_time + '-' + str(days[1]), "%Y-%m-%d").date()
+            results = results.filter(review_date__lte=end_format)
+        context['times'] = [];
+        context['must'] = [];
+        context['want'] = [];
+        for result in results:
+            str_time = result.review_date.strftime('%Y/%m')
+            context['times'].append(str_time)
+            context['must'].append(result.must)
+            context['want'].append(result.want)
 
         return self.render_to_response(context)

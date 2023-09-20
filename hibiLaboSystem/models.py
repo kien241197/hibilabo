@@ -607,6 +607,7 @@ class ResponsResult(models.Model):
 	)
 	logic = models.FloatField(blank=True, null=True, default=0)
 	sense = models.FloatField(blank=True, null=True, default=0)
+	review_date = models.DateField(blank=True, null=True)
 
 	class Meta:
 		db_table = 'respons_results'
@@ -635,6 +636,7 @@ class ThinkResult(models.Model):
 	)
 	must = models.FloatField(blank=True, null=True, default=0)
 	want = models.FloatField(blank=True, null=True, default=0)
+	review_date = models.DateField(blank=True, null=True)
 
 	class Meta:
 		db_table = 'think_results'

@@ -2,7 +2,8 @@ from django import forms
 from django.core import validators
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
-from . import models
+import datetime
+from . import models, fields
 
 User = get_user_model()
 
@@ -223,6 +224,17 @@ class SelfcheckEvaluationUnitForm(forms.Form):
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
         self.fields['user_id'].queryset = queryset
+
+class BonknowForm(forms.Form):
+    start = forms.ChoiceField(
+        widget=fields.MonthYearSelectWidget(),
+        required=True
+    )
+
+    end = forms.ChoiceField(
+        widget=fields.MonthYearSelectWidget(),
+        required=True
+    )
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()

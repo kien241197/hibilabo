@@ -93,14 +93,14 @@ function func_count_think(element, listQ){
             want += 1;
         }
     })
-    counter_group[0] = Math.round(must / listQ.length * 100 * 100) / 100;
-    counter_group[1] = Math.round(want / listQ.length * 100 * 100) / 100;
+    counter_group[1] = Math.round(must / listQ.length * 100 * 100) / 100;
+    counter_group[0] = Math.round(want / listQ.length * 100 * 100) / 100;
     drwa_chart_think(counter_group);
 }
 
 function drwa_chart_think(chartValue){
-    $('#must').val(chartValue[0]);
-    $('#want').val(chartValue[1]);
+    $('#must').val(chartValue[1]);
+    $('#want').val(chartValue[0]);
     if (chart2){
         chart2.destroy();
     }
@@ -204,8 +204,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 want_first += 1;
             }
         })
-        think_first[0] = Math.round(must_first / thinkList.length * 100 * 100) / 100;
-        think_first[1] = Math.round(want_first / thinkList.length * 100 * 100) / 100;    
+        think_first[1] = Math.round(must_first / thinkList.length * 100 * 100) / 100;
+        think_first[0] = Math.round(want_first / thinkList.length * 100 * 100) / 100;    
     }
     drwa_chart_res(respons_first);
 
