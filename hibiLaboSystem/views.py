@@ -1014,3 +1014,12 @@ class BonknowThink(TemplateView):
             context['want'].append(result.want)
 
         return self.render_to_response(context)
+
+class Mandara(TemplateView):
+    template_name = "mandara/index.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs

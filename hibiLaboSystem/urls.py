@@ -31,4 +31,6 @@ urlpatterns = [
 	path('bonknow-sheet/<evaluationUnit>', views.BonknowSheet.as_view(), name='bonknow_sheet'),
 	path('bonknow-think', views.BonknowThink.as_view(), name='bonknow_think'),
 	path('bonknow-respons', views.BonknowRespons.as_view(), name='bonknow_respons'),
+
+	path('mandara', views.Mandara.as_view(), name='mandara'),
 ]
