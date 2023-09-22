@@ -436,7 +436,7 @@ body {
 .wrapper-content-table-body-right {
 
     display: flex;
-    border-bottom: 1px solid #a0a1a4;
+    border-bottom: 2px solid #a0a1a4;
     gap: 5px;
     font-family: var(--font-text);
     text-align: center;
