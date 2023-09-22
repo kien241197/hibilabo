@@ -230,10 +230,10 @@ body {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 2px;
+    gap: 4px;
     background-color: #717276;
-    padding: 2px;
-    height: 740px;
+    padding: 4px;
+    height: 761px;
 }
 
 .wrapper-item-body-bottom-left {
@@ -244,7 +244,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 80px);
     align-content: stretch;
-    gap: 2px;
+    gap: 4px;
     background-color: #717276;
     /* grid-auto-rows: 80px; */
 }
@@ -336,6 +336,7 @@ body {
     text-align: center;
     letter-spacing: 0.1rem;
     z-index: 11;
+    color: #85878b;
 }
 
 .table-body-bottom-right {
@@ -422,14 +423,14 @@ body {
 
 .item-table-body-bottom-right {
 
-    border-top: 2px solid #717276;
-    border-left: 2px solid #717276;
-    border-right: 2px solid #717276;
+    border-top: 4px solid #717276;
+    border-left: 4px solid #717276;
+    border-right: 4px solid #717276;
 }
 
 .item-table-body-bottom-right:last-child {
 
-    border-bottom: 2px solid #717276;
+    border-bottom: 4px solid #717276;
 }
 
 .wrapper-content-table-body-right {
@@ -445,7 +446,7 @@ body {
 .order {
 
     width: 10%;
-    border-right: 1px solid #a0a1a4;
+    border-right: 2px solid #a0a1a4;
     text-align: center;
     font-family: var(--font-text);
     font-weight: normal;
@@ -453,10 +454,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
+    color: gray;
 }
 
 .title-order {
-    border-right: 1px solid #a0a1a4;
+    border-right: 2px solid #a0a1a4;
     padding-right: 10px;
     font-family: var(--font-text);
     font-weight: 700;
@@ -475,7 +478,7 @@ body {
 .content-table-body-right {
 
     width: 10%;
-    border-right: 1px solid #a0a1a4;
+    border-right: 2px solid #a0a1a4;
     font-family: var(--font-text);
     text-align: center;
     /* padding: 20px; */
@@ -492,6 +495,7 @@ body {
     font-weight: 700;
     padding: 30px;
     font-size: 75%;
+    letter-spacing: 0.1rem;
 }
 
 .wrapper-content-table-bottom-body-right {
@@ -700,8 +704,7 @@ body {
     }
 
     .body-bottom-left {
-
-        height: 650px;
+        height: 671px;
     }
 
     .wrapper-item-body-bottom-left {
@@ -766,8 +769,7 @@ body {
     }
 
     .body-bottom-left {
-
-        height: 605px;
+        height: 625px;
     }
 
     .title-body-bottom-right {
