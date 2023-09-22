@@ -15,8 +15,8 @@
 
 .body-top-left {
 
-    margin-right: 40px;
-    
+    margin-right: 10px;
+
 }
 
 .background-value-table {
@@ -73,46 +73,8 @@ body {
 
 }
 
-
-.menu {
-
-    letter-spacing: 2px;
-    color: #7b898c;
-    font: bold;
-    padding-left: 50px;
-    padding-right: 100px;
-    border-right: 2px solid #7b898c;
-}
-
-.item-menu {
-
-    display: flex;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.menu-next {
-
-    letter-spacing: 2px;
-    color: #7b898c;
-    font: bold;
-    padding-left: 50px;
-    padding-right: 50px;
-    border-right: 2px solid #7b898c;
-}
-
-.name {
-
-    color: #111315;
-    letter-spacing: 5px;
-    text-align: right;
-    margin-left: 10px;
-    font-family: var(--font-content);
-    font-weight: 700;
-}
-
 .wrapper-body {
-    padding: 15px 35px 15px 35px;
+    /* padding: 15px 35px 15px 35px; */
 }
 
 .body-top {
@@ -124,7 +86,7 @@ body {
 }
 
 .text-title {
-    font-size: 230%;
+    font-size: 170%;
     color: #85878b;
     font-weight: 600;
     font-family: var(--font-text);
@@ -134,6 +96,7 @@ body {
     letter-spacing: 0.1em;
     margin-block-start: unset !important;
     margin-bottom: 20px;
+
 }
 
 .content-title {
@@ -158,6 +121,8 @@ body {
     font-weight: 600;
     margin-block-start: unset !important;
     text-align: center;
+    word-break: keep-all;
+    font-size: 90%;
 }
 
 .item-body-center {
@@ -171,8 +136,8 @@ body {
 
     border-radius: 50%;
     border: none;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     font-family: var(--font-text);
     font-weight: 600;
     cursor: pointer;
@@ -191,6 +156,7 @@ body {
     letter-spacing: 0.3rem;
     font-weight: 600;
     margin-block-start: unset !important;
+    font-size: 90%;
 }
 
 .item-select {
@@ -205,17 +171,17 @@ body {
     width: 150px;
     height: unset;
     border-radius: 5px;
-    background-image: url(../img/icon.png);
-    background-position: right 5px top 50%;
-    background-size: 20px;
+    /* background-image: url(../img/icon.png); */
+    /* background-position: right 5px top 50%; */
+    /* background-size: 20px; */
     padding-left: 5px;
     border: none;
-    appearance: none;
-    background-repeat: no-repeat;
+    /* appearance: none; */
+    /* background-repeat: no-repeat; */
     letter-spacing: 0.1em;
     font-family: var(--font-content);
     font-weight: 700;
-    padding: 5px;
+    padding: 3px;
 }
 
 .button {
@@ -230,10 +196,11 @@ body {
     letter-spacing: 0.1em;
     font-family: var(--font-content);
     font-weight: 700;
+    word-break: keep-all;
 }
 
 .to {
-    font-size: 150%;
+    font-size: 100%;
     color: #9fa0a0;
     margin-block: unset !important;
 }
@@ -257,9 +224,11 @@ body {
     grid-column: span 9;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 2px;
     background-color: #717276;
-    padding: 2px
+    padding: 2px;
+    height: 740px;
 }
 
 .wrapper-item-body-bottom-left {
@@ -268,8 +237,11 @@ body {
     grid-column: span 3;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 80px);
+    align-content: stretch;
     gap: 2px;
     background-color: #717276;
+    /* grid-auto-rows: 80px; */
 }
 
 .body-bottom-right {
@@ -281,6 +253,7 @@ body {
 
     display: grid;
     grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 3px;
     background-color: #717276;
     padding: 3px;
@@ -295,9 +268,10 @@ body {
     grid-column: auto;
     padding-top: 10px;
     padding-bottom: 10px;
-    justify-content: center;
+    /* justify-content: center; */
     cursor: pointer;
-    min-height: 100px;
+    /* min-height: 80px;
+    max-height: 80px; */
     overflow: hidden;
     gap: 10px;
 }
@@ -314,7 +288,8 @@ body {
     padding-bottom: 10px;
     justify-content: center;
     cursor: pointer;
-    min-height: 100px;
+    /* min-height: 80px;
+    max-height: 80px; */
     overflow: hidden;
 }
 
@@ -332,6 +307,7 @@ body {
     word-wrap: break-word;
     text-align: center;
     letter-spacing: 0.3rem;
+    min-height: 25px;
 }
 
 .value-table-score p {
@@ -383,11 +359,11 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 50px;
+    padding: 20px;
 }
 
 .mycanvas {
-   
+
     width: 100% !important;
     height: 100% !important;
     object-fit: contain;
@@ -434,53 +410,71 @@ body {
 
     display: flex;
     border-bottom: 1px solid #a0a1a4;
-    gap: 10px;
+    gap: 5px;
     font-family: var(--font-text);
+    text-align: center;
 }
 
 .order {
 
-    width: 20px;
+    width: 10%;
     border-right: 1px solid #a0a1a4;
     text-align: center;
     font-family: var(--font-text);
+    font-weight: 600;
 }
 
 .title-order {
     border-right: 1px solid #a0a1a4;
     padding-right: 10px;
     font-family: var(--font-text);
+    font-weight: 600;
+}
+
+.title-order-right {
+    font-family: var(--font-text);
+    font-weight: 600;
 }
 
 .content-table-body-right {
 
-    width: 20px;
+    width: 10%;
     border-right: 1px solid #a0a1a4;
     font-family: var(--font-text);
+    text-align: center;
+    /* padding: 20px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.content-table-body-right p {
+    transform: rotate(90deg);
+    white-space: nowrap;
+    margin-block: unset !important;
+    font-weight: 600;
+    padding: 30px
 }
 
 .wrapper-content-table-bottom-body-right {
 
     display: flex;
-    gap: 5px;
+    /* gap: 5px; */
     position: relative;
 }
 
 .desc-table-body-right {
 
     font-family: var(--font-content);
-    /* letter-spacing: 0.1rem;s */
-    font-weight: 600;
+    letter-spacing: 0.3rem;
+    /* font-weight: 600; */
     padding-top: 1rem;
+    width: 90%;
+    padding-left: 10px;
 }
 
-.課題解決 {
 
-    position: absolute;
-    top: 0;
-    left: 6px;
-    font-family: var(--font-text);
-}
 
 .value-score {
 
@@ -592,34 +586,20 @@ body {
         font-size: 70%;
     }
 
-    /* .mycanvas {
-
-        top: -102px;
-        left: -116px;
-    } */
-
     .title-body-bottom-right {
-        font-size: 150%;
+        font-size: 100%;
     }
 
-    .desc-table-body-right {
-
-        font-size: 70%;
-    }
-
-    .課題解決 {
-
-        font-size: 70%;
-    }
 }
 
 
 @media screen and (max-width: 1281px) {
 
     .wrapper-canvas {
-      
+
         padding: 30px;
     }
+
     .select {
         width: 110px;
         font-size: 80%;
@@ -661,6 +641,8 @@ body {
 
     .value-table p {
         font-size: 50%;
+        min-height: 15px;
+
     }
 
     .value-table-score p {
@@ -676,23 +658,6 @@ body {
         object-fit: contain;
     }
 
-    /* .mycanvas {
-        top: -97px;
-        left: -98px;
-    } */
-
-    /* .mycanvas {
-        width: 300% !important;
-        height: 300% !important;
-    } */
-
-    .desc-table-body-right {
-        font-size: 50%;
-    }
-
-    .課題解決 {
-        font-size: 55%;
-    }
 
     .wrapper-content-table-body-right div {
 
@@ -704,14 +669,35 @@ body {
         font-size: 70%;
         width: 45px;
     }
+
+    .body-bottom-left {
+
+        height: 650px;
+    }
+
+    .wrapper-item-body-bottom-left {
+
+        grid-template-rows: repeat(3, 70px);
+    }
+
+    .content-table-body-right p {
+
+        font-size: 70%;
+    }
+
+    .desc-table-body-right {
+
+        font-size: 70%;
+    }
 }
 
 @media screen and (max-width: 1098px) {
 
     .wrapper-canvas {
-      
+
         padding: 20px;
     }
+
     .mycanvas {
 
         top: -22px;
@@ -722,7 +708,7 @@ body {
     }
 
     .content-title {
-        font-size: 50%;
+        font-size: 70%;
     }
 
     .content-body-center {
@@ -730,11 +716,48 @@ body {
     }
 
     .title-center {
-        font-size: 50%;
+        font-size: 70%;
     }
 
     .title-content-body-left {
-        font-size: 50%;
+        font-size: 70%;
+    }
+
+    .value-score {
+        font-size: 150% !important;
+    }
+
+    .wrapper-item-body-bottom-left {
+
+        grid-template-rows: repeat(3, 65px);
+    }
+
+    .body-bottom-left {
+
+        height: 605px;
+    }
+
+    .value-table-score {
+
+        /* min-height: 65px;
+        max-height: 65px; */
+
+    }
+
+    .value-table {
+
+        /* min-height: 65px;
+        max-height: 65px; */
+    }
+
+    .value-table p {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        -webkit-line-clamp: 2;
+        min-height: 15px;
     }
 
     .select {
@@ -746,16 +769,38 @@ body {
 
         font-size: 50%;
     }
-
-    /* .mycanvas {
-        top: -125px;
-        left: -100px;
-        width: 350% !important;
-        height: 350% !important;
-    } */
 }
 
 @media screen and (max-width: 961px) {
+
+    .text-title {
+
+        margin-bottom: 10px;
+    }
+
+    .content-body-center {
+        gap: 5px;
+    }
+
+    .title-content-body-left {
+        font-size: 50%;
+    }
+
+    .title-center {
+        font-size: 50%;
+        word-break: unset;
+    }
+
+    .content-title {
+
+        font-size: 50%;
+        letter-spacing: 0.1rem;
+    }
+
+    .text-title {
+        font-size: 84%;
+    }
+
     .body-bottom-left {
         grid-column: span 12;
 
@@ -768,16 +813,18 @@ body {
 
     .value-table {
 
-        min-height: 60px;
+        /* min-height: 60px; */
     }
 
     .value-table-score {
 
-        min-height: 60px;
+        /* min-height: 60px; */
     }
 
     .value-table p {
         font-size: 40%;
+        min-height: 10px;
+
     }
 
     .value-table-score p {
@@ -799,27 +846,29 @@ body {
         font-size: 100%;
     }
 
+
+
     .select {
-        width: 90px;
-        font-size: 60%;
+        width: 75px;
+        font-size: 50%;
         background-size: 15px;
     }
 
     .to {
 
-        font-size: 100%;
+        font-size: 50%;
     }
 
     .choose {
-        width: 25px;
-        height: 25px;
-        font-size: 55%;
+        width: 20px;
+        height: 20px;
+        font-size: 50%;
     }
 
-    .body-top-left {
+    /* .body-top-left {
 
         width: 300px;
-    }
+    } */
 
     .title-body-bottom-right {
         font-size: 95%;
@@ -840,6 +889,10 @@ body {
     .name {
 
         font-size: 90%;
+    }
+
+    .wrapper-tab div {
+        width: 64px;
     }
 }
 
@@ -898,6 +951,9 @@ body {
 }
 
 @media screen and (max-width: 769px) {
+    .wrapper-tab div {
+        width: 64px;
+    }
 
     .mycanvas {
         top: -17px;
@@ -921,7 +977,7 @@ body {
 @media screen and (max-width: 640px) {
 
     .wrapper-canvas {
-      
+
         padding: 5px;
     }
 
@@ -933,15 +989,60 @@ body {
         font-size: 40%;
     }
 
-    /* .mycanvas {
-        top: -166px;
-        left: -106px;
-        width: 450% !important;
-        height: 450% !important;
-    } */
+    .body-top {
+
+        position: relative;
+        margin-bottom: unset;
+    }
+
+    .body-top-left {
+        margin-right: 0px;
+    }
+
+    .content-title {
+
+        position: absolute;
+        bottom: 15px;
+    }
+
+    .title-center {
+        font-size: 30%;
+        word-break: unset;
+    }
+
+    .title-content-body-left {
+        font-size: 25%;
+        margin-bottom: 25px;
+    }
+
+    .select {
+        width: 60px;
+        font-size: 30%;
+        background-size: 10px;
+    }
+
+    .text-title {
+        font-size: 60%;
+    }
+
+    .to {
+        font-size: 40%;
+    }
+
+    .content-body-center {
+        margin-right: 10px;
+    }
+
+    .button {
+        font-size: 30%;
+    }
 }
 
-@media screen and (max-width: 481px) {
+@media screen and (max-width: 480px) {
+
+    .wrapper-canvas {
+        top: -35px;
+    }
 
     .choose {
 
@@ -972,30 +1073,13 @@ body {
     /* .value-table span {
         font-size: 30% !important;
     } */
-    .wrapper-body {
-        padding: 15px 15px 15px 15px;
+
+    .content-title {
+        bottom: 5px;
     }
 
-    .body-top {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .body-top-left {
-        grid-column: span 4;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .content-body-center {
-        grid-column: span 4;
-        margin-bottom: 20px;
-        gap: 20px;
-    }
-
-    .content-body-right {
-        grid-column: span 4;
-
+    .title-center {
+        word-break: break-word;
     }
 
     .desc h2 {
@@ -1018,6 +1102,10 @@ body {
         padding-right: 30px;
     }
 
+    .item-select {
+        margin-bottom: 20px;
+    }
+
     .item-menu h2 {
         font-size: 50%;
     }
@@ -1032,6 +1120,7 @@ body {
     .title-content-body-left {
 
         padding-left: 5px;
+        margin-bottom: 25px;
     }
 
     .mycanvas {
@@ -1047,7 +1136,10 @@ body {
 }
 
 @media screen and (max-width: 385px) {
+    .title-content-body-left {
 
+        margin-bottom: 37px;
+    }
     .menu-next {
         padding-left: 20px;
         padding-right: 20px;
@@ -1079,5 +1171,86 @@ body {
 
     .value-table-score span {
         font-size: 50%;
+    }
+
+    .wrapper-item-body-bottom-left {
+        grid-template-rows: repeat(3, 40px);
+    }
+
+    .value-table p {
+        min-height: 7px;
+    }
+
+    .body-bottom-left {
+        height: 380px;
+    }
+
+    .wrapper-canvas {
+        top: -22px;
+    }
+}
+
+@media print {
+    .body-bottom-left {
+        grid-column: span 9;
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        background-color: #000;
+        padding: 2px;
+        height: 640px;
+        gap: unset;
+
+    }
+
+    .wrapper-item-body-bottom-left {
+        position: relative;
+        grid-column: span 3;
+        display: grid;
+        gap: unset;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 80px);
+        align-content: stretch;
+        background-color: #000;
+    }
+
+    .choose {
+        border: 1px solid #f2f2f2;
+    }
+
+    .value-table {
+        border: 1px solid #717276;
+    }
+
+    .value-table-score {
+        border: 1px solid #717276;
+    }
+
+    .title-center {
+
+        word-break: unset;
+    }
+
+    .select {
+
+        width: 120px;
+    }
+
+    .button {
+
+        display: none;
+    }
+
+    .text-title {
+        background-color: #000;
+        padding: unset;
+    }
+
+    .wrapper-tab div {
+
+        width: 60px;
+        border-top: 1px solid rgb(113, 114, 118);
+        border-left: 1px solid rgb(113, 114, 118);
+        border-right: 1px solid rgb(113, 114, 118);
     }
 }

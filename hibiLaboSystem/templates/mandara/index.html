@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 {% load static %}
 <link rel="stylesheet" href="{% static '/css/mandara.css' %}">
-<script src="{% static 'js/mandarachart.js' %}"></script>
+
 
 {% endblock %}
 
@@ -22,445 +22,445 @@
     <section class="site-feedback pd-main">
         <div class="container-fluid">
             <div class="row">
-              <div class="container">
-                <div class="wrapper-body">
-                    <div class="body-top">
-                        <div class="body-top-left">
-                            <h2 class="text-title">MANDARA CHART</h2>
-                            <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
-                        </div>
-                        <div class="content-body-center">
-                            <div class="item-body-center">
-                                <p class="title-center">目標入力</p>
-                                <button class="choose">1</button>
+                <div class="container">
+                    <div class="wrapper-body">
+                        <div class="body-top">
+                            <div class="body-top-left">
+                                <h2 class="text-title">MANDARA CHART</h2>
+                                <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                             </div>
-                            <div class="item-body-center">
-                                <p class="title-center">日々検証</p>
-                                <button class="choose">2</button>
-                            </div>
-                            <div class="item-body-center">
-                                <p class="title-center">月間検証</p>
-                                <button class="choose">3</button>
-                            </div>
-                            <div class="item-body-center">
-                                <p class="title-center">個人推移</p>
-                                <button class="choose">4</button>
-                            </div>
-                        </div>
-                        <div class="content-body-right">
-                            <p class="title-content-body-left">目標期間設定</p>
-                            <div class="item-select">
-                                <select class="select" name="" id="">
-                                    <option value="">2023年3月</option>
-                                </select>
-                                <p class="to">～</p>
-                                <select class="select" name="" id="">
-                                    <option value="">2023年9月</option>
-                                </select>
-                                <button class="button">表示</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="body-bottom">
-                        <div class="body-bottom-left">
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table" id="value-table-1">
-                                    <p>体のケア</p>
-                                    <span id="value-1">3</span>
+                            <div class="content-body-center">
+                                <div class="item-body-center">
+                                    <p class="title-center">目標入力</p>
+                                    <button class="choose">1</button>
                                 </div>
-                                <div class="value-table" id="value-table-2">
-                                    <p>サプリメント</p>
-                                    <span id="value-2">2</span>
+                                <div class="item-body-center">
+                                    <p class="title-center">日々検証</p>
+                                    <button class="choose">2</button>
                                 </div>
-                                <div class="value-table" id="value-table-3">
-                                    <p>FSQ</p>
-                                    <span>2</span>
+                                <div class="item-body-center">
+                                    <p class="title-center">月間検証</p>
+                                    <button class="choose">3</button>
                                 </div>
-                                <div class="value-table">
-                                    <p>柔軟性</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">14</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-                                </div>
-                                <div class="value-table">
-                                    <p>RSQ</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>スタミナ</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>可動性</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>食事</p>
-                                    <span>2</span>
+                                <div class="item-body-center">
+                                    <p class="title-center">個人推移</p>
+                                    <button class="choose">4</button>
                                 </div>
                             </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table" id="value-table-4">
-                                    <p>体幹強化</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table" id="value-table-5">
-                                    <p>軸をぶらさない</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table" id="value-table-6">
-                                    <p>角度をつける</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>リリースポイント安定</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">20</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-        
-                                </div>
-                                <div class="value-table">
-                                    <p>不安をなくす</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>下肢の強化</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>体を開かない</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>メンタルコントロール</p>
-                                    <span>2</span>
-                                </div>
-                            </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table" id="value-table-7">
-                                    <p>角度をつける</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table" id="value-table-8">
-                                    <p>ボールをたたく</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table" id="value-table-9">
-                                    <p>リストの強化</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>力まない</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">20</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas3" class="mycanvas" width="148" height="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-                                </div>
-                                <div class="value-table">
-                                    <p>下半身主導</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>ボールを軸でリリース</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>回転数アップ</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>可動域</p>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table">
-                                    <p>はっきりと <br>
-                                        した目標 <br>
-                                        目的を持つ</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>一喜一憂 <br>
-                                        しない</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>頭は冷静に <br>
-                                        心は熱く</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>ピンチに <br>
-                                        強い</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">23</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-        
-                                </div>
-                                <div class="value-table">
-                                    <p>雰囲気に <br>
-                                        流されない</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>波を <br>
-                                        つくらない</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>勝利への <br>
-                                        執念</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>仲間を <br>
-                                        思いやる心</p>
-                                    <span>2</span>
-                                </div>
-                            </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score">体づくり</p>
-                                    <span class="value-score">14</span>
-                                </div>
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score">コントール</p>
-                                    <span class="value-score">20</span>
-                                </div>
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score">キレ</p>
-                                    <span class="value-score">20</span>
-                                </div>
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score">メンタル</p>
-                                    <span class="value-score">23</span>
-                                </div>
-                                <div class="value-table-score SCORE-MAIN">
-                                    <p class="title-main-score">1年後の目標</p>
-                                    <span class="value-score">188</span>
-                                </div>
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score">スピード</p>
-                                    <p class="title-main-score-next"> 160km/h</p>
-                                    <span class="value-score">33</span>
-                                </div>
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score f1年後の目標">人間性</p>
-                                    <span class="value-score">30</span>
-                                </div>
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score">運</p>
-                                    <span class="value-score">28</span>
-                                </div>
-                                <div class="value-table-score SCORE-text">
-                                    <p class="title-main-score">変化球</p>
-                                    <span class="value-score">20</span>
-                                </div>
-                            </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table">
-                                    <p>軸でまわる</p>
-                                    <span>5</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>下肢の強化</p>
-                                    <span>5</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>体重増加</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>体幹強化</p>
-                                    <span>5</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">33</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas5" class="mycanvas" width="148" height="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-        
-                                </div>
-                                <div class="value-table">
-                                    <p>肩周りの強化</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>可動域</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>ライナーキャッチボール</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>ピッチングを増やす</p>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table">
-                                    <p>感性</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>愛される <br>
-                                        人間</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>計画性</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>思いやり</p>
-                                    <span>5</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">3</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-        
-                                </div>
-                                <div class="value-table">
-                                    <p>感謝</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>礼儀</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>信頼される <br>
-                                        人間</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>継続力</p>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table">
-                                    <p>あいさつ</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>ゴミ拾い</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>部屋掃除</p>
-                                    <span>1</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>道具を <br>
-                                        大切に使う</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">28</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-        
-                                </div>
-                                <div class="value-table">
-                                    <p>審判さんへの <br>
-                                        態度</p>
-                                    <span>5</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>プラス思考</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>応援される <br>
-                                        人間になる</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>本を読む</p>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class="wrapper-item-body-bottom-left">
-                                <div class="value-table">
-                                    <p>カウントボールを増やす</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>フォーク完成</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>スライダーのキレ</p>
-                                    <span>4</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>遅く落差のあるカーブ</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table-score SCORE">
-                                    <p>SCORE</p>
-                                    <span class="value-score">20</span>
-                                    <div class="wrapper-canvas">
-                                        <canvas id="mycanvas8" class="mycanvas" width="148" height="148"
-                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                    </div>
-        
-                                </div>
-                                <div class="value-table">
-                                    <p>左打者への決め球</p>
-                                    <span>2</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>ストレートと同じフォーム</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>ストライクからボールに
-                                        投げるコントロール</p>
-                                    <span>3</span>
-                                </div>
-                                <div class="value-table">
-                                    <p>奥行きのイメージ</p>
-                                    <span>3</span>
+                            <div class="content-body-right">
+                                <p class="title-content-body-left">目標期間設定</p>
+                                <div class="item-select">
+                                    <select class="select" name="" id="">
+                                        <option value="">2023年3月</option>
+                                    </select>
+                                    <p class="to">～</p>
+                                    <select class="select" name="" id="">
+                                        <option value="">2023年9月</option>
+                                    </select>
+                                    <button class="button">表示</button>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="body-bottom-left">
+                        <div class="body-bottom">
+                            <div class="body-bottom-left">
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table" id="value-table-1">
+                                        <p>体のケア</p>
+                                        <span id="value-1">3</span>
+                                    </div>
+                                    <div class="value-table" id="value-table-2">
+                                        <p>サプリメント</p>
+                                        <span id="value-2">2</span>
+                                    </div>
+                                    <div class="value-table" id="value-table-3">
+                                        <p>FSQ</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>柔軟性</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">14</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>RSQ</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>スタミナ</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>可動性</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>食事</p>
+                                        <span>2</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table" id="value-table-4">
+                                        <p>体幹強化</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table" id="value-table-5">
+                                        <p>軸をぶらさない</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table" id="value-table-6">
+                                        <p>角度をつける</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>リリースポイント安定</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">20</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+
+                                    </div>
+                                    <div class="value-table">
+                                        <p>不安をなくす</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>下肢の強化</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>体を開かない</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>メンタルコントロール</p>
+                                        <span>2</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table" id="value-table-7">
+                                        <p>角度をつける</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table" id="value-table-8">
+                                        <p>ボールをたたく</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table" id="value-table-9">
+                                        <p>リストの強化</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>力まない</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">20</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas3" class="mycanvas" width="148" height="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>下半身主導</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>ボールを軸でリリース</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>回転数アップ</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>可動域</p>
+                                        <span>3</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table">
+                                        <p>はっきりと <br>
+                                            した目標 <br>
+                                            目的を持つ</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>一喜一憂 <br>
+                                            しない</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>頭は冷静に <br>
+                                            心は熱く</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>ピンチに <br>
+                                            強い</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">23</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+
+                                    </div>
+                                    <div class="value-table">
+                                        <p>雰囲気に <br>
+                                            流されない</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>波を <br>
+                                            つくらない</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>勝利への <br>
+                                            執念</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>仲間を <br>
+                                            思いやる心</p>
+                                        <span>2</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score">体づくり</p>
+                                        <span class="value-score">14</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score">コントール</p>
+                                        <span class="value-score">20</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score">キレ</p>
+                                        <span class="value-score">20</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score">メンタル</p>
+                                        <span class="value-score">23</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-MAIN">
+                                        <p class="title-main-score">1年後の目標</p>
+                                        <span class="value-score">188</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score">スピード</p>
+                                        <p class="title-main-score-next"> 160km/h</p>
+                                        <span class="value-score">33</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score f1年後の目標">人間性</p>
+                                        <span class="value-score">30</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score">運</p>
+                                        <span class="value-score">28</span>
+                                    </div>
+                                    <div class="value-table-score SCORE-text">
+                                        <p class="title-main-score">変化球</p>
+                                        <span class="value-score">20</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table">
+                                        <p>軸でまわる</p>
+                                        <span>5</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>下肢の強化</p>
+                                        <span>5</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>体重増加</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>体幹強化</p>
+                                        <span>5</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">33</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas5" class="mycanvas" width="148" height="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+
+                                    </div>
+                                    <div class="value-table">
+                                        <p>肩周りの強化</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>可動域</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>ライナーキャッチボール</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>ピッチングを増やす</p>
+                                        <span>3</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table">
+                                        <p>感性</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>愛される <br>
+                                            人間</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>計画性</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>思いやり</p>
+                                        <span>5</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">3</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+
+                                    </div>
+                                    <div class="value-table">
+                                        <p>感謝</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>礼儀</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>信頼される <br>
+                                            人間</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>継続力</p>
+                                        <span>3</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table">
+                                        <p>あいさつ</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>ゴミ拾い</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>部屋掃除</p>
+                                        <span>1</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>道具を <br>
+                                            大切に使う</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">28</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+
+                                    </div>
+                                    <div class="value-table">
+                                        <p>審判さんへの <br>
+                                            態度</p>
+                                        <span>5</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>プラス思考</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>応援される <br>
+                                            人間になる</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>本を読む</p>
+                                        <span>3</span>
+                                    </div>
+                                </div>
+                                <div class="wrapper-item-body-bottom-left">
+                                    <div class="value-table">
+                                        <p>カウントボールを増やす</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>フォーク完成</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>スライダーのキレ</p>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>遅く落差のあるカーブ</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table-score SCORE">
+                                        <p>SCORE</p>
+                                        <span class="value-score">20</span>
+                                        <div class="wrapper-canvas">
+                                            <canvas id="mycanvas8" class="mycanvas" width="148" height="148"
+                                                style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                        </div>
+
+                                    </div>
+                                    <div class="value-table">
+                                        <p>左打者への決め球</p>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>ストレートと同じフォーム</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>ストライクからボールに
+                                            投げるコントロール</p>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="value-table">
+                                        <p>奥行きのイメージ</p>
+                                        <span>3</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="body-bottom-left">
                             <div class="table-content-left">
                                 <div class="value-table" id="value-table-1">
                                     <p>体のケア</p>
@@ -830,1057 +830,1090 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="body-bottom-right">
-                            <div class="wrapper-title-body-bottom-right">
-                                <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
-                            </div>
-                            <div class="table-body-bottom-right">
-                                <div class="wrapper-tab">
-                                    <div class="tab tab1">Tab 1</div>
-                                    <div class="tab tab2">Tab 2</div>
+                            <div class="body-bottom-right">
+                                <div class="wrapper-title-body-bottom-right">
+                                    <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
                                 </div>
-                                <div class="wrapper-item-table-body-bottom-right-tab-1">
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">A</div>
-                                            <div class="title-order">キーワード</div>
-                                            <div>運</div>
+                                <div class="table-body-bottom-right">
+                                    <div class="wrapper-tab">
+                                        <div class="tab tab1">Tab 1</div>
+                                        <div class="tab tab2">Tab 2</div>
+                                    </div>
+                                    <div class="wrapper-item-table-body-bottom-right-tab-1">
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">A</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">運</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
                                         </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <!-- <span class="課題解決">課題解決</span> -->
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">B</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">メンタル</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">C</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">コントール</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">D</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">スピード160km/h</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">E</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">人間性</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">F</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">体づくり</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">G</div>
+                                                <div class="title-order">キレ</div>
+                                                <div class="title-order-right">運</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">H</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">変化球</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">B</div>
-                                            <div class="title-order">キーワード</div>
-                                            <div>メンタル</div>
-                                        </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <span class="課題解決">課題解決</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">C</div>
-                                            <div class="title-order">キーワード</div>
-                                            <div>コントール</div>
-                                        </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <span class="課題解決">課題解決</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">D</div>
-                                            <div class="title-order">キーワード</div>
-                                            <div>スピード160km/h</div>
-                                        </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <span class="課題解決">課題解決</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">E</div>
-                                            <div class="title-order">キーワード</div>
-                                            <div>人間性</div>
-                                        </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <span class="課題解決">課題解決</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">F</div>
-                                            <div class="title-order">キーワード</div>
-                                            <div>体づくり</div>
-                                        </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <span class="課題解決">課題解決</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">G</div>
-                                            <div class="title-order">キレ</div>
-                                            <div>運</div>
-                                        </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <span class="課題解決">課題解決</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-table-body-bottom-right">
-                                        <div class="wrapper-content-table-body-right">
-                                            <div class="order">H</div>
-                                            <div class="title-order">キーワード</div>
-                                            <div>変化球</div>
-                                        </div>
-                                        <div class="wrapper-content-table-bottom-body-right">
-                                            <div class="content-table-body-right"></div>
-                                            <p class="desc-table-body-right">
-                                                記述記述記述記述記述記述記述記述記述
-                                            </p>
-                                            <span class="課題解決">課題解決</span>
+                                    <div class="wrapper-item-table-body-bottom-right-tab-2">
+                                        <div class="item-table-body-bottom-right item-table-body-bottom-right-tab-2">
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas9" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas10" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas11" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas12" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas13" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas14" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas15" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <canvas id="mycanvas16" width="100%" height="100%"
+                                                    class="mycanvas-tab"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="wrapper-item-table-body-bottom-right-tab-2">
-                                    <div class="item-table-body-bottom-right item-table-body-bottom-right-tab-2">
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas9" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas10" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas11" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas12" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas13" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas14" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas15" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                        <div class="wrapper-mycanvas-tab">
-                                            <canvas id="mycanvas16" width="100%" height="100%" class="mycanvas-tab"></canvas>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
-              </div>
             </div>
         </div>
     </section>
 </main>
 
 <script>
-     Chart.register(ChartDataLabels);
+    Chart.register(ChartDataLabels);
 
-const mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [3, 2, 2, 2, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
+    const mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [3, 2, 2, 2, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd',
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    },
+                    gridLines: {
+                        color: "red",
 
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas2"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas2"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+
+            }]
         },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas3"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas4"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas3"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+
+            }]
         },
-        elements: {
-            line: {
-                borderWidth: 2,
+        options: {
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas5"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas6"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas4"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+
+            }]
         },
-        elements: {
-            line: {
-                borderWidth: 2,
+        options: {
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas7"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas8"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+        }
+    });
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
+    new Chart(document.getElementById("mycanvas5"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
 
-new Chart(document.getElementById("mycanvas9"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [3, 2, 2, 2, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        responsive: true,
-        aspectRatio: 1,
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
+            }]
+        },
+        options: {
 
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 1,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 1, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas10"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
+        }
+    });
 
-new Chart(document.getElementById("mycanvas11"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
+    new Chart(document.getElementById("mycanvas6"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
 
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+            }]
+        },
+        options: {
+
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas12"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+        }
+    });
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
+    new Chart(document.getElementById("mycanvas7"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
 
-new Chart(document.getElementById("mycanvas13"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
+            }]
+        },
+        options: {
 
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas14"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
-
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 1,
+        }
+    });
 
-            },
-            point: {
-                radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 1, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
+    new Chart(document.getElementById("mycanvas8"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
 
-new Chart(document.getElementById("mycanvas15"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
+            }]
+        },
+        options: {
 
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 1,
+            elements: {
+                line: {
+                    borderWidth: 2,
 
-            },
-            point: {
-                radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 1, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-new Chart(document.getElementById("mycanvas16"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
                 },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
-
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
                 }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
             },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+            tooltips: {
+                enabled: false,
             },
-        },
-        elements: {
-            line: {
-                borderWidth: 1,
+        }
+    });
 
+    new Chart(document.getElementById("mycanvas9"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [3, 2, 2, 2, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 1,
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd',
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    },
+                    gridLines: {
+                        color: "red",
+
+                    }
+                }
             },
-            point: {
-                radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 1, // Độ rộng của viền hình tròn
-            }
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 1,
+
+                },
+                point: {
+                    radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 1, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas10"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+
+            }]
         },
-        tooltips: {
-            enabled: false,
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 2,
+                },
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas11"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+
+            }]
         },
-    }
-});
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 2,
+
+                },
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas12"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+
+            }]
+        },
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 2,
+
+                },
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas13"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+
+            }]
+        },
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd'
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 2,
+
+                },
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas14"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+            }]
+        },
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd',
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    },
+                    gridLines: {
+                        color: "red",
+
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 1,
+
+                },
+                point: {
+                    radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 1, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas15"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+            }]
+        },
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd',
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    },
+                    gridLines: {
+                        color: "red",
+
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 1,
+
+                },
+                point: {
+                    radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 1, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
+
+    new Chart(document.getElementById("mycanvas16"), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [65, 59, 90, 81, 56, 55, 40],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+            }]
+        },
+        options: {
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd',
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    },
+                    gridLines: {
+                        color: "red",
+
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 1,
+
+                },
+                point: {
+                    radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 1, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+        }
+    });
 </script>
+<script src="{% static 'js/mandarachart.js' %}"></script>
 {% endblock %}
