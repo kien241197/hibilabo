@@ -795,7 +795,7 @@ body {
         text-overflow: ellipsis;
         white-space: normal;
         -webkit-line-clamp: 2;
-        min-height: 15px;
+        min-height: 16px;
     }
 
     .select {
