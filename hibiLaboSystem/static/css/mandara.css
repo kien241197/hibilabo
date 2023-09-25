@@ -575,6 +575,9 @@ body {
     font-family: var(--font-text);
     font-size: 75%;
     font-weight: 700;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
 
 }
 
@@ -583,11 +586,11 @@ body {
     background-color: #0DC5CE;
 }
 
-.wrapper-tab div:last-child {
+/* .wrapper-tab div:last-child {
 
     border-top-right-radius: 10px;
     border-left: none;
-}
+} */
 
 .table-body-bottom-rightdiv:last-child {
 
