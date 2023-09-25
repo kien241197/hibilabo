@@ -6,8 +6,8 @@ valueElements.forEach((element) => {
         // const spanElemen
         // spanElement.textContent = parseInt(spanElement.textContent) + 1;
         element.classList.add('background-value-table');
-
-
+        let child = element.querySelectorAll('span');
+        $(child[0]).text(Number($(child[0]).text()) + 1)
     });
 });
 
