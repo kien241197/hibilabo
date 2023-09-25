@@ -160,7 +160,7 @@ body {
 
 .title-content-body-left {
 
-    font-family: var(--font-text);
+    font-family: var(--font-content);
     letter-spacing: 0.3rem;
     font-weight: 700;
     margin-block-start: unset !important;
