@@ -39,7 +39,7 @@
 
 .background-tab-active {
 
-    background-color: #0DC5CE;
+    background-color: #0DC5CE !important;
 
 }
 
@@ -80,9 +80,7 @@ body {
 
 }
 
-.wrapper-body {
-    /* padding: 15px 35px 15px 35px; */
-}
+
 
 .body-top {
 
@@ -871,16 +869,6 @@ body {
     .body-bottom-right {
         grid-column: span 12;
 
-    }
-
-    .value-table {
-
-        /* min-height: 60px; */
-    }
-
-    .value-table-score {
-
-        /* min-height: 60px; */
     }
 
     .value-table p {
