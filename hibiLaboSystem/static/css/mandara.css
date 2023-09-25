@@ -279,6 +279,7 @@ body {
     max-height: 80px; */
     overflow: hidden;
     gap: 10px;
+    transition: ease 0.3s;
 }
 
 .value-table-score {
@@ -298,9 +299,11 @@ body {
     overflow: hidden;
 }
 
-.value-table:active {
+.value-table:hover {
 
+    transition: ease 0.3s;
     background-color: #e2db9d;
+    
 }
 
 .value-table p {
@@ -513,6 +516,7 @@ body {
     padding-top: 1rem;
     width: 90%;
     padding-left: 10px;
+    z-index: 10;
 }
 
 
@@ -1289,6 +1293,17 @@ body {
 }
 
 @media print {
+
+    .value-score {
+
+        color: white !important;
+    }
+
+    .body-top-left {
+
+        width: 350px;
+    }
+    
     .body-bottom-left {
         grid-column: span 9;
         display: grid;
@@ -1340,7 +1355,6 @@ body {
     }
 
     .text-title {
-        background-color: #000;
         padding: unset;
     }
 
