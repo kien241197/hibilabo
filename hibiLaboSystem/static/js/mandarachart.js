@@ -4,8 +4,6 @@ valueElements.forEach((element) => {
     element.classList.add("true")
     element.addEventListener('click', () => {
 
-        // const spanElemen 
-        // spanElement.textContent = parseInt(spanElement.textContent) + 1;
         element.classList.add('background-value-table');
 
         let child = element.querySelectorAll('span');
@@ -157,6 +155,7 @@ valueTab2.addEventListener('click', () => {
 
 const choose = document.querySelectorAll(".choose");
 choose[0].classList.add('background-tab-active')
+choose[0].classList.add('color-print')
 choose.forEach((element, index) => {
     element.addEventListener("click", function () {
 
@@ -166,9 +165,11 @@ choose.forEach((element, index) => {
             if (index !== count) {
 
                 item.classList.remove('background-tab-active')
+                item.classList.remove('color-print')
             }
         })
         element.classList.add('background-tab-active')
+        element.classList.add('color-print')
     })
 })
 console.log(window.innerWidth)
