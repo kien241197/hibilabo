@@ -303,7 +303,7 @@ body {
 
     transition: ease 0.3s;
     background-color: #e2db9d;
-    
+
 }
 
 .value-table p {
@@ -364,7 +364,7 @@ body {
     font-weight: 700;
     font-family: var(--font-content);
     z-index: 11;
-    color: #85878b;
+    color: #717276;
 }
 
 .SCORE {
@@ -536,6 +536,7 @@ body {
     background-color: #e7e7e8;
     position: absolute;
     top: 0;
+    color: unset !important;
 }
 
 .title-main-score-next {
@@ -544,6 +545,7 @@ body {
     background-color: unset;
     position: absolute;
     top: 12px;
+    color: unset !important;
 }
 
 .wrapper-tab {
@@ -1303,7 +1305,7 @@ body {
 
         width: 350px;
     }
-    
+
     .body-bottom-left {
         grid-column: span 9;
         display: grid;

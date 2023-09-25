@@ -2,7 +2,6 @@
 const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element) => {
     element.classList.add("true")
-
     element.addEventListener('click', () => {
 
         // const spanElemen 
@@ -13,7 +12,7 @@ valueElements.forEach((element) => {
 
         const group1 = element.classList.contains("group1");
         const checkStatus = element.classList.contains("true");
-        console.log("checkStatus", checkStatus)
+
         let array = [];
         if (checkStatus) {
 
