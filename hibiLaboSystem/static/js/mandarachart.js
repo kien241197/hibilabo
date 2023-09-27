@@ -617,7 +617,7 @@ var mycanvas10 = new Chart(document.getElementById("mycanvas10"), {
     }
 });
 
-var mycanvas11 =new Chart(document.getElementById("mycanvas11"), {
+var mycanvas11 = new Chart(document.getElementById("mycanvas11"), {
     type: 'radar',
     data: {
         labels: ['', '', '', '', '', '', '', ''],
@@ -965,7 +965,6 @@ valueElements.forEach((element) => {
         const group1 = element.classList.contains("group1");
         const checkStatus = element.classList.contains("true");
 
-        let array = [];
         if (checkStatus) {
 
             $(child[0]).text(Number($(child[0]).text()) + 1);
@@ -987,7 +986,6 @@ valueElements.forEach((element) => {
             valueScoreMain.textContent = textContent;
 
 
-            array.push(textContent);
             const group = document.querySelectorAll('.value-group-1');
             let newArray = [];
             group.forEach(item => {
@@ -1124,7 +1122,6 @@ valueElements.forEach((element) => {
             const valueScoreMain = document.querySelectorAll(".value-score")[5];
             valueScoreMain.textContent = textContent;
 
-            array.push(textContent);
 
             const group = document.querySelectorAll('.value-group-2');
             let newArray = [];
@@ -1263,7 +1260,6 @@ valueElements.forEach((element) => {
             const valueScoreMain = document.querySelectorAll(".value-score")[6];
             valueScoreMain.textContent = textContent;
 
-            array.push(textContent);
 
             const group = document.querySelectorAll('.value-group-3');
             let newArray = [];
@@ -1401,7 +1397,6 @@ valueElements.forEach((element) => {
             const valueScoreMain = document.querySelectorAll(".value-score")[7];
             valueScoreMain.textContent = textContent;
 
-            array.push(textContent);
 
             const group = document.querySelectorAll('.value-group-4');
             let newArray = [];
@@ -1539,7 +1534,6 @@ valueElements.forEach((element) => {
             const valueScoreMain = document.querySelectorAll(".value-score")[9];
             valueScoreMain.textContent = textContent;
 
-            array.push(textContent);
 
             const group = document.querySelectorAll('.value-group-5');
             let newArray = [];
@@ -1677,9 +1671,8 @@ valueElements.forEach((element) => {
             const valueScoreMain = document.querySelectorAll(".value-score")[10];
             valueScoreMain.textContent = textContent;
 
-            array.push(textContent);
 
-            
+
             const group = document.querySelectorAll('.value-group-6');
             let newArray = [];
             group.forEach(item => {
@@ -1816,7 +1809,6 @@ valueElements.forEach((element) => {
             const valueScoreMain = document.querySelectorAll(".value-score")[11];
             valueScoreMain.textContent = textContent;
 
-            array.push(textContent);
 
             const group = document.querySelectorAll('.value-group-7');
             let newArray = [];
@@ -1954,7 +1946,6 @@ valueElements.forEach((element) => {
             const valueScoreMain = document.querySelectorAll(".value-score")[12];
             valueScoreMain.textContent = textContent;
 
-            array.push(textContent);
 
             const group = document.querySelectorAll('.value-group-8');
             let newArray = [];
