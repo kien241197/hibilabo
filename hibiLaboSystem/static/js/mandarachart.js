@@ -1,5 +1,95 @@
 Chart.register(ChartDataLabels);
 
+function createCanvas(className, array) {
+    return new Chart(document.getElementById(className), {
+        type: 'radar',
+        data: {
+            labels: ['', '', '', '', '', '', '', ''],
+            datasets: [{
+                label: '',
+                data: [array[1], array[2], array[4], array[7], array[6], array[5], array[3], array[0]],
+                borderColor: "#e2db9d",
+                pointBackgroundColor: '#e2db9d',
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: { // https://www.chartjs.org/docs/latest/axes/radial/
+                    angleLines: {
+                        color: '#cbcccd'
+                    },
+                    grid: {
+                        color: '#cbcccd',
+                    },
+                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+                        color: 'white'
+                    },
+                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+                        color: 'none',
+                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+                    },
+                    gridLines: {
+                        color: "red",
+
+                    },
+                    min: 0,
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Ẩn chú thích (legend)
+                },
+                datalabels: {
+                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                },
+            },
+            elements: {
+                line: {
+                    borderWidth: 2,
+
+                },
+                point: {
+                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                    borderWidth: 2, // Độ rộng của viền hình tròn
+                }
+            },
+            tooltips: {
+                enabled: false,
+            },
+            r: {
+
+                //メモリ線
+                ticks: {
+                    display: false
+                },
+            }
+        }
+    });
+
+}
+
+function newArrayData(className) {
+
+    const group = document.querySelectorAll(className);
+    var newArray = [];
+    group.forEach(item => {
+
+        newArray.push(item.textContent);
+    })
+    return newArray;
+}
+
+function countValue(value1, value2) {
+
+    const valueScore = document.querySelectorAll(".value-score")[value1];
+    const textContent = parseInt(valueScore.textContent) + 1;
+    valueScore.textContent = textContent;
+
+    const valueScoreMain = document.querySelectorAll(".value-score")[value2];
+    valueScoreMain.textContent = textContent;
+}
+
 let arrayGroup1 = [];
 let arrayGroup2 = [];
 let arrayGroup3 = [];
@@ -57,923 +147,37 @@ group8.forEach(item => {
     arrayGroup8.push(item.textContent);
 })
 
+var mycanvas1 = createCanvas("mycanvas1", arrayGroup1);
 
-var mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup1[1], arrayGroup1[2], arrayGroup1[4], arrayGroup1[7], arrayGroup1[6], arrayGroup1[5], arrayGroup1[3], arrayGroup1[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
+var mycanvas2 = createCanvas("mycanvas2", arrayGroup2);
 
-                },
-                min: 0,
+var mycanvas3 = createCanvas("mycanvas3", arrayGroup3);
 
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+var mycanvas4 = createCanvas("mycanvas4", arrayGroup4);
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-        r: {
+var mycanvas5 = createCanvas("mycanvas5", arrayGroup5);
 
-            //メモリ線
-            ticks: {
-                display: false
-            },
-        }
-    }
-});
+var mycanvas6 = createCanvas("mycanvas6", arrayGroup6);
 
-var mycanvas2 = new Chart(document.getElementById("mycanvas2"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup2[1], arrayGroup2[2], arrayGroup2[4], arrayGroup2[7], arrayGroup2[6], arrayGroup2[5], arrayGroup2[3], arrayGroup2[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
+var mycanvas7 = createCanvas("mycanvas7", arrayGroup7);
 
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+var mycanvas8 = createCanvas("mycanvas8", arrayGroup8);
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
+var mycanvas9 = createCanvas("mycanvas9", arrayGroup1);
 
-var mycanvas3 = new Chart(document.getElementById("mycanvas3"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup3[1], arrayGroup3[2], arrayGroup3[4], arrayGroup3[7], arrayGroup3[6], arrayGroup3[5], arrayGroup3[3], arrayGroup3[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
+var mycanvas10 = createCanvas("mycanvas10", arrayGroup2);
 
-        }]
-    },
-    options: {
+var mycanvas11 = createCanvas("mycanvas11", arrayGroup3);
 
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
+var mycanvas12 = createCanvas("mycanvas12", arrayGroup4);
 
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
+var mycanvas13 = createCanvas("mycanvas13", arrayGroup5);
 
-var mycanvas4 = new Chart(document.getElementById("mycanvas4"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup4[1], arrayGroup4[2], arrayGroup4[4], arrayGroup4[7], arrayGroup4[6], arrayGroup4[5], arrayGroup4[3], arrayGroup4[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
+var mycanvas14 = createCanvas("mycanvas14", arrayGroup6);
 
-        }]
-    },
-    options: {
+var mycanvas15 = createCanvas("mycanvas15", arrayGroup7);
 
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas5 = new Chart(document.getElementById("mycanvas5"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup5[1], arrayGroup5[2], arrayGroup5[4], arrayGroup5[7], arrayGroup5[6], arrayGroup5[5], arrayGroup5[3], arrayGroup5[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas6 = new Chart(document.getElementById("mycanvas6"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup6[1], arrayGroup6[2], arrayGroup6[4], arrayGroup6[7], arrayGroup6[6], arrayGroup6[5], arrayGroup6[3], arrayGroup6[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0,
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas7 = new Chart(document.getElementById("mycanvas7"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup7[1], arrayGroup7[2], arrayGroup7[4], arrayGroup7[7], arrayGroup7[6], arrayGroup7[5], arrayGroup7[3], arrayGroup7[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas8 = new Chart(document.getElementById("mycanvas8"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup8[1], arrayGroup8[2], arrayGroup8[4], arrayGroup8[7], arrayGroup8[6], arrayGroup8[5], arrayGroup8[3], arrayGroup8[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas9 = new Chart(document.getElementById("mycanvas9"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            // data: [1,2,3,4,5,6,7,8],
-            data: [arrayGroup1[1], arrayGroup1[2], arrayGroup1[4], arrayGroup1[7], arrayGroup1[6], arrayGroup1[5], arrayGroup1[3], arrayGroup1[0]],
-
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        responsive: true,
-        aspectRatio: 1,
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
-
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas10 = new Chart(document.getElementById("mycanvas10"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup2[1], arrayGroup2[2], arrayGroup2[4], arrayGroup2[7], arrayGroup2[6], arrayGroup2[5], arrayGroup2[3], arrayGroup2[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas11 = new Chart(document.getElementById("mycanvas11"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup3[1], arrayGroup3[2], arrayGroup3[4], arrayGroup3[7], arrayGroup3[6], arrayGroup3[5], arrayGroup3[3], arrayGroup3[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas12 = new Chart(document.getElementById("mycanvas12"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup4[1], arrayGroup4[2], arrayGroup4[4], arrayGroup4[7], arrayGroup4[6], arrayGroup4[5], arrayGroup4[3], arrayGroup4[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas13 = new Chart(document.getElementById("mycanvas13"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup5[1], arrayGroup5[2], arrayGroup5[4], arrayGroup5[7], arrayGroup5[6], arrayGroup5[5], arrayGroup5[3], arrayGroup5[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd'
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas14 = new Chart(document.getElementById("mycanvas14"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup6[1], arrayGroup6[2], arrayGroup6[4], arrayGroup6[7], arrayGroup6[6], arrayGroup6[5], arrayGroup6[3], arrayGroup6[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
-
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas15 = new Chart(document.getElementById("mycanvas15"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup7[1], arrayGroup7[2], arrayGroup7[4], arrayGroup7[7], arrayGroup7[6], arrayGroup7[5], arrayGroup7[3], arrayGroup7[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
-
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
-
-var mycanvas16 = new Chart(document.getElementById("mycanvas16"), {
-    type: 'radar',
-    data: {
-        labels: ['', '', '', '', '', '', '', ''],
-        datasets: [{
-            label: '',
-            data: [arrayGroup8[1], arrayGroup8[2], arrayGroup8[4], arrayGroup8[7], arrayGroup8[6], arrayGroup8[5], arrayGroup8[3], arrayGroup8[0]],
-            borderColor: "#e2db9d",
-            pointBackgroundColor: '#e2db9d',
-        }]
-    },
-    options: {
-        scales: {
-            r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                angleLines: {
-                    color: '#cbcccd'
-                },
-                grid: {
-                    color: '#cbcccd',
-                },
-                pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                    color: 'white'
-                },
-                ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                    color: 'none',
-                    backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                },
-                gridLines: {
-                    color: "red",
-
-                },
-                min: 0
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ẩn chú thích (legend)
-            },
-            datalabels: {
-                display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-            },
-        },
-        elements: {
-            line: {
-                borderWidth: 2,
-
-            },
-            point: {
-                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 2, // Độ rộng của viền hình tròn
-            }
-        },
-        tooltips: {
-            enabled: false,
-        },
-    }
-});
+var mycanvas16 = createCanvas("mycanvas16", arrayGroup8);
 
 
 const valueElements = document.querySelectorAll('.value-table');
@@ -989,7 +193,7 @@ valueElements.forEach((element) => {
 
         const group1 = element.classList.contains("group1");
         const checkStatus = element.classList.contains("true");
-
+        
         if (checkStatus) {
 
             $(child[0]).text(Number($(child[0]).text()) + 1);
@@ -1002,1102 +206,115 @@ valueElements.forEach((element) => {
         }
 
         if (group1 && checkStatus) {
+
+            countValue(0, 4);
+
+            const newArray = newArrayData('.value-group-1');
+
             mycanvas1.destroy();
-            const valueScore = document.querySelectorAll(".value-score")[0];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            mycanvas1 = createCanvas("mycanvas1", newArray);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[4];
-            valueScoreMain.textContent = textContent;
-
-
-            const group = document.querySelectorAll('.value-group-1');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
-            mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
-
-            mycanvas9.destroy()
-            mycanvas9 = new Chart(document.getElementById("mycanvas9"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
-
+            mycanvas9.destroy();
+            mycanvas9 = createCanvas("mycanvas9", newArray);
         }
 
         const group2 = element.classList.contains("group2");
         if (group2 && checkStatus) {
 
-            const valueScore = document.querySelectorAll(".value-score")[1];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            countValue(1, 5);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[5];
-            valueScoreMain.textContent = textContent;
+            const newArray = newArrayData('.value-group-2');
 
+            mycanvas2.destroy();
+            mycanvas2 = createCanvas("mycanvas2", newArray);
 
-            const group = document.querySelectorAll('.value-group-2');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
-            mycanvas2.destroy()
-            mycanvas2 = new Chart(document.getElementById("mycanvas2"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
-
-            mycanvas10.destroy()
-            mycanvas10 = new Chart(document.getElementById("mycanvas10"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas10.destroy();
+            mycanvas10 = createCanvas("mycanvas10", newArray);
 
         }
 
         const group3 = element.classList.contains("group3");
         if (group3 && checkStatus) {
 
-            const valueScore = document.querySelectorAll(".value-score")[2];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            countValue(2, 6);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[6];
-            valueScoreMain.textContent = textContent;
+            const newArray = newArrayData('.value-group-3');
 
-
-            const group = document.querySelectorAll('.value-group-3');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas3.destroy()
-            mycanvas3 = new Chart(document.getElementById("mycanvas3"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas3 = createCanvas("mycanvas3", newArray)
 
             mycanvas11.destroy()
-            mycanvas11 = new Chart(document.getElementById("mycanvas11"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas11 = createCanvas("mycanvas11", newArray)
         }
 
         const group4 = element.classList.contains("group4");
         if (group4 && checkStatus) {
 
-            const valueScore = document.querySelectorAll(".value-score")[3];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            countValue(3, 7);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[7];
-            valueScoreMain.textContent = textContent;
+            const newArray = newArrayData('.value-group-4');
 
-
-            const group = document.querySelectorAll('.value-group-4');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas4.destroy()
-            mycanvas4 = new Chart(document.getElementById("mycanvas4"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas4 = createCanvas("mycanvas4", newArray)
 
             mycanvas12.destroy()
-            mycanvas12 = new Chart(document.getElementById("mycanvas12"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas12 = createCanvas("mycanvas12", newArray)
         }
 
         const group5 = element.classList.contains("group5");
         if (group5 && checkStatus) {
 
-            const valueScore = document.querySelectorAll(".value-score")[13];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            countValue(13, 9);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[9];
-            valueScoreMain.textContent = textContent;
+            const newArray = newArrayData('.value-group-5');
 
-
-            const group = document.querySelectorAll('.value-group-5');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas5.destroy()
-            mycanvas5 = new Chart(document.getElementById("mycanvas5"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas5 = createCanvas("mycanvas5", newArray)
 
             mycanvas13.destroy()
-            mycanvas13 = new Chart(document.getElementById("mycanvas13"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas13 = createCanvas("mycanvas13", newArray)
         }
 
         const group6 = element.classList.contains("group6");
         if (group6 && checkStatus) {
 
-            const valueScore = document.querySelectorAll(".value-score")[14];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            countValue(14, 10);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[10];
-            valueScoreMain.textContent = textContent;
+            const newArray = newArrayData('.value-group-6');
 
-
-
-            const group = document.querySelectorAll('.value-group-6');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas6.destroy()
-            mycanvas6 = new Chart(document.getElementById("mycanvas6"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas6 = createCanvas("mycanvas6", newArray)
 
             mycanvas14.destroy()
-            mycanvas14 = new Chart(document.getElementById("mycanvas14"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas14 = createCanvas("mycanvas14", newArray)
         }
 
         const group7 = element.classList.contains("group7");
         if (group7 && checkStatus) {
 
-            const valueScore = document.querySelectorAll(".value-score")[15];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            countValue(15, 11);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[11];
-            valueScoreMain.textContent = textContent;
+            const newArray = newArrayData('.value-group-7');
 
-
-            const group = document.querySelectorAll('.value-group-7');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas7.destroy()
-            mycanvas7 = new Chart(document.getElementById("mycanvas7"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas7 = createCanvas("mycanvas7", newArray)
 
             mycanvas15.destroy()
-            mycanvas15 = new Chart(document.getElementById("mycanvas15"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas15 = createCanvas("mycanvas15", newArray)
         }
 
         const group8 = element.classList.contains("group8");
         if (group8 && checkStatus) {
 
-            const valueScore = document.querySelectorAll(".value-score")[16];
-            const textContent = parseInt(valueScore.textContent) + 1;
-            valueScore.textContent = textContent;
+            countValue(16, 12);
 
-            const valueScoreMain = document.querySelectorAll(".value-score")[12];
-            valueScoreMain.textContent = textContent;
+            const newArray = newArrayData('.value-group-8');
 
-
-            const group = document.querySelectorAll('.value-group-8');
-            var newArray = [];
-            group.forEach(item => {
-
-                newArray.push(item.textContent);
-            })
-            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas8.destroy()
-            mycanvas8 = new Chart(document.getElementById("mycanvas8"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas8 = createCanvas("mycanvas8", newArray)
 
             mycanvas16.destroy()
-            mycanvas16 = new Chart(document.getElementById("mycanvas16"), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: newArray,
-                        borderColor: "#e2db9d",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                            angleLines: {
-                                color: '#cbcccd'
-                            },
-                            grid: {
-                                color: '#cbcccd',
-                            },
-                            pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                                color: 'white'
-                            },
-                            ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                                color: 'none',
-                                backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                            },
-                            gridLines: {
-                                color: "red",
-                            },
-                            min: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false, // Ẩn chú thích (legend)
-                        },
-                        datalabels: {
-                            display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
-                        },
-                    },
-                    elements: {
-                        line: {
-                            borderWidth: 2,
-
-                        },
-                        point: {
-                            radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                            borderWidth: 2, // Độ rộng của viền hình tròn
-                        }
-                    },
-                    tooltips: {
-                        enabled: false,
-                    },
-                }
-            });
+            mycanvas16 = createCanvas("mycanvas16", newArray)
         }
 
         const textContentMain = document.querySelectorAll(".value-score");
@@ -2146,5 +363,3 @@ choose.forEach((element, index) => {
 })
 
 console.log(window.innerWidth)
-
-// cũ
