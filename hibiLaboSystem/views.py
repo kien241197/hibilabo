@@ -113,7 +113,7 @@ class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'info/password_change_done.html'
 
 #Honne
-class HonneSheet(TemplateView):
+class HonneSheet(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_sheet.html"
     form_class = forms.HonneForm
 
@@ -281,7 +281,7 @@ class HonneSheet(TemplateView):
 
         return self.render_to_response(context)
 
-class HonneTotal(TemplateView):
+class HonneTotal(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_total.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -320,7 +320,7 @@ class HonneTotal(TemplateView):
                     context['max_type'] = max(context['result'], key=context['result'].get)
         return self.render_to_response(context)
 
-class HonneTypeStaticks(TemplateView):
+class HonneTypeStaticks(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_type_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -342,7 +342,7 @@ class HonneTypeStaticks(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneTypePersonalGraph(TemplateView):
+class HonneTypePersonalGraph(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_type_personal_graph.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -364,7 +364,7 @@ class HonneTypePersonalGraph(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneIndexStaticks(TemplateView):
+class HonneIndexStaticks(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_index_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -386,7 +386,7 @@ class HonneIndexStaticks(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneChart(TemplateView):
+class HonneChart(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_chart.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -408,7 +408,7 @@ class HonneChart(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneQrStaticks(TemplateView):
+class HonneQrStaticks(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_qr_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -457,7 +457,7 @@ class HonneQrStaticks(TemplateView):
         return self.render_to_response(context)
 
 # Selfcheck
-class SelfcheckIndex(TemplateView):
+class SelfcheckIndex(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_index.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -479,7 +479,7 @@ class SelfcheckIndex(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckIndexChart(TemplateView):
+class SelfcheckIndexChart(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_index_chart.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -501,7 +501,7 @@ class SelfcheckIndexChart(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckQuestions(TemplateView):
+class SelfcheckQuestions(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_questions.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -549,7 +549,7 @@ class SelfcheckQuestions(TemplateView):
                 context["qr_list"] = result_list
         return self.render_to_response(context)
 
-class SelfcheckType(TemplateView):
+class SelfcheckType(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_type.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -571,7 +571,7 @@ class SelfcheckType(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckTypeChart(TemplateView):
+class SelfcheckTypeChart(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_type_chart.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -593,7 +593,7 @@ class SelfcheckTypeChart(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckSheet(TemplateView):
+class SelfcheckSheet(LoginRequiredMixin, TemplateView):
     template_name = 'selfcheck/selfcheck_sheet.html'
     form_class = forms.SelfcheckForm
 
@@ -801,7 +801,7 @@ class SelfcheckSheet(TemplateView):
         return self.render_to_response(context)
 
 #Bonknow
-class BonknowSheet(TemplateView):
+class BonknowSheet(LoginRequiredMixin, TemplateView):
     template_name = "bonknow/bonknow_sheet.html"
 
     def get_context_data(self, **kwargs):
@@ -939,7 +939,7 @@ class BonknowSheet(TemplateView):
         return self.render_to_response(context)
 
 
-class BonknowRespons(TemplateView):
+class BonknowRespons(LoginRequiredMixin, TemplateView):
     template_name = "bonknow/bonknow_respons.html"
     form_class = forms.BonknowForm
 
@@ -977,7 +977,7 @@ class BonknowRespons(TemplateView):
 
         return self.render_to_response(context)
 
-class BonknowThink(TemplateView):
+class BonknowThink(LoginRequiredMixin, TemplateView):
     template_name = "bonknow/bonknow_think.html"
     form_class = forms.BonknowForm
 
@@ -1015,7 +1015,7 @@ class BonknowThink(TemplateView):
 
         return self.render_to_response(context)
 
-class Mandara(TemplateView):
+class Mandara(LoginRequiredMixin, TemplateView):
     template_name = "mandara/index.html"
 
     def get_context_data(self, **kwargs):
