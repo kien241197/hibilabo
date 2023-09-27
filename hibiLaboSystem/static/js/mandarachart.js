@@ -953,7 +953,9 @@ var mycanvas16 = new Chart(document.getElementById("mycanvas16"), {
 
 const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element) => {
+
     element.classList.add("true")
+
     element.addEventListener('click', () => {
 
         element.classList.add('background-value-table');
@@ -1124,9 +1126,6 @@ valueElements.forEach((element) => {
 
             array.push(textContent);
 
-
-            mycanvas2.destroy()
-
             const group = document.querySelectorAll('.value-group-2');
             let newArray = [];
             group.forEach(item => {
@@ -1134,6 +1133,7 @@ valueElements.forEach((element) => {
                 newArray.push(item.textContent);
             })
 
+            mycanvas2.destroy()
             mycanvas2 = new Chart(document.getElementById("mycanvas2"), {
                 type: 'radar',
                 data: {
@@ -1267,7 +1267,6 @@ valueElements.forEach((element) => {
 
             const group = document.querySelectorAll('.value-group-3');
             let newArray = [];
-
             group.forEach(item => {
 
                 newArray.push(item.textContent);
@@ -1406,7 +1405,6 @@ valueElements.forEach((element) => {
 
             const group = document.querySelectorAll('.value-group-4');
             let newArray = [];
-
             group.forEach(item => {
 
                 newArray.push(item.textContent);
@@ -1545,7 +1543,6 @@ valueElements.forEach((element) => {
 
             const group = document.querySelectorAll('.value-group-5');
             let newArray = [];
-
             group.forEach(item => {
 
                 newArray.push(item.textContent);
@@ -1685,7 +1682,6 @@ valueElements.forEach((element) => {
             
             const group = document.querySelectorAll('.value-group-6');
             let newArray = [];
-
             group.forEach(item => {
 
                 newArray.push(item.textContent);
@@ -1824,7 +1820,6 @@ valueElements.forEach((element) => {
 
             const group = document.querySelectorAll('.value-group-7');
             let newArray = [];
-
             group.forEach(item => {
 
                 newArray.push(item.textContent);
@@ -1963,7 +1958,6 @@ valueElements.forEach((element) => {
 
             const group = document.querySelectorAll('.value-group-8');
             let newArray = [];
-
             group.forEach(item => {
 
                 newArray.push(item.textContent);
