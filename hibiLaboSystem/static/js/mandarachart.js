@@ -1,6 +1,6 @@
 Chart.register(ChartDataLabels);
 
-let arrayGroup1 = [1, 2, 3, 4, 5, 6, 7, 8];
+let arrayGroup1 = [];
 let arrayGroup2 = [];
 let arrayGroup3 = [];
 let arrayGroup4 = [];
@@ -9,12 +9,12 @@ let arrayGroup6 = [];
 let arrayGroup7 = [];
 let arrayGroup8 = [];
 
-// const group1 = document.querySelectorAll('.value-group-1');
-// group1.forEach(item => {
+const group1 = document.querySelectorAll('.value-group-1');
+group1.forEach(item => {
 
-//     arrayGroup1.push(item.textContent);
-// })
-console.log("arrayGroup1", arrayGroup1[6])
+    arrayGroup1.push(item.textContent);
+})
+
 const group2 = document.querySelectorAll('.value-group-2');
 group2.forEach(item => {
 
@@ -89,7 +89,10 @@ var mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
                 gridLines: {
                     color: "red",
 
-                }
+                },
+                min: 0,
+
+                min: 0
             }
         },
         plugins: {
@@ -119,8 +122,6 @@ var mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
             ticks: {
                 display: false
             },
-
-
         }
     }
 });
@@ -156,7 +157,8 @@ var mycanvas2 = new Chart(document.getElementById("mycanvas2"), {
                 gridLines: {
                     color: "red",
 
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -211,7 +213,8 @@ var mycanvas3 = new Chart(document.getElementById("mycanvas3"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -266,7 +269,8 @@ var mycanvas4 = new Chart(document.getElementById("mycanvas4"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -321,7 +325,8 @@ var mycanvas5 = new Chart(document.getElementById("mycanvas5"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -361,7 +366,6 @@ var mycanvas6 = new Chart(document.getElementById("mycanvas6"), {
         }]
     },
     options: {
-
         scales: {
             r: { // https://www.chartjs.org/docs/latest/axes/radial/
                 angleLines: {
@@ -376,7 +380,8 @@ var mycanvas6 = new Chart(document.getElementById("mycanvas6"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0,
             }
         },
         plugins: {
@@ -431,7 +436,8 @@ var mycanvas7 = new Chart(document.getElementById("mycanvas7"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -486,7 +492,8 @@ var mycanvas8 = new Chart(document.getElementById("mycanvas8"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -547,7 +554,8 @@ var mycanvas9 = new Chart(document.getElementById("mycanvas9"), {
                 gridLines: {
                     color: "red",
 
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -601,7 +609,8 @@ var mycanvas10 = new Chart(document.getElementById("mycanvas10"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -654,7 +663,8 @@ var mycanvas11 = new Chart(document.getElementById("mycanvas11"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -708,7 +718,8 @@ var mycanvas12 = new Chart(document.getElementById("mycanvas12"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -762,7 +773,8 @@ var mycanvas13 = new Chart(document.getElementById("mycanvas13"), {
                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
                     color: 'none',
                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -819,7 +831,8 @@ var mycanvas14 = new Chart(document.getElementById("mycanvas14"), {
                 gridLines: {
                     color: "red",
 
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -876,7 +889,8 @@ var mycanvas15 = new Chart(document.getElementById("mycanvas15"), {
                 gridLines: {
                     color: "red",
 
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -933,7 +947,8 @@ var mycanvas16 = new Chart(document.getElementById("mycanvas16"), {
                 gridLines: {
                     color: "red",
 
-                }
+                },
+                min: 0
             }
         },
         plugins: {
@@ -1033,8 +1048,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1092,8 +1107,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1172,7 +1187,8 @@ valueElements.forEach((element) => {
                             gridLines: {
                                 color: "red",
 
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1231,7 +1247,8 @@ valueElements.forEach((element) => {
                             gridLines: {
                                 color: "red",
 
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1310,7 +1327,8 @@ valueElements.forEach((element) => {
                             gridLines: {
                                 color: "red",
 
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1324,7 +1342,6 @@ valueElements.forEach((element) => {
                     elements: {
                         line: {
                             borderWidth: 2,
-
                         },
                         point: {
                             radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
@@ -1368,8 +1385,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1446,8 +1463,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1505,8 +1522,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1583,8 +1600,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1642,8 +1659,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1721,8 +1738,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1780,8 +1797,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1858,8 +1875,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1917,8 +1934,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -1995,8 +2012,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -2054,8 +2071,8 @@ valueElements.forEach((element) => {
                             },
                             gridLines: {
                                 color: "red",
-
-                            }
+                            },
+                            min: 0
                         }
                     },
                     plugins: {
@@ -2129,3 +2146,5 @@ choose.forEach((element, index) => {
 })
 
 console.log(window.innerWidth)
+
+// cũ
