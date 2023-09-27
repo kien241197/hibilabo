@@ -1,6 +1,6 @@
 Chart.register(ChartDataLabels);
 
-let arrayGroup1 = [];
+let arrayGroup1 = [1, 2, 3, 4, 5, 6, 7, 8];
 let arrayGroup2 = [];
 let arrayGroup3 = [];
 let arrayGroup4 = [];
@@ -9,12 +9,12 @@ let arrayGroup6 = [];
 let arrayGroup7 = [];
 let arrayGroup8 = [];
 
-const group1 = document.querySelectorAll('.value-group-1');
-group1.forEach(item => {
+// const group1 = document.querySelectorAll('.value-group-1');
+// group1.forEach(item => {
 
-    arrayGroup1.push(item.textContent);
-})
-console.log("arrayGroup1", arrayGroup1)
+//     arrayGroup1.push(item.textContent);
+// })
+console.log("arrayGroup1", arrayGroup1[6])
 const group2 = document.querySelectorAll('.value-group-2');
 group2.forEach(item => {
 
@@ -58,14 +58,13 @@ group8.forEach(item => {
 })
 
 
-
 var mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
     type: 'radar',
     data: {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup1,
+            data: [arrayGroup1[1], arrayGroup1[2], arrayGroup1[4], arrayGroup1[7], arrayGroup1[6], arrayGroup1[5], arrayGroup1[3], arrayGroup1[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
         }]
@@ -114,6 +113,15 @@ var mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
         tooltips: {
             enabled: false,
         },
+        r: {
+
+            //メモリ線
+            ticks: {
+                display: false
+            },
+
+
+        }
     }
 });
 
@@ -123,7 +131,7 @@ var mycanvas2 = new Chart(document.getElementById("mycanvas2"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup2,
+            data: [arrayGroup2[1], arrayGroup2[2], arrayGroup2[4], arrayGroup2[7], arrayGroup2[6], arrayGroup2[5], arrayGroup2[3], arrayGroup2[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
         }]
@@ -181,7 +189,7 @@ var mycanvas3 = new Chart(document.getElementById("mycanvas3"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup3,
+            data: [arrayGroup3[1], arrayGroup3[2], arrayGroup3[4], arrayGroup3[7], arrayGroup3[6], arrayGroup3[5], arrayGroup3[3], arrayGroup3[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -236,7 +244,7 @@ var mycanvas4 = new Chart(document.getElementById("mycanvas4"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup4,
+            data: [arrayGroup4[1], arrayGroup4[2], arrayGroup4[4], arrayGroup4[7], arrayGroup4[6], arrayGroup4[5], arrayGroup4[3], arrayGroup4[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -291,7 +299,7 @@ var mycanvas5 = new Chart(document.getElementById("mycanvas5"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup5,
+            data: [arrayGroup5[1], arrayGroup5[2], arrayGroup5[4], arrayGroup5[7], arrayGroup5[6], arrayGroup5[5], arrayGroup5[3], arrayGroup5[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -346,7 +354,7 @@ var mycanvas6 = new Chart(document.getElementById("mycanvas6"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup6,
+            data: [arrayGroup6[1], arrayGroup6[2], arrayGroup6[4], arrayGroup6[7], arrayGroup6[6], arrayGroup6[5], arrayGroup6[3], arrayGroup6[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -401,7 +409,7 @@ var mycanvas7 = new Chart(document.getElementById("mycanvas7"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup7,
+            data: [arrayGroup7[1], arrayGroup7[2], arrayGroup7[4], arrayGroup7[7], arrayGroup7[6], arrayGroup7[5], arrayGroup7[3], arrayGroup7[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -456,7 +464,7 @@ var mycanvas8 = new Chart(document.getElementById("mycanvas8"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup8,
+            data: [arrayGroup8[1], arrayGroup8[2], arrayGroup8[4], arrayGroup8[7], arrayGroup8[6], arrayGroup8[5], arrayGroup8[3], arrayGroup8[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -511,7 +519,9 @@ var mycanvas9 = new Chart(document.getElementById("mycanvas9"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup1,
+            // data: [1,2,3,4,5,6,7,8],
+            data: [arrayGroup1[1], arrayGroup1[2], arrayGroup1[4], arrayGroup1[7], arrayGroup1[6], arrayGroup1[5], arrayGroup1[3], arrayGroup1[0]],
+
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
         }]
@@ -570,7 +580,7 @@ var mycanvas10 = new Chart(document.getElementById("mycanvas10"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup2,
+            data: [arrayGroup2[1], arrayGroup2[2], arrayGroup2[4], arrayGroup2[7], arrayGroup2[6], arrayGroup2[5], arrayGroup2[3], arrayGroup2[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -623,7 +633,7 @@ var mycanvas11 = new Chart(document.getElementById("mycanvas11"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup3,
+            data: [arrayGroup3[1], arrayGroup3[2], arrayGroup3[4], arrayGroup3[7], arrayGroup3[6], arrayGroup3[5], arrayGroup3[3], arrayGroup3[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -677,7 +687,7 @@ var mycanvas12 = new Chart(document.getElementById("mycanvas12"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup4,
+            data: [arrayGroup4[1], arrayGroup4[2], arrayGroup4[4], arrayGroup4[7], arrayGroup4[6], arrayGroup4[5], arrayGroup4[3], arrayGroup4[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -731,7 +741,7 @@ var mycanvas13 = new Chart(document.getElementById("mycanvas13"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup5,
+            data: [arrayGroup5[1], arrayGroup5[2], arrayGroup5[4], arrayGroup5[7], arrayGroup5[6], arrayGroup5[5], arrayGroup5[3], arrayGroup5[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
 
@@ -785,7 +795,7 @@ var mycanvas14 = new Chart(document.getElementById("mycanvas14"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup6,
+            data: [arrayGroup6[1], arrayGroup6[2], arrayGroup6[4], arrayGroup6[7], arrayGroup6[6], arrayGroup6[5], arrayGroup6[3], arrayGroup6[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
         }]
@@ -822,12 +832,12 @@ var mycanvas14 = new Chart(document.getElementById("mycanvas14"), {
         },
         elements: {
             line: {
-                borderWidth: 1,
+                borderWidth: 2,
 
             },
             point: {
-                radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 1, // Độ rộng của viền hình tròn
+                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                borderWidth: 2, // Độ rộng của viền hình tròn
             }
         },
         tooltips: {
@@ -842,7 +852,7 @@ var mycanvas15 = new Chart(document.getElementById("mycanvas15"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup7,
+            data: [arrayGroup7[1], arrayGroup7[2], arrayGroup7[4], arrayGroup7[7], arrayGroup7[6], arrayGroup7[5], arrayGroup7[3], arrayGroup7[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
         }]
@@ -879,12 +889,12 @@ var mycanvas15 = new Chart(document.getElementById("mycanvas15"), {
         },
         elements: {
             line: {
-                borderWidth: 1,
+                borderWidth: 2,
 
             },
             point: {
-                radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 1, // Độ rộng của viền hình tròn
+                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                borderWidth: 2, // Độ rộng của viền hình tròn
             }
         },
         tooltips: {
@@ -899,7 +909,7 @@ var mycanvas16 = new Chart(document.getElementById("mycanvas16"), {
         labels: ['', '', '', '', '', '', '', ''],
         datasets: [{
             label: '',
-            data: arrayGroup8,
+            data: [arrayGroup8[1], arrayGroup8[2], arrayGroup8[4], arrayGroup8[7], arrayGroup8[6], arrayGroup8[5], arrayGroup8[3], arrayGroup8[0]],
             borderColor: "#e2db9d",
             pointBackgroundColor: '#e2db9d',
         }]
@@ -936,12 +946,12 @@ var mycanvas16 = new Chart(document.getElementById("mycanvas16"), {
         },
         elements: {
             line: {
-                borderWidth: 1,
+                borderWidth: 2,
 
             },
             point: {
-                radius: 1, // Đặt kích thước của hình tròn nhỏ hơn
-                borderWidth: 1, // Độ rộng của viền hình tròn
+                radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
+                borderWidth: 2, // Độ rộng của viền hình tròn
             }
         },
         tooltips: {
