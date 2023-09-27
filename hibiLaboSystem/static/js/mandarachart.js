@@ -4,8 +4,6 @@ valueElements.forEach((element) => {
     element.classList.add("true")
     element.addEventListener('click', () => {
 
-        // const spanElemen 
-        // spanElement.textContent = parseInt(spanElement.textContent) + 1;
         element.classList.add('background-value-table');
 
         let child = element.querySelectorAll('span');
@@ -16,14 +14,15 @@ valueElements.forEach((element) => {
         let array = [];
         if (checkStatus) {
 
-            $(child[0]).text(Number($(child[0]).text()) + 1)
-            element.classList.remove("true")
-            element.classList.add("false")
+            $(child[0]).text(Number($(child[0]).text()) + 1);
+            element.classList.remove("true");
+            element.classList.add("false");
 
         } else {
 
-            alert("押すのは 1 回のみ")
+            alert("押すのは 1 回のみ");
         }
+
         if (group1 && checkStatus) {
 
             const valueScore = document.querySelectorAll(".value-score")[0];
@@ -131,7 +130,6 @@ valueElements.forEach((element) => {
 
         const textContentMain = document.querySelectorAll(".value-score");
         const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
-
         textContentMain[8].textContent = valueContentMain
     });
 });
@@ -154,4 +152,24 @@ valueTab2.addEventListener('click', () => {
     document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.add("hidden-tab");
     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
 });
+
+const choose = document.querySelectorAll(".choose");
+choose[0].classList.add('background-tab-active')
+choose[0].classList.add('color-print')
+choose.forEach((element, index) => {
+    element.addEventListener("click", function () {
+
+        const listChoose = document.querySelectorAll(".choose");
+
+        listChoose.forEach((item, count) => {
+            if (index !== count) {
+
+                item.classList.remove('background-tab-active')
+                item.classList.remove('color-print')
+            }
+        })
+        element.classList.add('background-tab-active')
+        element.classList.add('color-print')
+    })
+})
 console.log(window.innerWidth)

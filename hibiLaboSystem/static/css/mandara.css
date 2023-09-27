@@ -39,7 +39,7 @@
 
 .background-tab-active {
 
-    background-color: #0DC5CE;
+    background-color: #0DC5CE !important;
 
 }
 
@@ -80,9 +80,7 @@ body {
 
 }
 
-.wrapper-body {
-    /* padding: 15px 35px 15px 35px; */
-}
+
 
 .body-top {
 
@@ -110,7 +108,7 @@ body {
 
     color: #000;
     font-family: var(--font-content);
-    letter-spacing: 0.5rem;
+    letter-spacing: 0.3rem;
     font-weight: 700;
     font-size: 75%;
 }
@@ -162,7 +160,7 @@ body {
 
 .title-content-body-left {
 
-    font-family: var(--font-text);
+    font-family: var(--font-content);
     letter-spacing: 0.3rem;
     font-weight: 700;
     margin-block-start: unset !important;
@@ -873,16 +871,6 @@ body {
 
     }
 
-    .value-table {
-
-        /* min-height: 60px; */
-    }
-
-    .value-table-score {
-
-        /* min-height: 60px; */
-    }
-
     .value-table p {
         font-size: 40%;
         min-height: 10px;
@@ -922,8 +910,8 @@ body {
     }
 
     .choose {
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
         font-size: 50%;
     }
 
@@ -960,8 +948,28 @@ body {
 
 @media screen and (max-width: 821px) {
 
+    .choose {
+        font-size: 13.76px;
+    }
+
+    .title-content-body-left {
+
+        font-size: 8px;
+    }
+
+
+    .content-title {
+
+        font-size: 8px;
+    }
+
+    .title-center {
+
+        font-size: 6.48px;
+    }
+
     .text-title {
-        font-size: 110%;
+        font-size: 14px;
     }
 
 
@@ -1001,7 +1009,7 @@ body {
 
     .wrapper-tab div {
         font-size: 100%;
-        width: 45px;
+        width: 65px;
     }
 
     .wrapper-content-table-body-right div {
@@ -1298,6 +1306,16 @@ body {
 }
 
 @media print {
+
+    .color-print {
+
+        color: white;
+    }
+
+    .value-table-score p {
+
+        color: white;
+    }
 
     .value-score {
 
