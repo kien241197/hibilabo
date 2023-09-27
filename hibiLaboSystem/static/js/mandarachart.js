@@ -1,6 +1,6 @@
 Chart.register(ChartDataLabels);
 
-var arrayGroup1 = [];
+let arrayGroup1 = [];
 let arrayGroup2 = [];
 let arrayGroup3 = [];
 let arrayGroup4 = [];
@@ -14,7 +14,7 @@ group1.forEach(item => {
 
     arrayGroup1.push(item.textContent);
 })
-
+console.log("arrayGroup1", arrayGroup1)
 const group2 = document.querySelectorAll('.value-group-2');
 group2.forEach(item => {
 
