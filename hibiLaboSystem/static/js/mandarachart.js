@@ -997,12 +997,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-1');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas1 = new Chart(document.getElementById("mycanvas1"), {
                 type: 'radar',
                 data: {
@@ -1134,12 +1134,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-2');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas2.destroy()
             mycanvas2 = new Chart(document.getElementById("mycanvas2"), {
                 type: 'radar',
@@ -1272,12 +1272,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-3');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas3.destroy()
             mycanvas3 = new Chart(document.getElementById("mycanvas3"), {
                 type: 'radar',
@@ -1409,12 +1409,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-4');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas4.destroy()
             mycanvas4 = new Chart(document.getElementById("mycanvas4"), {
                 type: 'radar',
@@ -1546,12 +1546,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-5');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas5.destroy()
             mycanvas5 = new Chart(document.getElementById("mycanvas5"), {
                 type: 'radar',
@@ -1684,12 +1684,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-6');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas6.destroy()
             mycanvas6 = new Chart(document.getElementById("mycanvas6"), {
                 type: 'radar',
@@ -1821,12 +1821,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-7');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas7.destroy()
             mycanvas7 = new Chart(document.getElementById("mycanvas7"), {
                 type: 'radar',
@@ -1958,12 +1958,12 @@ valueElements.forEach((element) => {
 
 
             const group = document.querySelectorAll('.value-group-8');
-            let newArray = [];
+            var newArray = [];
             group.forEach(item => {
 
                 newArray.push(item.textContent);
             })
-
+            newArray = [newArray[1], newArray[2], newArray[4], newArray[7], newArray[6], newArray[5], newArray[3], newArray[0]]
             mycanvas8.destroy()
             mycanvas8 = new Chart(document.getElementById("mycanvas8"), {
                 type: 'radar',
