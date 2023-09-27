@@ -30,7 +30,7 @@
             datasets: [{
             label: 'カルテット指数',
             //data: [10, 16, 13, 12, 16, 15, 14, 17],
-            data: [12, chatValue[1], chatValue[2], chatValue[3], chatValue[4], chatValue[5], chatValue[6], chatValue[7]],
+            data: [chatValue[0], chatValue[1], chatValue[2], chatValue[3], chatValue[4], chatValue[5], chatValue[6], chatValue[7]],
             // データライン
             borderColor: 'yellow',
             borderWidth: 4,
