@@ -97,94 +97,94 @@ function countValueCenter() {
     textContentMain[8].textContent = valueContentMain
 }
 
-let arrayGroup1 = [];
-let arrayGroup2 = [];
-let arrayGroup3 = [];
-let arrayGroup4 = [];
-let arrayGroup5 = [];
-let arrayGroup6 = [];
-let arrayGroup7 = [];
-let arrayGroup8 = [];
+let arrayChartGroup1 = [];
+let arrayChartGroup2 = [];
+let arrayChartGroup3 = [];
+let arrayChartGroup4 = [];
+let arrayChartGroup5 = [];
+let arrayChartGroup6 = [];
+let arrayChartGroup7 = [];
+let arrayChartGroup8 = [];
 
 const group1 = document.querySelectorAll('.value-group-1');
 group1.forEach(item => {
 
-    arrayGroup1.push(item.textContent);
+    arrayChartGroup1.push(item.textContent);
 })
 
 const group2 = document.querySelectorAll('.value-group-2');
 group2.forEach(item => {
 
-    arrayGroup2.push(item.textContent);
+    arrayChartGroup2.push(item.textContent);
 })
 
 const group3 = document.querySelectorAll('.value-group-3');
 group3.forEach(item => {
 
-    arrayGroup3.push(item.textContent);
+    arrayChartGroup3.push(item.textContent);
 })
 
 const group4 = document.querySelectorAll('.value-group-4');
 group4.forEach(item => {
 
-    arrayGroup4.push(item.textContent);
+    arrayChartGroup4.push(item.textContent);
 })
 
 const group5 = document.querySelectorAll('.value-group-5');
 group5.forEach(item => {
 
-    arrayGroup5.push(item.textContent);
+    arrayChartGroup5.push(item.textContent);
 })
 
 const group6 = document.querySelectorAll('.value-group-6');
 group6.forEach(item => {
 
-    arrayGroup6.push(item.textContent);
+    arrayChartGroup6.push(item.textContent);
 })
 
 const group7 = document.querySelectorAll('.value-group-7');
 group7.forEach(item => {
 
-    arrayGroup7.push(item.textContent);
+    arrayChartGroup7.push(item.textContent);
 })
 
 const group8 = document.querySelectorAll('.value-group-8');
 group8.forEach(item => {
 
-    arrayGroup8.push(item.textContent);
+    arrayChartGroup8.push(item.textContent);
 })
 
-var mycanvas1 = createCanvas("mycanvas1", arrayGroup1);
+var mycanvas1 = createCanvas("mycanvas1", arrayChartGroup1);
 
-var mycanvas2 = createCanvas("mycanvas2", arrayGroup2);
+var mycanvas2 = createCanvas("mycanvas2", arrayChartGroup2);
 
-var mycanvas3 = createCanvas("mycanvas3", arrayGroup3);
+var mycanvas3 = createCanvas("mycanvas3", arrayChartGroup3);
 
-var mycanvas4 = createCanvas("mycanvas4", arrayGroup4);
+var mycanvas4 = createCanvas("mycanvas4", arrayChartGroup4);
 
-var mycanvas5 = createCanvas("mycanvas5", arrayGroup5);
+var mycanvas5 = createCanvas("mycanvas5", arrayChartGroup5);
 
-var mycanvas6 = createCanvas("mycanvas6", arrayGroup6);
+var mycanvas6 = createCanvas("mycanvas6", arrayChartGroup6);
 
-var mycanvas7 = createCanvas("mycanvas7", arrayGroup7);
+var mycanvas7 = createCanvas("mycanvas7", arrayChartGroup7);
 
-var mycanvas8 = createCanvas("mycanvas8", arrayGroup8);
+var mycanvas8 = createCanvas("mycanvas8", arrayChartGroup8);
 
-var mycanvas9 = createCanvas("mycanvas9", arrayGroup1);
+var mycanvas9 = createCanvas("mycanvas9", arrayChartGroup1);
 
-var mycanvas10 = createCanvas("mycanvas10", arrayGroup2);
+var mycanvas10 = createCanvas("mycanvas10", arrayChartGroup2);
 
-var mycanvas11 = createCanvas("mycanvas11", arrayGroup3);
+var mycanvas11 = createCanvas("mycanvas11", arrayChartGroup3);
 
-var mycanvas12 = createCanvas("mycanvas12", arrayGroup4);
+var mycanvas12 = createCanvas("mycanvas12", arrayChartGroup4);
 
-var mycanvas13 = createCanvas("mycanvas13", arrayGroup5);
+var mycanvas13 = createCanvas("mycanvas13", arrayChartGroup5);
 
-var mycanvas14 = createCanvas("mycanvas14", arrayGroup6);
+var mycanvas14 = createCanvas("mycanvas14", arrayChartGroup6);
 
-var mycanvas15 = createCanvas("mycanvas15", arrayGroup7);
+var mycanvas15 = createCanvas("mycanvas15", arrayChartGroup7);
 
-var mycanvas16 = createCanvas("mycanvas16", arrayGroup8);
+var mycanvas16 = createCanvas("mycanvas16", arrayChartGroup8);
 
 
 const valueElements = document.querySelectorAll('.value-table');
