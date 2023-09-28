@@ -313,6 +313,7 @@ body {
     word-wrap: break-word;
     text-align: center;
     min-height: 25px;
+    z-index: 11;
 }
 
 .body-bottom-right {
@@ -637,7 +638,7 @@ body {
 
     .wrapper-canvas {
 
-        padding: 30px;
+        padding: 10px;
     }
 
     .select {
@@ -731,11 +732,6 @@ body {
 }
 
 @media screen and (max-width: 1098px) {
-
-    .wrapper-canvas {
-
-        padding: 20px;
-    }
 
     .mycanvas {
 

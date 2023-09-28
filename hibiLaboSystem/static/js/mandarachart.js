@@ -38,10 +38,10 @@ function createCanvas(className, array) {
             },
             plugins: {
                 legend: {
-                    display: false, // Ẩn chú thích (legend)
+                    display: false, // キャプションを隠す
                 },
                 datalabels: {
-                    display: false, // Ẩn hiển thị dữ liệu trên biểu đồ
+                    display: false, // チャート上のデータ表示を非表示にする
                 },
             },
             elements: {
@@ -50,8 +50,8 @@ function createCanvas(className, array) {
 
                 },
                 point: {
-                    radius: 2, // Đặt kích thước của hình tròn nhỏ hơn
-                    borderWidth: 2, // Độ rộng của viền hình tròn
+                    radius: 2, // 小さい方の円のサイズを設定します
+                    borderWidth: 2, // 円の境界線の幅 円の境界線の幅
                 }
             },
             tooltips: {
@@ -88,6 +88,13 @@ function countValue(value1, value2) {
 
     const valueScoreMain = document.querySelectorAll(".value-score")[value2];
     valueScoreMain.textContent = textContent;
+}
+
+function countValueCenter() {
+
+    const textContentMain = document.querySelectorAll(".value-score");
+    const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
+    textContentMain[8].textContent = valueContentMain
 }
 
 let arrayGroup1 = [];
@@ -193,7 +200,7 @@ valueElements.forEach((element) => {
 
         const group1 = element.classList.contains("group1");
         const checkStatus = element.classList.contains("true");
-        
+
         if (checkStatus) {
 
             $(child[0]).text(Number($(child[0]).text()) + 1);
@@ -317,9 +324,7 @@ valueElements.forEach((element) => {
             mycanvas16 = createCanvas("mycanvas16", newArray)
         }
 
-        const textContentMain = document.querySelectorAll(".value-score");
-        const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
-        textContentMain[8].textContent = valueContentMain
+        countValueCenter()
     });
 });
 
