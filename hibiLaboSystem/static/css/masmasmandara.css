@@ -24,6 +24,7 @@
     padding: 2px;
     font-family: var(--font-content);
     font-weight: bold;
+    z-index: 13;
 }
 
 ::placeholder {
@@ -562,6 +563,8 @@
     position: absolute;
     margin: auto;
     opacity: 0.5;
+    top: 0;
+    bottom: 0;
 }
 
 #triangle1 {
@@ -584,6 +587,8 @@
     position: absolute;
     margin: auto;
     opacity: 0.5;
+    top: 0;
+    bottom: 0;
 }
 
 #triangle {
