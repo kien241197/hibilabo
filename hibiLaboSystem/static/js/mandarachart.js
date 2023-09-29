@@ -8,7 +8,7 @@ function createCanvas(className, array) {
             datasets: [{
                 label: '',
                 data: [array[1], array[2], array[4], array[7], array[6], array[5], array[3], array[0]],
-                borderColor: "#e2db9d",
+                borderColor: "#CB99C4",
                 pointBackgroundColor: '#e2db9d',
             }]
         },
@@ -46,12 +46,12 @@ function createCanvas(className, array) {
             },
             elements: {
                 line: {
-                    borderWidth: 2,
+                    borderWidth: 1,
 
                 },
                 point: {
-                    radius: 2, // 小さい方の円のサイズを設定します
-                    borderWidth: 2, // 円の境界線の幅 円の境界線の幅
+                    radius: 1, // 小さい方の円のサイズを設定します
+                    borderWidth: 1, // 円の境界線の幅 円の境界線の幅
                 }
             },
             tooltips: {
@@ -187,150 +187,54 @@ var mycanvas15 = createCanvas("mycanvas15", arrayChartGroup7);
 var mycanvas16 = createCanvas("mycanvas16", arrayChartGroup8);
 
 const valueElements = document.querySelectorAll('.value-table');
-valueElements.forEach((element) => {
-
-    element.classList.add("true")
-
-    element.addEventListener('click', () => {
-
-        element.classList.add('background-value-table');
-
-        let child = element.querySelectorAll('span');
-
-        const group1 = element.classList.contains("group1");
-        const checkStatus = element.classList.contains("true");
-
-        if (checkStatus) {
-
-            $(child[0]).text(Number($(child[0]).text()) + 1);
-            element.classList.remove("true");
-            element.classList.add("false");
-
-        } else {
-
-            alert("押すのは 1 回のみ");
-        }
-
-        if (group1 && checkStatus) {
-
-            countValue(0, 4);
-
-            const newArray = newArrayData('.value-group-1');
-
-            mycanvas1.destroy();
-            mycanvas1 = createCanvas("mycanvas1", newArray);
-
-            mycanvas9.destroy();
-            mycanvas9 = createCanvas("mycanvas9", newArray);
-        }
-
-        const group2 = element.classList.contains("group2");
-        if (group2 && checkStatus) {
-
-            countValue(1, 5);
-
-            const newArray = newArrayData('.value-group-2');
-
-            mycanvas2.destroy();
-            mycanvas2 = createCanvas("mycanvas2", newArray);
-
-            mycanvas10.destroy();
-            mycanvas10 = createCanvas("mycanvas10", newArray);
-
-        }
-
-        const group3 = element.classList.contains("group3");
-        if (group3 && checkStatus) {
-
-            countValue(2, 6);
-
-            const newArray = newArrayData('.value-group-3');
-
-            mycanvas3.destroy()
-            mycanvas3 = createCanvas("mycanvas3", newArray)
-
-            mycanvas11.destroy()
-            mycanvas11 = createCanvas("mycanvas11", newArray)
-        }
-
-        const group4 = element.classList.contains("group4");
-        if (group4 && checkStatus) {
-
-            countValue(3, 7);
-
-            const newArray = newArrayData('.value-group-4');
-
-            mycanvas4.destroy()
-            mycanvas4 = createCanvas("mycanvas4", newArray)
-
-            mycanvas12.destroy()
-            mycanvas12 = createCanvas("mycanvas12", newArray)
-        }
-
-        const group5 = element.classList.contains("group5");
-        if (group5 && checkStatus) {
-
-            countValue(13, 9);
-
-            const newArray = newArrayData('.value-group-5');
-
-            mycanvas5.destroy()
-            mycanvas5 = createCanvas("mycanvas5", newArray)
-
-            mycanvas13.destroy()
-            mycanvas13 = createCanvas("mycanvas13", newArray)
-        }
-
-        const group6 = element.classList.contains("group6");
-        if (group6 && checkStatus) {
-
-            countValue(14, 10);
-
-            const newArray = newArrayData('.value-group-6');
-
-            mycanvas6.destroy()
-            mycanvas6 = createCanvas("mycanvas6", newArray)
-
-            mycanvas14.destroy()
-            mycanvas14 = createCanvas("mycanvas14", newArray)
-        }
-
-        const group7 = element.classList.contains("group7");
-        if (group7 && checkStatus) {
-
-            countValue(15, 11);
-
-            const newArray = newArrayData('.value-group-7');
-
-            mycanvas7.destroy()
-            mycanvas7 = createCanvas("mycanvas7", newArray)
-
-            mycanvas15.destroy()
-            mycanvas15 = createCanvas("mycanvas15", newArray)
-        }
-
-        const group8 = element.classList.contains("group8");
-        if (group8 && checkStatus) {
-
-            countValue(16, 12);
-
-            const newArray = newArrayData('.value-group-8');
-
-            mycanvas8.destroy()
-            mycanvas8 = createCanvas("mycanvas8", newArray)
-
-            mycanvas16.destroy()
-            mycanvas16 = createCanvas("mycanvas16", newArray)
-        }
-
-        countValueCenter()
-    });
+valueElements.forEach((element, index) => {
+    
+    const paragraph = element.querySelector('p').textContent;
+    var content = `<div class="popup" id='popup${index + 1}'>
+    <p class="title-popup">${paragraph}</p>
+    <div class="wrapper-item">
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+        <div class="wrapper-text"></div>
+    </div>
+    </div>`;
+    document.getElementById("value-body-bottom-left").innerHTML += content;
 });
 
-
-
 const choose = document.querySelectorAll(".choose");
-choose[0].classList.add('background-tab-active')
+choose[0].classList.add('background-choose-active')
 choose[0].classList.add('color-print')
 choose.forEach((element, index) => {
     element.addEventListener("click", function () {
@@ -340,13 +244,188 @@ choose.forEach((element, index) => {
         listChoose.forEach((item, count) => {
             if (index !== count) {
 
-                item.classList.remove('background-tab-active')
+                item.classList.remove('background-choose-active')
                 item.classList.remove('color-print')
             }
         })
-        element.classList.add('background-tab-active')
+        element.classList.add('background-choose-active')
         element.classList.add('color-print')
     })
 })
 
+const valueTab1 = document.querySelector(".tab1");
+document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.add("hidden-tab");
+document.querySelector(".tab1").classList.add("background-tab-active")
+valueTab1.addEventListener('click', () => {
+    valueTab1.classList.add('background-tab-active');
+    document.querySelector(".tab2").classList.remove("background-tab-active")
+    document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.remove("hidden-tab");
+    document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.add("hidden-tab");
+});
+
+const valueTab2 = document.querySelector(".tab2");
+valueTab2.addEventListener('click', () => {
+    valueTab2.classList.add('background-tab-active');
+    document.querySelector(".tab1").classList.remove("background-tab-active")
+    document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.add("hidden-tab");
+    document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
+});
+
+
 console.log(window.innerWidth)
+// 
+
+
+var mouseDownTime = 0;
+var minimumHoldTime = 2000;
+let time = 0;
+var timeoutId;
+
+const popup = document.querySelectorAll('.popup');
+popup.forEach(element => {
+    element.classList.add("hidden")
+})
+
+const openPopup = document.querySelectorAll('.value-table');
+openPopup.forEach((element, index) => {
+
+    element.classList.add("true")
+    element.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        mouseDownTime = new Date().getTime();
+        const popup = document.querySelectorAll('.popup');
+        popup.forEach(element => {
+            element.classList.add("hidden")
+        })
+        time = 0;
+        timeoutId = setTimeout(() => {
+            document.getElementById(`popup${index + 1}`).classList.remove("hidden");
+            time = 2;
+        }, minimumHoldTime)
+
+    });
+
+    element.addEventListener("mouseup", function () {
+        clearTimeout(timeoutId);
+        console.log("timeoutId", timeoutId);
+
+    })
+
+
+    element.addEventListener('click', function (e) {
+        e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+
+        if (time < 2) {
+            element.classList.add('background-value-table');
+            let child = element.querySelectorAll('span');
+
+            const group1 = element.classList.contains("group1");
+            const checkStatus = element.classList.contains("true");
+
+            if (checkStatus) {
+
+                $(child[0]).text(Number($(child[0]).text()) + 1);
+                element.classList.remove("true");
+                element.classList.add("false");
+
+            } else {
+
+                // alert("押すのは 1 回のみ");
+            }
+
+            if (group1 && checkStatus) {
+
+                countValue(0, 4);
+
+                const newArray = newArrayData('.value-group-1');
+
+                mycanvas1.destroy();
+                mycanvas1 = createCanvas("mycanvas1", newArray);
+
+            }
+
+            const group2 = element.classList.contains("group2");
+            if (group2 && checkStatus) {
+
+                countValue(1, 5);
+
+                const newArray = newArrayData('.value-group-2');
+
+                mycanvas2.destroy();
+                mycanvas2 = createCanvas("mycanvas2", newArray);
+            }
+
+            const group3 = element.classList.contains("group3");
+            if (group3 && checkStatus) {
+
+                countValue(2, 6);
+
+                const newArray = newArrayData('.value-group-3');
+
+                mycanvas3.destroy()
+                mycanvas3 = createCanvas("mycanvas3", newArray)
+
+            }
+
+            const group4 = element.classList.contains("group4");
+            if (group4 && checkStatus) {
+
+                countValue(3, 7);
+
+                const newArray = newArrayData('.value-group-4');
+
+                mycanvas4.destroy()
+                mycanvas4 = createCanvas("mycanvas4", newArray)
+
+            }
+
+            const group5 = element.classList.contains("group5");
+            if (group5 && checkStatus) {
+
+                countValue(13, 9);
+
+                const newArray = newArrayData('.value-group-5');
+
+                mycanvas5.destroy()
+                mycanvas5 = createCanvas("mycanvas5", newArray)
+
+            }
+
+            const group6 = element.classList.contains("group6");
+            if (group6 && checkStatus) {
+
+                countValue(14, 10);
+
+                const newArray = newArrayData('.value-group-6');
+
+                mycanvas6.destroy()
+                mycanvas6 = createCanvas("mycanvas6", newArray)
+            }
+
+            const group7 = element.classList.contains("group7");
+            if (group7 && checkStatus) {
+
+                countValue(15, 11);
+
+                const newArray = newArrayData('.value-group-7');
+
+                mycanvas7.destroy()
+                mycanvas7 = createCanvas("mycanvas7", newArray)
+            }
+
+            const group8 = element.classList.contains("group8");
+            if (group8 && checkStatus) {
+
+                countValue(16, 12);
+
+                const newArray = newArrayData('.value-group-8');
+
+                mycanvas8.destroy()
+                mycanvas8 = createCanvas("mycanvas8", newArray)
+            }
+
+            countValueCenter()
+        }
+
+    });
+})
