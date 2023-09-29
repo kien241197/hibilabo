@@ -33,4 +33,5 @@ urlpatterns = [
 	path('bonknow-respons', views.BonknowRespons.as_view(), name='bonknow_respons'),
 
 	path('mandara', views.Mandara.as_view(), name='mandara'),
+    path('masmasmandara', views.Masmasmandara.as_view(), name='masmasmandara'),
 ]

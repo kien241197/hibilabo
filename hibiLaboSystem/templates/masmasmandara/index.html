@@ -11,9 +11,7 @@
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 {% load static %}
-<link rel="stylesheet" href="{% static '/css/mandara.css' %}">
-
-
+<link rel="stylesheet" href="{% static '/css/masmasmandara.css' %}">
 {% endblock %}
 
 <!-- コンテンツ -->
@@ -30,7 +28,12 @@
                                 <div>
                                     <div class="body-top">
                                         <div class="body-top-left">
-                                            <h2 class="text-title">MANDARA CHART</h2>
+                                            <div class="wrapper-text-title">
+                                                <h2 class="text-title">MANDARA CHART</h2>
+                                                <button class="button-title">一括削除</button>
+                                                <button class="button-title">一時保存</button>
+                                                <button class="button-title">保存</button>
+                                            </div>
                                             <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                         </div>
                                         <div class="content-body-center">
@@ -70,25 +73,19 @@
 
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group1" id="value-table-1">
-                                            <p>体のケア</p>
-                                            <span id="value-1" class="value-group-1">3</span>
+                                            <textarea aria-valuetext="123" maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group1" id="value-table-2">
-                                            <p>サプリメント</p>
-                                            <span id="value-2" class="value-group-1">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group1" id="value-table-3">
-                                            <p>FSQ</p>
-                                            <span class="value-group-1">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>柔軟性</p>
-                                            <span class="value-group-1">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">A</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">14</span>
                                             <p class="title-value-table-score">体づくり</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
@@ -96,20 +93,16 @@
                                             </div>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>RSQ</p>
-                                            <span class="value-group-1">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>スタミナ</p>
-                                            <span class="value-group-1">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>可動性</p>
-                                            <span class="value-group-1">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>食事</p>
-                                            <span class="value-group-1">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <svg id="triangle1" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="50" viewBox="0 0 52 50" fill="none">
                                                 <path
@@ -120,25 +113,19 @@
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group2" id="value-table-4">
-                                            <p>体幹強化</p>
-                                            <span class="value-group-2">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group2" id="value-table-5">
-                                            <p>軸をぶらさない</p>
-                                            <span class="value-group-2">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group2" id="value-table-6">
-                                            <p>角度をつける</p>
-                                            <span class="value-group-2">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>リリースポイント安定</p>
-                                            <span class="value-group-2">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">B</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">20</span>
                                             <p class="title-value-table-score">コントール</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
@@ -146,47 +133,37 @@
                                             </div>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>不安をなくす</p>
-                                            <span class="value-group-2">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>下肢の強化</p>
-                                            <span class="value-group-2">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>体を開かない</p>
-                                            <span class="value-group-2">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <svg id="triangle" xmlns="http://www.w3.org/2000/svg" width="62" height="42"
                                                 viewBox="0 0 62 42" fill="none">
                                                 <path d="M31 0L61.3109 41.25H0.689112L31 0Z" fill="#CB99C4" />
                                             </svg>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>メンタルコントロール</p>
-                                            <span class="value-group-2">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group3" id="value-table-7">
-                                            <p>角度をつける</p>
-                                            <span class="value-group-3">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group3" id="value-table-8">
-                                            <p>ボールをたたく</p>
-                                            <span class="value-group-3">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group3" id="value-table-9">
-                                            <p>リストの強化</p>
-                                            <span class="value-group-3">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>力まない</p>
-                                            <span class="value-group-3">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">C</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">20</span>
                                             <p class="title-value-table-score">キレ</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas3" class="mycanvas" width="148" height="148"
@@ -194,12 +171,10 @@
                                             </div>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>下半身主導</p>
-                                            <span class="value-group-3">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>ボールを軸でリリース</p>
-                                            <span class="value-group-3">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <svg id="triangle3" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="52" viewBox="0 0 52 52" fill="none">
                                                 <path
@@ -208,40 +183,27 @@
                                             </svg>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>回転数アップ</p>
-                                            <span class="value-group-3">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>可動域</p>
-                                            <span class="value-group-3">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group4">
-                                            <p>はっきりと <br>
-                                                した目標 <br>
-                                                目的を持つ</p>
-                                            <span class="value-group-4">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>一喜一憂 <br>
-                                                しない</p>
-                                            <span class="value-group-4">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>頭は冷静に <br>
-                                                心は熱く</p>
-                                            <span class="value-group-4">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>ピンチに <br>
-                                                強い</p>
-                                            <span class="value-group-4">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">D</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">23</span>
                                             <p class="title-value-table-score">メンタル</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
@@ -249,8 +211,7 @@
                                             </div>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>雰囲気に <br>
-                                                流されない</p>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <span class="value-group-4">1</span>
                                             <svg id="triangle4" xmlns="http://www.w3.org/2000/svg" width="42"
                                                 height="61" viewBox="0 0 42 61" fill="none">
@@ -259,76 +220,74 @@
                                             </svg>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>波を <br>
-                                                つくらない</p>
-                                            <span class="value-group-4">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>勝利への <br>
-                                                執念</p>
-                                            <span class="value-group-4">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>仲間を <br>
-                                                思いやる心</p>
-                                            <span class="value-group-4">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">A</span>
                                             <p class="title-main-score">体づくり</p>
-                                            <span class="value-score">14</span>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">B</span>
                                             <p class="title-main-score">コントール</p>
-                                            <span class="value-score">20</span>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">C</span>
                                             <p class="title-main-score">キレ</p>
-                                            <span class="value-score">20</span>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">D</span>
                                             <p class="title-main-score">メンタル</p>
-                                            <span class="value-score">23</span>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                         <div class="value-table-score SCORE-MAIN">
-                                            <p class="title-main-score">1年後の目標</p>
-                                            <span class="value-score">188</span>
+                                            <p class="title-main-score-center">1年後の目標</p>
+                                            <span class="value-score">ドラ 1
+                                                8 球団</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
-                                            <p class="title-main-score">スピード</p>
-                                            <p class="title-main-score-next"> 160km/h</p>
-                                            <span class="value-score">33</span>
+                                            <span class="text-table-score">E</span>
+                                            <p class="title-main-score">スピード160km/h</p>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                         <div class="value-table-score SCORE-text">
-                                            <p class="title-main-score f1年後の目標">人間性</p>
-                                            <span class="value-score">30</span>
+                                            <span class="text-table-score">F</span>
+                                            <p class="title-main-score">人間性</p>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">G</span>
                                             <p class="title-main-score">運</p>
-                                            <span class="value-score">28</span>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">H</span>
                                             <p class="title-main-score">変化球</p>
-                                            <span class="value-score">20</span>
+                                            <div class="wrapper-top-block"></div>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group5">
-                                            <p>軸でまわる</p>
-                                            <span class="value-group-5">5</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>下肢の強化</p>
-                                            <span class="value-group-5">5</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>体重増加</p>
-                                            <span class="value-group-5">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>体幹強化</p>
-                                            <span class="value-group-5">5</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <svg id="triangle5" xmlns="http://www.w3.org/2000/svg" width="42"
                                                 height="61" viewBox="0 0 42 61" fill="none">
                                                 <path d="M41.5 30.5L0.25001 60.8109L0.25001 0.189111L41.5 30.5Z"
@@ -337,8 +296,6 @@
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">E</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">33</span>
                                             <p class="title-value-table-score">スピード</p>
                                             <div class="wrapper-canvas ">
                                                 <canvas id="mycanvas5" class="mycanvas" width="148" height="148"
@@ -347,35 +304,27 @@
 
                                         </div>
                                         <div class="value-table group5">
-                                            <p>肩周りの強化</p>
-                                            <span class="value-group-5">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>可動域</p>
-                                            <span class="value-group-5">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>ライナーキャッチボール</p>
-                                            <span class="value-group-5">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>ピッチングを増やす</p>
-                                            <span class="value-group-5">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group6">
-                                            <p>感性</p>
-                                            <span class="value-group-6">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>愛される <br>
-                                                人間</p>
-                                            <span class="value-group-6">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>計画性</p>
-                                            <span class="value-group-6">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <svg id="triangle6" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="51" viewBox="0 0 52 51" fill="none">
                                                 <path
@@ -384,13 +333,10 @@
                                             </svg>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>思いやり</p>
-                                            <span class="value-group-6">5</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">F</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">30</span>
                                             <p class="title-value-table-score">人間性</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
@@ -398,31 +344,24 @@
                                             </div>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>感謝</p>
-                                            <span class="value-group-6">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>礼儀</p>
-                                            <span class="value-group-6">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>信頼される <br>
-                                                人間</p>
-                                            <span class="value-group-6">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>継続力</p>
-                                            <span class="value-group-6">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group7">
-                                            <p>あいさつ</p>
-                                            <span class="value-group-7">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>ゴミ拾い</p>
-                                            <span class="value-group-7">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <svg id="triangle7" xmlns="http://www.w3.org/2000/svg" width="62"
                                                 height="42" viewBox="0 0 62 42" fill="none">
                                                 <path d="M31 42L0.689144 0.750002L61.3109 0.750002L31 42Z"
@@ -430,18 +369,13 @@
                                             </svg>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>部屋掃除</p>
-                                            <span class="value-group-7">1</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>道具を <br>
-                                                大切に使う</p>
-                                            <span class="value-group-7">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">G</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">28</span>
                                             <p class="title-value-table-score">運</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
@@ -450,28 +384,21 @@
 
                                         </div>
                                         <div class="value-table group7">
-                                            <p>審判さんへの <br>
-                                                態度</p>
-                                            <span class="value-group-7">5</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>プラス思考</p>
-                                            <span class="value-group-7">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>応援される <br>
-                                                人間になる</p>
-                                            <span class="value-group-7">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>本を読む</p>
-                                            <span class="value-group-7">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group8">
-                                            <p>カウントボールを増やす</p>
-                                            <span class="value-group-8">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                             <svg id="triangle8" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="51" viewBox="0 0 52 51" fill="none">
                                                 <path
@@ -480,21 +407,16 @@
                                             </svg>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>フォーク完成</p>
-                                            <span class="value-group-8">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>スライダーのキレ</p>
-                                            <span class="value-group-8">4</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>遅く落差のあるカーブ</p>
-                                            <span class="value-group-8">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">H</span>
-                                            <p>SCORE</p>
-                                            <span class="value-score">20</span>
                                             <p class="title-value-table-score">変化球</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas8" class="mycanvas" width="148" height="148"
@@ -503,31 +425,28 @@
 
                                         </div>
                                         <div class="value-table group8">
-                                            <p>左打者への決め球</p>
-                                            <span class="value-group-8">2</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>ストレートと同じフォーム</p>
-                                            <span class="value-group-8">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>ストライクからボールに
-                                                投げるコントロール</p>
-                                            <span class="value-group-8">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>奥行きのイメージ</p>
-                                            <span class="value-group-8">3</span>
+                                            <textarea maxlength="20" class="input-table " placeholder="20文字以内で入力してください"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="body-bottom-right">
-                                <!-- <div class="wrapper-title-body-bottom-right">
-                                    <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
-                                </div> -->
+                                <div class="wrapper-title-body-bottom-right">
+                                    <h2 class="title-body-bottom-right">RULE</h2>
+                                    <p class="content-rule">①ど真ん中の一年後の目標を設定します</p>
+                                    <p class="content-rule">②A〜H の項目を入力してください</p>
+                                </div>
                                 <div class="content-body-right">
-                                    <p class="title-content-body-left">目標期間設定</p>
+                                    <p class="title-content-body-left">目標期間は 1 年</p>
                                     <div class="item-select">
                                         <select class="select" name="" id="">
                                             <option value="">2023年3月</option>
@@ -536,7 +455,7 @@
                                         <select class="select" name="" id="">
                                             <option value="">2023年9月</option>
                                         </select>
-                                        <button class="button">表示</button>
+                                        <!-- <button class="button">表示</button> -->
                                     </div>
                                 </div>
 
@@ -550,16 +469,20 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">A</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">運</div>
+                                                <div class="title-order-right">
+                                                    <input class="input-value-tab" type="text"
+                                                        placeholder="20文字以内で入力してください...">
+                                                </div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
                                                     <p>課題解決
                                                     </p>
                                                 </div>
-                                                <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
-                                                </p>
+                                                <div class="desc-table-body-right">
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
+                                                </div>
 
                                             </div>
                                         </div>
@@ -567,7 +490,10 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">B</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">メンタル</div>
+                                                <div class="title-order-right">
+                                                    <input class="input-value-tab" type="text"
+                                                        placeholder="20文字以内で入力してください...">
+                                                </div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
@@ -575,7 +501,8 @@
                                                     </p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
                                                 </p>
 
                                             </div>
@@ -584,7 +511,8 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">C</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">コントール</div>
+                                                <div class="title-order-right"><input class="input-value-tab"
+                                                        type="text" placeholder="20文字以内で入力してください..."></div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
@@ -592,7 +520,8 @@
                                                     </p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
                                                 </p>
 
                                             </div>
@@ -601,7 +530,8 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">D</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">スピード160km/h</div>
+                                                <div class="title-order-right"><input class="input-value-tab"
+                                                        type="text" placeholder="20文字以内で入力してください..."></div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
@@ -609,7 +539,8 @@
                                                     </p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
                                                 </p>
 
                                             </div>
@@ -618,7 +549,8 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">E</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">人間性</div>
+                                                <div class="title-order-right"><input class="input-value-tab"
+                                                        type="text" placeholder="20文字以内で入力してください..."></div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
@@ -626,7 +558,8 @@
                                                     </p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
                                                 </p>
 
                                             </div>
@@ -635,7 +568,8 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">F</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">体づくり</div>
+                                                <div class="title-order-right"><input class="input-value-tab"
+                                                        type="text" placeholder="20文字以内で入力してください..."></div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
@@ -643,7 +577,8 @@
                                                     </p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
                                                 </p>
 
                                             </div>
@@ -652,7 +587,8 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">G</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">キレ</div>
+                                                <div class="title-order-right"><input class="input-value-tab"
+                                                        type="text" placeholder="20文字以内で入力してください..."></div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
@@ -660,7 +596,8 @@
                                                     </p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
                                                 </p>
 
                                             </div>
@@ -669,7 +606,8 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">H</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">変化球</div>
+                                                <div class="title-order-right"><input class="input-value-tab"
+                                                        type="text" placeholder="20文字以内で入力してください..."></div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
@@ -677,7 +615,8 @@
                                                     </p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    <textarea class="input-table" name="" id=""
+                                                        placeholder="ここに説明を入力してください...!"></textarea>
                                                 </p>
                                             </div>
                                         </div>
@@ -756,8 +695,5 @@
         </div>
     </section>
 </main>
-
-
-<script src="{% static 'js/mandarachart.js' %}"></script>
-
+<script src="{% static 'js/masmasmandara.js' %}"></script>
 {% endblock %}
