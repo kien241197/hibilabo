@@ -1042,3 +1042,14 @@ class MandaraDisplayNo2(LoginRequiredMixin, TemplateView):
         user_id = self.request.user.id
 
         return kwargs
+    
+    
+class MandaraDisplayNo4(LoginRequiredMixin, TemplateView):
+    template_name = "mandara-display-no-4/index.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs
+

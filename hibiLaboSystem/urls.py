@@ -34,5 +34,6 @@ urlpatterns = [
 
 	path('mandara', views.Mandara.as_view(), name='mandara'),
     path('masmasmandara', views.Masmasmandara.as_view(), name='masmasmandara'),
-     path('mandara-display-no-2', views.MandaraDisplayNo2.as_view(), name='mandara_display_no_2'),
+    path('mandara-display-no-2', views.MandaraDisplayNo2.as_view(), name='mandara_display_no_2'),
+    path('mandara-display-no-4', views.MandaraDisplayNo4.as_view(), name='mandara_display_no_4'),
 ]

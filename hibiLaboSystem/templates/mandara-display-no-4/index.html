@@ -1,0 +1,681 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<!-- chartの呼び出し -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/mandara_display_no_4.css' %}">
+
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="wrapper-body">
+
+                        <div class="body-bottom">
+                            <div class="wrapper-body-left">
+                                <div>
+                                    <div class="body-top">
+                                        <div class="body-top-left">
+                                            <div class="wrapper-text-title">
+                                                <h2 class="text-title">MANDARA CHART</h2>
+                                                <button class="button-title" id="button-title-1">FIX</button>
+                                            </div>
+                                            <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
+                                        </div>
+                                        <div class="content-body-center">
+                                            <div class="item-body-center">
+                                                <p class="title-center">目標入力</p>
+                                                <button class="choose">1</button>
+                                            </div>
+                                            <div class="item-body-center">
+                                                <p class="title-center">日々検証</p>
+                                                <button class="choose">2</button>
+                                            </div>
+                                            <!-- <div class="item-body-center">
+                                            <p class="title-center">月間検証</p>
+                                            <button class="choose">3</button>
+                                        </div> -->
+                                            <!-- <div class="item-body-center">
+                                            <p class="title-center">個人推移</p>
+                                            <button class="choose">4</button>
+                                        </div> -->
+                                        </div>
+                                        <!-- <div class="content-body-right">
+                                        <p class="title-content-body-left">目標期間設定</p>
+                                        <div class="item-select">
+                                            <select class="select" name="" id="">
+                                                <option value="">2023年3月</option>
+                                            </select>
+                                            <p class="to">～</p>
+                                            <select class="select" name="" id="">
+                                                <option value="">2023年9月</option>
+                                            </select>
+                                            <button class="button">表示</button>
+                                        </div>
+                                    </div> -->
+                                    </div>
+                                </div>
+                                <div class="body-bottom-left" id="value-body-bottom-left">
+
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group1" id="value-table-1">
+                                            <p>体のケア</p>
+                                        </div>
+                                        <div class="value-table group1" id="value-table-2">
+                                            <p>サプリメント</p>
+                                        </div>
+                                        <div class="value-table group1" id="value-table-3">
+                                            <p>FSQ</p>
+                                        </div>
+                                        <div class="value-table group1">
+                                            <p>柔軟性</p>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">A</span>
+                                            <p class="title-value-table-score">体づくり</p>
+                                            <div class="wrapper-canvas">
+                                                <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="value-table group1">
+                                            <p>RSQ</p>
+                                        </div>
+                                        <div class="value-table group1">
+                                            <p>スタミナ</p>
+                                        </div>
+                                        <div class="value-table group1">
+                                            <p>可動性</p>
+                                        </div>
+                                        <div class="value-table group1">
+                                            <p>食事</p>
+                                            <svg id="triangle1" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="50" viewBox="0 0 52 50" fill="none">
+                                                <path
+                                                    d="M0.325983 0.574089L51.493 2.07355L14.181 49.8524L0.325983 0.574089Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group2" id="value-table-4">
+                                            <p>体幹強化</p>
+                                        </div>
+                                        <div class="value-table group2" id="value-table-5">
+                                            <p>軸をぶらさない</p>
+                                        </div>
+                                        <div class="value-table group2" id="value-table-6">
+                                            <p>角度をつける</p>
+                                        </div>
+                                        <div class="value-table group2">
+                                            <p>リリースポイント安定</p>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">B</span>
+                                            <p class="title-value-table-score">コントール</p>
+                                            <div class="wrapper-canvas">
+                                                <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="value-table group2">
+                                            <p>不安をなくす</p>
+                                        </div>
+                                        <div class="value-table group2">
+                                            <p>下肢の強化</p>
+                                        </div>
+                                        <div class="value-table group2">
+                                            <p>体を開かない</p>
+                                            <svg id="triangle" xmlns="http://www.w3.org/2000/svg" width="62" height="42"
+                                                viewBox="0 0 62 42" fill="none">
+                                                <path d="M31 0L61.3109 41.25H0.689112L31 0Z" fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                        <div class="value-table group2">
+                                            <p>メンタルコントロール</p>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group3" id="value-table-7">
+                                            <p>角度をつける</p>
+                                        </div>
+                                        <div class="value-table group3" id="value-table-8">
+                                            <p>ボールをたたく</p>
+                                        </div>
+                                        <div class="value-table group3" id="value-table-9">
+                                            <p>リストの強化</p>
+                                        </div>
+                                        <div class="value-table group3">
+                                            <p>力まない</p>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">C</span>
+                                            <p class="title-value-table-score">キレ</p>
+                                            <div class="wrapper-canvas">
+                                                <canvas id="mycanvas3" class="mycanvas" width="148" height="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="value-table group3">
+                                            <p>下半身主導</p>
+                                        </div>
+                                        <div class="value-table group3">
+                                            <p>ボールを軸でリリース</p>
+                                            <svg id="triangle3" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="52" viewBox="0 0 52 52" fill="none">
+                                                <path
+                                                    d="M51.0836 0.699342L44.2828 51.4345L0.63365 9.36608L51.0836 0.699342Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                        <div class="value-table group3">
+                                            <p>回転数アップ</p>
+                                        </div>
+                                        <div class="value-table group3">
+                                            <p>可動域</p>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group4">
+                                            <p>はっきりと <br>
+                                                した目標 <br>
+                                                目的を持つ</p>
+                                        </div>
+                                        <div class="value-table group4">
+                                            <p>一喜一憂 <br>
+                                                しない</p>
+                                        </div>
+                                        <div class="value-table group4">
+                                            <p>頭は冷静に <br>
+                                                心は熱く</p>
+                                        </div>
+                                        <div class="value-table group4">
+                                            <p>ピンチに <br>
+                                                強い</p>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">D</span>
+                                            <p class="title-value-table-score">メンタル</p>
+                                            <div class="wrapper-canvas">
+                                                <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="value-table group4">
+                                            <p>雰囲気に <br>
+                                                流されない</p>
+                                            <svg id="triangle4" xmlns="http://www.w3.org/2000/svg" width="42"
+                                                height="61" viewBox="0 0 42 61" fill="none">
+                                                <path d="M0.500015 30.5L41.75 0.189098L41.75 60.8109L0.500015 30.5Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                        <div class="value-table group4">
+                                            <p>波を <br>
+                                                つくらない</p>
+                                        </div>
+                                        <div class="value-table group4">
+                                            <p>勝利への <br>
+                                                執念</p>
+                                        </div>
+                                        <div class="value-table group4">
+                                            <p>仲間を <br>
+                                                思いやる心</p>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score">体づくり</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score">コントール</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score">キレ</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score">メンタル</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-MAIN">
+                                            <p class="title-main-score display-no-4">1年後の目標</p>
+                                            <p class="display-no-4-bottom">ドラ1
+                                                8球団</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score">スピード</p>
+                                            <p class="title-main-score-next"> 160km/h</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score f1年後の目標">人間性</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score">運</p>
+                                        </div>
+                                        <div class="value-table-score SCORE-text">
+                                            <p class="title-main-score">変化球</p>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group5">
+                                            <p>軸でまわる</p>
+                                        </div>
+                                        <div class="value-table group5">
+                                            <p>下肢の強化</p>
+                                        </div>
+                                        <div class="value-table group5">
+                                            <p>体重増加</p>
+                                        </div>
+                                        <div class="value-table group5">
+                                            <p>体幹強化</p>
+                                            <svg id="triangle5" xmlns="http://www.w3.org/2000/svg" width="42"
+                                                height="61" viewBox="0 0 42 61" fill="none">
+                                                <path d="M41.5 30.5L0.25001 60.8109L0.25001 0.189111L41.5 30.5Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">E</span>
+                                            <p class="title-value-table-score">スピード</p>
+                                            <div class="wrapper-canvas ">
+                                                <canvas id="mycanvas5" class="mycanvas" width="148" height="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+
+                                        </div>
+                                        <div class="value-table group5">
+                                            <p>肩周りの強化</p>
+                                        </div>
+                                        <div class="value-table group5">
+                                            <p>可動域</p>
+                                        </div>
+                                        <div class="value-table group5">
+                                            <p>ライナーキャッチボール</p>
+                                        </div>
+                                        <div class="value-table group5">
+                                            <p>ピッチングを増やす</p>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group6">
+                                            <p>感性</p>
+                                        </div>
+                                        <div class="value-table group6">
+                                            <p>愛される <br>
+                                                人間</p>
+                                        </div>
+                                        <div class="value-table group6">
+                                            <p>計画性</p>
+                                            <svg id="triangle6" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="51" viewBox="0 0 52 51" fill="none">
+                                                <path
+                                                    d="M0.630295 50.975L10.8215 0.810713L51.5483 45.7143L0.630295 50.975Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                        <div class="value-table group6">
+                                            <p>思いやり</p>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">F</span>
+                                            <p class="title-value-table-score">人間性</p>
+                                            <div class="wrapper-canvas">
+                                                <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="value-table group6">
+                                            <p>感謝</p>
+                                        </div>
+                                        <div class="value-table group6">
+                                            <p>礼儀</p>
+                                        </div>
+                                        <div class="value-table group6">
+                                            <p>信頼される <br>
+                                                人間</p>
+                                        </div>
+                                        <div class="value-table group6">
+                                            <p>継続力</p>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group7">
+                                            <p>あいさつ</p>
+                                        </div>
+                                        <div class="value-table group7">
+                                            <p>ゴミ拾い</p>
+                                            <svg id="triangle7" xmlns="http://www.w3.org/2000/svg" width="62"
+                                                height="42" viewBox="0 0 62 42" fill="none">
+                                                <path d="M31 42L0.689144 0.750002L61.3109 0.750002L31 42Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                        <div class="value-table group7">
+                                            <p>部屋掃除</p>
+                                        </div>
+                                        <div class="value-table group7">
+                                            <p>道具を <br>
+                                                大切に使う</p>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">G</span>
+                                            <p class="title-value-table-score">運</p>
+                                            <div class="wrapper-canvas">
+                                                <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+
+                                        </div>
+                                        <div class="value-table group7">
+                                            <p>審判さんへの <br>
+                                                態度</p>
+                                        </div>
+                                        <div class="value-table group7">
+                                            <p>プラス思考</p>
+                                        </div>
+                                        <div class="value-table group7">
+                                            <p>応援される <br>
+                                                人間になる</p>
+                                        </div>
+                                        <div class="value-table group7">
+                                            <p>本を読む</p>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="value-table group8">
+                                            <p>カウントボールを増やす</p>
+                                            <svg id="triangle8" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="51" viewBox="0 0 52 51" fill="none">
+                                                <path
+                                                    d="M51.3689 50.9759L0.451211 45.713L41.1799 0.811178L51.3689 50.9759Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                        </div>
+                                        <div class="value-table group8">
+                                            <p>フォーク完成</p>
+                                        </div>
+                                        <div class="value-table group8">
+                                            <p>スライダーのキレ</p>
+                                        </div>
+                                        <div class="value-table group8">
+                                            <p>遅く落差のあるカーブ</p>
+                                        </div>
+                                        <div class="value-table-score SCORE">
+                                            <span class="text-table-score">H</span>
+                                            <p class="title-value-table-score">変化球</p>
+                                            <div class="wrapper-canvas">
+                                                <canvas id="mycanvas8" class="mycanvas" width="148" height="148"
+                                                    style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                            </div>
+
+                                        </div>
+                                        <div class="value-table group8">
+                                            <p>左打者への決め球</p>
+                                        </div>
+                                        <div class="value-table group8">
+                                            <p>ストレートと同じフォーム</p>
+                                        </div>
+                                        <div class="value-table group8">
+                                            <p>ストライクからボールに
+                                                投げるコントロール</p>
+                                        </div>
+                                        <div class="value-table group8">
+                                            <p>奥行きのイメージ</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="body-bottom-right">
+                                <div class="wrapper-title-body-bottom-right">
+                                    <h2 class="title-body-bottom-right">RULE</h2>
+                                    <p class="content-rule">①ど真ん中の一年後の目標を設定します</p>
+                                    <p class="content-rule">②A〜H の項目を入力してください</p>
+                                </div>
+                                <div class="content-body-right">
+                                    <p class="title-content-body-left">目標期間設定</p>
+                                    <div class="item-select">
+                                        <select class="select" name="" id="">
+                                            <option value="">2023年3月</option>
+                                        </select>
+                                        <p class="to">～</p>
+                                        <select class="select" name="" id="">
+                                            <option value="">2023年9月</option>
+                                        </select>
+                                        <button class="button">表示</button>
+                                    </div>
+                                </div>
+
+                                <div class="table-body-bottom-right">
+                                    <div class="wrapper-tab">
+                                        <div class="tab tab1">Content</div>
+                                        <div class="tab tab2">Score</div>
+                                    </div>
+                                    <div class="wrapper-item-table-body-bottom-right-tab-1">
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">A</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">運</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">B</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">メンタル</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">C</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">コントール</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">D</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">スピード160km/h</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">E</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">人間性</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">F</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">体づくり</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">G</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">キレ</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="order">H</div>
+                                                <div class="title-order">キーワード</div>
+                                                <div class="title-order-right">変化球</div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right">
+                                                <div class="content-table-body-right">
+                                                    <p>課題解決
+                                                    </p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    記述記述記述記述記述記述記述記述記述
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-item-table-body-bottom-right-tab-2">
+                                        <div class="item-table-body-bottom-right item-table-body-bottom-right-tab-2">
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas9" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">体づくり</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas10" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">コントール</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas11" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">キレ</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas12" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">メンタル</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab wrapper-mycanvas-tab-center">
+                                                <p class="text-canvas-center">●●後の目標</p>
+                                                <p class="value-vanvas-center">188</p>
+                                                <p class="text-canvas-center">ドライチ 8 球団</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas13" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">スピード</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas14" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">人間性</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas15" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">運</p>
+                                            </div>
+                                            <div class="wrapper-mycanvas-tab">
+                                                <div>
+                                                    <canvas id="mycanvas16" width="100%" height="100%"
+                                                        class="mycanvas-tab"></canvas>
+                                                </div>
+                                                <p class="text-canvas">変化球</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<script src="{% static 'js/mandara_display_no_4.js' %}"></script>
+
+{% endblock %}
