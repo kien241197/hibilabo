@@ -80,22 +80,22 @@ function newArrayData(className) {
     return newArray;
 }
 
-function countValue(value1, value2) {
+// function countValue(value1, value2) {
 
-    const valueScore = document.querySelectorAll(".value-score")[value1];
-    const textContent = parseInt(valueScore.textContent) + 1;
-    valueScore.textContent = textContent;
+//     const valueScore = document.querySelectorAll(".value-score")[value1];
+//     // const textContent = parseInt(valueScore.textContent) + 1;
+//     // valueScore.textContent = textContent;
 
-    const valueScoreMain = document.querySelectorAll(".value-score")[value2];
-    valueScoreMain.textContent = textContent;
-}
+//     const valueScoreMain = document.querySelectorAll(".value-score")[value2];
+//     // valueScoreMain.textContent = textContent;
+// }
 
-function countValueCenter() {
+// function countValueCenter() {
 
-    const textContentMain = document.querySelectorAll(".value-score");
-    const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
-    textContentMain[8].textContent = valueContentMain
-}
+//     const textContentMain = document.querySelectorAll(".value-score");
+//     const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
+//     textContentMain[8].textContent = valueContentMain
+// }
 
 let arrayChartGroup1 = [];
 let arrayChartGroup2 = [];
@@ -348,7 +348,7 @@ openPopup.forEach((element, index) => {
 
             if (group1 && checkStatus) {
 
-                countValue(0, 4);
+                // countValue(0, 4);
 
                 const newArray = newArrayData('.value-group-1');
 
@@ -360,7 +360,7 @@ openPopup.forEach((element, index) => {
             const group2 = element.classList.contains("group2");
             if (group2 && checkStatus) {
 
-                countValue(1, 5);
+                // countValue(1, 5);
 
                 const newArray = newArrayData('.value-group-2');
 
@@ -371,7 +371,7 @@ openPopup.forEach((element, index) => {
             const group3 = element.classList.contains("group3");
             if (group3 && checkStatus) {
 
-                countValue(2, 6);
+                // countValue(2, 6);
 
                 const newArray = newArrayData('.value-group-3');
 
@@ -383,7 +383,7 @@ openPopup.forEach((element, index) => {
             const group4 = element.classList.contains("group4");
             if (group4 && checkStatus) {
 
-                countValue(3, 7);
+                // countValue(3, 7);
 
                 const newArray = newArrayData('.value-group-4');
 
@@ -395,7 +395,7 @@ openPopup.forEach((element, index) => {
             const group5 = element.classList.contains("group5");
             if (group5 && checkStatus) {
 
-                countValue(13, 9);
+                // countValue(13, 9);
 
                 const newArray = newArrayData('.value-group-5');
 
@@ -407,7 +407,7 @@ openPopup.forEach((element, index) => {
             const group6 = element.classList.contains("group6");
             if (group6 && checkStatus) {
 
-                countValue(14, 10);
+                // countValue(14, 10);
 
                 const newArray = newArrayData('.value-group-6');
 
@@ -418,7 +418,7 @@ openPopup.forEach((element, index) => {
             const group7 = element.classList.contains("group7");
             if (group7 && checkStatus) {
 
-                countValue(15, 11);
+                // countValue(15, 11);
 
                 const newArray = newArrayData('.value-group-7');
 
@@ -429,7 +429,7 @@ openPopup.forEach((element, index) => {
             const group8 = element.classList.contains("group8");
             if (group8 && checkStatus) {
 
-                countValue(16, 12);
+                // countValue(16, 12);
 
                 const newArray = newArrayData('.value-group-8');
 
@@ -437,7 +437,7 @@ openPopup.forEach((element, index) => {
                 mycanvas8 = createCanvas("mycanvas8", newArray)
             }
 
-            countValueCenter()
+            // countValueCenter()
         }
 
     });

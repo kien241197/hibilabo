@@ -75,9 +75,13 @@ buttonTitle.addEventListener("click", function () {
 
 // 
 const inputValue = document.querySelectorAll('.input-table');
-inputValue.forEach(element => {
+inputValue.forEach((element, index) => {
 
     element.setAttribute("readOnly", "true")
+    element.addEventListener("change", function(){
+
+        console.log(index);
+    })
 })
 
 
@@ -91,6 +95,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[0].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[0].textContent = element.value;
+            inputValue[64].removeAttribute("readOnly")
             removeAttribute(0, 7)
         }
 
@@ -98,6 +103,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[1].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[1].textContent = element.value;
+            inputValue[65].removeAttribute("readOnly")
             removeAttribute(8, 15)
         }
 
@@ -105,6 +111,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[2].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[2].textContent = element.value;
+            inputValue[66].removeAttribute("readOnly")
             removeAttribute(16, 23)
         }
 
@@ -112,6 +119,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[4].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[4].textContent = element.value;
+            inputValue[67].removeAttribute("readOnly")
            removeAttribute(32, 39)
         }
 
@@ -119,6 +127,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[7].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[7].textContent = element.value;
+            inputValue[68].removeAttribute("readOnly")
             removeAttribute(56, 64)
         }
 
@@ -126,6 +135,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[6].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[6].textContent = element.value;
+            inputValue[69].removeAttribute("readOnly")
             removeAttribute(48, 55)
         }
 
@@ -133,6 +143,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[5].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[5].textContent = element.value;
+            inputValue[70].removeAttribute("readOnly")
             removeAttribute(40, 47)
         }
 
@@ -140,6 +151,7 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[3].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[3].textContent = element.value;
+            inputValue[71].removeAttribute("readOnly")
             removeAttribute(24, 31)
         }
     })

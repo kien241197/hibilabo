@@ -13,6 +13,13 @@
     --background-rgba: linear-gradient(90.07deg, #F68121 -0.48%, #F86E54 100.22%);
 }
 
+.wrapper-item-table-body-bottom-right-tab-1 {
+
+    height: 87%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
 .wrapper-body-left {
 
     grid-column: span 8;
@@ -1439,7 +1446,7 @@ body {
 
 @media screen and (max-width: 960px) {
 
-  
+
     .wrapper-body-left {
         grid-column: span 7;
     }
@@ -1608,14 +1615,14 @@ body {
     }
 
     #triangle4 {
-      
+
         top: 0;
         bottom: 0;
         padding: 3px;
     }
 
     #triangle5 {
-      
+
         top: 0;
         bottom: 0;
         padding: 3px;
