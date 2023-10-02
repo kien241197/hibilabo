@@ -188,7 +188,7 @@ var mycanvas16 = createCanvas("mycanvas16", arrayChartGroup8);
 
 const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element, index) => {
-    
+
     const paragraph = element.querySelector('p').textContent;
     var content = `<div class="popup" id='popup${index + 1}'>
     <p class="title-popup">${paragraph}</p>
@@ -275,9 +275,24 @@ valueTab2.addEventListener('click', () => {
 console.log(window.innerWidth)
 // 
 
+const hiddenPopup = document.querySelectorAll(".container-fluid");
+hiddenPopup.forEach(element => {
+
+    element.addEventListener("click", function () {
+
+        const popup = document.querySelectorAll(".popup")
+        popup.forEach(itemPopup => {
+            const checkStatus = itemPopup.classList.contains("hidden");
+            if (checkStatus === false) {
+                itemPopup.classList.add("hidden")
+            }
+        })
+    })
+})
+
 
 var mouseDownTime = 0;
-var minimumHoldTime = 2000;
+var minimumHoldTime = 1500;
 let time = 0;
 var timeoutId;
 
@@ -307,8 +322,6 @@ openPopup.forEach((element, index) => {
 
     element.addEventListener("mouseup", function () {
         clearTimeout(timeoutId);
-        console.log("timeoutId", timeoutId);
-
     })
 
 
@@ -429,3 +442,4 @@ openPopup.forEach((element, index) => {
 
     });
 })
+
