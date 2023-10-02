@@ -110,37 +110,37 @@ inputValueTab.forEach((element, index) => {
 
         if (index === 3) {
 
-            document.querySelectorAll(".title-main-score")[3].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[3].textContent = element.value;
-           removeAttribute(24, 31)
+            document.querySelectorAll(".title-main-score")[4].textContent = element.value;
+            document.querySelectorAll(".title-value-table-score")[4].textContent = element.value;
+           removeAttribute(32, 39)
         }
 
         if (index === 4) {
 
-            document.querySelectorAll(".title-main-score")[4].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[4].textContent = element.value;
-            removeAttribute(32, 39)
+            document.querySelectorAll(".title-main-score")[7].textContent = element.value;
+            document.querySelectorAll(".title-value-table-score")[7].textContent = element.value;
+            removeAttribute(56, 64)
         }
 
         if (index === 5) {
+
+            document.querySelectorAll(".title-main-score")[6].textContent = element.value;
+            document.querySelectorAll(".title-value-table-score")[6].textContent = element.value;
+            removeAttribute(48, 55)
+        }
+
+        if (index === 6) {
 
             document.querySelectorAll(".title-main-score")[5].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[5].textContent = element.value;
             removeAttribute(40, 47)
         }
 
-        if (index === 6) {
-
-            document.querySelectorAll(".title-main-score")[6].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[6].textContent = element.value;
-            removeAttribute(48, 56)
-        }
-
         if (index === 7) {
 
-            document.querySelectorAll(".title-main-score")[7].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[7].textContent = element.value;
-            removeAttribute(56, 64)
+            document.querySelectorAll(".title-main-score")[3].textContent = element.value;
+            document.querySelectorAll(".title-value-table-score")[3].textContent = element.value;
+            removeAttribute(24, 31)
         }
     })
 })
