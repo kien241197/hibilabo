@@ -1032,3 +1032,13 @@ class Masmasmandara(LoginRequiredMixin, TemplateView):
         user_id = self.request.user.id
 
         return kwargs
+    
+    
+class MandaraDisplayNo2(LoginRequiredMixin, TemplateView):
+    template_name = "mandara-display-no-2/index.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs
