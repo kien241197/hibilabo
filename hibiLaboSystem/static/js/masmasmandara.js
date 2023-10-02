@@ -91,96 +91,56 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[0].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[0].textContent = element.value;
-            inputValue.forEach((item, number) => {
-                if (number <= 7) {
-                    item.removeAttribute("readOnly")
-                }
-            })
+            removeAttribute(0, 7)
         }
 
         if (index === 1) {
 
             document.querySelectorAll(".title-main-score")[1].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[1].textContent = element.value;
-                inputValue.forEach((item, number) => {
-                    if (number > 7 && number <= 15) {
-                        console.log("vào đây")
-                        item.removeAttribute("readOnly")
-                    }
-                })
+            removeAttribute(8, 15)
         }
 
         if (index === 2) {
 
             document.querySelectorAll(".title-main-score")[2].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[2].textContent = element.value;
-            inputValue.forEach((item, number) => {
-                if (number > 15 && number <= 23) {
-                    console.log("vào đây")
-                    item.removeAttribute("readOnly")
-                }
-            })
-
+            removeAttribute(16, 23)
         }
 
         if (index === 3) {
 
             document.querySelectorAll(".title-main-score")[3].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[3].textContent = element.value;
-            inputValue.forEach((item, number) => {
-                if (number > 23 && number <= 31) {
-                    console.log("vào đây")
-                    item.removeAttribute("readOnly")
-                }
-            })
+           removeAttribute(24, 31)
         }
 
         if (index === 4) {
 
             document.querySelectorAll(".title-main-score")[4].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[4].textContent = element.value;
-            inputValue.forEach((item, number) => {
-                if (number > 31 && number <= 39) {
-                    console.log("vào đây")
-                    item.removeAttribute("readOnly")
-                }
-            })
+            removeAttribute(32, 39)
         }
 
         if (index === 5) {
 
             document.querySelectorAll(".title-main-score")[5].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[5].textContent = element.value;
-            inputValue.forEach((item, number) => {
-                if (number > 39 && number <= 47) {
-                    console.log("vào đây")
-                    item.removeAttribute("readOnly")
-                }
-            })
+            removeAttribute(40, 47)
         }
 
         if (index === 6) {
 
             document.querySelectorAll(".title-main-score")[6].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[6].textContent = element.value;
-            inputValue.forEach((item, number) => {
-                if (number > 47 && number <= 56) {
-                    console.log("vào đây")
-                    item.removeAttribute("readOnly")
-                }
-            })
+            removeAttribute(48, 56)
         }
 
         if (index === 7) {
 
             document.querySelectorAll(".title-main-score")[7].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[7].textContent = element.value;
-            inputValue.forEach((item, number) => {
-                if (number > 56 && number <= 64) {
-                    console.log("vào đây")
-                    item.removeAttribute("readOnly")
-                }
-            })
+            removeAttribute(56, 64)
         }
     })
 })
@@ -194,4 +154,13 @@ inputValueSocre.addEventListener('change', function () {
         element.removeAttribute("readOnly")
     })
 })
+
+function removeAttribute(number1, number2) {
+
+    inputValue.forEach((item, number) => {
+        if (number >= number1 && number <= number2) {
+            item.removeAttribute("readOnly")
+        }
+    })
+}
 console.log(window.innerWidth)
