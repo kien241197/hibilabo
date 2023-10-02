@@ -966,6 +966,7 @@ body {
     background-color: white;
     margin: unset !important;
     display: block !important;
+    color: black;
 }
 
 /* .wrapper-tab div:last-child {
