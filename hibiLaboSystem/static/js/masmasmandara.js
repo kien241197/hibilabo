@@ -43,10 +43,32 @@ const buttonTitle = document.getElementById('button-title-1');
 buttonTitle.addEventListener("click", function () {
 
     const valueInput = document.querySelectorAll(".input-table");
-
+    const inputValueTab = document.querySelectorAll(".input-value-tab");
+    const titleValueTableScore = document.querySelectorAll(".title-value-table-score");
+    const titleMainScore = document.querySelectorAll(".title-main-score");
     valueInput.forEach(element => {
         if (element.value) {
             element.value = "";
+        }
+    });
+
+    inputValueTab.forEach(element => {
+        if (element.value) {
+            element.value = "";
+        }
+    })
+
+    titleValueTableScore.forEach(element => {
+        if (element.textContent) {
+            element.textContent = "";
+        }
+    })
+
+    titleMainScore.forEach(element => {
+
+        if (element.textContent) {
+
+            element.textContent = ""
         }
     })
 })
