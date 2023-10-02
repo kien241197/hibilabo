@@ -39,15 +39,71 @@ valueTab2.addEventListener('click', () => {
 
 
 // 
-// const buttonTitle = document.querySelectorAll('.button-title');
-// buttonTitle.forEach(element => {
+const buttonTitle = document.getElementById('button-title-1');
+buttonTitle.addEventListener("click", function () {
 
-//     element.addEventListener("click", function(){
+    const valueInput = document.querySelectorAll(".input-table");
 
-//         console.log(element.textContent);
-//         if(element.textContent === "一括削除"){
-            
-//         }
-//     })
-// })
+    valueInput.forEach(element => {
+        if (element.value) {
+            element.value = "";
+        }
+    })
+})
+
+const inputValueTab = document.querySelectorAll(".input-value-tab");
+inputValueTab.forEach((element, index) => {
+
+    element.addEventListener('change', function () {
+
+        if (index === 0) {
+
+            document.querySelectorAll(".title-main-score")[0].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[0].textContent = element.value
+        }
+
+        if (index === 1) {
+
+            document.querySelectorAll(".title-main-score")[1].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[1].textContent = element.value
+        }
+
+        if (index === 2) {
+
+            document.querySelectorAll(".title-main-score")[2].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[2].textContent = element.value
+        }
+
+        if (index === 3) {
+
+            document.querySelectorAll(".title-main-score")[3].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[3].textContent = element.value
+        }
+
+        if (index === 4) {
+
+            document.querySelectorAll(".title-main-score")[4].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[4].textContent = element.value
+        }
+
+        if (index === 5) {
+
+            document.querySelectorAll(".title-main-score")[5].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[5].textContent = element.value
+        }
+
+        if (index === 6) {
+
+            document.querySelectorAll(".title-main-score")[6].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[6].textContent = element.value
+        }
+
+        if (index === 7) {
+
+            document.querySelectorAll(".title-main-score")[7].textContent = element.value
+            document.querySelectorAll(".title-value-table-score")[7].textContent = element.value
+        }
+    })
+})
+
 console.log(window.innerWidth)
