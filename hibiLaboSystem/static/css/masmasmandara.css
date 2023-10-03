@@ -19,16 +19,10 @@
 }
 
 
-.wrapper-item-table-body-bottom-right-tab-1 {
-
-    height: 74%;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 
 .input-table {
 
+    text-align: center;
     width: 100%;
     height: 100%;
     background: none;
@@ -98,6 +92,7 @@
 
 .input-value-score {
 
+    text-align: center;
     width: 100%;
     height: 80%;
     border: none;
@@ -105,6 +100,8 @@
     resize: none;
     font-family: var(--font-content);
     font-weight: bold;
+    position: absolute;
+    bottom: 0;
 }
 
 .wrapper-text:nth-child(2) {

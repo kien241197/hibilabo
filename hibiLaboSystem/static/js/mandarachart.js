@@ -250,6 +250,23 @@ choose.forEach((element, index) => {
         })
         element.classList.add('background-choose-active')
         element.classList.add('color-print')
+
+        if (index === 1) {
+            console.log(document.querySelector(".body-bottom-left"));
+            document.querySelector(".masmas-mandara").style.display = "block";
+            document.querySelector(".body-bottom-left").style.display = "none";
+            document.querySelector(".body-bottom-right").style.display = "none";
+            document.querySelector(".content-title").style.display = "none";
+            document.querySelector(".text-title").textContent = "MASMAS MANDARA CHART";
+            document.querySelector(".wrapper-body-left").style.gridColumn = "span 12"
+        } else {
+            document.querySelector(".masmas-mandara").style.display = "none";
+            document.querySelector(".body-bottom-left").style.display = "grid";
+            document.querySelector(".body-bottom-right").style.display = "flex";
+            document.querySelector(".content-title").style.display = "block";
+            document.querySelector(".text-title").textContent = "MANDARA CHART";
+            document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
+        }
     })
 })
 
@@ -269,10 +286,11 @@ valueTab2.addEventListener('click', () => {
     document.querySelector(".tab1").classList.remove("background-tab-active")
     document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.add("hidden-tab");
     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
+
 });
 
 
-console.log(window.innerWidth)
+console.log("a", window.innerWidth)
 // 
 
 const hiddenPopup = document.querySelectorAll(".container-fluid");
@@ -443,3 +461,58 @@ openPopup.forEach((element, index) => {
     });
 })
 
+// 
+
+const barChart1 = document.getElementById('barChart1').getContext('2d');
+const chart5 = new Chart(barChart1, {
+    type: 'bar',
+    data: {
+        labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+        datasets: [{
+            label: '',
+            data: [48, 53, 66, 78, 73, 70, 85],
+            backgroundColor:
+                '#C8C9CA',
+        }]
+    },
+    options: {
+        plugins: {
+
+
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                offset: -5,
+                color: "#2CAEB5",
+                font: { size: 22, weight: 700 },
+                formatter: function (value, context) {
+                    return value;
+                },
+
+            },
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: '#000000',
+
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: '#000000',
+
+                }
+            }
+        }
+    },
+});

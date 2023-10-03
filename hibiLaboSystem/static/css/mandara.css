@@ -12,14 +12,10 @@
     --font-text: 'Source Sans Pro';
     --background-rgba: linear-gradient(90.07deg, #F68121 -0.48%, #F86E54 100.22%);
 }
+.masmas-mandara {
 
-.wrapper-item-table-body-bottom-right-tab-1 {
-
-    height: 87%;
-    overflow: hidden;
-    overflow-y: auto;
+    display: none;
 }
-
 .wrapper-body-left {
 
     grid-column: span 8;
@@ -1236,6 +1232,11 @@ body {
     background-color: #fff;
     background: #717276;
     gap: 2px;
+}
+
+.select-masmas {
+
+    border-radius: 5px;
 }
 
 
