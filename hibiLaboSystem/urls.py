@@ -32,8 +32,9 @@ urlpatterns = [
 	path('bonknow-think', views.BonknowThink.as_view(), name='bonknow_think'),
 	path('bonknow-respons', views.BonknowRespons.as_view(), name='bonknow_respons'),
 
-	path('mandara', views.Mandara.as_view(), name='mandara'),
-    path('masmasmandara', views.Masmasmandara.as_view(), name='masmasmandara'),
-    path('mandara-display-no-2', views.MandaraDisplayNo2.as_view(), name='mandara_display_no_2'),
-    path('mandara-display-no-4', views.MandaraDisplayNo4.as_view(), name='mandara_display_no_4'),
+	path('mandara-print', views.MandaraPrint.as_view(), name='mandara_print'), #print PDF
+    path('mandara-sheet', views.MandaraSheet.as_view(), name='mandara_sheet'), #Display 2
+    path('mandata-create', views.MandaraCreate.as_view(), name='mandara_create'), #Display 3
+    path('mandara-reuse', views.MandaraReuse.as_view(), name='mandara_reuse'), #Display 4
+    path('mandara-completion', views.MandaraCompletion.as_view(), name='mandara_completion'), #Display 5
 ]

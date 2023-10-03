@@ -1015,8 +1015,9 @@ class BonknowThink(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(context)
 
-class Mandara(LoginRequiredMixin, TemplateView):
-    template_name = "mandara/index.html"
+#MASMASMANDARA
+class MandaraPrint(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_print.html"
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
@@ -1024,18 +1025,8 @@ class Mandara(LoginRequiredMixin, TemplateView):
 
         return kwargs
     
-class Masmasmandara(LoginRequiredMixin, TemplateView):
-    template_name = "masmasmandara/index.html"
-
-    def get_context_data(self, **kwargs):
-        company_id = self.request.user.company_id
-        user_id = self.request.user.id
-
-        return kwargs
-    
-    
-class MandaraDisplayNo2(LoginRequiredMixin, TemplateView):
-    template_name = "mandara-display-no-2/index.html"
+class MandaraCreate(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_create.html"
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
@@ -1044,8 +1035,27 @@ class MandaraDisplayNo2(LoginRequiredMixin, TemplateView):
         return kwargs
     
     
-class MandaraDisplayNo4(LoginRequiredMixin, TemplateView):
-    template_name = "mandara-display-no-4/index.html"
+class MandaraSheet(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_sheet.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs
+    
+    
+class MandaraReuse(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_reuse.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs
+
+class MandaraCompletion(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_completion.html"
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
