@@ -13,12 +13,17 @@
     --background-rgba: linear-gradient(90.07deg, #F68121 -0.48%, #F86E54 100.22%);
 }
 
-.tab2 {
-    
-    background-color: #8f9195;
+input:focus { 
+    outline: none !important;
+}
+textarea:focus { 
+    outline: none !important;
 }
 
+.tab2 {
 
+    background-color: #8f9195;
+}
 
 .input-table {
 
@@ -65,7 +70,7 @@
 }
 
 .button-title {
-    
+
     cursor: pointer;
     border: none;
     background-color: #d2d2d4;
@@ -192,23 +197,6 @@
     background-color: #e2db9d;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .popup {
     position: absolute;
     z-index: 12;
@@ -220,23 +208,32 @@
 #triangle8 {
 
     position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     margin: auto;
-    top: 20px;
     opacity: 0.5;
 }
 
 #triangle7 {
 
     position: absolute;
-    bottom: 7px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
     opacity: 0.5;
 }
 
 #triangle6 {
-
     position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     margin: auto;
-    top: 20px;
     opacity: 0.5;
 }
 
@@ -251,32 +248,41 @@
 
 #triangle1 {
     position: absolute;
-    bottom: 0px;
-    margin: 0 auto;
-    left: 28px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
     opacity: 0.5;
 }
 
 #triangle3 {
     position: absolute;
-    bottom: 0px;
-    margin: 0 auto;
-    left: 10px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
     opacity: 0.5;
 }
 
 #triangle4 {
     position: absolute;
-    margin: auto;
-    opacity: 0.5;
     top: 0;
     bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    opacity: 0.5;
 }
 
 #triangle {
     position: absolute;
-    bottom: 10px;
-    margin: 0 auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
     opacity: 0.5;
 }
 
@@ -755,7 +761,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     color: #888888;
-    border-bottom: 1px solid #000 ;
+    border-bottom: 1px solid #000;
 }
 
 .item-table-body-bottom-right {
@@ -881,6 +887,7 @@ body {
     background-color: white;
     height: 12px;
 }
+
 .title-main-score {
 
     width: 100%;
@@ -971,6 +978,7 @@ body {
 
 
 }
+
 .title-main-score-center {
 
     position: absolute;
@@ -1782,7 +1790,7 @@ body {
         overflow: hidden;
         overflow-y: none;
     }
-    
+
 
     .color-print {
 
@@ -1799,7 +1807,7 @@ body {
         color: white !important;
     }
 
-   
+
 
     .body-bottom-left {
         grid-column: span 9;
