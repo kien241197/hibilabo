@@ -94,7 +94,11 @@ function countValueCenter() {
 
     const textContentMain = document.querySelectorAll(".value-score");
     const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
-    textContentMain[8].textContent = valueContentMain
+    textContentMain[8].textContent = valueContentMain;
+
+    const valueTabCenter = document.querySelector(".value-vanvas-center");
+    console.log("valueTabCenter", valueTabCenter);
+    valueTabCenter.textContent = valueContentMain;
 }
 
 let arrayChartGroup1 = [];
@@ -154,21 +158,21 @@ group8.forEach(item => {
     arrayChartGroup8.push(item.textContent);
 })
 
-var mycanvas1 = createCanvas("mycanvas1", arrayChartGroup1);
+// var mycanvas1 = createCanvas("mycanvas1", arrayChartGroup1);
 
-var mycanvas2 = createCanvas("mycanvas2", arrayChartGroup2);
+// var mycanvas2 = createCanvas("mycanvas2", arrayChartGroup2);
 
-var mycanvas3 = createCanvas("mycanvas3", arrayChartGroup3);
+// var mycanvas3 = createCanvas("mycanvas3", arrayChartGroup3);
 
-var mycanvas4 = createCanvas("mycanvas4", arrayChartGroup4);
+// var mycanvas4 = createCanvas("mycanvas4", arrayChartGroup4);
 
-var mycanvas5 = createCanvas("mycanvas5", arrayChartGroup5);
+// var mycanvas5 = createCanvas("mycanvas5", arrayChartGroup5);
 
-var mycanvas6 = createCanvas("mycanvas6", arrayChartGroup6);
+// var mycanvas6 = createCanvas("mycanvas6", arrayChartGroup6);
 
-var mycanvas7 = createCanvas("mycanvas7", arrayChartGroup7);
+// var mycanvas7 = createCanvas("mycanvas7", arrayChartGroup7);
 
-var mycanvas8 = createCanvas("mycanvas8", arrayChartGroup8);
+// var mycanvas8 = createCanvas("mycanvas8", arrayChartGroup8);
 
 var mycanvas9 = createCanvas("mycanvas9", arrayChartGroup1);
 
@@ -370,8 +374,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-1');
 
-                mycanvas1.destroy();
-                mycanvas1 = createCanvas("mycanvas1", newArray);
+                mycanvas9.destroy();
+                mycanvas9 = createCanvas("mycanvas9", newArray);
 
             }
 
@@ -382,8 +386,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-2');
 
-                mycanvas2.destroy();
-                mycanvas2 = createCanvas("mycanvas2", newArray);
+                mycanvas10.destroy();
+                mycanvas10 = createCanvas("mycanvas10", newArray);
             }
 
             const group3 = element.classList.contains("group3");
@@ -393,8 +397,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-3');
 
-                mycanvas3.destroy()
-                mycanvas3 = createCanvas("mycanvas3", newArray)
+                mycanvas11.destroy()
+                mycanvas11 = createCanvas("mycanvas11", newArray)
 
             }
 
@@ -405,8 +409,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-4');
 
-                mycanvas4.destroy()
-                mycanvas4 = createCanvas("mycanvas4", newArray)
+                mycanvas12.destroy()
+                mycanvas12 = createCanvas("mycanvas12", newArray)
 
             }
 
@@ -417,8 +421,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-5');
 
-                mycanvas5.destroy()
-                mycanvas5 = createCanvas("mycanvas5", newArray)
+                mycanvas13.destroy()
+                mycanvas13 = createCanvas("mycanvas13", newArray)
 
             }
 
@@ -429,8 +433,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-6');
 
-                mycanvas6.destroy()
-                mycanvas6 = createCanvas("mycanvas6", newArray)
+                mycanvas14.destroy()
+                mycanvas14 = createCanvas("mycanvas14", newArray)
             }
 
             const group7 = element.classList.contains("group7");
@@ -440,8 +444,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-7');
 
-                mycanvas7.destroy()
-                mycanvas7 = createCanvas("mycanvas7", newArray)
+                mycanvas15.destroy()
+                mycanvas15 = createCanvas("mycanvas15", newArray)
             }
 
             const group8 = element.classList.contains("group8");
@@ -451,8 +455,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-8');
 
-                mycanvas8.destroy()
-                mycanvas8 = createCanvas("mycanvas8", newArray)
+                mycanvas16.destroy()
+                mycanvas16 = createCanvas("mycanvas16", newArray)
             }
 
             countValueCenter()
