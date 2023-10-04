@@ -810,7 +810,7 @@ body {
     font-weight: 700;
     font-size: 75%;
     margin: auto 0;
-    width: 68%;
+    flex: 1;
 }
 
 .content-table-body-right {
@@ -1104,11 +1104,6 @@ body {
     .wrapper-content-table-body-right div {
 
         font-size: 80%;
-    }
-
-    .title-order-right {
-
-        width: 65%;
     }
 
     .wrapper-tab div {
