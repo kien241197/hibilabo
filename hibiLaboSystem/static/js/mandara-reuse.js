@@ -80,22 +80,26 @@ function newArrayData(className) {
     return newArray;
 }
 
-// function countValue(value1, value2) {
+function countValue(value1, value2) {
 
-//     const valueScore = document.querySelectorAll(".value-score")[value1];
-//     // const textContent = parseInt(valueScore.textContent) + 1;
-//     // valueScore.textContent = textContent;
+    const valueScore = document.querySelectorAll(".value-score")[value1];
+    const textContent = parseInt(valueScore.textContent) + 1;
+    valueScore.textContent = textContent;
 
-//     const valueScoreMain = document.querySelectorAll(".value-score")[value2];
-//     // valueScoreMain.textContent = textContent;
-// }
+    const valueScoreMain = document.querySelectorAll(".value-score")[value2];
+    valueScoreMain.textContent = textContent;
+}
 
-// function countValueCenter() {
+function countValueCenter() {
 
-//     const textContentMain = document.querySelectorAll(".value-score");
-//     const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
-//     textContentMain[8].textContent = valueContentMain
-// }
+    const textContentMain = document.querySelectorAll(".value-score");
+    const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
+    textContentMain[8].textContent = valueContentMain;
+
+    const valueTabCenter = document.querySelector(".value-vanvas-center");
+    console.log("valueTabCenter", valueTabCenter);
+    valueTabCenter.textContent = valueContentMain;
+}
 
 let arrayChartGroup1 = [];
 let arrayChartGroup2 = [];
@@ -154,21 +158,21 @@ group8.forEach(item => {
     arrayChartGroup8.push(item.textContent);
 })
 
-var mycanvas1 = createCanvas("mycanvas1", arrayChartGroup1);
+// var mycanvas1 = createCanvas("mycanvas1", arrayChartGroup1);
 
-var mycanvas2 = createCanvas("mycanvas2", arrayChartGroup2);
+// var mycanvas2 = createCanvas("mycanvas2", arrayChartGroup2);
 
-var mycanvas3 = createCanvas("mycanvas3", arrayChartGroup3);
+// var mycanvas3 = createCanvas("mycanvas3", arrayChartGroup3);
 
-var mycanvas4 = createCanvas("mycanvas4", arrayChartGroup4);
+// var mycanvas4 = createCanvas("mycanvas4", arrayChartGroup4);
 
-var mycanvas5 = createCanvas("mycanvas5", arrayChartGroup5);
+// var mycanvas5 = createCanvas("mycanvas5", arrayChartGroup5);
 
-var mycanvas6 = createCanvas("mycanvas6", arrayChartGroup6);
+// var mycanvas6 = createCanvas("mycanvas6", arrayChartGroup6);
 
-var mycanvas7 = createCanvas("mycanvas7", arrayChartGroup7);
+// var mycanvas7 = createCanvas("mycanvas7", arrayChartGroup7);
 
-var mycanvas8 = createCanvas("mycanvas8", arrayChartGroup8);
+// var mycanvas8 = createCanvas("mycanvas8", arrayChartGroup8);
 
 var mycanvas9 = createCanvas("mycanvas9", arrayChartGroup1);
 
@@ -189,6 +193,11 @@ var mycanvas16 = createCanvas("mycanvas16", arrayChartGroup8);
 const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element, index) => {
 
+    const valueSpan = element.querySelector('span').textContent;
+    if(valueSpan == 0){
+        element.querySelector('span').textContent = ""
+    }
+    
     const paragraph = element.querySelector('p').textContent;
     var content = `<div class="popup" id='popup${index + 1}'>
     <p class="title-popup">${paragraph}</p>
@@ -250,6 +259,23 @@ choose.forEach((element, index) => {
         })
         element.classList.add('background-choose-active')
         element.classList.add('color-print')
+
+        if (index === 1) {
+            console.log(document.querySelector(".body-bottom-left"));
+            document.querySelector(".masmas-mandara").style.display = "block";
+            document.querySelector(".body-bottom-left").style.display = "none";
+            document.querySelector(".body-bottom-right").style.display = "none";
+            document.querySelector(".content-title").style.display = "none";
+            document.querySelector(".text-title").textContent = "MASMAS MANDARA CHART";
+            document.querySelector(".wrapper-body-left").style.gridColumn = "span 12"
+        } else {
+            document.querySelector(".masmas-mandara").style.display = "none";
+            document.querySelector(".body-bottom-left").style.display = "grid";
+            document.querySelector(".body-bottom-right").style.display = "flex";
+            document.querySelector(".content-title").style.display = "block";
+            document.querySelector(".text-title").textContent = "MANDARA CHART";
+            document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
+        }
     })
 })
 
@@ -263,16 +289,17 @@ valueTab1.addEventListener('click', () => {
     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.add("hidden-tab");
 });
 
-// const valueTab2 = document.querySelector(".tab2");
-// valueTab2.addEventListener('click', () => {
-//     valueTab2.classList.add('background-tab-active');
-//     document.querySelector(".tab1").classList.remove("background-tab-active")
-//     document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.add("hidden-tab");
-//     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
-// });
+const valueTab2 = document.querySelector(".tab2");
+valueTab2.addEventListener('click', () => {
+    valueTab2.classList.add('background-tab-active');
+    document.querySelector(".tab1").classList.remove("background-tab-active")
+    document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.add("hidden-tab");
+    document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
+
+});
 
 
-console.log(window.innerWidth)
+console.log("a", window.innerWidth)
 // 
 
 const hiddenPopup = document.querySelectorAll(".container-fluid");
@@ -348,98 +375,153 @@ openPopup.forEach((element, index) => {
 
             if (group1 && checkStatus) {
 
-                // countValue(0, 4);
+                countValue(0, 4);
 
                 const newArray = newArrayData('.value-group-1');
 
-                mycanvas1.destroy();
-                mycanvas1 = createCanvas("mycanvas1", newArray);
+                mycanvas9.destroy();
+                mycanvas9 = createCanvas("mycanvas9", newArray);
 
             }
 
             const group2 = element.classList.contains("group2");
             if (group2 && checkStatus) {
 
-                // countValue(1, 5);
+                countValue(1, 5);
 
                 const newArray = newArrayData('.value-group-2');
 
-                mycanvas2.destroy();
-                mycanvas2 = createCanvas("mycanvas2", newArray);
+                mycanvas10.destroy();
+                mycanvas10 = createCanvas("mycanvas10", newArray);
             }
 
             const group3 = element.classList.contains("group3");
             if (group3 && checkStatus) {
 
-                // countValue(2, 6);
+                countValue(2, 6);
 
                 const newArray = newArrayData('.value-group-3');
 
-                mycanvas3.destroy()
-                mycanvas3 = createCanvas("mycanvas3", newArray)
+                mycanvas11.destroy()
+                mycanvas11 = createCanvas("mycanvas11", newArray)
 
             }
 
             const group4 = element.classList.contains("group4");
             if (group4 && checkStatus) {
 
-                // countValue(3, 7);
+                countValue(3, 7);
 
                 const newArray = newArrayData('.value-group-4');
 
-                mycanvas4.destroy()
-                mycanvas4 = createCanvas("mycanvas4", newArray)
+                mycanvas12.destroy()
+                mycanvas12 = createCanvas("mycanvas12", newArray)
 
             }
 
             const group5 = element.classList.contains("group5");
             if (group5 && checkStatus) {
 
-                // countValue(13, 9);
+                countValue(13, 9);
 
                 const newArray = newArrayData('.value-group-5');
 
-                mycanvas5.destroy()
-                mycanvas5 = createCanvas("mycanvas5", newArray)
+                mycanvas13.destroy()
+                mycanvas13 = createCanvas("mycanvas13", newArray)
 
             }
 
             const group6 = element.classList.contains("group6");
             if (group6 && checkStatus) {
 
-                // countValue(14, 10);
+                countValue(14, 10);
 
                 const newArray = newArrayData('.value-group-6');
 
-                mycanvas6.destroy()
-                mycanvas6 = createCanvas("mycanvas6", newArray)
+                mycanvas14.destroy()
+                mycanvas14 = createCanvas("mycanvas14", newArray)
             }
 
             const group7 = element.classList.contains("group7");
             if (group7 && checkStatus) {
 
-                // countValue(15, 11);
+                countValue(15, 11);
 
                 const newArray = newArrayData('.value-group-7');
 
-                mycanvas7.destroy()
-                mycanvas7 = createCanvas("mycanvas7", newArray)
+                mycanvas15.destroy()
+                mycanvas15 = createCanvas("mycanvas15", newArray)
             }
 
             const group8 = element.classList.contains("group8");
             if (group8 && checkStatus) {
 
-                // countValue(16, 12);
+                countValue(16, 12);
 
                 const newArray = newArrayData('.value-group-8');
 
-                mycanvas8.destroy()
-                mycanvas8 = createCanvas("mycanvas8", newArray)
+                mycanvas16.destroy()
+                mycanvas16 = createCanvas("mycanvas16", newArray)
             }
 
-            // countValueCenter()
+            countValueCenter()
         }
 
     });
 })
 
+// 
+
+const barChart1 = document.getElementById('barChart1').getContext('2d');
+const chart5 = new Chart(barChart1, {
+    type: 'bar',
+    data: {
+        labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+        datasets: [{
+            label: '',
+            data: [48, 53, 66, 78, 73, 70, 85],
+            backgroundColor:
+                '#C8C9CA',
+        }]
+    },
+    options: {
+        plugins: {
+
+
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                offset: -5,
+                color: "#2CAEB5",
+                font: { size: 22, weight: 700 },
+                formatter: function (value, context) {
+                    return value;
+                },
+
+            },
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: '#000000',
+
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: '#000000',
+
+                }
+            }
+        }
+    },
+});
