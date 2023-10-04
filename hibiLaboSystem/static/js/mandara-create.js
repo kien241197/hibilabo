@@ -75,29 +75,12 @@ buttonTitle.addEventListener("click", function () {
 
 // 
 const inputValue = document.querySelectorAll('.input-table');
-inputValue.forEach((element, index) => {
+inputValue.forEach(element => {
 
 
     element.setAttribute("readOnly", "true")
 
 })
-
-function removeAttributeTab() {
-
-    inputValue.forEach((element, index) => {
-
-        inputValue[64].removeAttribute("readOnly");
-        inputValue[65].removeAttribute("readOnly");
-        inputValue[66].removeAttribute("readOnly");
-        inputValue[67].removeAttribute("readOnly");
-        inputValue[68].removeAttribute("readOnly");
-        inputValue[69].removeAttribute("readOnly");
-        inputValue[70].removeAttribute("readOnly");
-        inputValue[71].removeAttribute("readOnly");
-
-
-    })
-}
 
 const inputValueTab = document.querySelectorAll(".input-value-tab");
 inputValueTab.forEach((element, index) => {
@@ -178,7 +161,7 @@ inputValueSocre.addEventListener('change', function () {
 
         element.removeAttribute("readOnly")
     })
-    removeAttributeTab();
+    removeAttribute(64, 71);
 })
 
 function removeAttribute(number1, number2) {
@@ -189,4 +172,5 @@ function removeAttribute(number1, number2) {
         }
     })
 }
+
 console.log(window.innerWidth)
