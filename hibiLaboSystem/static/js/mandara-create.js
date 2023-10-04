@@ -75,15 +75,12 @@ buttonTitle.addEventListener("click", function () {
 
 // 
 const inputValue = document.querySelectorAll('.input-table');
-inputValue.forEach((element, index) => {
+inputValue.forEach(element => {
+
 
     element.setAttribute("readOnly", "true")
-    element.addEventListener("change", function(){
 
-        console.log(index);
-    })
 })
-
 
 const inputValueTab = document.querySelectorAll(".input-value-tab");
 inputValueTab.forEach((element, index) => {
@@ -95,7 +92,6 @@ inputValueTab.forEach((element, index) => {
 
             document.querySelectorAll(".title-main-score")[0].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[0].textContent = element.value;
-            inputValue[64].removeAttribute("readOnly")
             removeAttribute(0, 7)
         }
 
@@ -120,7 +116,7 @@ inputValueTab.forEach((element, index) => {
             document.querySelectorAll(".title-main-score")[4].textContent = element.value;
             document.querySelectorAll(".title-value-table-score")[4].textContent = element.value;
             inputValue[67].removeAttribute("readOnly")
-           removeAttribute(32, 39)
+            removeAttribute(32, 39)
         }
 
         if (index === 4) {
@@ -165,6 +161,7 @@ inputValueSocre.addEventListener('change', function () {
 
         element.removeAttribute("readOnly")
     })
+    removeAttribute(64, 71);
 })
 
 function removeAttribute(number1, number2) {
@@ -175,4 +172,5 @@ function removeAttribute(number1, number2) {
         }
     })
 }
+
 console.log(window.innerWidth)
