@@ -36,6 +36,22 @@
     resize: none;
 }
 
+.input-table-desc {
+
+    text-align: left !important;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    padding: 2px;
+    font-family: var(--font-content);
+    font-weight: bold;
+    z-index: 13;
+    resize: none;
+}
+
 ::placeholder {
 
     font-size: 10px;
@@ -613,6 +629,7 @@ body {
     font-family: var(--font-content);
     color: #000;
     font-weight: bold;
+    width: 100%;
 }
 
 .value-table-score p {
@@ -793,6 +810,7 @@ body {
     font-weight: 700;
     font-size: 75%;
     margin: auto 0;
+    flex: 1;
 }
 
 .content-table-body-right {
