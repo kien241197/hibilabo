@@ -80,7 +80,7 @@ function newArrayData(className) {
     return newArray;
 }
 
-function countValue(value1, value2) {
+function countValue(value1, value2, value3) {
 
     const valueScore = document.querySelectorAll(".value-score")[value1];
     const textContent = parseInt(valueScore.textContent) + 1;
@@ -88,6 +88,8 @@ function countValue(value1, value2) {
 
     const valueScoreMain = document.querySelectorAll(".value-score")[value2];
     valueScoreMain.textContent = textContent;
+
+    document.querySelectorAll(".value-score-canvas")[value3].textContent = textContent;
 }
 
 function countValueCenter() {
@@ -194,10 +196,10 @@ const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element, index) => {
 
     const valueSpan = element.querySelector('span').textContent;
-    if(valueSpan == 0){
+    if (valueSpan == 0) {
         element.querySelector('span').textContent = ""
     }
-    
+
     const paragraph = element.querySelector('p').textContent;
     var content = `<div class="popup" id='popup${index + 1}'>
     <p class="title-popup">${paragraph}</p>
@@ -375,7 +377,7 @@ openPopup.forEach((element, index) => {
 
             if (group1 && checkStatus) {
 
-                countValue(0, 4);
+                countValue(0, 4, 0);
 
                 const newArray = newArrayData('.value-group-1');
 
@@ -387,7 +389,7 @@ openPopup.forEach((element, index) => {
             const group2 = element.classList.contains("group2");
             if (group2 && checkStatus) {
 
-                countValue(1, 5);
+                countValue(1, 5, 1);
 
                 const newArray = newArrayData('.value-group-2');
 
@@ -398,7 +400,7 @@ openPopup.forEach((element, index) => {
             const group3 = element.classList.contains("group3");
             if (group3 && checkStatus) {
 
-                countValue(2, 6);
+                countValue(2, 6, 2);
 
                 const newArray = newArrayData('.value-group-3');
 
@@ -410,7 +412,7 @@ openPopup.forEach((element, index) => {
             const group4 = element.classList.contains("group4");
             if (group4 && checkStatus) {
 
-                countValue(3, 7);
+                countValue(3, 7, 3);
 
                 const newArray = newArrayData('.value-group-4');
 
@@ -422,7 +424,7 @@ openPopup.forEach((element, index) => {
             const group5 = element.classList.contains("group5");
             if (group5 && checkStatus) {
 
-                countValue(13, 9);
+                countValue(13, 9, 4);
 
                 const newArray = newArrayData('.value-group-5');
 
@@ -434,7 +436,7 @@ openPopup.forEach((element, index) => {
             const group6 = element.classList.contains("group6");
             if (group6 && checkStatus) {
 
-                countValue(14, 10);
+                countValue(14, 10, 5);
 
                 const newArray = newArrayData('.value-group-6');
 
@@ -445,7 +447,7 @@ openPopup.forEach((element, index) => {
             const group7 = element.classList.contains("group7");
             if (group7 && checkStatus) {
 
-                countValue(15, 11);
+                countValue(15, 11, 6);
 
                 const newArray = newArrayData('.value-group-7');
 
@@ -456,7 +458,7 @@ openPopup.forEach((element, index) => {
             const group8 = element.classList.contains("group8");
             if (group8 && checkStatus) {
 
-                countValue(16, 12);
+                countValue(16, 12, 7);
 
                 const newArray = newArrayData('.value-group-8');
 
@@ -525,3 +527,96 @@ const chart5 = new Chart(barChart1, {
         }
     },
 });
+
+// Giá trị Score ban đầu
+let sumScore1 = 0;
+let sumScore2 = 0;
+let sumScore3 = 0;
+let sumScore4 = 0;
+let sumScore5 = 0;
+let sumScore6 = 0;
+let sumScore7 = 0;
+let sumScore8 = 0;
+
+arrayChartGroup1.forEach(element => {
+
+    sumScore1 += Number(element)
+
+})
+
+
+arrayChartGroup2.forEach(element => {
+
+    sumScore2 += Number(element)
+
+})
+
+
+arrayChartGroup3.forEach(element => {
+
+    sumScore3 += Number(element)
+
+})
+
+
+arrayChartGroup4.forEach(element => {
+
+    sumScore4 += Number(element)
+
+})
+
+
+arrayChartGroup5.forEach(element => {
+
+    sumScore5 += Number(element)
+
+})
+
+
+arrayChartGroup6.forEach(element => {
+
+    sumScore6 += Number(element)
+
+})
+
+
+arrayChartGroup7.forEach(element => {
+
+    sumScore7 += Number(element)
+
+})
+
+
+arrayChartGroup8.forEach(element => {
+
+    sumScore8 += Number(element)
+
+})
+
+const totalSumCore = [sumScore1, sumScore2, sumScore3, sumScore4, sumScore5, sumScore6, sumScore7, sumScore8]
+document.querySelectorAll(".value-score-canvas")[0].textContent = sumScore1;
+
+const valueScoreCanvas = document.querySelectorAll(".value-score-canvas");
+valueScoreCanvas.forEach((element, index) => {
+
+    element.textContent = totalSumCore[index];
+})
+
+document.querySelectorAll(".value-score")[0].textContent = totalSumCore[0]
+document.querySelectorAll(".value-score")[4].textContent = totalSumCore[0]
+document.querySelectorAll(".value-score")[1].textContent = totalSumCore[1]
+document.querySelectorAll(".value-score")[5].textContent = totalSumCore[1]
+document.querySelectorAll(".value-score")[2].textContent = totalSumCore[2]
+document.querySelectorAll(".value-score")[6].textContent = totalSumCore[2]
+document.querySelectorAll(".value-score")[3].textContent = totalSumCore[3]
+document.querySelectorAll(".value-score")[7].textContent = totalSumCore[3]
+document.querySelectorAll(".value-score")[9].textContent = totalSumCore[4]
+document.querySelectorAll(".value-score")[13].textContent = totalSumCore[4]
+document.querySelectorAll(".value-score")[10].textContent = totalSumCore[5]
+document.querySelectorAll(".value-score")[14].textContent = totalSumCore[5]
+document.querySelectorAll(".value-score")[11].textContent = totalSumCore[6]
+document.querySelectorAll(".value-score")[15].textContent = totalSumCore[6]
+document.querySelectorAll(".value-score")[12].textContent = totalSumCore[7]
+document.querySelectorAll(".value-score")[16].textContent = totalSumCore[7]
+
+countValueCenter()
