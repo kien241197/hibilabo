@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="container">
                     <form action="" method="POST">
-                        <!-- {% csrf_token %} -->
+                        {% csrf_token %}
                         <div class="wrapper-body">
                             <div class="body-bottom">
                                 <div class="wrapper-body-left">
@@ -35,7 +35,6 @@
                                                     <button class="button-title" id="button-title-2">一時保存</button>
                                                     <input type="submit" class="button-title" value="保存"
                                                         id="button-title-3">
-                                                    <!-- <button class="button-title" id="button-title-3"></button> -->
                                                 </div>
                                                 <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                             </div>
@@ -48,28 +47,7 @@
                                                     <p class="title-center">日々検証</p>
                                                     <button class="choose">2</button>
                                                 </div>
-                                                <!-- <div class="item-body-center">
-                                            <p class="title-center">月間検証</p>
-                                            <button class="choose">3</button>
-                                        </div> -->
-                                                <!-- <div class="item-body-center">
-                                            <p class="title-center">個人推移</p>
-                                            <button class="choose">4</button>
-                                        </div> -->
                                             </div>
-                                            <!-- <div class="content-body-right">
-                                        <p class="title-content-body-left">目標期間設定</p>
-                                        <div class="item-select">
-                                            <select class="select" name="" id="">
-                                                <option value="">2023年3月</option>
-                                            </select>
-                                            <p class="to">～</p>
-                                            <select class="select" name="" id="">
-                                                <option value="">2023年9月</option>
-                                            </select>
-                                            <button class="button">表示</button>
-                                        </div>
-                                    </div> -->
                                         </div>
                                     </div>
                                     <div class="body-bottom-left" id="value-body-bottom-left">
@@ -261,8 +239,7 @@
                                             </div>
                                             <div class="value-table-score SCORE-MAIN">
                                                 <p class="title-main-score-center">1年後の目標</p>
-                                                <textarea class="input-value-score" placeholder="
-                                            ドラ 18 球団" maxlength="20"></textarea>
+                                                {{ form.total_mission }}
                                             </div>
                                             <div class="value-table-score SCORE-text">
                                                 <span class="text-table-score">D</span>

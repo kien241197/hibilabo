@@ -238,3 +238,9 @@ class BonknowForm(forms.Form):
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
+
+class MandaraCreateForm(forms.Form):
+    total_mission = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(attrs={'class': "input-value-score",'placeholder': 'ドラ 18 球団 '})
+    )
