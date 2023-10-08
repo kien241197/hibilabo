@@ -1060,14 +1060,6 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
             mandara = form.save(commit=False)
             mandara.user_id = user_id
             mandara.company_id = company_id
-            mandara.A_result = 0
-            mandara.B_result = 0
-            mandara.C_result = 0
-            mandara.D_result = 0
-            mandara.E_result = 0
-            mandara.F_result = 0
-            mandara.G_result = 0
-            mandara.H_result = 0
             mandara.save()
             context["message"] = '-- 保存しました。--'
         else:
