@@ -31,8 +31,8 @@
                                             <div class="body-top-left">
                                                 <div class="wrapper-text-title">
                                                     <h2 class="text-title">MANDARA CHART</h2>
-                                                    <button class="button-title" id="button-title-1">一括削除</button>
-                                                    <button class="button-title" id="button-title-2">一時保存</button>
+                                                    <button type="button" class="button-title" id="button-title-1">一括削除</button>
+                                                    <button type="button" class="button-title" id="button-title-2">一時保存</button>
                                                     <input type="submit" class="button-title" value="保存"
                                                         id="button-title-3">
                                                 </div>
@@ -41,11 +41,11 @@
                                             <div class="content-body-center">
                                                 <div class="item-body-center">
                                                     <p class="title-center">目標入力</p>
-                                                    <button class="choose">1</button>
+                                                    <button type="button" class="choose">1</button>
                                                 </div>
                                                 <div class="item-body-center">
                                                     <p class="title-center">日々検証</p>
-                                                    <button class="choose">2</button>
+                                                    <button type="button" class="choose">2</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -54,23 +54,16 @@
 
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group1" id="value-table-1">
-                                                <textarea aria-valuetext="123" maxlength="20" class="input-table "
-                                                    placeholder="
-                                                記入例
-                                                体のケア"></textarea>
+                                                {{ form.A1_content }}
                                             </div>
                                             <div class="value-table group1" id="value-table-2">
-                                                <textarea maxlength="20" class="input-table " placeholder="
-
-                                            記入例"></textarea>
+                                                {{ form.A2_content }}
                                             </div>
                                             <div class="value-table group1" id="value-table-3">
-                                                <textarea maxlength="20" class="input-table " placeholder="
-                                            
-                                            記入例"></textarea>
+                                                {{ form.A3_content }}
                                             </div>
                                             <div class="value-table group1">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.A8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
                                                 <span class="text-table-score">A</span>
@@ -81,16 +74,16 @@
                                                 </div>
                                             </div>
                                             <div class="value-table group1">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.A4_content }}
                                             </div>
                                             <div class="value-table group1">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.A7_content }}
                                             </div>
                                             <div class="value-table group1">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.A6_content }}
                                             </div>
                                             <div class="value-table group1">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.A5_content }}
                                                 <svg id="triangle1" xmlns="http://www.w3.org/2000/svg" width="52"
                                                     height="50" viewBox="0 0 52 50" fill="none">
                                                     <path
@@ -101,16 +94,16 @@
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group2" id="value-table-4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B1_content }}
                                             </div>
                                             <div class="value-table group2" id="value-table-5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B2_content }}
                                             </div>
                                             <div class="value-table group2" id="value-table-6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B3_content }}
                                             </div>
                                             <div class="value-table group2">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
                                                 <span class="text-table-score">B</span>
@@ -121,34 +114,34 @@
                                                 </div>
                                             </div>
                                             <div class="value-table group2">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B4_content }}
                                             </div>
                                             <div class="value-table group2">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B7_content }}
                                             </div>
                                             <div class="value-table group2">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B6_content }}
                                                 <svg id="triangle" xmlns="http://www.w3.org/2000/svg" width="62"
                                                     height="42" viewBox="0 0 62 42" fill="none">
                                                     <path d="M31 0L61.3109 41.25H0.689112L31 0Z" fill="#CB99C4" />
                                                 </svg>
                                             </div>
                                             <div class="value-table group2">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.B5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group3" id="value-table-7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C1_content }}
                                             </div>
                                             <div class="value-table group3" id="value-table-8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C2_content }}
                                             </div>
                                             <div class="value-table group3" id="value-table-9">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C3_content }}
                                             </div>
                                             <div class="value-table group3">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
                                                 <span class="text-table-score">C</span>
@@ -159,10 +152,10 @@
                                                 </div>
                                             </div>
                                             <div class="value-table group3">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C4_content }}
                                             </div>
                                             <div class="value-table group3">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C7_content }}
                                                 <svg id="triangle3" xmlns="http://www.w3.org/2000/svg" width="52"
                                                     height="52" viewBox="0 0 52 52" fill="none">
                                                     <path
@@ -171,24 +164,24 @@
                                                 </svg>
                                             </div>
                                             <div class="value-table group3">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C6_content }}
                                             </div>
                                             <div class="value-table group3">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.C5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H1_content }}
                                             </div>
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H2_content }}
                                             </div>
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H3_content }}
                                             </div>
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
                                                 <span class="text-table-score">H</span>
@@ -199,7 +192,7 @@
                                                 </div>
                                             </div>
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H4_content }}
                                                 <svg id="triangle4" xmlns="http://www.w3.org/2000/svg" width="42"
                                                     height="61" viewBox="0 0 42 61" fill="none">
                                                     <path d="M0.500015 30.5L41.75 0.189098L41.75 60.8109L0.500015 30.5Z"
@@ -207,13 +200,13 @@
                                                 </svg>
                                             </div>
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H7_content }}
                                             </div>
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H6_content }}
                                             </div>
                                             <div class="value-table group4">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.H5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
@@ -264,16 +257,16 @@
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D1_content }}
                                             </div>
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D2_content }}
                                             </div>
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D3_content }}
                                             </div>
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D8_content }}
                                                 <svg id="triangle5" xmlns="http://www.w3.org/2000/svg" width="42"
                                                     height="61" viewBox="0 0 42 61" fill="none">
                                                     <path d="M41.5 30.5L0.25001 60.8109L0.25001 0.189111L41.5 30.5Z"
@@ -290,27 +283,27 @@
 
                                             </div>
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D4_content }}
                                             </div>
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D7_content }}
                                             </div>
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D6_content }}
                                             </div>
                                             <div class="value-table group5">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.D5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G1_content }}
                                             </div>
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G2_content }}
                                             </div>
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G3_content }}
                                                 <svg id="triangle6" xmlns="http://www.w3.org/2000/svg" width="52"
                                                     height="51" viewBox="0 0 52 51" fill="none">
                                                     <path
@@ -319,7 +312,7 @@
                                                 </svg>
                                             </div>
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
                                                 <span class="text-table-score">G</span>
@@ -330,24 +323,24 @@
                                                 </div>
                                             </div>
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G4_content }}
                                             </div>
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G7_content }}
                                             </div>
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G6_content }}
                                             </div>
                                             <div class="value-table group6">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.G5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F1_content }}
                                             </div>
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F2_content }}
                                                 <svg id="triangle7" xmlns="http://www.w3.org/2000/svg" width="62"
                                                     height="42" viewBox="0 0 62 42" fill="none">
                                                     <path d="M31 42L0.689144 0.750002L61.3109 0.750002L31 42Z"
@@ -355,10 +348,10 @@
                                                 </svg>
                                             </div>
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F3_content }}
                                             </div>
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
                                                 <span class="text-table-score">F</span>
@@ -370,21 +363,21 @@
 
                                             </div>
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F4_content }}
                                             </div>
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F7_content }}
                                             </div>
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F6_content }}
                                             </div>
                                             <div class="value-table group7">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.F5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E1_content }}
                                                 <svg id="triangle8" xmlns="http://www.w3.org/2000/svg" width="52"
                                                     height="51" viewBox="0 0 52 51" fill="none">
                                                     <path
@@ -393,13 +386,13 @@
                                                 </svg>
                                             </div>
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E2_content }}
                                             </div>
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E3_content }}
                                             </div>
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
                                                 <span class="text-table-score">E</span>
@@ -411,16 +404,16 @@
 
                                             </div>
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E4_content }}
                                             </div>
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E7_content }}
                                             </div>
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E6_content }}
                                             </div>
                                             <div class="value-table group8">
-                                                <textarea maxlength="20" class="input-table "></textarea>
+                                                {{ form.E5_content }}
                                             </div>
                                         </div>
                                     </div>
@@ -434,13 +427,9 @@
                                     <div class="content-body-right">
                                         <p class="title-content-body-left">目標期間は 1 年</p>
                                         <div class="item-select">
-                                            <select class="select" name="" id="">
-                                                <option value="">2023年3月●日</option>
-                                            </select>
+                                            {{ form.start_YYYYMM }}
                                             <p class="to">～</p>
-                                            <select class="select" name="" id="">
-                                                <option value="">2024年3月●日</option>
-                                            </select>
+                                            {{ form.end_YYYYMM }}
                                             <!-- <button class="button">表示</button> -->
                                         </div>
                                     </div>
@@ -456,8 +445,7 @@
                                                     <div class="order">A</div>
                                                     <div class="title-order">キーワード</div>
                                                     <div class="title-order-right">
-                                                        <input class="input-value-tab" type="text" maxlength="20"
-                                                            placeholder="20文字以内で入力してください...">
+                                                        {{ form.A_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -466,8 +454,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.A_dueto }}
                                                     </div>
 
                                                 </div>
@@ -477,8 +464,7 @@
                                                     <div class="order">B</div>
                                                     <div class="title-order">キーワード</div>
                                                     <div class="title-order-right">
-                                                        <input class="input-value-tab" type="text" maxlength="20"
-                                                            placeholder="20文字以内で入力してください...">
+                                                        {{ form.B_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -487,8 +473,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.B_dueto }}
                                                     </div>
 
                                                 </div>
@@ -497,8 +482,8 @@
                                                 <div class="wrapper-content-table-body-right">
                                                     <div class="order">C</div>
                                                     <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right"><input class="input-value-tab"
-                                                            maxlength="20" type="text" placeholder="20文字以内で入力してください...">
+                                                    <div class="title-order-right">
+                                                        {{ form.C_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -507,8 +492,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.C_dueto }}
                                                     </div>
 
                                                 </div>
@@ -517,8 +501,8 @@
                                                 <div class="wrapper-content-table-body-right">
                                                     <div class="order">D</div>
                                                     <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right"><input class="input-value-tab"
-                                                            maxlength="20" type="text" placeholder="20文字以内で入力してください...">
+                                                    <div class="title-order-right">
+                                                        {{ form.D_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -527,8 +511,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.D_dueto }}
                                                     </div>
 
                                                 </div>
@@ -537,8 +520,8 @@
                                                 <div class="wrapper-content-table-body-right">
                                                     <div class="order">E</div>
                                                     <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right"><input class="input-value-tab"
-                                                            maxlength="20" type="text" placeholder="20文字以内で入力してください...">
+                                                    <div class="title-order-right">
+                                                        {{ form.E_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -547,8 +530,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.E_dueto }}
                                                     </div>
 
                                                 </div>
@@ -557,8 +539,8 @@
                                                 <div class="wrapper-content-table-body-right">
                                                     <div class="order">F</div>
                                                     <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right"><input class="input-value-tab"
-                                                            maxlength="20" type="text" placeholder="20文字以内で入力してください...">
+                                                    <div class="title-order-right">
+                                                        {{ form.F_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -567,8 +549,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.F_dueto }}
                                                     </div>
 
                                                 </div>
@@ -577,8 +558,8 @@
                                                 <div class="wrapper-content-table-body-right">
                                                     <div class="order">G</div>
                                                     <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right"><input class="input-value-tab"
-                                                            maxlength="20" type="text" placeholder="20文字以内で入力してください...">
+                                                    <div class="title-order-right">
+                                                        {{ form.G_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -587,8 +568,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.G_dueto }}
                                                     </div>
 
                                                 </div>
@@ -597,8 +577,8 @@
                                                 <div class="wrapper-content-table-body-right">
                                                     <div class="order">H</div>
                                                     <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right"><input class="input-value-tab"
-                                                            maxlength="20" type="text" placeholder="20文字以内で入力してください...">
+                                                    <div class="title-order-right">
+                                                        {{ form.H_keyword }}
                                                     </div>
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
@@ -607,8 +587,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="desc-table-body-right">
-                                                        <textarea class="input-table input-table-desc" name="" id=""
-                                                            placeholder="記述...!"></textarea>
+                                                        {{ form.H_dueto }}
                                                     </div>
                                                 </div>
                                             </div>

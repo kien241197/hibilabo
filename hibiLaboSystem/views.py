@@ -1036,7 +1036,33 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         kwargs['form'] = self.form_class(self.request.GET or None)
 
         return kwargs
-    
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = self.form_class(request.POST)
+        context["form"] = form
+        start_YYYYMM = request.POST.get('start_YYYYMM')
+        end_YYYYMM = request.POST.get('end_YYYYMM')
+        form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
+        form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
+        if form.is_valid():
+            mandara = form.save(commit=False)
+            mandara.user_id = self.request.user.id
+            mandara.company_id = self.request.user.company_id
+            mandara.A_result = 0
+            mandara.B_result = 0
+            mandara.C_result = 0
+            mandara.D_result = 0
+            mandara.E_result = 0
+            mandara.F_result = 0
+            mandara.G_result = 0
+            mandara.H_result = 0
+            mandara.save()
+        else:
+            print(form.errors.as_data())
+
+        return self.render_to_response(context)
+
     
 class MandaraSheet(LoginRequiredMixin, TemplateView):
     template_name = "mandara/mandara_sheet.html"

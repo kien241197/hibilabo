@@ -658,11 +658,9 @@ class MandaraBase(models.Model):
 	    null=True
 	)
 	start_YYYYMM = models.CharField(
-		unique=True,
 		max_length=6
 	)
 	end_YYYYMM = models.CharField(
-		unique=True,
 		max_length=6
 	)
 	total_mission = models.CharField(max_length=20, blank=True, null=True)
@@ -768,6 +766,9 @@ class MandaraBase(models.Model):
 
 	class Meta:
 		db_table = 'mandara_base'
+		constraints = [
+	        models.UniqueConstraint(fields=['user_id', 'company_id', 'start_YYYYMM', 'end_YYYYMM'], name='unique_mandara')
+	    ]
 
 class MandaraProgress(models.Model):
 	mandara_base = models.ForeignKey(
