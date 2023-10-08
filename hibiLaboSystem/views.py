@@ -1043,6 +1043,7 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         context = self.get_context_data(**kwargs)
         form = self.form_class(request.POST)
         context["form"] = form
+        context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
         end_YYYYMM = request.POST.get('end_YYYYMM')
         form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
@@ -1053,7 +1054,7 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
             return self.render_to_response(context)
 
         if MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exists():
-            context["message"] = '-- Mandara is exists, can not create。--'
+            context["message"] = '-- マンダラが存在しているため、作成できません。--'
             return self.render_to_response(context)
 
         if form.is_valid():
@@ -1062,6 +1063,7 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
             mandara.company_id = company_id
             mandara.save()
             context["message"] = '-- 保存しました。--'
+            context["message_class"] = 'text-success'
         else:
             context["message"] = form.errors.as_data()
 
