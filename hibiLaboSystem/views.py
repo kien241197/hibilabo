@@ -1,5 +1,5 @@
 from . import forms
-from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult
+from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult, MandaraBase
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponse, JsonResponse
@@ -1038,6 +1038,8 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         return kwargs
 
     def post(self, request, *args, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
         context = self.get_context_data(**kwargs)
         form = self.form_class(request.POST)
         context["form"] = form
@@ -1045,10 +1047,19 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         end_YYYYMM = request.POST.get('end_YYYYMM')
         form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
         form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
+        diff = int(end_YYYYMM) - int(start_YYYYMM)
+        if diff != 100:
+            context["message"] = '-- 目標期間は 1 年。--'
+            return self.render_to_response(context)
+
+        if MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exists():
+            context["message"] = '-- Mandara is exists, can not create。--'
+            return self.render_to_response(context)
+
         if form.is_valid():
             mandara = form.save(commit=False)
-            mandara.user_id = self.request.user.id
-            mandara.company_id = self.request.user.company_id
+            mandara.user_id = user_id
+            mandara.company_id = company_id
             mandara.A_result = 0
             mandara.B_result = 0
             mandara.C_result = 0
@@ -1058,8 +1069,9 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
             mandara.G_result = 0
             mandara.H_result = 0
             mandara.save()
+            context["message"] = '-- 保存しました。--'
         else:
-            print(form.errors.as_data())
+            context["message"] = form.errors.as_data()
 
         return self.render_to_response(context)
 
