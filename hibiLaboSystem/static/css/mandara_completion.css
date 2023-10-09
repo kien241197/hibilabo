@@ -56,16 +56,6 @@ body {
 
 }
 
-
-
-
-
-
-
-
-
-
-
 .item-select {
     display: flex;
     gap: 5px;
@@ -103,7 +93,6 @@ body {
 
 .to {
     font-size: 100%;
-    color: #9fa0a0;
     margin-block: unset !important;
 }
 
@@ -113,7 +102,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     font-family: var(--font-text);
     text-align: center;
-    gap: 30px;
+    gap: 50px;
 }
 
 .wrapper-date {
