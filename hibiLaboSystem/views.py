@@ -1,5 +1,5 @@
 from . import forms
-from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult, MandaraBase
+from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult, MandaraBase, MandaraProgress
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponse, JsonResponse
@@ -1046,6 +1046,10 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
         end_YYYYMM = request.POST.get('end_YYYYMM')
+        if start_YYYYMM == '' or end_YYYYMM == '':
+            context["message"] = '-- 目標期間は 1 年。--'
+            return self.render_to_response(context)
+
         form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
         form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
         diff = int(end_YYYYMM) - int(start_YYYYMM)
@@ -1062,6 +1066,17 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
             mandara.user_id = user_id
             mandara.company_id = company_id
             mandara.save()
+            sdate = datetime.date(int(start_YYYYMM[0:4]), int(start_YYYYMM[4:6]), 1)   # start date
+            edate = datetime.date(int(end_YYYYMM[0:4]), int(end_YYYYMM[4:6]), 1)   # end date
+            delta = edate - sdate
+            bulk_list = list()
+            for i in range(delta.days):
+                day = sdate + datetime.timedelta(days=i)
+                bulk_list.append(
+                    MandaraProgress(date=day, mandara_base_id=mandara.id)
+                )
+
+            bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
             context["message"] = '-- 保存しました。--'
             context["message_class"] = 'text-success'
         else:
