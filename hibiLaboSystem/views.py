@@ -1101,6 +1101,18 @@ class MandaraReuse(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
+        today = datetime.date.today().strftime("%Y%m")
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today).order_by('start_YYYYMM').first()
+        kwargs['mandara'] = mandara
+        if mandara is not None:
+            kwargs['fix'] = True
+            if mandara.start_YYYYMM > today:
+                kwargs['fix'] = False
+
+            start = mandara.start_YYYYMM[0:4] + '年' + mandara.start_YYYYMM[4:6] + '月●日'
+            end = mandara.end_YYYYMM[0:4] + '年' + mandara.end_YYYYMM[4:6] + '月●日'
+            kwargs['start'] = start
+            kwargs['end'] = end
 
         return kwargs
 
