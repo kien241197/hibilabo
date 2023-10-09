@@ -13,7 +13,7 @@
         drwa_chart(counter_group);
     }
 
-    function drwa_chart(chatValue){
+function drwa_chart(chatValue){
     var ctx = document.getElementById('mycanvas');
     //前のチャートがあったら消す
     if (myChart){
