@@ -56,6 +56,7 @@ buttonTitle.addEventListener("click", function () {
     const inputValueTab = document.querySelectorAll(".input-value-tab");
     const titleValueTableScore = document.querySelectorAll(".title-value-table-score");
     const titleMainScore = document.querySelectorAll(".title-main-score");
+    const timeSelects = document.querySelectorAll(".select");
     valueInput.forEach(element => {
         if (element.value) {
             element.value = "";
@@ -80,6 +81,10 @@ buttonTitle.addEventListener("click", function () {
 
             element.textContent = ""
         }
+    })
+
+    timeSelects.forEach(element => {
+        element.value = "";
     })
 })
 
