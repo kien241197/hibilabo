@@ -33,7 +33,7 @@ class BetweenYearSelectWidget(forms.Widget):
         super().__init__(attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
-        output = '<select name="%s" class="select">' % name
+        output = '<select name="%s" class="select" required>' % name
         output += '<option value="" selected>%s</option>' % self.empty_label
 
         for year in range(datetime.date.today().year, datetime.date.today().year + 5):
