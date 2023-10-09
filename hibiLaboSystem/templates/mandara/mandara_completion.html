@@ -1,1 +1,82 @@
-mandara_complete.html
+{% extends 'layout.html' %}
+
+{% block header %}
+<!-- chartの呼び出し -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/mandara_completion.css' %}">
+
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="wrapper-body">
+                        <div class="body-bottom">
+                            <div class="wrapper-body-left">
+                                <div class="body-top">
+                                    <div class="body-top-left">
+                                        <div class="mb-4">
+                                            <h2 class="text-title">COMPLETION CHART</h2>
+                                        </div>
+                                        <div class="item-select">
+                                            <select class="select" name="" id="">
+                                                <option value="">2023年3月</option>
+                                            </select>
+                                            <p class="to">～</p>
+                                            <select class="select" name="" id="">
+                                                <option value="">2023年9月</option>
+                                            </select>
+                                            <button class="button">表示</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-date">
+                                    <div class="wrapper-date">
+                                        <b>2020/6</b>
+                                        <b> ~ </b>
+                                        <b>2021/6</b>
+                                    </div>
+                                    <div class="wrapper-date">
+                                        <b>2021/6</b>
+                                        <b> ~ </b>
+                                        <b>2022/6</b>
+                                    </div>
+                                    <div class="wrapper-date">
+                                        <b>2022/6</b>
+                                        <b> ~ </b>
+                                        <b>2023/6</b>
+                                    </div>
+                                    <div class="wrapper-date">
+                                        <b>2023/6</b>
+                                        <b> ~ </b>
+                                        <b>2024/6</b>
+                                    </div>
+                                    <div class="wrapper-date">
+                                        <b>2024/6</b>
+                                        <b> ~ </b>
+                                        <b>2025/6</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
