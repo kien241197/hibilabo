@@ -108,6 +108,9 @@ body {
 .wrapper-date {
 
     columns: span 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media print {
