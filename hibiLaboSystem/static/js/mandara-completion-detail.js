@@ -80,7 +80,7 @@ function newArrayData(className) {
     return newArray;
 }
 
-function countValue(value1, value2) {
+function countValue(value1, value2, value3) {
 
     const valueScore = document.querySelectorAll(".value-score")[value1];
     const textContent = parseInt(valueScore.textContent) + 1;
@@ -88,6 +88,8 @@ function countValue(value1, value2) {
 
     const valueScoreMain = document.querySelectorAll(".value-score")[value2];
     valueScoreMain.textContent = textContent;
+
+    document.querySelectorAll(".value-score-canvas")[value3].textContent = textContent;
 }
 
 function countValueCenter() {
@@ -193,6 +195,11 @@ var mycanvas16 = createCanvas("mycanvas16", arrayChartGroup8);
 const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element, index) => {
 
+    const valueSpan = element.querySelector('span').textContent;
+    if (valueSpan == 0) {
+        element.querySelector('span').textContent = ""
+    }
+
     const paragraph = element.querySelector('p').textContent;
     var content = `<div class="popup" id='popup${index + 1}'>
     <p class="title-popup">${paragraph}</p>
@@ -237,42 +244,42 @@ valueElements.forEach((element, index) => {
     document.getElementById("value-body-bottom-left").innerHTML += content;
 });
 
-const choose = document.querySelectorAll(".choose");
-choose[0].classList.add('background-choose-active')
-choose[0].classList.add('color-print')
-choose.forEach((element, index) => {
-    element.addEventListener("click", function () {
+// const choose = document.querySelectorAll(".choose");
+// choose[0].classList.add('background-choose-active')
+// choose[0].classList.add('color-print')
+// choose.forEach((element, index) => {
+//     element.addEventListener("click", function () {
 
-        const listChoose = document.querySelectorAll(".choose");
+//         const listChoose = document.querySelectorAll(".choose");
 
-        listChoose.forEach((item, count) => {
-            if (index !== count) {
+//         listChoose.forEach((item, count) => {
+//             if (index !== count) {
 
-                item.classList.remove('background-choose-active')
-                item.classList.remove('color-print')
-            }
-        })
-        element.classList.add('background-choose-active')
-        element.classList.add('color-print')
+//                 item.classList.remove('background-choose-active')
+//                 item.classList.remove('color-print')
+//             }
+//         })
+//         element.classList.add('background-choose-active')
+//         element.classList.add('color-print')
 
-        if (index === 1) {
-            console.log(document.querySelector(".body-bottom-left"));
-            document.querySelector(".masmas-mandara").style.display = "block";
-            document.querySelector(".body-bottom-left").style.display = "none";
-            document.querySelector(".body-bottom-right").style.display = "none";
-            document.querySelector(".content-title").style.display = "none";
-            document.querySelector(".text-title").textContent = "MASMAS MANDARA CHART";
-            document.querySelector(".wrapper-body-left").style.gridColumn = "span 12"
-        } else {
-            document.querySelector(".masmas-mandara").style.display = "none";
-            document.querySelector(".body-bottom-left").style.display = "grid";
-            document.querySelector(".body-bottom-right").style.display = "flex";
-            document.querySelector(".content-title").style.display = "block";
-            document.querySelector(".text-title").textContent = "MANDARA CHART";
-            document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
-        }
-    })
-})
+//         if (index === 1) {
+//             console.log(document.querySelector(".body-bottom-left"));
+//             document.querySelector(".masmas-mandara").style.display = "block";
+//             document.querySelector(".body-bottom-left").style.display = "none";
+//             document.querySelector(".body-bottom-right").style.display = "none";
+//             document.querySelector(".content-title").style.display = "none";
+//             document.querySelector(".text-title").textContent = "MASMAS MANDARA CHART";
+//             document.querySelector(".wrapper-body-left").style.gridColumn = "span 12"
+//         } else {
+//             document.querySelector(".masmas-mandara").style.display = "none";
+//             document.querySelector(".body-bottom-left").style.display = "grid";
+//             document.querySelector(".body-bottom-right").style.display = "flex";
+//             document.querySelector(".content-title").style.display = "block";
+//             document.querySelector(".text-title").textContent = "MANDARA CHART";
+//             document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
+//         }
+//     })
+// })
 
 const valueTab1 = document.querySelector(".tab1");
 document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.add("hidden-tab");
@@ -347,7 +354,9 @@ openPopup.forEach((element, index) => {
     })
 
 
-  
+    element.addEventListener('click', function (e) {
+        e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+    });
 })
 
 // 
@@ -405,3 +414,96 @@ const chart5 = new Chart(barChart1, {
         }
     },
 });
+
+// Giá trị Score ban đầu
+let sumScore1 = 0;
+let sumScore2 = 0;
+let sumScore3 = 0;
+let sumScore4 = 0;
+let sumScore5 = 0;
+let sumScore6 = 0;
+let sumScore7 = 0;
+let sumScore8 = 0;
+
+arrayChartGroup1.forEach(element => {
+
+    sumScore1 += Number(element)
+
+})
+
+
+arrayChartGroup2.forEach(element => {
+
+    sumScore2 += Number(element)
+
+})
+
+
+arrayChartGroup3.forEach(element => {
+
+    sumScore3 += Number(element)
+
+})
+
+
+arrayChartGroup4.forEach(element => {
+
+    sumScore4 += Number(element)
+
+})
+
+
+arrayChartGroup5.forEach(element => {
+
+    sumScore5 += Number(element)
+
+})
+
+
+arrayChartGroup6.forEach(element => {
+
+    sumScore6 += Number(element)
+
+})
+
+
+arrayChartGroup7.forEach(element => {
+
+    sumScore7 += Number(element)
+
+})
+
+
+arrayChartGroup8.forEach(element => {
+
+    sumScore8 += Number(element)
+
+})
+
+const totalSumCore = [sumScore1, sumScore2, sumScore3, sumScore4, sumScore5, sumScore6, sumScore7, sumScore8]
+document.querySelectorAll(".value-score-canvas")[0].textContent = sumScore1;
+
+const valueScoreCanvas = document.querySelectorAll(".value-score-canvas");
+valueScoreCanvas.forEach((element, index) => {
+
+    element.textContent = totalSumCore[index];
+})
+
+document.querySelectorAll(".value-score")[0].textContent = totalSumCore[0]
+document.querySelectorAll(".value-score")[4].textContent = totalSumCore[0]
+document.querySelectorAll(".value-score")[1].textContent = totalSumCore[1]
+document.querySelectorAll(".value-score")[5].textContent = totalSumCore[1]
+document.querySelectorAll(".value-score")[2].textContent = totalSumCore[2]
+document.querySelectorAll(".value-score")[6].textContent = totalSumCore[2]
+document.querySelectorAll(".value-score")[3].textContent = totalSumCore[3]
+document.querySelectorAll(".value-score")[7].textContent = totalSumCore[3]
+document.querySelectorAll(".value-score")[9].textContent = totalSumCore[4]
+document.querySelectorAll(".value-score")[13].textContent = totalSumCore[4]
+document.querySelectorAll(".value-score")[10].textContent = totalSumCore[5]
+document.querySelectorAll(".value-score")[14].textContent = totalSumCore[5]
+document.querySelectorAll(".value-score")[11].textContent = totalSumCore[6]
+document.querySelectorAll(".value-score")[15].textContent = totalSumCore[6]
+document.querySelectorAll(".value-score")[12].textContent = totalSumCore[7]
+document.querySelectorAll(".value-score")[16].textContent = totalSumCore[7]
+
+countValueCenter()
