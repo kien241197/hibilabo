@@ -11,7 +11,7 @@
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 {% load static %}
-<link rel="stylesheet" href="{% static '/css/mandara_fix.css' %}">
+<link rel="stylesheet" href="{% static '/css/mandara_completion_detail.css' %}">
 
 
 {% endblock %}
@@ -24,24 +24,23 @@
             <div class="row">
                 <div class="container">
                     <div class="wrapper-body">
-
                         <div class="body-bottom">
                             <div class="wrapper-body-left">
                                 <div>
                                     <div class="body-top">
-                                        <div class="body-top-left">
-                                            <h2 class="text-title">MANDARA CHART</h2>
+                                        <div class="body-top-left w-100">
+                                            <div class="d-flex mb-3 justify-content-between">
+                                                <div class="d-flex">
+                                                    <h2 class="text-title mr-3">MANDARA CHART</h2>
+                                                    <button type="submit" class="button-fix mr-3">FIX</button>
+                                                </div>
+                                                <button type="submit" class="button-print"
+                                                    onclick="window.open('mandara-print')">PRINT</button>
+                                            </div>
                                             <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                         </div>
                                         <div class="content-body-center">
-                                            <div class="item-body-center">
-                                                <p class="title-center">目標入力</p>
-                                                <button class="choose">1</button>
-                                            </div>
-                                            <div class="item-body-center">
-                                                <p class="title-center">日々検証</p>
-                                                <button class="choose">2</button>
-                                            </div>
+
                                             <!-- <div class="item-body-center">
                                             <p class="title-center">月間検証</p>
                                             <button class="choose">3</button>
@@ -71,7 +70,7 @@
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group1" id="value-table-1">
                                             <p>体のケア</p>
-                                            <span id="value-1" class="value-group-1">3</span>
+                                            <span id="value-1" class="value-group-1">0</span>
                                         </div>
                                         <div class="value-table group1" id="value-table-2">
                                             <p>サプリメント</p>
@@ -276,40 +275,47 @@
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">A</span>
                                             <p class="title-main-score">体づくり</p>
-                                            <span class="value-score">14</span>
+                                            <span class="value-score"></span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">B</span>
                                             <p class="title-main-score">コントール</p>
-                                            <span class="value-score">20</span>
+                                            <span class="value-score"></span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">C</span>
                                             <p class="title-main-score">キレ</p>
-                                            <span class="value-score">20</span>
+                                            <span class="value-score"></span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">H</span>
                                             <p class="title-main-score">メンタル</p>
-                                            <span class="value-score">23</span>
+                                            <span class="value-score"></span>
                                         </div>
                                         <div class="value-table-score SCORE-MAIN">
-                                            <p class="title-main-score">1年後の目標</p>
+                                            <p class="title-main-score title-main-score-center">1年後の目標</p>
                                             <span class="value-score value-score-center">188</span>
                                             <p class="title-main-score-bottom">1年後の目標</p>
                                         </div>
                                         <div class="value-table-score SCORE-text">
-                                            <p class="title-main-score">スピード</p>
-                                            <p class="title-main-score-next"> 160km/h</p>
-                                            <span class="value-score">33</span>
+                                            <span class="text-table-score">D</span>
+                                            <p class="title-main-score">スピード <br /> 160km/h</p>
+                                            <span class="value-score"></span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">G</span>
                                             <p class="title-main-score f1年後の目標">人間性</p>
                                             <span class="value-score">30</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">F</span>
                                             <p class="title-main-score">運</p>
                                             <span class="value-score">28</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
+                                            <span class="text-table-score">E</span>
                                             <p class="title-main-score">変化球</p>
                                             <span class="value-score">20</span>
                                         </div>
@@ -528,16 +534,11 @@
                                     <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
                                 </div> -->
                                 <div class="content-body-right">
-                                    <p class="title-content-body-left">目標期間設定</p>
+                                    <p class="title-content-body-left">目標期間は 1 年</p>
                                     <div class="item-select">
-                                        <select class="select" name="" id="">
-                                            <option value="">2023年3月</option>
-                                        </select>
+                                        <label class="label-date">2023 年 3 月●日</label>
                                         <p class="to">～</p>
-                                        <select class="select" name="" id="">
-                                            <option value="">2023年9月</option>
-                                        </select>
-                                        <button class="button">表示</button>
+                                        <label class="label-date">2024 年 3 月●日</label>
                                     </div>
                                 </div>
 
@@ -686,32 +687,41 @@
                                     <div class="wrapper-item-table-body-bottom-right-tab-2">
                                         <div class="item-table-body-bottom-right item-table-body-bottom-right-tab-2">
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas9" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
                                                 </div>
                                                 <p class="text-canvas">体づくり</p>
+
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas10" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
                                                 </div>
                                                 <p class="text-canvas">コントール</p>
+
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas11" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
                                                 </div>
                                                 <p class="text-canvas">キレ</p>
+
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas12" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
+
                                                 </div>
                                                 <p class="text-canvas">メンタル</p>
+
                                             </div>
                                             <div class="wrapper-mycanvas-tab wrapper-mycanvas-tab-center">
                                                 <p class="text-canvas-center">●●後の目標</p>
@@ -719,50 +729,54 @@
                                                 <p class="text-canvas-center">ドライチ 8 球団</p>
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas13" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
                                                 </div>
                                                 <p class="text-canvas">スピード</p>
+
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas14" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
                                                 </div>
                                                 <p class="text-canvas">人間性</p>
+
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas15" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
                                                 </div>
                                                 <p class="text-canvas">運</p>
+
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
-                                                <div>
+                                                <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas16" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
+                                                    <span class="value-score-canvas"></span>
                                                 </div>
                                                 <p class="text-canvas">変化球</p>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="masmas-mandara">
                             <div class="content-body-right mb-5">
-                                <div class="item-select">
-                                    <select class="select select-masmas" name="" id="">
-                                        <option value="">2023年3月</option>
-                                    </select>
-                                    <p class="to">～</p>
-                                    <select class="select select-masmas" name="" id="">
-                                        <option value="">2023年9月</option>
-                                    </select>
+                                <div class="content-body-right">
+                                    <div class="item-select">
+                                        <label class="label-date">2023 年 3 月</label>
+                                        <p class="to">～</p>
+                                        <label class="label-date">2024 年 3 月</label>
+                                    </div>
                                 </div>
                             </div>
                             <canvas id="barChart1" class="chart"></canvas>
@@ -775,6 +789,6 @@
 </main>
 
 
-<script src="{% static 'js/mandara-fix.js' %}"></script>
+<script src="{% static 'js/mandara-completion-detail.js' %}"></script>
 
 {% endblock %}

@@ -238,3 +238,798 @@ class BonknowForm(forms.Form):
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
+
+class MandaraCreateForm(forms.ModelForm):
+    class Meta:
+        model = models.MandaraBase
+        fields = "__all__"
+        exclude = ["user", "company"]
+
+    start_YYYYMM = forms.ChoiceField(
+        widget=fields.BetweenYearSelectWidget(),
+        required=True
+    )
+
+    end_YYYYMM = forms.ChoiceField(
+        widget=fields.BetweenYearSelectWidget(),
+        required=True
+    )
+
+    total_mission = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-value-score",
+                'placeholder': 'ドラ 18 球団 ',
+                'rows':0
+            }
+        )
+    )
+
+    A_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    A_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    A_result = forms.IntegerField(required=False)
+    A1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例体のケア',
+                'rows':0
+            }
+        )
+    )
+    A2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    A3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    A4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    A5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    A6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    A7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    A8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+
+    B_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    B_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    B_result = forms.IntegerField(required=False)
+    B1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    B2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    B3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    B4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    B5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    B6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    B7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    B8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+
+    C_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    C_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    C_result = forms.IntegerField(required=False)
+    C1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    C2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    C3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    C4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    C5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    C6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    C7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    C8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+
+    D_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    D_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    D_result = forms.IntegerField(required=False)
+    D1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    D2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    D3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    D4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    D5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    D6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    D7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    D8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+
+    E_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    E_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    E_result = forms.IntegerField(required=False)
+    E1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    E2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    E3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    E4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    E5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    E6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    E7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    E8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+
+    F_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    F_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    F_result = forms.IntegerField(required=False)
+    F1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    F2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    F3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    F4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    F5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    F6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    F7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    F8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+
+    G_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    G_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    G_result = forms.IntegerField(required=False)
+    G1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    G2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    G3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    G4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    G5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    G6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    G7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    G8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+
+    H_keyword = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-value-tab",
+                'placeholder': '20文字以内で入力してください...'
+            }
+        )
+    )
+    H_dueto = forms.CharField(
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table input-table-desc",
+                'placeholder': '記述...!',
+                'rows':0
+            }
+        )
+    )
+    H_result = forms.IntegerField(required=False)
+    H1_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    H2_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    H3_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'placeholder': '記入例',
+                'rows':0
+            }
+        )
+    )
+    H4_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    H5_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    H6_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    H7_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )
+    H8_content = forms.CharField(
+        max_length=20,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-table",
+                'rows':0
+            }
+        )
+    )

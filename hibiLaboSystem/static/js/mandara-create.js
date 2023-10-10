@@ -1,4 +1,14 @@
 
+const OPTION_LIST = [
+    [0,0,7],
+    [1,8,15],
+    [2,16,23],
+    [4,32,39],
+    [7,56,64],
+    [6,48,55],
+    [5,40,47],
+    [3,24,31],
+];
 const choose = document.querySelectorAll(".choose");
 choose[0].classList.add('background-choose-active')
 choose[0].classList.add('color-print')
@@ -46,6 +56,7 @@ buttonTitle.addEventListener("click", function () {
     const inputValueTab = document.querySelectorAll(".input-value-tab");
     const titleValueTableScore = document.querySelectorAll(".title-value-table-score");
     const titleMainScore = document.querySelectorAll(".title-main-score");
+    const timeSelects = document.querySelectorAll(".select");
     valueInput.forEach(element => {
         if (element.value) {
             element.value = "";
@@ -71,108 +82,27 @@ buttonTitle.addEventListener("click", function () {
             element.textContent = ""
         }
     })
+
+    timeSelects.forEach(element => {
+        element.value = "";
+    })
 })
 
 // 
 const inputValue = document.querySelectorAll('.input-table');
-inputValue.forEach((element, index) => {
-
-    element.setAttribute("readOnly", "true")
-    element.addEventListener("change", function(){
-
-        console.log(index);
-    })
-})
-
 
 const inputValueTab = document.querySelectorAll(".input-value-tab");
 inputValueTab.forEach((element, index) => {
-
-    element.setAttribute("readOnly", "true")
+    render_keyword(index, element.value);
     element.addEventListener('change', function () {
-
-        if (index === 0) {
-
-            document.querySelectorAll(".title-main-score")[0].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[0].textContent = element.value;
-            inputValue[64].removeAttribute("readOnly")
-            removeAttribute(0, 7)
-        }
-
-        if (index === 1) {
-
-            document.querySelectorAll(".title-main-score")[1].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[1].textContent = element.value;
-            inputValue[65].removeAttribute("readOnly")
-            removeAttribute(8, 15)
-        }
-
-        if (index === 2) {
-
-            document.querySelectorAll(".title-main-score")[2].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[2].textContent = element.value;
-            inputValue[66].removeAttribute("readOnly")
-            removeAttribute(16, 23)
-        }
-
-        if (index === 3) {
-
-            document.querySelectorAll(".title-main-score")[4].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[4].textContent = element.value;
-            inputValue[67].removeAttribute("readOnly")
-           removeAttribute(32, 39)
-        }
-
-        if (index === 4) {
-
-            document.querySelectorAll(".title-main-score")[7].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[7].textContent = element.value;
-            inputValue[68].removeAttribute("readOnly")
-            removeAttribute(56, 64)
-        }
-
-        if (index === 5) {
-
-            document.querySelectorAll(".title-main-score")[6].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[6].textContent = element.value;
-            inputValue[69].removeAttribute("readOnly")
-            removeAttribute(48, 55)
-        }
-
-        if (index === 6) {
-
-            document.querySelectorAll(".title-main-score")[5].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[5].textContent = element.value;
-            inputValue[70].removeAttribute("readOnly")
-            removeAttribute(40, 47)
-        }
-
-        if (index === 7) {
-
-            document.querySelectorAll(".title-main-score")[3].textContent = element.value;
-            document.querySelectorAll(".title-value-table-score")[3].textContent = element.value;
-            inputValue[71].removeAttribute("readOnly")
-            removeAttribute(24, 31)
-        }
+        render_keyword(index, element.value);
     })
 })
 
 
 const inputValueSocre = document.querySelector('.input-value-score')
-inputValueSocre.addEventListener('change', function () {
-
-    inputValueTab.forEach(element => {
-
-        element.removeAttribute("readOnly")
-    })
-})
-
-function removeAttribute(number1, number2) {
-
-    inputValue.forEach((item, number) => {
-        if (number >= number1 && number <= number2) {
-            item.removeAttribute("readOnly")
-        }
-    })
+function render_keyword(numb, value) {
+    document.querySelectorAll(".title-main-score")[OPTION_LIST[numb][0]].textContent = value;
+    document.querySelectorAll(".title-value-table-score")[OPTION_LIST[numb][0]].textContent = value;
 }
 console.log(window.innerWidth)
