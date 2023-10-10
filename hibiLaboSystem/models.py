@@ -762,7 +762,7 @@ class MandaraBase(models.Model):
 	H8_content = models.CharField(max_length=20, blank=True, null=True)
 
 	def total_result(self):
-			return self.a_result + self.b_result + self.c_result + self.d_result + self.e_result + self.f_result + self.g_result + self.h_result
+			return self.A_result + self.B_result + self.C_result + self.D_result + self.E_result + self.F_result + self.G_result + self.H_result
 
 	class Meta:
 		db_table = 'mandara_base'
@@ -852,5 +852,7 @@ class MandaraProgress(models.Model):
 	H7_result = models.IntegerField(default=0)
 	H8_result = models.IntegerField(default=0)
 
+	def sum_result(self):
+		return self.A1_result + self.B1_result + self.C1_result + self.D1_result + self.E1_result + self.F1_result + self.G1_result + self.H1_result + self.A2_result + self.B2_result + self.C2_result + self.D2_result + self.E2_result + self.F2_result + self.G2_result + self.H2_result + self.A3_result + self.B3_result + self.C3_result + self.D3_result + self.E3_result + self.F3_result + self.G3_result + self.H3_result + self.A4_result + self.B4_result + self.C4_result + self.D4_result + self.E4_result + self.F4_result + self.G4_result + self.H4_result + self.A5_result + self.B5_result + self.C5_result + self.D5_result + self.E5_result + self.F5_result + self.G5_result + self.H5_result + self.A6_result + self.B6_result + self.C6_result + self.D6_result + self.E6_result + self.F6_result + self.G6_result + self.H6_result + self.A7_result + self.B7_result + self.C7_result + self.D7_result + self.E7_result + self.F7_result + self.G7_result + self.H7_result + self.A8_result + self.B8_result + self.C8_result + self.D8_result + self.E8_result + self.F8_result + self.G8_result + self.H8_result
 	class Meta:
 		db_table = 'mandara_progress'

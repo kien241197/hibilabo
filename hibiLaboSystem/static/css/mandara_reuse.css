@@ -435,94 +435,10 @@
     right: 230px;
 }
 
-.wrapper-text:nth-child(2) {
+.wrapper-text.active {
 
     background-color: #e2db9d;
 }
-
-.wrapper-text:nth-child(9) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(10) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(11) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(14) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(16) {
-
-    background-color: #e2db9d;
-}
-
-
-.wrapper-text:nth-child(18) {
-
-    background-color: #e2db9d;
-}
-
-
-.wrapper-text:nth-child(20) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(24) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(28) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(32) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(33) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(34) {
-
-    background-color: #e2db9d;
-}
-
-.wrapper-text:nth-child(35) {
-
-    background-color: #e2db9d;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .popup {
     position: absolute;

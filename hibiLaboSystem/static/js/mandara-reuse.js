@@ -1,5 +1,10 @@
 Chart.register(ChartDataLabels);
 
+function daysInThisMonth() {
+  var now = new Date();
+  return new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+}
+
 function createCanvas(className, array) {
     return new Chart(document.getElementById(className), {
         type: 'radar',
@@ -103,144 +108,36 @@ function countValueCenter() {
     valueTabCenter.textContent = valueContentMain;
 }
 
-let arrayChartGroup1 = [];
-let arrayChartGroup2 = [];
-let arrayChartGroup3 = [];
-let arrayChartGroup4 = [];
-let arrayChartGroup5 = [];
-let arrayChartGroup6 = [];
-let arrayChartGroup7 = [];
-let arrayChartGroup8 = [];
+var mycanvas1 = createCanvas("mycanvas1", arrayChartGroupA);
 
-const group1 = document.querySelectorAll('.value-group-1');
-group1.forEach(item => {
+var mycanvas2 = createCanvas("mycanvas2", arrayChartGroupB);
 
-    arrayChartGroup1.push(item.textContent);
-})
+var mycanvas3 = createCanvas("mycanvas3", arrayChartGroupC);
 
-const group2 = document.querySelectorAll('.value-group-2');
-group2.forEach(item => {
+var mycanvas4 = createCanvas("mycanvas4", arrayChartGroupH);
 
-    arrayChartGroup2.push(item.textContent);
-})
+var mycanvas5 = createCanvas("mycanvas5", arrayChartGroupD);
 
-const group3 = document.querySelectorAll('.value-group-3');
-group3.forEach(item => {
+var mycanvas6 = createCanvas("mycanvas6", arrayChartGroupG);
 
-    arrayChartGroup3.push(item.textContent);
-})
+var mycanvas7 = createCanvas("mycanvas7", arrayChartGroupF);
 
-const group4 = document.querySelectorAll('.value-group-4');
-group4.forEach(item => {
-
-    arrayChartGroup4.push(item.textContent);
-})
-
-const group5 = document.querySelectorAll('.value-group-5');
-group5.forEach(item => {
-
-    arrayChartGroup5.push(item.textContent);
-})
-
-const group6 = document.querySelectorAll('.value-group-6');
-group6.forEach(item => {
-
-    arrayChartGroup6.push(item.textContent);
-})
-
-const group7 = document.querySelectorAll('.value-group-7');
-group7.forEach(item => {
-
-    arrayChartGroup7.push(item.textContent);
-})
-
-const group8 = document.querySelectorAll('.value-group-8');
-group8.forEach(item => {
-
-    arrayChartGroup8.push(item.textContent);
-})
-
-// var mycanvas1 = createCanvas("mycanvas1", arrayChartGroup1);
-
-// var mycanvas2 = createCanvas("mycanvas2", arrayChartGroup2);
-
-// var mycanvas3 = createCanvas("mycanvas3", arrayChartGroup3);
-
-// var mycanvas4 = createCanvas("mycanvas4", arrayChartGroup4);
-
-// var mycanvas5 = createCanvas("mycanvas5", arrayChartGroup5);
-
-// var mycanvas6 = createCanvas("mycanvas6", arrayChartGroup6);
-
-// var mycanvas7 = createCanvas("mycanvas7", arrayChartGroup7);
-
-// var mycanvas8 = createCanvas("mycanvas8", arrayChartGroup8);
-
-var mycanvas9 = createCanvas("mycanvas9", arrayChartGroup1);
-
-var mycanvas10 = createCanvas("mycanvas10", arrayChartGroup2);
-
-var mycanvas11 = createCanvas("mycanvas11", arrayChartGroup3);
-
-var mycanvas12 = createCanvas("mycanvas12", arrayChartGroup4);
-
-var mycanvas13 = createCanvas("mycanvas13", arrayChartGroup5);
-
-var mycanvas14 = createCanvas("mycanvas14", arrayChartGroup6);
-
-var mycanvas15 = createCanvas("mycanvas15", arrayChartGroup7);
-
-var mycanvas16 = createCanvas("mycanvas16", arrayChartGroup8);
+var mycanvas8 = createCanvas("mycanvas8", arrayChartGroupE);
 
 const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element, index) => {
 
     const valueSpan = element.querySelector('span').textContent;
-    if (valueSpan == 0) {
-        element.querySelector('span').textContent = ""
-    }
 
     const paragraph = element.querySelector('p').textContent;
     var content = `<div class="popup" id='popup${index + 1}'>
     <p class="title-popup">${paragraph}</p>
-    <div class="wrapper-item">
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-        <div class="wrapper-text"></div>
-    </div>
-    </div>`;
+    <div class="wrapper-item">`;
+    for (var i = 0; i < daysInThisMonth(); i++) {
+        content += `<div class="wrapper-text text-center">${i + 1}</div>`;
+    }
+    content += `</div>
+            </div>`;
     document.getElementById("value-body-bottom-left").innerHTML += content;
 });
 
@@ -333,7 +230,7 @@ popup.forEach(element => {
 const openPopup = document.querySelectorAll('.value-table');
 openPopup.forEach((element, index) => {
 
-    element.classList.add("true")
+    // element.classList.add("true")
     element.addEventListener('mousedown', function (e) {
         e.preventDefault();
         mouseDownTime = new Date().getTime();
@@ -381,8 +278,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-1');
 
-                mycanvas9.destroy();
-                mycanvas9 = createCanvas("mycanvas9", newArray);
+                mycanvas1.destroy();
+                mycanvas1 = createCanvas("mycanvas1", newArray);
 
             }
 
@@ -393,8 +290,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-2');
 
-                mycanvas10.destroy();
-                mycanvas10 = createCanvas("mycanvas10", newArray);
+                mycanvas2.destroy();
+                mycanvas2 = createCanvas("mycanvas2", newArray);
             }
 
             const group3 = element.classList.contains("group3");
@@ -404,8 +301,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-3');
 
-                mycanvas11.destroy()
-                mycanvas11 = createCanvas("mycanvas11", newArray)
+                mycanvas3.destroy()
+                mycanvas3 = createCanvas("mycanvas3", newArray)
 
             }
 
@@ -416,8 +313,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-4');
 
-                mycanvas12.destroy()
-                mycanvas12 = createCanvas("mycanvas12", newArray)
+                mycanvas4.destroy()
+                mycanvas4 = createCanvas("mycanvas4", newArray)
 
             }
 
@@ -428,8 +325,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-5');
 
-                mycanvas13.destroy()
-                mycanvas13 = createCanvas("mycanvas13", newArray)
+                mycanvas5.destroy()
+                mycanvas5 = createCanvas("mycanvas5", newArray)
 
             }
 
@@ -440,8 +337,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-6');
 
-                mycanvas14.destroy()
-                mycanvas14 = createCanvas("mycanvas14", newArray)
+                mycanvas6.destroy()
+                mycanvas6 = createCanvas("mycanvas6", newArray)
             }
 
             const group7 = element.classList.contains("group7");
@@ -451,8 +348,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-7');
 
-                mycanvas15.destroy()
-                mycanvas15 = createCanvas("mycanvas15", newArray)
+                mycanvas7.destroy()
+                mycanvas7 = createCanvas("mycanvas7", newArray)
             }
 
             const group8 = element.classList.contains("group8");
@@ -462,8 +359,8 @@ openPopup.forEach((element, index) => {
 
                 const newArray = newArrayData('.value-group-8');
 
-                mycanvas16.destroy()
-                mycanvas16 = createCanvas("mycanvas16", newArray)
+                mycanvas8.destroy()
+                mycanvas8 = createCanvas("mycanvas8", newArray)
             }
 
             countValueCenter()
@@ -478,10 +375,10 @@ const barChart1 = document.getElementById('barChart1').getContext('2d');
 const chart5 = new Chart(barChart1, {
     type: 'bar',
     data: {
-        labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+        labels: labels,
         datasets: [{
             label: '',
-            data: [48, 53, 66, 78, 73, 70, 85],
+            data: values,
             backgroundColor:
                 '#C8C9CA',
         }]
@@ -527,96 +424,3 @@ const chart5 = new Chart(barChart1, {
         }
     },
 });
-
-// Giá trị Score ban đầu
-let sumScore1 = 0;
-let sumScore2 = 0;
-let sumScore3 = 0;
-let sumScore4 = 0;
-let sumScore5 = 0;
-let sumScore6 = 0;
-let sumScore7 = 0;
-let sumScore8 = 0;
-
-arrayChartGroup1.forEach(element => {
-
-    sumScore1 += Number(element)
-
-})
-
-
-arrayChartGroup2.forEach(element => {
-
-    sumScore2 += Number(element)
-
-})
-
-
-arrayChartGroup3.forEach(element => {
-
-    sumScore3 += Number(element)
-
-})
-
-
-arrayChartGroup4.forEach(element => {
-
-    sumScore4 += Number(element)
-
-})
-
-
-arrayChartGroup5.forEach(element => {
-
-    sumScore5 += Number(element)
-
-})
-
-
-arrayChartGroup6.forEach(element => {
-
-    sumScore6 += Number(element)
-
-})
-
-
-arrayChartGroup7.forEach(element => {
-
-    sumScore7 += Number(element)
-
-})
-
-
-arrayChartGroup8.forEach(element => {
-
-    sumScore8 += Number(element)
-
-})
-
-const totalSumCore = [sumScore1, sumScore2, sumScore3, sumScore4, sumScore5, sumScore6, sumScore7, sumScore8]
-document.querySelectorAll(".value-score-canvas")[0].textContent = sumScore1;
-
-const valueScoreCanvas = document.querySelectorAll(".value-score-canvas");
-valueScoreCanvas.forEach((element, index) => {
-
-    element.textContent = totalSumCore[index];
-})
-
-document.querySelectorAll(".value-score")[0].textContent = totalSumCore[0]
-document.querySelectorAll(".value-score")[4].textContent = totalSumCore[0]
-document.querySelectorAll(".value-score")[1].textContent = totalSumCore[1]
-document.querySelectorAll(".value-score")[5].textContent = totalSumCore[1]
-document.querySelectorAll(".value-score")[2].textContent = totalSumCore[2]
-document.querySelectorAll(".value-score")[6].textContent = totalSumCore[2]
-document.querySelectorAll(".value-score")[3].textContent = totalSumCore[3]
-document.querySelectorAll(".value-score")[7].textContent = totalSumCore[3]
-document.querySelectorAll(".value-score")[9].textContent = totalSumCore[4]
-document.querySelectorAll(".value-score")[13].textContent = totalSumCore[4]
-document.querySelectorAll(".value-score")[10].textContent = totalSumCore[5]
-document.querySelectorAll(".value-score")[14].textContent = totalSumCore[5]
-document.querySelectorAll(".value-score")[11].textContent = totalSumCore[6]
-document.querySelectorAll(".value-score")[15].textContent = totalSumCore[6]
-document.querySelectorAll(".value-score")[12].textContent = totalSumCore[7]
-document.querySelectorAll(".value-score")[16].textContent = totalSumCore[7]
-
-countValueCenter()
