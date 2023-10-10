@@ -37,4 +37,5 @@ urlpatterns = [
     path('mandata-create', views.MandaraCreate.as_view(), name='mandara_create'), #Display 3
     path('mandara-reuse', views.MandaraReuse.as_view(), name='mandara_reuse'), #Display 4
     path('mandara-completion', views.MandaraCompletion.as_view(), name='mandara_completion'), #Display 5
+    path('mandara-completion-detail', views.MandaraCompletionDetail.as_view(), name='mandara_completion_detail'), #Display 5
 ]
