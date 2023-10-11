@@ -37,4 +37,6 @@ urlpatterns = [
     path('mandata-create', views.MandaraCreate.as_view(), name='mandara_create'), #Display 3
     path('mandara-reuse', views.MandaraReuse.as_view(), name='mandara_reuse'), #Display 4
     path('mandara-completion', views.MandaraCompletion.as_view(), name='mandara_completion'), #Display 5
+    path('mandara/ajax/get-detail', views.get_detail_month, name='mandara_ajax_get_detail'),
+    path('mandara/ajax/post-day', views.post_detail_day, name='mandara_ajax_post_day'),
 ]

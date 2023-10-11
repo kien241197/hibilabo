@@ -5,6 +5,22 @@ function daysInThisMonth() {
   return new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
 }
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 function createCanvas(className, array) {
     return new Chart(document.getElementById(className), {
         type: 'radar',
@@ -240,8 +256,28 @@ openPopup.forEach((element, index) => {
         })
         time = 0;
         timeoutId = setTimeout(() => {
-            document.getElementById(`popup${index + 1}`).classList.remove("hidden");
-            time = 2;
+            fetch(urlGet + `?type_box=${element.dataset.boxType}`, {
+              method: "GET",
+              headers: {
+                "X-Requested-With": "XMLHttpRequest",
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+                let popup = document.getElementById(`popup${index + 1}`);
+                if(data.context) {
+                    popup.querySelector('.wrapper-item').innerHTML = '';
+                    let contentHtml = ''
+                    for (var i = 0; i < daysInThisMonth(); i++) {
+                        let find = data.context.find(item => item.day == i + 1);
+                        let active = find[element.dataset.boxType+'_result'] == 1 ? 'active' : '';
+                        contentHtml += `<div class="wrapper-text text-center ${active}">${i + 1}</div>`;
+                    }
+                    popup.querySelector('.wrapper-item').innerHTML = contentHtml;
+                }
+                popup.classList.remove("hidden");
+                time = 2;
+            });
         }, minimumHoldTime)
 
     });
@@ -255,115 +291,126 @@ openPopup.forEach((element, index) => {
         e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
 
         if (time < 2) {
-            element.classList.add('background-value-table');
             let child = element.querySelectorAll('span');
 
             const group1 = element.classList.contains("group1");
+            const group2 = element.classList.contains("group2");
+            const group3 = element.classList.contains("group3");
+            const group4 = element.classList.contains("group4");
+            const group5 = element.classList.contains("group5");
+            const group6 = element.classList.contains("group6");
+            const group7 = element.classList.contains("group7");
+            const group8 = element.classList.contains("group8");
             const checkStatus = element.classList.contains("true");
 
             if (checkStatus) {
+                fetch(urlPost, {
+                  method: "POST",
+                  credentials: "same-origin",
+                  headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRFToken": getCookie("csrftoken"),
+                  },
+                  body: JSON.stringify({box: element.dataset.boxType})
+                })
+                .then(response => response.json())
+                .then(data => {
+                  console.log(data);
+                  if(data.status && data.status == 'OK'){
+                    $(child[0]).text(Number($(child[0]).text()) + 1);
+                    element.classList.add('background-value-table');
+                    element.classList.remove("true");
+                    element.classList.add("false");
 
-                $(child[0]).text(Number($(child[0]).text()) + 1);
-                element.classList.remove("true");
-                element.classList.add("false");
+                    if (group1) {
 
-            } else {
+                        countValue(0, 4, 0);
 
-                // alert("押すのは 1 回のみ");
+                        const newArray = newArrayData('.value-group-1');
+
+                        mycanvas1.destroy();
+                        mycanvas1 = createCanvas("mycanvas1", newArray);
+
+                    }
+
+                    if (group2) {
+
+                        countValue(1, 5, 1);
+
+                        const newArray = newArrayData('.value-group-2');
+
+                        mycanvas2.destroy();
+                        mycanvas2 = createCanvas("mycanvas2", newArray);
+                    }
+
+                    if (group3) {
+
+                        countValue(2, 6, 2);
+
+                        const newArray = newArrayData('.value-group-3');
+
+                        mycanvas3.destroy()
+                        mycanvas3 = createCanvas("mycanvas3", newArray)
+
+                    }
+
+                    if (group4) {
+
+                        countValue(3, 7, 3);
+
+                        const newArray = newArrayData('.value-group-4');
+
+                        mycanvas4.destroy()
+                        mycanvas4 = createCanvas("mycanvas4", newArray)
+
+                    }
+
+                    if (group5) {
+
+                        countValue(13, 9, 4);
+
+                        const newArray = newArrayData('.value-group-5');
+
+                        mycanvas5.destroy()
+                        mycanvas5 = createCanvas("mycanvas5", newArray)
+
+                    }
+
+                    if (group6) {
+
+                        countValue(14, 10, 5);
+
+                        const newArray = newArrayData('.value-group-6');
+
+                        mycanvas6.destroy()
+                        mycanvas6 = createCanvas("mycanvas6", newArray)
+                    }
+
+                    if (group7) {
+
+                        countValue(15, 11, 6);
+
+                        const newArray = newArrayData('.value-group-7');
+
+                        mycanvas7.destroy()
+                        mycanvas7 = createCanvas("mycanvas7", newArray)
+                    }
+
+                    if (group8) {
+
+                        countValue(16, 12, 7);
+
+                        const newArray = newArrayData('.value-group-8');
+
+                        mycanvas8.destroy()
+                        mycanvas8 = createCanvas("mycanvas8", newArray)
+                    }
+
+                    countValueCenter()
+                  }
+                });
+
             }
-
-            if (group1 && checkStatus) {
-
-                countValue(0, 4, 0);
-
-                const newArray = newArrayData('.value-group-1');
-
-                mycanvas1.destroy();
-                mycanvas1 = createCanvas("mycanvas1", newArray);
-
-            }
-
-            const group2 = element.classList.contains("group2");
-            if (group2 && checkStatus) {
-
-                countValue(1, 5, 1);
-
-                const newArray = newArrayData('.value-group-2');
-
-                mycanvas2.destroy();
-                mycanvas2 = createCanvas("mycanvas2", newArray);
-            }
-
-            const group3 = element.classList.contains("group3");
-            if (group3 && checkStatus) {
-
-                countValue(2, 6, 2);
-
-                const newArray = newArrayData('.value-group-3');
-
-                mycanvas3.destroy()
-                mycanvas3 = createCanvas("mycanvas3", newArray)
-
-            }
-
-            const group4 = element.classList.contains("group4");
-            if (group4 && checkStatus) {
-
-                countValue(3, 7, 3);
-
-                const newArray = newArrayData('.value-group-4');
-
-                mycanvas4.destroy()
-                mycanvas4 = createCanvas("mycanvas4", newArray)
-
-            }
-
-            const group5 = element.classList.contains("group5");
-            if (group5 && checkStatus) {
-
-                countValue(13, 9, 4);
-
-                const newArray = newArrayData('.value-group-5');
-
-                mycanvas5.destroy()
-                mycanvas5 = createCanvas("mycanvas5", newArray)
-
-            }
-
-            const group6 = element.classList.contains("group6");
-            if (group6 && checkStatus) {
-
-                countValue(14, 10, 5);
-
-                const newArray = newArrayData('.value-group-6');
-
-                mycanvas6.destroy()
-                mycanvas6 = createCanvas("mycanvas6", newArray)
-            }
-
-            const group7 = element.classList.contains("group7");
-            if (group7 && checkStatus) {
-
-                countValue(15, 11, 6);
-
-                const newArray = newArrayData('.value-group-7');
-
-                mycanvas7.destroy()
-                mycanvas7 = createCanvas("mycanvas7", newArray)
-            }
-
-            const group8 = element.classList.contains("group8");
-            if (group8 && checkStatus) {
-
-                countValue(16, 12, 7);
-
-                const newArray = newArrayData('.value-group-8');
-
-                mycanvas8.destroy()
-                mycanvas8 = createCanvas("mycanvas8", newArray)
-            }
-
-            countValueCenter()
         }
 
     });
@@ -420,7 +467,7 @@ const chart5 = new Chart(barChart1, {
                     color: '#000000',
 
                 }
-            }
+            },
         }
     },
 });

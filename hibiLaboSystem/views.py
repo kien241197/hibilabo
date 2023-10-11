@@ -2,7 +2,7 @@ from . import forms
 from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult, MandaraBase, MandaraProgress
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from pprint import pprint
@@ -14,11 +14,12 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView, CreateView, TemplateView, DetailView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models.functions import ExtractMonth, ExtractYear
+from django.db.models.functions import ExtractMonth, ExtractYear, ExtractDay
 from .constants import SELFCHECK_ANSWER, CIRCL, SQUARE, TRAIANGLE
 import calendar
 import datetime
 import pdb
+import json
 
 User = get_user_model()
 # Create your views here.
@@ -1213,3 +1214,68 @@ class MandaraCompletion(LoginRequiredMixin, TemplateView):
 
         return kwargs
 
+@login_required
+def get_detail_month(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            try:
+                company_id = request.user.company_id
+                user_id = request.user.id
+                today_str = datetime.date.today().strftime("%Y%m")
+                year = datetime.date.today().strftime("%Y")
+                month = datetime.date.today().strftime("%m")
+                box = request.GET['type_box']
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today_str).order_by('start_YYYYMM').first()
+                if mandara_get is not None:
+                    list_resp = list(mandara_get.mandara_progress.annotate(day=ExtractDay('date')).filter(date__year=year,date__month=month).values('day', box + '_result'))
+                    return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    else:
+        return HttpResponseBadRequest('Invalid request')
+
+@login_required
+def post_detail_day(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                company_id = request.user.company_id
+                user_id = request.user.id
+                today_str = datetime.date.today().strftime("%Y%m")
+                data = json.load(request)
+                todo = data.get('box')
+                field = todo + '_result'
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today_str).order_by('start_YYYYMM').first()
+                if mandara_get is not None:
+                    today_progress = MandaraProgress.objects.filter(mandara_base_id=mandara_get.id,date=datetime.date.today())
+                    check = today_progress.values(todo+'_result').first()
+                    if check[field] == 0:
+                        today_progress.update(**{field: 1})
+                        if 'A' in todo:
+                            mandara_get.A_result += 1
+                        if 'B' in todo:
+                            mandara_get.B_result += 1 
+                        if 'C' in todo:
+                            mandara_get.C_result += 1 
+                        if 'D' in todo:
+                            mandara_get.D_result += 1 
+                        if 'E' in todo:
+                            mandara_get.E_result += 1 
+                        if 'F' in todo:
+                            mandara_get.F_result += 1 
+                        if 'G' in todo:
+                            mandara_get.G_result += 1 
+                        if 'H' in todo:
+                            mandara_get.H_result += 1
+                        mandara_get.save()
+                        return JsonResponse({'status': 'OK'})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'NG'}, status=400)
+    else:
+        return HttpResponseBadRequest('Invalid request')

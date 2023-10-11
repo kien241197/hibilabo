@@ -57,7 +57,7 @@
                                     <div class="wrapper-item-body-bottom-left">
                                         {% with content=key|add:'1_content' %}
                                         {% with result=key|add:'1_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}1">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -65,7 +65,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'2_content' %}
                                         {% with result=key|add:'2_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}2">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -73,7 +73,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'3_content' %}
                                         {% with result=key|add:'3_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}3">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -81,7 +81,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'8_content' %}
                                         {% with result=key|add:'8_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}8">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -99,7 +99,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'4_content' %}
                                         {% with result=key|add:'4_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}4">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -107,7 +107,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'7_content' %}
                                         {% with result=key|add:'7_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}7">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -115,7 +115,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'6_content' %}
                                         {% with result=key|add:'6_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}6">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -123,7 +123,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'5_content' %}
                                         {% with result=key|add:'5_result' %}
-                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}5">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -170,7 +170,7 @@
                                     <div class="wrapper-item-body-bottom-left">
                                         {% with content=key|add:'1_content' %}
                                         {% with result=key|add:'1_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}1">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -178,7 +178,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'2_content' %}
                                         {% with result=key|add:'2_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}2">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -186,7 +186,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'3_content' %}
                                         {% with result=key|add:'3_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}3">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -194,7 +194,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'8_content' %}
                                         {% with result=key|add:'8_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}8">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -212,7 +212,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'4_content' %}
                                         {% with result=key|add:'4_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}4">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -220,7 +220,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'7_content' %}
                                         {% with result=key|add:'7_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}7">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -228,7 +228,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'6_content' %}
                                         {% with result=key|add:'6_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}6">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -236,7 +236,7 @@
                                         {% endwith %}
                                         {% with content=key|add:'5_content' %}
                                         {% with result=key|add:'5_result' %}
-                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}">
+                                        <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}5">
                                             <p>{{ mandara|get_custom_name:content }}</p>
                                             <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
                                         </div>
@@ -367,6 +367,8 @@
     var arrayChartGroupE = [{{mandara.E1_result}}, {{mandara.E2_result}}, {{mandara.E3_result}}, {{mandara.E8_result}}, {{mandara.E4_result}}, {{mandara.E7_result}}, {{mandara.E6_result}}, {{mandara.E5_result}}];
     var labels = {{ data_month|safe }};
     var values = {{ data_value|safe }};
+    var urlGet = "{% url 'mandara_ajax_get_detail' %}";
+    var urlPost = "{% url 'mandara_ajax_post_day' %}";
 </script>
 <script src="{% static 'js/mandara-reuse.js' %}"></script>
 
