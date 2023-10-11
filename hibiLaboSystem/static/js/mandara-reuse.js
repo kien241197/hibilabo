@@ -417,7 +417,6 @@ openPopup.forEach((element, index) => {
 })
 
 // 
-
 const barChart1 = document.getElementById('barChart1').getContext('2d');
 const chart5 = new Chart(barChart1, {
     type: 'bar',
@@ -432,7 +431,6 @@ const chart5 = new Chart(barChart1, {
     },
     options: {
         plugins: {
-
 
             datalabels: {
                 anchor: 'end',
@@ -450,6 +448,7 @@ const chart5 = new Chart(barChart1, {
             },
         },
         scales: {
+            
             x: {
                 grid: {
                     display: false
@@ -460,6 +459,7 @@ const chart5 = new Chart(barChart1, {
                 }
             },
             y: {
+                max: Math.max(...values) + 1,
                 grid: {
                     display: false
                 },
