@@ -1032,10 +1032,15 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
     form_class = forms.MandaraCreateForm
 
     def get_context_data(self, **kwargs):
+        today = datetime.date.today().strftime("%Y%m")
         company_id = self.request.user.company_id
         user_id = self.request.user.id
+        mandara = MandaraBase.objects.all().filter(
+            user_id=user_id,company_id=company_id,start_YYYYMM__gt=today
+        ).order_by('start_YYYYMM').first()
 
-        kwargs['form'] = self.form_class(self.request.GET or None)
+        kwargs['form'] = self.form_class(instance=mandara)
+        kwargs['mandara'] = mandara
 
         return kwargs
 
@@ -1043,7 +1048,7 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         context = self.get_context_data(**kwargs)
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, instance=context["mandara"])
         context["form"] = form
         context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
@@ -1055,11 +1060,13 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
         form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
         diff = int(end_YYYYMM) - int(start_YYYYMM)
-        if diff != 100:
+        if diff > 100 or diff <=0:
             context["message"] = '-- 目標期間は 1 年。--'
             return self.render_to_response(context)
-
-        if MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exists():
+        check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exists()
+        if context["mandara"] is not None:
+            MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exclude (pk=context["mandara"].id).exists()
+        if check_exists:
             context["message"] = '-- マンダラが存在しているため、作成できません。--'
             return self.render_to_response(context)
 
@@ -1068,8 +1075,10 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
             mandara.user_id = user_id
             mandara.company_id = company_id
             mandara.save()
+            if context["mandara"] is not None:
+                MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
             sdate = datetime.date(int(start_YYYYMM[0:4]), int(start_YYYYMM[4:6]), 1)   # start date
-            edate = datetime.date(int(end_YYYYMM[0:4]), int(end_YYYYMM[4:6]), 1)   # end date
+            edate = datetime.date(int(end_YYYYMM[0:4]), int(end_YYYYMM[4:6]) + 1, 1)   # end date
             delta = edate - sdate
             bulk_list = list()
             for i in range(delta.days):
@@ -1104,7 +1113,7 @@ class MandaraReuse(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         today = datetime.date.today().strftime("%Y%m")
-        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today).annotate(
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1169,7 +1178,7 @@ class MandaraReuse(LoginRequiredMixin, TemplateView):
                H6_result=Sum('mandara_progress__H6_result'),
                H7_result=Sum('mandara_progress__H7_result'),
                H8_result=Sum('mandara_progress__H8_result'),
-            ).order_by('start_YYYYMM').first()
+            ).first()
         kwargs['mandara'] = mandara
         kwargs['month'] = datetime.date.today().strftime("%m")
         if mandara is not None:

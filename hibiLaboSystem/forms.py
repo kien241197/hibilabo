@@ -246,12 +246,12 @@ class MandaraCreateForm(forms.ModelForm):
         exclude = ["user", "company"]
 
     start_YYYYMM = forms.ChoiceField(
-        widget=fields.BetweenYearSelectWidget(),
+        widget=fields.BetweenYearSelectWidgetStart(),
         required=True
     )
 
     end_YYYYMM = forms.ChoiceField(
-        widget=fields.BetweenYearSelectWidget(),
+        widget=fields.BetweenYearSelectWidgetEnd(),
         required=True
     )
 
