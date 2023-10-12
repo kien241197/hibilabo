@@ -242,41 +242,41 @@ var mycanvas16 = createCanvas("mycanvas16", arrayChartGroup8);
 
 
 
-const choose = document.querySelectorAll(".choose");
-choose[0].classList.add('background-choose-active')
-choose[0].classList.add('color-print')
-choose.forEach((element, index) => {
-    element.addEventListener("click", function () {
+// const choose = document.querySelectorAll(".choose");
+// choose[0].classList.add('background-choose-active')
+// choose[0].classList.add('color-print')
+// choose.forEach((element, index) => {
+//     element.addEventListener("click", function () {
 
-        const listChoose = document.querySelectorAll(".choose");
+//         const listChoose = document.querySelectorAll(".choose");
 
-        listChoose.forEach((item, count) => {
-            if (index !== count) {
+//         listChoose.forEach((item, count) => {
+//             if (index !== count) {
 
-                item.classList.remove('background-choose-active')
-                item.classList.remove('color-print')
-            }
-        })
-        element.classList.add('background-choose-active')
-        element.classList.add('color-print')
+//                 item.classList.remove('background-choose-active')
+//                 item.classList.remove('color-print')
+//             }
+//         })
+//         element.classList.add('background-choose-active')
+//         element.classList.add('color-print')
 
-        if (index === 1) {
-            document.querySelector(".masmas-mandara").style.display = "block";
-            document.querySelector(".body-bottom-left").style.display = "none";
-            document.querySelector(".body-bottom-right").style.display = "none";
-            document.querySelector(".content-title").style.display = "none";
-            document.querySelector(".text-title").textContent = "MASMAS MANDARA CHART";
-            document.querySelector(".wrapper-body-left").style.gridColumn = "span 12"
-        } else {
-            document.querySelector(".masmas-mandara").style.display = "none";
-            document.querySelector(".body-bottom-left").style.display = "grid";
-            document.querySelector(".body-bottom-right").style.display = "flex";
-            document.querySelector(".content-title").style.display = "block";
-            document.querySelector(".text-title").textContent = "MANDARA CHART";
-            document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
-        }
-    })
-})
+//         if (index === 1) {
+//             document.querySelector(".masmas-mandara").style.display = "block";
+//             document.querySelector(".body-bottom-left").style.display = "none";
+//             document.querySelector(".body-bottom-right").style.display = "none";
+//             document.querySelector(".content-title").style.display = "none";
+//             document.querySelector(".text-title").textContent = "MASMAS MANDARA CHART";
+//             document.querySelector(".wrapper-body-left").style.gridColumn = "span 12"
+//         } else {
+//             document.querySelector(".masmas-mandara").style.display = "none";
+//             document.querySelector(".body-bottom-left").style.display = "grid";
+//             document.querySelector(".body-bottom-right").style.display = "flex";
+//             document.querySelector(".content-title").style.display = "block";
+//             document.querySelector(".text-title").textContent = "MANDARA CHART";
+//             document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
+//         }
+//     })
+// })
 
 // const valueTab1 = document.querySelector(".tab1");
 document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.add("hidden-tab");

@@ -879,6 +879,8 @@ body {
 }
 
 .value-table {
+    grid-column: span 1;
+    overflow: hidden;
     width: 100%;
     background-color: #e7e7e8;
     display: flex;
@@ -931,6 +933,8 @@ body {
 
 .value-table p {
 
+    width: 100%;
+    padding: 0 5px;
     font-size: 75%;
     font-weight: 700;
     font-family: var(--font-content);

@@ -1,7 +1,27 @@
-{% extends 'layout.html' %}
+{% load static %}
 
 {% block header %}
 <!-- chartの呼び出し -->
+<!-- Required meta tags -->
+<meta charset="UTF-8">
+<title>HIBI_LABOインナーマーケティング</title>
+<!-- ファビコン -->
+<link rel=”icon” href="{% static 'assets/favicon1.png' %}">
+<meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+<!-- 互換表示の解除 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta id="HandheldFriendly" content="True" />
+
+<!-- chromeでキャッシュが効いていると最新のcss等が反映されないその場合には、ctrl+shift+R　-->
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/fontawesome/css/all.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/responsive.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/custom-style.css' %}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
     integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
     crossorigin="anonymous"></script>
@@ -10,7 +30,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-{% load static %}
 <link rel="stylesheet" href="{% static '/css/mandara_print.css' %}">
 
 
@@ -33,7 +52,7 @@
                                             <h2 class="text-title">MANDARA CHART</h2>
                                             <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                         </div>
-                                        <div class="content-body-center">
+                                        <!-- <div class="content-body-center">
                                             <div class="item-body-center">
                                                 <p class="title-center">目標入力</p>
                                                 <button class="choose">1</button>
@@ -42,15 +61,15 @@
                                                 <p class="title-center">日々検証</p>
                                                 <button class="choose">2</button>
                                             </div>
-                                            <!-- <div class="item-body-center">
-                                            <p class="title-center">月間検証</p>
-                                            <button class="choose">3</button>
+                                            <div class="item-body-center">
+                                                <p class="title-center">月間検証</p>
+                                                <button class="choose">3</button>
+                                            </div>
+                                            <div class="item-body-center">
+                                                <p class="title-center">個人推移</p>
+                                                <button class="choose">4</button>
+                                            </div>
                                         </div> -->
-                                            <!-- <div class="item-body-center">
-                                            <p class="title-center">個人推移</p>
-                                            <button class="choose">4</button>
-                                        </div> -->
-                                        </div>
                                         <!-- <div class="content-body-right">
                                         <p class="title-content-body-left">目標期間設定</p>
                                         <div class="item-select">
