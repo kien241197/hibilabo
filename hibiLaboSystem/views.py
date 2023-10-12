@@ -1104,7 +1104,7 @@ class MandaraReuse(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         today = datetime.date.today().strftime("%Y%m")
-        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today).annotate(
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1227,7 +1227,7 @@ def get_detail_month(request):
                 year = datetime.date.today().strftime("%Y")
                 month = datetime.date.today().strftime("%m")
                 box = request.GET['type_box']
-                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today_str).order_by('start_YYYYMM').first()
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today_str).order_by('start_YYYYMM').first()
                 if mandara_get is not None:
                     list_resp = list(mandara_get.mandara_progress.annotate(day=ExtractDay('date')).filter(date__year=year,date__month=month).values('day', box + '_result'))
                     return JsonResponse({'context': list_resp})
@@ -1250,7 +1250,7 @@ def post_detail_day(request):
                 data = json.load(request)
                 todo = data.get('box')
                 field = todo + '_result'
-                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today_str).order_by('start_YYYYMM').first()
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today_str).order_by('start_YYYYMM').first()
                 if mandara_get is not None:
                     today_progress = MandaraProgress.objects.filter(mandara_base_id=mandara_get.id,date=datetime.date.today())
                     check = today_progress.values(todo+'_result').first()

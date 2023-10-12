@@ -120,7 +120,6 @@ function countValueCenter() {
     textContentMain[8].textContent = valueContentMain;
 
     const valueTabCenter = document.querySelector(".value-vanvas-center");
-    console.log("valueTabCenter", valueTabCenter);
     valueTabCenter.textContent = valueContentMain;
 }
 
@@ -176,7 +175,6 @@ choose.forEach((element, index) => {
         element.classList.add('color-print')
 
         if (index === 1) {
-            console.log(document.querySelector(".body-bottom-left"));
             document.querySelector(".masmas-mandara").style.display = "block";
             document.querySelector(".body-bottom-left").style.display = "none";
             document.querySelector(".body-bottom-right").style.display = "none";
@@ -406,7 +404,10 @@ openPopup.forEach((element, index) => {
                         mycanvas8 = createCanvas("mycanvas8", newArray)
                     }
 
-                    countValueCenter()
+                    countValueCenter();
+                    values[values.length - 1] += 1;
+                    char5.destroy();
+                    char5 = createBarChart(labels, values); 
                   }
                 });
 
@@ -417,57 +418,61 @@ openPopup.forEach((element, index) => {
 })
 
 // 
-const barChart1 = document.getElementById('barChart1').getContext('2d');
-const chart5 = new Chart(barChart1, {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: '',
-            data: values,
-            backgroundColor:
-                '#C8C9CA',
-        }]
-    },
-    options: {
-        plugins: {
-
-            datalabels: {
-                anchor: 'end',
-                align: 'top',
-                offset: -5,
-                color: "#2CAEB5",
-                font: { size: 22, weight: 700 },
-                formatter: function (value, context) {
-                    return value;
-                },
-
-            },
-            legend: {
-                display: false,
-            },
+function createBarChart(arr_label, arr_value) {
+    const barChart1 = document.getElementById('barChart1').getContext('2d');
+    return new Chart(barChart1, {
+        type: 'bar',
+        data: {
+            labels: arr_label,
+            datasets: [{
+                label: '',
+                data: arr_value,
+                backgroundColor:
+                    '#C8C9CA',
+            }]
         },
-        scales: {
-            
-            x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    color: '#000000',
+        options: {
+            plugins: {
 
-                }
-            },
-            y: {
-                max: Math.max(...values) + 1,
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    color: '#000000',
+                datalabels: {
+                    anchor: 'end',
+                    align: 'top',
+                    offset: -5,
+                    color: "#2CAEB5",
+                    font: { size: 22, weight: 700 },
+                    formatter: function (value, context) {
+                        return value;
+                    },
 
-                }
+                },
+                legend: {
+                    display: false,
+                },
             },
-        }
-    },
-});
+            scales: {
+                
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#000000',
+
+                    }
+                },
+                y: {
+                    max: Math.max(...values) + 1,
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#000000',
+
+                    }
+                },
+            }
+        },
+    });    
+}
+
+var char5 = createBarChart(labels, values);
