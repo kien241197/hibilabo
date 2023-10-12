@@ -1060,7 +1060,7 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
         form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
         diff = int(end_YYYYMM) - int(start_YYYYMM)
-        if diff > 100 or diff <=0:
+        if diff != 99:
             context["message"] = '-- 目標期間は 1 年。--'
             return self.render_to_response(context)
         check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exists()
