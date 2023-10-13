@@ -33,12 +33,36 @@
                                                 <div class="d-flex">
                                                     <h2 class="text-title mr-3">MANDARA CHART</h2>
                                                     <a href="{% url 'mandara_print' get_mandara_detail.id %}"
-                                                        type="submit" class="button-print d-flex justify-content-center align-items-center">PRINT</a>
+                                                        type="submit" class="button-print f-flex justify-content-centerz">PRINT</a>
                                                 </div>
 
                                             </div>
                                             <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                         </div>
+                                        <div class="content-body-center">
+
+                                            <!-- <div class="item-body-center">
+                                            <p class="title-center">月間検証</p>
+                                            <button class="choose">3</button>
+                                        </div> -->
+                                            <!-- <div class="item-body-center">
+                                            <p class="title-center">個人推移</p>
+                                            <button class="choose">4</button>
+                                        </div> -->
+                                        </div>
+                                        <!-- <div class="content-body-right">
+                                        <p class="title-content-body-left">目標期間設定</p>
+                                        <div class="item-select">
+                                            <select class="select" name="" id="">
+                                                <option value="">2023年3月</option>
+                                            </select>
+                                            <p class="to">～</p>
+                                            <select class="select" name="" id="">
+                                                <option value="">2023年9月</option>
+                                            </select>
+                                            <button class="button">表示</button>
+                                        </div>
+                                    </div> -->
                                     </div>
                                 </div>
                                 {% if get_mandara_detail is not None %}
@@ -529,7 +553,7 @@
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決</p>
+                                                    <p>課題解決z</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
                                                     {{get_mandara_detail.A_dueto}}
@@ -762,14 +786,14 @@
 </main>
 
 <script>
-    var arrayChartGroupA = [{{ get_mandara_detail.A1_result }}, { { get_mandara_detail.A2_result } }, { { get_mandara_detail.A3_result } }, { { get_mandara_detail.A8_result } }, { { get_mandara_detail.A4_result } }, { { get_mandara_detail.A7_result } }, { { get_mandara_detail.A6_result } }, { { get_mandara_detail.A5_result } }];
-    var arrayChartGroupB = [{{ get_mandara_detail.B1_result }}, { { get_mandara_detail.B2_result } }, { { get_mandara_detail.B3_result } }, { { get_mandara_detail.B8_result } }, { { get_mandara_detail.B4_result } }, { { get_mandara_detail.B7_result } }, { { get_mandara_detail.B6_result } }, { { get_mandara_detail.B5_result } }];
-    var arrayChartGroupC = [{{ get_mandara_detail.C1_result }}, { { get_mandara_detail.C2_result } }, { { get_mandara_detail.C3_result } }, { { get_mandara_detail.C8_result } }, { { get_mandara_detail.C4_result } }, { { get_mandara_detail.C7_result } }, { { get_mandara_detail.C6_result } }, { { get_mandara_detail.C5_result } }];
-    var arrayChartGroupH = [{{ get_mandara_detail.H1_result }}, { { get_mandara_detail.H2_result } }, { { get_mandara_detail.H3_result } }, { { get_mandara_detail.H8_result } }, { { get_mandara_detail.H4_result } }, { { get_mandara_detail.H7_result } }, { { get_mandara_detail.H6_result } }, { { get_mandara_detail.H5_result } }];
-    var arrayChartGroupD = [{{ get_mandara_detail.D1_result }}, { { get_mandara_detail.D2_result } }, { { get_mandara_detail.D3_result } }, { { get_mandara_detail.D8_result } }, { { get_mandara_detail.D4_result } }, { { get_mandara_detail.D7_result } }, { { get_mandara_detail.D6_result } }, { { get_mandara_detail.D5_result } }];
-    var arrayChartGroupG = [{{ get_mandara_detail.G1_result }}, { { get_mandara_detail.G2_result } }, { { get_mandara_detail.G3_result } }, { { get_mandara_detail.G8_result } }, { { get_mandara_detail.G4_result } }, { { get_mandara_detail.G7_result } }, { { get_mandara_detail.G6_result } }, { { get_mandara_detail.G5_result } }];
-    var arrayChartGroupF = [{{ get_mandara_detail.F1_result }}, { { get_mandara_detail.F2_result } }, { { get_mandara_detail.F3_result } }, { { get_mandara_detail.F8_result } }, { { get_mandara_detail.F4_result } }, { { get_mandara_detail.F7_result } }, { { get_mandara_detail.F6_result } }, { { get_mandara_detail.F5_result } }];
-    var arrayChartGroupE = [{{ get_mandara_detail.E1_result }}, { { get_mandara_detail.E2_result } }, { { get_mandara_detail.E3_result } }, { { get_mandara_detail.E8_result } }, { { get_mandara_detail.E4_result } }, { { get_mandara_detail.E7_result } }, { { get_mandara_detail.E6_result } }, { { get_mandara_detail.E5_result } }];
+    var arrayChartGroupA = [{{get_mandara_detail.A1_result}}, {{get_mandara_detail.A2_result}}, {{ get_mandara_detail.A3_result }}, {{ get_mandara_detail.A8_result }}, {{ get_mandara_detail.A4_result }}, {{ get_mandara_detail.A7_result }}, {{ get_mandara_detail.A6_result }}, {{ get_mandara_detail.A5_result }}];
+    var arrayChartGroupB = [{{ get_mandara_detail.B1_result }}, {{ get_mandara_detail.B2_result }}, {{ get_mandara_detail.B3_result }}, {{ get_mandara_detail.B8_result }}, {{ get_mandara_detail.B4_result }}, {{ get_mandara_detail.B7_result }}, {{ get_mandara_detail.B6_result }}, {{ get_mandara_detail.B5_result }}];
+    var arrayChartGroupC = [{{ get_mandara_detail.C1_result }}, {{ get_mandara_detail.C2_result }}, {{ get_mandara_detail.C3_result }}, {{ get_mandara_detail.C8_result }}, {{ get_mandara_detail.C4_result }}, {{ get_mandara_detail.C7_result }}, {{ get_mandara_detail.C6_result }}, {{ get_mandara_detail.C5_result }}];
+    var arrayChartGroupH = [{{ get_mandara_detail.H1_result }}, {{ get_mandara_detail.H2_result }}, {{ get_mandara_detail.H3_result }}, {{ get_mandara_detail.H8_result }}, {{ get_mandara_detail.H4_result }}, {{ get_mandara_detail.H7_result }}, {{ get_mandara_detail.H6_result }}, {{ get_mandara_detail.H5_result }}];
+    var arrayChartGroupD = [{{ get_mandara_detail.D1_result }}, {{ get_mandara_detail.D2_result }}, {{ get_mandara_detail.D3_result }}, {{ get_mandara_detail.D8_result }}, {{ get_mandara_detail.D4_result }}, {{ get_mandara_detail.D7_result }}, {{ get_mandara_detail.D6_result }}, {{ get_mandara_detail.D5_result }}];
+    var arrayChartGroupG = [{{ get_mandara_detail.G1_result }}, {{ get_mandara_detail.G2_result }}, {{ get_mandara_detail.G3_result }}, {{ get_mandara_detail.G8_result }}, {{ get_mandara_detail.G4_result }}, {{ get_mandara_detail.G7_result }}, {{ get_mandara_detail.G6_result }}, {{ get_mandara_detail.G5_result }}];
+    var arrayChartGroupF = [{{ get_mandara_detail.F1_result }}, {{ get_mandara_detail.F2_result }}, {{ get_mandara_detail.F3_result }}, {{ get_mandara_detail.F8_result }}, {{ get_mandara_detail.F4_result }}, {{ get_mandara_detail.F7_result }}, {{ get_mandara_detail.F6_result }}, {{ get_mandara_detail.F5_result }}];
+    var arrayChartGroupE = [{{ get_mandara_detail.E1_result }}, {{ get_mandara_detail.E2_result }}, {{ get_mandara_detail.E3_result }}, {{ get_mandara_detail.E8_result }}, {{ get_mandara_detail.E4_result }}, {{ get_mandara_detail.E7_result }}, {{ get_mandara_detail.E6_result }}, {{ get_mandara_detail.E5_result }}];
 </script>
 <script src="{% static 'js/mandara-completion-detail.js' %}"></script>
 
