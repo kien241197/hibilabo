@@ -33,7 +33,7 @@
                                                 <div class="d-flex">
                                                     <h2 class="text-title mr-3">MANDARA CHART</h2>
                                                     <button type="submit" class="button-print"
-                                                        onclick="window.location.assign('mandara-print')">PRINT</button>
+                                                        onclick="window.location.assign('/mandara-print/{{get_mandara_detail.id}}')">PRINT</button>
                                                 </div>
 
                                             </div>
@@ -65,50 +65,54 @@
                                     </div> -->
                                     </div>
                                 </div>
+                                {% if get_mandara_detail is not None %}
                                 <div class="body-bottom-left" id="value-body-bottom-left">
 
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group1" id="value-table-1">
-                                            <p>体のケア</p>
-                                            <span id="value-1" class="value-group-1">0</span>
+                                            <p>{{get_mandara_detail.A1_content}}</p>
+                                            <span id="value-1" class="value-group-1">
+                                                {{get_mandara_detail.A1_result}}
+                                            </span>
                                         </div>
                                         <div class="value-table group1" id="value-table-2">
-                                            <p>サプリメント</p>
-                                            <span id="value-2" class="value-group-1">2</span>
+                                            <p>{{get_mandara_detail.A2_content}}</p>
+                                            <span id="value-2"
+                                                class="value-group-1">{{get_mandara_detail.A2_result}}</span>
                                         </div>
                                         <div class="value-table group1" id="value-table-3">
-                                            <p>FSQ</p>
-                                            <span class="value-group-1">2</span>
+                                            <p>{{get_mandara_detail.A3_content}}</p>
+                                            <span class="value-group-1">{{get_mandara_detail.A3_result}}</span>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>柔軟性</p>
-                                            <span class="value-group-1">1</span>
+                                            <p>{{get_mandara_detail.A4_content}}</p>
+                                            <span class="value-group-1">{{get_mandara_detail.A4_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">A</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">14</span>
-                                            <p class="title-value-table-score">体づくり</p>
+                                            <span class="value-score">{{get_mandara_detail.A_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.A_keyword}}</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
                                             </div>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>RSQ</p>
-                                            <span class="value-group-1">2</span>
+                                            <p>{{get_mandara_detail.A5_content}}</p>
+                                            <span class="value-group-1">{{get_mandara_detail.A5_result}}</span>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>スタミナ</p>
-                                            <span class="value-group-1">1</span>
+                                            <p>{{get_mandara_detail.A6_content}}</p>
+                                            <span class="value-group-1">{{get_mandara_detail.A6_result}}</span>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>可動性</p>
-                                            <span class="value-group-1">1</span>
+                                            <p>{{get_mandara_detail.A7_content}}</p>
+                                            <span class="value-group-1">{{get_mandara_detail.A7_result}}</span>
                                         </div>
                                         <div class="value-table group1">
-                                            <p>食事</p>
-                                            <span class="value-group-1">2</span>
+                                            <p>{{get_mandara_detail.A8_content}}</p>
+                                            <span class="value-group-1">{{get_mandara_detail.A8_result}}</span>
                                             <!-- <svg id="triangle1" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="50" viewBox="0 0 52 50" fill="none">
                                                 <path
@@ -119,86 +123,86 @@
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group2" id="value-table-4">
-                                            <p>体幹強化</p>
-                                            <span class="value-group-2">4</span>
+                                            <p>{{get_mandara_detail.B1_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B1_result}}</span>
                                         </div>
                                         <div class="value-table group2" id="value-table-5">
-                                            <p>軸をぶらさない</p>
-                                            <span class="value-group-2">1</span>
+                                            <p>{{get_mandara_detail.B2_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B2_result}}</span>
                                         </div>
                                         <div class="value-table group2" id="value-table-6">
-                                            <p>角度をつける</p>
-                                            <span class="value-group-2">2</span>
+                                            <p>{{get_mandara_detail.B3_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B3_result}}</span>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>リリースポイント安定</p>
-                                            <span class="value-group-2">1</span>
+                                            <p>{{get_mandara_detail.B4_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B4_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">B</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">20</span>
-                                            <p class="title-value-table-score">コントール</p>
+                                            <span class="value-score">{{get_mandara_detail.B_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.B_keyword}}</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
                                             </div>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>不安をなくす</p>
-                                            <span class="value-group-2">1</span>
+                                            <p>{{get_mandara_detail.B5_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B5_result}}</span>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>下肢の強化</p>
-                                            <span class="value-group-2">4</span>
+                                            <p>{{get_mandara_detail.B6_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B6_result}}</span>
                                         </div>
                                         <div class="value-table group2">
-                                            <p>体を開かない</p>
-                                            <span class="value-group-2">4</span>
+                                            <p>{{get_mandara_detail.B7_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B7_result}}</span>
                                             <!-- <svg id="triangle" xmlns="http://www.w3.org/2000/svg" width="62" height="42"
                                                 viewBox="0 0 62 42" fill="none">
                                                 <path d="M31 0L61.3109 41.25H0.689112L31 0Z" fill="#CB99C4" />
                                             </svg> -->
                                         </div>
                                         <div class="value-table group2">
-                                            <p>メンタルコントロール</p>
-                                            <span class="value-group-2">2</span>
+                                            <p>{{get_mandara_detail.B8_content}}</p>
+                                            <span class="value-group-2">{{get_mandara_detail.B8_result}}</span>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group3" id="value-table-7">
-                                            <p>角度をつける</p>
-                                            <span class="value-group-3">2</span>
+                                            <p>{{get_mandara_detail.C1_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C1_result}}</span>
                                         </div>
                                         <div class="value-table group3" id="value-table-8">
-                                            <p>ボールをたたく</p>
-                                            <span class="value-group-3">3</span>
+                                            <p>{{get_mandara_detail.C2_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C2_result}}</span>
                                         </div>
                                         <div class="value-table group3" id="value-table-9">
-                                            <p>リストの強化</p>
-                                            <span class="value-group-3">4</span>
+                                            <p>{{get_mandara_detail.C3_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C3_result}}</span>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>力まない</p>
-                                            <span class="value-group-3">2</span>
+                                            <p>{{get_mandara_detail.C4_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C4_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">C</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">20</span>
-                                            <p class="title-value-table-score">キレ</p>
+                                            <span class="value-score">{{get_mandara_detail.C_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.C_keyword}}</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas3" class="mycanvas" width="148" height="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
                                             </div>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>下半身主導</p>
-                                            <span class="value-group-3">3</span>
+                                            <p>{{get_mandara_detail.C5_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C5_result}}</span>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>ボールを軸でリリース</p>
-                                            <span class="value-group-3">2</span>
+                                            <p>{{get_mandara_detail.C6_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C6_result}}</span>
                                             <!-- <svg id="triangle3" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="52" viewBox="0 0 52 52" fill="none">
                                                 <path
@@ -207,50 +211,44 @@
                                             </svg> -->
                                         </div>
                                         <div class="value-table group3">
-                                            <p>回転数アップ</p>
-                                            <span class="value-group-3">2</span>
+                                            <p>{{get_mandara_detail.C7_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C7_result}}</span>
                                         </div>
                                         <div class="value-table group3">
-                                            <p>可動域</p>
-                                            <span class="value-group-3">3</span>
+                                            <p>{{get_mandara_detail.C8_content}}</p>
+                                            <span class="value-group-3">{{get_mandara_detail.C8_result}}</span>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group4">
-                                            <p>はっきりと <br>
-                                                した目標 <br>
-                                                目的を持つ</p>
-                                            <span class="value-group-4">3</span>
+                                            <p>{{get_mandara_detail.H1_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H1_result}}</span>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>一喜一憂 <br>
-                                                しない</p>
-                                            <span class="value-group-4">4</span>
+                                            <p>{{get_mandara_detail.H2_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H2_result}}</span>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>頭は冷静に <br>
-                                                心は熱く</p>
-                                            <span class="value-group-4">1</span>
+                                            <p>{{get_mandara_detail.H3_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H3_result}}</span>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>ピンチに <br>
-                                                強い</p>
-                                            <span class="value-group-4">1</span>
+                                            <p>{{get_mandara_detail.H4_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H4_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">H</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">23</span>
-                                            <p class="title-value-table-score">メンタル</p>
+                                            <span class="value-score">{{get_mandara_detail.H_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.H_keyword}}</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
                                             </div>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>雰囲気に <br>
-                                                流されない</p>
-                                            <span class="value-group-4">1</span>
+                                            <p>{{get_mandara_detail.H5_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H5_result}}</span>
                                             <!-- <svg id="triangle4" xmlns="http://www.w3.org/2000/svg" width="42"
                                                 height="61" viewBox="0 0 42 61" fill="none">
                                                 <path d="M0.500015 30.5L41.75 0.189098L41.75 60.8109L0.500015 30.5Z"
@@ -258,84 +256,81 @@
                                             </svg> -->
                                         </div>
                                         <div class="value-table group4">
-                                            <p>波を <br>
-                                                つくらない</p>
-                                            <span class="value-group-4">3</span>
+                                            <p>{{get_mandara_detail.H6_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H6_result}}</span>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>勝利への <br>
-                                                執念</p>
-                                            <span class="value-group-4">4</span>
+                                            <p>{{get_mandara_detail.H7_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H7_result}}</span>
                                         </div>
                                         <div class="value-table group4">
-                                            <p>仲間を <br>
-                                                思いやる心</p>
-                                            <span class="value-group-4">2</span>
+                                            <p>{{get_mandara_detail.H8_content}}</p>
+                                            <span class="value-group-4">{{get_mandara_detail.H8_result}}</span>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table-score SCORE-text">
                                             <span class="text-table-score">A</span>
-                                            <p class="title-main-score">体づくり</p>
-                                            <span class="value-score"></span>
+                                            <p class="title-main-score">{{get_mandara_detail.A_keyword}}</p>
+                                            <span class="value-score">{{get_mandara_detail.A_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
                                             <span class="text-table-score">B</span>
-                                            <p class="title-main-score">コントール</p>
-                                            <span class="value-score"></span>
+                                            <p class="title-main-score">{{get_mandara_detail.B_keyword}}</p>
+                                            <span class="value-score">{{get_mandara_detail.B_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
-                                            <span class="text-table-score">C</span>
+                                            <span class="text-table-score">{{get_mandara_detail.C_keyword}}</span>
                                             <p class="title-main-score">キレ</p>
-                                            <span class="value-score"></span>
+                                            <span class="value-score">{{get_mandara_detail.C_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
-                                            <span class="text-table-score">H</span>
+                                            <span class="text-table-score">{{get_mandara_detail.H_keyword}}</span>
                                             <p class="title-main-score">メンタル</p>
-                                            <span class="value-score"></span>
+                                            <span class="value-score">{{get_mandara_detail.H_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE-MAIN">
                                             <p class="title-main-score title-main-score-center">1年後の目標</p>
-                                            <span class="value-score value-score-center">188</span>
+                                            <span class="value-score value-score-center"></span>
                                             <p class="title-main-score-bottom">1年後の目標</p>
                                         </div>
                                         <div class="value-table-score SCORE-text">
                                             <span class="text-table-score">D</span>
-                                            <p class="title-main-score">スピード <br /> 160km/h</p>
-                                            <span class="value-score"></span>
+                                            <p class="title-main-score">{{get_mandara_detail.D_keyword}}</p>
+                                            <span class="value-score">{{get_mandara_detail.D_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
                                             <span class="text-table-score">G</span>
-                                            <p class="title-main-score f1年後の目標">人間性</p>
-                                            <span class="value-score">30</span>
+                                            <p class="title-main-score f1年後の目標">{{get_mandara_detail.G_keyword}}</p>
+                                            <span class="value-score">{{get_mandara_detail.G_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
                                             <span class="text-table-score">F</span>
-                                            <p class="title-main-score">運</p>
-                                            <span class="value-score">28</span>
+                                            <p class="title-main-score">{{get_mandara_detail.F_keyword}}</p>
+                                            <span class="value-score">{{get_mandara_detail.F_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE-text">
                                             <span class="text-table-score">E</span>
-                                            <p class="title-main-score">変化球</p>
-                                            <span class="value-score">20</span>
+                                            <p class="title-main-score">{{get_mandara_detail.E_keyword}}</p>
+                                            <span class="value-score">{{get_mandara_detail.E_result}}</span>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group5">
-                                            <p>軸でまわる</p>
-                                            <span class="value-group-5">5</span>
+                                            <p>{{get_mandara_detail.D1_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D1_result}}</span>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>下肢の強化</p>
-                                            <span class="value-group-5">5</span>
+                                            <p>{{get_mandara_detail.D2_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D2_result}}</span>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>体重増加</p>
-                                            <span class="value-group-5">4</span>
+                                            <p>{{get_mandara_detail.D3_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D3_result}}</span>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>体幹強化</p>
-                                            <span class="value-group-5">5</span>
+                                            <p>{{get_mandara_detail.D4_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D4_result}}</span>
                                             <!-- <svg id="triangle5" xmlns="http://www.w3.org/2000/svg" width="42"
                                                 height="61" viewBox="0 0 42 61" fill="none">
                                                 <path d="M41.5 30.5L0.25001 60.8109L0.25001 0.189111L41.5 30.5Z"
@@ -345,8 +340,9 @@
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">D</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">33</span>
-                                            <p class="title-value-table-score">スピード</p>
+                                            <span class="value-score">{{get_mandara_detail.D_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.D_keyword}}
+                                            </p>
                                             <div class="wrapper-canvas ">
                                                 <canvas id="mycanvas5" class="mycanvas" width="148" height="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
@@ -354,35 +350,34 @@
 
                                         </div>
                                         <div class="value-table group5">
-                                            <p>肩周りの強化</p>
-                                            <span class="value-group-5">4</span>
+                                            <p>{{get_mandara_detail.D5_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D5_result}}</span>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>可動域</p>
-                                            <span class="value-group-5">4</span>
+                                            <p>{{get_mandara_detail.D6_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D6_result}}</span>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>ライナーキャッチボール</p>
-                                            <span class="value-group-5">3</span>
+                                            <p>{{get_mandara_detail.D7_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D7_result}}</span>
                                         </div>
                                         <div class="value-table group5">
-                                            <p>ピッチングを増やす</p>
-                                            <span class="value-group-5">3</span>
+                                            <p>{{get_mandara_detail.D8_content}}</p>
+                                            <span class="value-group-5">{{get_mandara_detail.D8_result}}</span>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group6">
-                                            <p>感性</p>
-                                            <span class="value-group-6">3</span>
+                                            <p>{{get_mandara_detail.G1_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G1_result}}</span>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>愛される <br>
-                                                人間</p>
-                                            <span class="value-group-6">2</span>
+                                            <p>{{get_mandara_detail.G2_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G2_result}}</span>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>計画性</p>
-                                            <span class="value-group-6">2</span>
+                                            <p>{{get_mandara_detail.G3_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G3_result}}</span>
                                             <!-- <svg id="triangle6" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="51" viewBox="0 0 52 51" fill="none">
                                                 <path
@@ -391,45 +386,44 @@
                                             </svg> -->
                                         </div>
                                         <div class="value-table group6">
-                                            <p>思いやり</p>
-                                            <span class="value-group-6">5</span>
+                                            <p>{{get_mandara_detail.G4_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G4_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">G</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">30</span>
-                                            <p class="title-value-table-score">人間性</p>
+                                            <span class="value-score">{{get_mandara_detail.G_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.G_keyword}}</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
                                             </div>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>感謝</p>
-                                            <span class="value-group-6">3</span>
+                                            <p>{{get_mandara_detail.G5_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G5_result}}</span>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>礼儀</p>
-                                            <span class="value-group-6">4</span>
+                                            <p>{{get_mandara_detail.G6_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G6_result}}</span>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>信頼される <br>
-                                                人間</p>
-                                            <span class="value-group-6">4</span>
+                                            <p>{{get_mandara_detail.G7_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G7_result}}</span>
                                         </div>
                                         <div class="value-table group6">
-                                            <p>継続力</p>
-                                            <span class="value-group-6">3</span>
+                                            <p>{{get_mandara_detail.G8_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.G8_result}}</span>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group7">
-                                            <p>あいさつ</p>
-                                            <span class="value-group-7">3</span>
+                                            <p>{{get_mandara_detail.F1_content}}</p>
+                                            <span class="value-group-7">{{get_mandara_detail.F1_result}}</span>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>ゴミ拾い</p>
-                                            <span class="value-group-7">4</span>
+                                            <p>{{get_mandara_detail.F2_content}}</p>
+                                            <span class="value-group-7">{{get_mandara_detail.F2_result}}</span>
                                             <!-- <svg id="triangle7" xmlns="http://www.w3.org/2000/svg" width="62"
                                                 height="42" viewBox="0 0 62 42" fill="none">
                                                 <path d="M31 42L0.689144 0.750002L61.3109 0.750002L31 42Z"
@@ -437,13 +431,12 @@
                                             </svg> -->
                                         </div>
                                         <div class="value-table group7">
-                                            <p>部屋掃除</p>
-                                            <span class="value-group-7">1</span>
+                                            <p>{{get_mandara_detail.F3_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.F3_result}}</span>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>道具を <br>
-                                                大切に使う</p>
-                                            <span class="value-group-7">4</span>
+                                            <p>{{get_mandara_detail.F4_content}}</p>
+                                            <span class="value-group-6">{{get_mandara_detail.F4_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">F</span>
@@ -457,28 +450,26 @@
 
                                         </div>
                                         <div class="value-table group7">
-                                            <p>審判さんへの <br>
-                                                態度</p>
-                                            <span class="value-group-7">5</span>
+                                            <p>{{get_mandara_detail.F5_content}}</p>
+                                            <span class="value-group-7">{{get_mandara_detail.F5_result}}</span>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>プラス思考</p>
-                                            <span class="value-group-7">3</span>
+                                            <p>{{get_mandara_detail.F6_content}}</p>
+                                            <span class="value-group-7">{{get_mandara_detail.F6_result}}</span>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>応援される <br>
-                                                人間になる</p>
-                                            <span class="value-group-7">3</span>
+                                            <p>{{get_mandara_detail.F7_content}}</p>
+                                            <span class="value-group-7">{{get_mandara_detail.F7_result}}</span>
                                         </div>
                                         <div class="value-table group7">
-                                            <p>本を読む</p>
-                                            <span class="value-group-7">3</span>
+                                            <p>{{get_mandara_detail.F8_content}}</p>
+                                            <span class="value-group-7">{{get_mandara_detail.F8_result}}</span>
                                         </div>
                                     </div>
                                     <div class="wrapper-item-body-bottom-left">
                                         <div class="value-table group8">
-                                            <p>カウントボールを増やす</p>
-                                            <span class="value-group-8">2</span>
+                                            <p>{{get_mandara_detail.E1_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E1_result}}</span>
                                             <!-- <svg id="triangle8" xmlns="http://www.w3.org/2000/svg" width="52"
                                                 height="51" viewBox="0 0 52 51" fill="none">
                                                 <path
@@ -487,22 +478,22 @@
                                             </svg> -->
                                         </div>
                                         <div class="value-table group8">
-                                            <p>フォーク完成</p>
-                                            <span class="value-group-8">3</span>
+                                            <p>{{get_mandara_detail.E2_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E2_result}}</span>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>スライダーのキレ</p>
-                                            <span class="value-group-8">4</span>
+                                            <p>{{get_mandara_detail.E3_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E3_result}}</span>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>遅く落差のあるカーブ</p>
-                                            <span class="value-group-8">3</span>
+                                            <p>{{get_mandara_detail.E4_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E4_result}}</span>
                                         </div>
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">E</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">20</span>
-                                            <p class="title-value-table-score">変化球</p>
+                                            <span class="value-score">{{get_mandara_detail.E_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.E_keyword}}</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas8" class="mycanvas" width="148" height="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
@@ -510,25 +501,31 @@
 
                                         </div>
                                         <div class="value-table group8">
-                                            <p>左打者への決め球</p>
-                                            <span class="value-group-8">2</span>
+                                            <p>{{get_mandara_detail.E5_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E5_result}}</span>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>ストレートと同じフォーム</p>
-                                            <span class="value-group-8">3</span>
+                                            <p>{{get_mandara_detail.E6_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E6_result}}</span>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>ストライクからボールに
-                                                投げるコントロール</p>
-                                            <span class="value-group-8">3</span>
+                                            <p>{{get_mandara_detail.E7_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E7_result}}</span>
                                         </div>
                                         <div class="value-table group8">
-                                            <p>奥行きのイメージ</p>
-                                            <span class="value-group-8">3</span>
+                                            <p>{{get_mandara_detail.E8_content}}</p>
+                                            <span class="value-group-8">{{get_mandara_detail.E8_result}}</span>
                                         </div>
                                     </div>
                                 </div>
+                                {% else%}
+                                <div class="text-center">
+                                    <h2>404 NOT FOUND</h2>
+                                </div>
+                                {% endif %}
+
                             </div>
+                            {% if get_mandara_detail is not None %}
                             <div class="body-bottom-right">
                                 <!-- <div class="wrapper-title-body-bottom-right">
                                     <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
@@ -552,15 +549,14 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">A</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">運</div>
+                                                <div class="title-order-right">{{get_mandara_detail.A_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決z</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.A_dueto}}
                                                 </p>
 
                                             </div>
@@ -569,15 +565,14 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">B</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">メンタル</div>
+                                                <div class="title-order-right">{{get_mandara_detail.B_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.B_dueto}}
                                                 </p>
 
                                             </div>
@@ -586,15 +581,14 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">C</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">コントール</div>
+                                                <div class="title-order-right">{{get_mandara_detail.C_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.C_dueto}}
                                                 </p>
 
                                             </div>
@@ -603,15 +597,14 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">D</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">スピード160km/h</div>
+                                                <div class="title-order-right">{{get_mandara_detail.D_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.D_dueto}}
                                                 </p>
 
                                             </div>
@@ -620,32 +613,29 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">E</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">キ レ</div>
+                                                <div class="title-order-right">{{get_mandara_detail.E_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.E_dueto}}
                                                 </p>
-
                                             </div>
                                         </div>
                                         <div class="item-table-body-bottom-right">
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">F</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">体づくり</div>
+                                                <div class="title-order-right">{{get_mandara_detail.F_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.F_dueto}}
                                                 </p>
 
                                             </div>
@@ -654,15 +644,14 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">G</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">キレ</div>
+                                                <div class="title-order-right">{{get_mandara_detail.G_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.G_dueto}}
                                                 </p>
 
                                             </div>
@@ -671,15 +660,14 @@
                                             <div class="wrapper-content-table-body-right">
                                                 <div class="order">H</div>
                                                 <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">変化球</div>
+                                                <div class="title-order-right">{{get_mandara_detail.H_keyword}}</div>
                                             </div>
                                             <div class="wrapper-content-table-bottom-body-right">
                                                 <div class="content-table-body-right">
-                                                    <p>課題解決
-                                                    </p>
+                                                    <p>課題解決</p>
                                                 </div>
                                                 <p class="desc-table-body-right">
-                                                    記述記述記述記述記述記述記述記述記述
+                                                    {{get_mandara_detail.H_dueto}}
                                                 </p>
                                             </div>
                                         </div>
@@ -690,86 +678,95 @@
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas9" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.A_result}}</span>
                                                 </div>
-                                                <p class="text-canvas">体づくり</p>
+                                                <p class="text-canvas">{{get_mandara_detail.A_keyword}}</p>
 
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas10" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.B_result}}</span>
                                                 </div>
-                                                <p class="text-canvas">コントール</p>
+                                                <p class="text-canvas">{{get_mandara_detail.B_keyword}}</p>
 
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas11" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.C_result}}</span>
                                                 </div>
-                                                <p class="text-canvas">キレ</p>
+                                                <p class="text-canvas">{{get_mandara_detail.C_keyword}}</p>
 
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas12" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.H_result}}</span>
 
                                                 </div>
-                                                <p class="text-canvas">メンタル</p>
+                                                <p class="text-canvas">{{get_mandara_detail.H_keyword}}</p>
 
                                             </div>
                                             <div class="wrapper-mycanvas-tab wrapper-mycanvas-tab-center">
                                                 <p class="text-canvas-center">●●後の目標</p>
-                                                <p class="value-vanvas-center">188</p>
+                                                <p class="value-vanvas-center"></p>
                                                 <p class="text-canvas-center">ドライチ 8 球団</p>
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas13" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.D_result}}</span>
                                                 </div>
-                                                <p class="text-canvas">スピード</p>
+                                                <p class="text-canvas">{{get_mandara_detail.D_keyword}}</p>
 
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas14" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.G_result}}</span>
                                                 </div>
-                                                <p class="text-canvas">人間性</p>
+                                                <p class="text-canvas">{{get_mandara_detail.G_keyword}}</p>
 
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas15" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.F_result}}</span>
                                                 </div>
-                                                <p class="text-canvas">運</p>
+                                                <p class="text-canvas">{{get_mandara_detail.F_keyword}}</p>
 
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
                                                     <canvas id="mycanvas16" width="100%" height="100%"
                                                         class="mycanvas-tab"></canvas>
-                                                    <span class="value-score-canvas"></span>
+                                                    <span
+                                                        class="value-score-canvas">{{get_mandara_detail.E_result}}</span>
                                                 </div>
-                                                <p class="text-canvas">変化球</p>
+                                                <p class="text-canvas">{{get_mandara_detail.E_keyword}}</p>
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
-                        <div class="masmas-mandara">
+                        <!-- <div class="masmas-mandara">
                             <div class="content-body-right mb-5">
                                 <div class="content-body-right">
                                     <div class="item-select">
@@ -780,7 +777,7 @@
                                 </div>
                             </div>
                             <canvas id="barChart1" class="chart"></canvas>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -788,7 +785,16 @@
     </section>
 </main>
 
-
+<script>
+    var arrayChartGroupA = [{{get_mandara_detail.A1_result}}, {{get_mandara_detail.A2_result}}, {{get_mandara_detail.A3_result}}, {{get_mandara_detail.A8_result}}, {{get_mandara_detail.A4_result}}, {{get_mandara_detail.A7_result}}, {{get_mandara_detail.A6_result}}, {{get_mandara_detail.A5_result}}];
+    var arrayChartGroupB = [{{get_mandara_detail.B1_result}}, {{get_mandara_detail.B2_result}}, {{get_mandara_detail.B3_result}}, {{get_mandara_detail.B8_result}}, {{get_mandara_detail.B4_result}}, {{get_mandara_detail.B7_result}}, {{get_mandara_detail.B6_result}}, {{get_mandara_detail.B5_result}}];
+    var arrayChartGroupC = [{{get_mandara_detail.C1_result}}, {{get_mandara_detail.C2_result}}, {{get_mandara_detail.C3_result}}, {{get_mandara_detail.C8_result}}, {{get_mandara_detail.C4_result}}, {{get_mandara_detail.C7_result}}, {{get_mandara_detail.C6_result}}, {{get_mandara_detail.C5_result}}];
+    var arrayChartGroupH = [{{get_mandara_detail.H1_result}}, {{get_mandara_detail.H2_result}}, {{get_mandara_detail.H3_result}}, {{get_mandara_detail.H8_result}}, {{get_mandara_detail.H4_result}}, {{get_mandara_detail.H7_result}}, {{get_mandara_detail.H6_result}}, {{get_mandara_detail.H5_result}}];
+    var arrayChartGroupD = [{{get_mandara_detail.D1_result}}, {{get_mandara_detail.D2_result}}, {{get_mandara_detail.D3_result}}, {{get_mandara_detail.D8_result}}, {{get_mandara_detail.D4_result}}, {{get_mandara_detail.D7_result}}, {{get_mandara_detail.D6_result}}, {{get_mandara_detail.D5_result}}];
+    var arrayChartGroupG = [{{get_mandara_detail.G1_result}}, {{get_mandara_detail.G2_result}}, {{get_mandara_detail.G3_result}}, {{get_mandara_detail.G8_result}}, {{get_mandara_detail.G4_result}}, {{get_mandara_detail.G7_result}}, {{get_mandara_detail.G6_result}}, {{get_mandara_detail.G5_result}}];
+    var arrayChartGroupF = [{{get_mandara_detail.F1_result}}, {{get_mandara_detail.F2_result}}, {{get_mandara_detail.F3_result}}, {{get_mandara_detail.F8_result}}, {{get_mandara_detail.F4_result}}, {{get_mandara_detail.F7_result}}, {{get_mandara_detail.F6_result}}, {{get_mandara_detail.F5_result}}];
+    var arrayChartGroupE = [{{get_mandara_detail.E1_result}}, {{get_mandara_detail.E2_result}}, {{get_mandara_detail.E3_result}}, {{get_mandara_detail.E8_result}}, {{get_mandara_detail.E4_result}}, {{get_mandara_detail.E7_result}}, {{get_mandara_detail.E6_result}}, {{get_mandara_detail.E5_result}}];
+</script>
 <script src="{% static 'js/mandara-completion-detail.js' %}"></script>
 
 {% endblock %}
