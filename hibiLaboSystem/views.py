@@ -34,7 +34,7 @@ class Home(TemplateView):
         return context
 
 class Login(LoginView):
-    # Staff: staff_1, Pass: 11223344k
+    # Staff: staff_1, Pass: 0339497769k
     # Admin: tiah_1, Pass: 11223344k
     form_class = forms.LoginForm
     template_name = 'login.html'
@@ -1062,7 +1062,7 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         diff = int(end_YYYYMM) - int(start_YYYYMM)
         check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exists()
         if context["mandara"] is not None:
-            MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exclude (pk=context["mandara"].id).exists()
+            check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exclude (pk=context["mandara"].id).exists()
         if check_exists:
             context["message"] = '-- マンダラの期限が重複しているため、作成できません。--'
             return self.render_to_response(context)
