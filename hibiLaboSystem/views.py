@@ -1060,14 +1060,15 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
         form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
         diff = int(end_YYYYMM) - int(start_YYYYMM)
+        check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exists()
+        if context["mandara"] is not None:
+            MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exclude (pk=context["mandara"].id).exists()
+        if check_exists:
+            context["message"] = '-- マンダラの期限が重複しているため、作成できません。--'
+            return self.render_to_response(context)
+
         if diff != 99:
             context["message"] = '-- 目標期間は 1 年。--'
-            return self.render_to_response(context)
-        check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exists()
-        if context["mandara"] is not None:
-            MandaraBase.objects.filter(user_id=user_id,company_id=company_id,start_YYYYMM=start_YYYYMM,end_YYYYMM=end_YYYYMM).exclude (pk=context["mandara"].id).exists()
-        if check_exists:
-            context["message"] = '-- マンダラが存在しているため、作成できません。--'
             return self.render_to_response(context)
 
         if form.is_valid():
