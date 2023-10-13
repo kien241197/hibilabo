@@ -12,10 +12,55 @@
     --font-text: 'Source Sans Pro';
     --background-rgba: linear-gradient(90.07deg, #F68121 -0.48%, #F86E54 100.22%);
 }
+
+.button-print {
+
+    padding: 0px 10px;
+    color: white;
+    font-weight: bold;
+    font-family: var(--font-text);
+    background-color: #172A88;
+    border-radius: 15px;
+    border: none;
+    font-size: 170%;
+    cursor: pointer;
+}
+
+.label-date {
+
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 25px;
+    font-size: 75%;
+    font-family: var(--font-content);
+    font-weight: bold;
+}
+
+.wrapper-canvas-tab {
+
+    position: relative;
+}
+
+.value-score-canvas {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-text);
+    padding-top: 10px;
+    font-size: 150%;
+}
+
 .masmas-mandara {
 
     display: none;
 }
+
 .wrapper-body-left {
 
     grid-column: span 8;
@@ -655,8 +700,19 @@ body {
     width: fit-content;
     letter-spacing: 0.1em;
     margin-block-start: unset !important;
-    margin-bottom: 10px;
 
+}
+
+.button-fix {
+
+    width: 60px;
+    color: white;
+    font-weight: bold;
+    font-family: var(--font-text);
+    background-color: #172A88;
+    border-radius: 15px;
+    border: none;
+    font-size: 170%;
 }
 
 .content-title {
@@ -823,6 +879,8 @@ body {
 }
 
 .value-table {
+    grid-column: span 1;
+    overflow: hidden;
     width: 100%;
     background-color: #e7e7e8;
     display: flex;
@@ -832,7 +890,6 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     /* justify-content: center; */
-    cursor: pointer;
     /* min-height: 80px;
     max-height: 80px; */
     gap: 10px;
@@ -876,6 +933,8 @@ body {
 
 .value-table p {
 
+    width: 100%;
+    padding: 0 5px;
     font-size: 75%;
     font-weight: 700;
     font-family: var(--font-content);
@@ -893,7 +952,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding-top: 89px;
+    padding-top: 90px;
 }
 
 .wrapper-item-table-body-bottom-right-tab-2 {
@@ -945,7 +1004,7 @@ body {
 
     position: absolute;
     top: 0;
-    left: 0;
+    left: 2px;
     opacity: 0.6;
     font-size: 100% !important;
 }
@@ -953,7 +1012,7 @@ body {
 .SCORE {
 
     background-color: #0DC5CE;
-    /* position: relative; */
+    position: relative;
 }
 
 .SCORE-text {
@@ -971,6 +1030,7 @@ body {
     right: 0;
     bottom: 0;
     padding: 20px;
+    display: none;
 }
 
 .mycanvas {
@@ -1107,6 +1167,21 @@ body {
 .value-score {
 
     font-size: 230% !important;
+
+}
+
+.value-score-center {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8f9195 !important;
 }
 
 
@@ -1117,9 +1192,23 @@ body {
 .title-main-score {
 
     width: 100%;
+    /* background-color: #e7e7e8; */
+    position: absolute;
+    top: 10px;
+    color: unset !important;
+}
+
+.title-main-score-center {
+    top: 0 !important;
+    background-color: #e7e7e8;
+}
+
+.title-main-score-bottom {
+
+    width: 100%;
     background-color: #e7e7e8;
     position: absolute;
-    top: 0;
+    bottom: 0;
     color: unset !important;
 }
 
@@ -1150,6 +1239,7 @@ body {
     grid-column: span 1;
     /* overflow: hidden; */
     background: #fff;
+    position: relative;
 }
 
 .wrapper-mycanvas-tab div {
@@ -2090,10 +2180,5 @@ body {
         border-top: 1px solid rgb(113, 114, 118);
         border-left: 1px solid rgb(113, 114, 118);
         border-right: 1px solid rgb(113, 114, 118);
-    }
-
-    #barChart1 {
-
-        width: 100% !important;
     }
 }

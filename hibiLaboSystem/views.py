@@ -1223,6 +1223,15 @@ class MandaraCompletion(LoginRequiredMixin, TemplateView):
         user_id = self.request.user.id
 
         return kwargs
+    
+class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_completion_detail.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs
 
 @login_required
 def get_detail_month(request):
