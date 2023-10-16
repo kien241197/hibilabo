@@ -1375,8 +1375,17 @@ class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):
                H7_result=Sum('mandara_progress__H7_result'),
                H8_result=Sum('mandara_progress__H8_result'),
             ).first()
+        
+        end_YYYYMM = get_mandara_detail.end_YYYYMM
+        start_YYYYMM = get_mandara_detail.start_YYYYMM
+
+        format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月●日'
+        format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月●日'
+
         kwargs['get_mandara_detail'] = get_mandara_detail
-        print(get_mandara_detail)
+        kwargs['format_end_date'] = format_end_date
+        kwargs['format_start_date'] = format_start_date
+      
         return kwargs
 
 @login_required

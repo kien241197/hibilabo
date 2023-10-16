@@ -33,7 +33,7 @@
                                                 <div class="d-flex">
                                                     <h2 class="text-title mr-3">MANDARA CHART</h2>
                                                     <a href="{% url 'mandara_print' get_mandara_detail.id %}"
-                                                        type="submit" class="button-print f-flex justify-content-centerz">PRINT</a>
+                                                        type="submit" class="button-print d-flex justify-content-center align-items-center">PRINT</a>
                                                 </div>
 
                                             </div>
@@ -441,8 +441,8 @@
                                         <div class="value-table-score SCORE">
                                             <span class="text-table-score">F</span>
                                             <p>SCORE</p>
-                                            <span class="value-score">28</span>
-                                            <p class="title-value-table-score">運</p>
+                                            <span class="value-score">{{get_mandara_detail.F_result}}</span>
+                                            <p class="title-value-table-score">{{get_mandara_detail.F_keyword}}</p>
                                             <div class="wrapper-canvas">
                                                 <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
                                                     style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
@@ -533,9 +533,9 @@
                                 <div class="content-body-right">
                                     <p class="title-content-body-left">目標期間は 1 年</p>
                                     <div class="item-select">
-                                        <label class="label-date">2023 年 3 月●日</label>
+                                        <label class="label-date">{{format_start_date}}</label>
                                         <p class="to">～</p>
-                                        <label class="label-date">2024 年 3 月●日</label>
+                                        <label class="label-date">{{format_end_date}}</label>
                                     </div>
                                 </div>
 
@@ -718,7 +718,7 @@
                                             <div class="wrapper-mycanvas-tab wrapper-mycanvas-tab-center">
                                                 <p class="text-canvas-center">●●後の目標</p>
                                                 <p class="value-vanvas-center"></p>
-                                                <p class="text-canvas-center">ドライチ 8 球団</p>
+                                                <p class="text-canvas-center">{{get_mandara_detail.total_mission}}</p>
                                             </div>
                                             <div class="wrapper-mycanvas-tab">
                                                 <div class="wrapper-canvas-tab">
@@ -786,14 +786,14 @@
 </main>
 
 <script>
-    var arrayChartGroupA = [{{get_mandara_detail.A1_result}}, {{get_mandara_detail.A2_result}}, {{ get_mandara_detail.A3_result }}, {{ get_mandara_detail.A8_result }}, {{ get_mandara_detail.A4_result }}, {{ get_mandara_detail.A7_result }}, {{ get_mandara_detail.A6_result }}, {{ get_mandara_detail.A5_result }}];
-    var arrayChartGroupB = [{{ get_mandara_detail.B1_result }}, {{ get_mandara_detail.B2_result }}, {{ get_mandara_detail.B3_result }}, {{ get_mandara_detail.B8_result }}, {{ get_mandara_detail.B4_result }}, {{ get_mandara_detail.B7_result }}, {{ get_mandara_detail.B6_result }}, {{ get_mandara_detail.B5_result }}];
-    var arrayChartGroupC = [{{ get_mandara_detail.C1_result }}, {{ get_mandara_detail.C2_result }}, {{ get_mandara_detail.C3_result }}, {{ get_mandara_detail.C8_result }}, {{ get_mandara_detail.C4_result }}, {{ get_mandara_detail.C7_result }}, {{ get_mandara_detail.C6_result }}, {{ get_mandara_detail.C5_result }}];
-    var arrayChartGroupH = [{{ get_mandara_detail.H1_result }}, {{ get_mandara_detail.H2_result }}, {{ get_mandara_detail.H3_result }}, {{ get_mandara_detail.H8_result }}, {{ get_mandara_detail.H4_result }}, {{ get_mandara_detail.H7_result }}, {{ get_mandara_detail.H6_result }}, {{ get_mandara_detail.H5_result }}];
-    var arrayChartGroupD = [{{ get_mandara_detail.D1_result }}, {{ get_mandara_detail.D2_result }}, {{ get_mandara_detail.D3_result }}, {{ get_mandara_detail.D8_result }}, {{ get_mandara_detail.D4_result }}, {{ get_mandara_detail.D7_result }}, {{ get_mandara_detail.D6_result }}, {{ get_mandara_detail.D5_result }}];
-    var arrayChartGroupG = [{{ get_mandara_detail.G1_result }}, {{ get_mandara_detail.G2_result }}, {{ get_mandara_detail.G3_result }}, {{ get_mandara_detail.G8_result }}, {{ get_mandara_detail.G4_result }}, {{ get_mandara_detail.G7_result }}, {{ get_mandara_detail.G6_result }}, {{ get_mandara_detail.G5_result }}];
-    var arrayChartGroupF = [{{ get_mandara_detail.F1_result }}, {{ get_mandara_detail.F2_result }}, {{ get_mandara_detail.F3_result }}, {{ get_mandara_detail.F8_result }}, {{ get_mandara_detail.F4_result }}, {{ get_mandara_detail.F7_result }}, {{ get_mandara_detail.F6_result }}, {{ get_mandara_detail.F5_result }}];
-    var arrayChartGroupE = [{{ get_mandara_detail.E1_result }}, {{ get_mandara_detail.E2_result }}, {{ get_mandara_detail.E3_result }}, {{ get_mandara_detail.E8_result }}, {{ get_mandara_detail.E4_result }}, {{ get_mandara_detail.E7_result }}, {{ get_mandara_detail.E6_result }}, {{ get_mandara_detail.E5_result }}];
+    var arrayChartGroupA = [{{ get_mandara_detail.A2_result }}, {{ get_mandara_detail.A3_result }}, {{ get_mandara_detail.A5_result }}, {{ get_mandara_detail.A8_result }}, {{ get_mandara_detail.A7_result }}, {{ get_mandara_detail.A6_result }}, {{ get_mandara_detail.A4_result }}, {{get_mandara_detail.A1_result}}];
+    var arrayChartGroupB = [{{ get_mandara_detail.B2_result }}, {{ get_mandara_detail.B3_result }}, {{ get_mandara_detail.B5_result }}, {{ get_mandara_detail.B8_result }}, {{ get_mandara_detail.B7_result }}, {{ get_mandara_detail.B6_result }}, {{ get_mandara_detail.B4_result }}, {{ get_mandara_detail.B1_result }}];
+    var arrayChartGroupC = [{{ get_mandara_detail.C2_result }}, {{ get_mandara_detail.C3_result }}, {{ get_mandara_detail.C5_result }}, {{ get_mandara_detail.C8_result }}, {{ get_mandara_detail.C7_result }}, {{ get_mandara_detail.C6_result }}, {{ get_mandara_detail.C4_result }}, {{ get_mandara_detail.C1_result }}];
+    var arrayChartGroupH = [{{ get_mandara_detail.H2_result }}, {{ get_mandara_detail.H3_result }}, {{ get_mandara_detail.H5_result }}, {{ get_mandara_detail.H8_result }}, {{ get_mandara_detail.H7_result }}, {{ get_mandara_detail.H6_result }}, {{ get_mandara_detail.H4_result }}, {{ get_mandara_detail.H1_result }}];
+    var arrayChartGroupD = [{{ get_mandara_detail.D2_result }}, {{ get_mandara_detail.D3_result }}, {{ get_mandara_detail.D5_result }}, {{ get_mandara_detail.D8_result }}, {{ get_mandara_detail.D7_result }}, {{ get_mandara_detail.D6_result }}, {{ get_mandara_detail.D4_result }}, {{ get_mandara_detail.D1_result }}];
+    var arrayChartGroupG = [{{ get_mandara_detail.G2_result }}, {{ get_mandara_detail.G3_result }}, {{ get_mandara_detail.G5_result }}, {{ get_mandara_detail.G8_result }}, {{ get_mandara_detail.G7_result }}, {{ get_mandara_detail.G6_result }}, {{ get_mandara_detail.G4_result }}, {{ get_mandara_detail.G1_result }}];
+    var arrayChartGroupF = [{{ get_mandara_detail.F2_result }}, {{ get_mandara_detail.F3_result }}, {{ get_mandara_detail.F5_result }}, {{ get_mandara_detail.F8_result }}, {{ get_mandara_detail.F7_result }}, {{ get_mandara_detail.F6_result }}, {{ get_mandara_detail.F4_result }}, {{ get_mandara_detail.F1_result }}];
+    var arrayChartGroupE = [{{ get_mandara_detail.E2_result }}, {{ get_mandara_detail.E3_result }}, {{ get_mandara_detail.E5_result }}, {{ get_mandara_detail.E8_result }}, {{ get_mandara_detail.E7_result }}, {{ get_mandara_detail.E6_result }}, {{ get_mandara_detail.E4_result }}, {{ get_mandara_detail.E1_result }}];
 </script>
 <script src="{% static 'js/mandara-completion-detail.js' %}"></script>
 
