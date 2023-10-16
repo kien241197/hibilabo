@@ -90,21 +90,21 @@ function countValueCenter() {
     valueTabCenter.textContent = valueContentMain;
 }
 
-var mycanvas9 = createCanvas("mycanvas9", arrayChartGroupA);
+var mycanvas9 = createCanvas("mycanvas1", arrayChartGroupA);
 
-var mycanvas10 = createCanvas("mycanvas10", arrayChartGroupB);
+var mycanvas10 = createCanvas("mycanvas2", arrayChartGroupB);
 
-var mycanvas11 = createCanvas("mycanvas11", arrayChartGroupC);
+var mycanvas11 = createCanvas("mycanvas3", arrayChartGroupC);
 
-var mycanvas12 = createCanvas("mycanvas12", arrayChartGroupH);
+var mycanvas12 = createCanvas("mycanvas4", arrayChartGroupH);
 
-var mycanvas13 = createCanvas("mycanvas13", arrayChartGroupD);
+var mycanvas13 = createCanvas("mycanvas5", arrayChartGroupD);
 
-var mycanvas14 = createCanvas("mycanvas14", arrayChartGroupG);
+var mycanvas14 = createCanvas("mycanvas6", arrayChartGroupG);
 
-var mycanvas15 = createCanvas("mycanvas15", arrayChartGroupF);
+var mycanvas15 = createCanvas("mycanvas7", arrayChartGroupF);
 
-var mycanvas16 = createCanvas("mycanvas16", arrayChartGroupE);
+var mycanvas16 = createCanvas("mycanvas8", arrayChartGroupE);
 
 const valueElements = document.querySelectorAll('.value-table');
 valueElements.forEach((element, index) => {

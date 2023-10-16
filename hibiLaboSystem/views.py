@@ -1302,6 +1302,24 @@ class MandaraCompletion(LoginRequiredMixin, TemplateView):
         kwargs['mandara_get'] = mandara_get
         return kwargs
     
+    def post(self, request, *args, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        today_str = datetime.date.today().strftime("%Y%m")
+        mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__lt=today_str).order_by('start_YYYYMM')
+        
+        for item in mandara_get:
+            end_YYYYMM = item.end_YYYYMM
+            start_YYYYMM = item.start_YYYYMM
+            format_end_date = f'{end_YYYYMM[:4]}/{int(end_YYYYMM[4:])}'
+            format_start_date = f'{start_YYYYMM[:4]}/{int(start_YYYYMM[4:])}'
+            item.end_YYYYMM = format_end_date
+            item.start_YYYYMM = format_start_date
+
+        kwargs['mandara_get'] = mandara_get
+        return kwargs
+
+    
 class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):
     template_name = "mandara/mandara_completion_detail.html"
 
@@ -1379,13 +1397,16 @@ class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):
         end_YYYYMM = get_mandara_detail.end_YYYYMM
         start_YYYYMM = get_mandara_detail.start_YYYYMM
 
-        format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月●日'
-        format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月●日'
+        format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月'
+        format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月'
+
+        month = datetime.date.today().strftime("%m")
 
         kwargs['get_mandara_detail'] = get_mandara_detail
         kwargs['format_end_date'] = format_end_date
         kwargs['format_start_date'] = format_start_date
-      
+        kwargs['month'] = month
+        
         return kwargs
 
 @login_required
