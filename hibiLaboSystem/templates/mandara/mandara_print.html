@@ -268,128 +268,30 @@
                                 </div>
                                 <div class="table-body-bottom-right">
                                     <div class="wrapper-item-table-body-bottom-right-tab-1">
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">A</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.A_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決</p>
+                                        {% with 'A B C D E F G H' as list %}
+                                        {% for key in list.split %}
+                                            {% with keyword=key|add:'_keyword' %}
+                                            {% with dueto=key|add:'_dueto' %}
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">{{ key }}</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">{{ mandara|get_custom_name:keyword }}</div>
                                                 </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.A_dueto}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">B</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.B_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決</p>
-                                                </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.B_dueto}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">C</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.C_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決</p>
-                                                </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.C_dueto}}
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">D</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.D_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決</p>
-                                                </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.D_dueto}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">E</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.E_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決</p>
-                                                </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.E_dueto}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">F</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.F_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決</p>
-                                                </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.F_dueto}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">G</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.G_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決</p>
-                                                </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.G_dueto}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item-table-body-bottom-right">
-                                            <div class="wrapper-content-table-body-right">
-                                                <div class="order">H</div>
-                                                <div class="title-order">キーワード</div>
-                                                <div class="title-order-right">{{mandara.H_keyword}}</div>
-                                            </div>
-                                            <div class="wrapper-content-table-bottom-body-right">
-                                                <div class="content-table-body-right">
-                                                    <p>課題解決
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <p class="desc-table-body-right">
+                                                        {{ mandara|get_custom_name:dueto }}
                                                     </p>
                                                 </div>
-                                                <p class="desc-table-body-right">
-                                                    {{mandara.H_dueto}}
-                                                </p>
                                             </div>
-                                        </div>
+                                            {% endwith %}
+                                            {% endwith %}
+                                        {% endfor %}
+                                        {% endwith %}
                                     </div>
                                 </div>
                             </div>
