@@ -1,5 +1,5 @@
 Chart.register(ChartDataLabels);
-
+console.log("aaaa", window.innerWidth)
 function createCanvas(className, array) {
     return new Chart(document.getElementById(className), {
         type: 'radar',
@@ -84,13 +84,13 @@ var mycanvas3 = createCanvas("mycanvas3", arrayChartGroupC);
 
 var mycanvas4 = createCanvas("mycanvas4", arrayChartGroupH);
 
-var mycanvas5 = createCanvas("mycanvas5", arrayChartGroupD);
+var mycanvas5 = createCanvas("mycanvasD", arrayChartGroupD);
 
-var mycanvas6 = createCanvas("mycanvas6", arrayChartGroupG);
+var mycanvas6 = createCanvas("mycanvasG", arrayChartGroupG);
 
-var mycanvas7 = createCanvas("mycanvas7", arrayChartGroupF);
+var mycanvas7 = createCanvas("mycanvasF", arrayChartGroupF);
 
-var mycanvas8 = createCanvas("mycanvas8", arrayChartGroupE);
+var mycanvas8 = createCanvas("mycanvasE", arrayChartGroupE);
 
 
 countValueCenter()

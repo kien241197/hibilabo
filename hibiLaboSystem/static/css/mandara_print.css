@@ -18,7 +18,7 @@
 }
 .wrapper-body-left {
 
-    grid-column: span 8;
+    grid-column: span 12;
 }
 
 .hidden {
@@ -765,6 +765,7 @@ body {
 
 .body-bottom {
 
+    grid-column: span 8;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 20px;
@@ -805,6 +806,13 @@ body {
     /* background-color: #717276; */
     /* grid-auto-rows: 80px; */
 
+}
+
+.wrapper-body {
+
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
 }
 
 .body-bottom-right {
@@ -1446,9 +1454,12 @@ body {
 
 @media screen and (max-width: 960px) {
 
+    .body-bottom {
 
+        grid-column: span 12;
+    }
     .wrapper-body-left {
-        grid-column: span 7;
+        grid-column: span 12;
     }
 
     .order {
@@ -1500,7 +1511,7 @@ body {
     }
 
     .body-bottom-right {
-        grid-column: span 5;
+        grid-column: span 12;
         padding-top: 69px;
 
     }
