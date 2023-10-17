@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <META content="charset=UTF-8"> 
+    <title>HIBI_LABOインナーマーケティング</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="HandheldFriendly" content="True" />
+
+    <link rel="stylesheet" type="text/css" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/custom-style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+        integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+        crossorigin="anonymous"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/css/mandara_print.css">
+    <style type="text/css">
+        @page {
+            size: letter landscape;
+        }
+    </style>
+  </head>
+
+    <body>
+        <main class="bg-main bg-gray">
+            <section class="site-feedback pd-main">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="container">
+                            <div class="wrapper-body">
+
+                                <div class="body-bottom">
+                                    <div class="wrapper-body-left">
+                                        <div>
+                                            <div class="body-top">
+                                                <div class="body-top-left">
+                                                    <h2 class="text-title" id="test">MANDARA CHART</h2>
+                                                    <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if mandara is not None %}
+                                        <div class="body-bottom-left" id="value-body-bottom-left">
+                                            {% load custom_filters %}
+                                            {% with 'A B C H' as list %}
+                                            {% for key in list.split %}
+                                            <div class="wrapper-item-body-bottom-left">
+                                                {% with content=key|add:'1_content' %}
+                                                {% with result=key|add:'1_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}1">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'2_content' %}
+                                                {% with result=key|add:'2_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}2">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'3_content' %}
+                                                {% with result=key|add:'3_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}3">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'8_content' %}
+                                                {% with result=key|add:'8_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}8">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with keyword=key|add:'_keyword' %}
+                                                {% with result=key|add:'_result' %}
+                                                <div class="value-table-score SCORE">
+                                                    <p>SCORE</p>
+                                                    <span class="value-score">{{ mandara|get_custom_name:result }}</span>
+                                                    <p class="title-value-table-score">{{ mandara|get_custom_name:keyword }}</p>
+                                                    <div class="wrapper-canvas">
+                                                        <canvas id="mycanvas{{forloop.counter}}" class="mycanvas" height="148" width="148"
+                                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                    </div>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'4_content' %}
+                                                {% with result=key|add:'4_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}4">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'7_content' %}
+                                                {% with result=key|add:'7_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}7">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'6_content' %}
+                                                {% with result=key|add:'6_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}6">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'5_content' %}
+                                                {% with result=key|add:'5_result' %}
+                                                <div class="value-table group{{forloop.counter}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}5">
+                                                    <p>{{ d|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter}}">{% if d|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                            </div>
+                                            {% endfor %}
+                                            {% endwith %}
+                                            <div class="wrapper-item-body-bottom-left">
+                                                {% with 'A B C H' as list %}
+                                                {% for key in list.split %}
+                                                    {% with keyword=key|add:'_keyword' %}
+                                                    {% with result=key|add:'_result' %}
+                                                    <div class="value-table-score SCORE-text">
+                                                        <p class="title-main-score">{{ mandara|get_custom_name:keyword }}</p>
+                                                        <span class="value-score">{{ mandara|get_custom_name:result }}</span>
+                                                    </div>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                {% endfor %}
+                                                {% endwith %}
+                                                <div class="value-table-score SCORE-MAIN">
+                                                    <p class="title-main-score title-main-score-center">1年後の目標</p>
+                                                    <span class="value-score value-score-center">{{ mandara.total_result }}</span>
+                                                </div>
+                                                {% with 'D G F E' as list %}
+                                                {% for key in list.split %}
+                                                    {% with keyword=key|add:'_keyword' %}
+                                                    {% with result=key|add:'_result' %}
+                                                    <div class="value-table-score SCORE-text">
+                                                        <p class="title-main-score">{{ mandara|get_custom_name:keyword }}</p>
+                                                        <span class="value-score">{{ mandara|get_custom_name:result }}</span>
+                                                    </div>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                {% endfor %}
+                                                {% endwith %}
+                                            </div>
+                                            {% with 'D G F E' as list %}
+                                            {% for key in list.split %}
+                                            <div class="wrapper-item-body-bottom-left">
+                                                {% with content=key|add:'1_content' %}
+                                                {% with result=key|add:'1_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}1">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'2_content' %}
+                                                {% with result=key|add:'2_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}2">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'3_content' %}
+                                                {% with result=key|add:'3_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}3">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'8_content' %}
+                                                {% with result=key|add:'8_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}8">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with keyword=key|add:'_keyword' %}
+                                                {% with result=key|add:'_result' %}
+                                                <div class="value-table-score SCORE">
+                                                    <p>SCORE</p>
+                                                    <span class="value-score">{{ mandara|get_custom_name:result }}</span>
+                                                    <p class="title-value-table-score">{{ mandara|get_custom_name:keyword }}</p>
+                                                    <div class="wrapper-canvas">
+                                                        <canvas id="mycanvas{{key}}" class="mycanvas" height="148" width="148"
+                                                            style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                    </div>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'4_content' %}
+                                                {% with result=key|add:'4_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}4">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'7_content' %}
+                                                {% with result=key|add:'7_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}7">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'6_content' %}
+                                                {% with result=key|add:'6_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}6">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                                {% with content=key|add:'5_content' %}
+                                                {% with result=key|add:'5_result' %}
+                                                <div class="value-table group{{forloop.counter|add:4}} {% if check_today|get_custom_name:result == 1 %}background-value-table false{% else %}true{% endif %}" data-box-type="{{ key }}5">
+                                                    <p>{{ mandara|get_custom_name:content }}</p>
+                                                    <span class="value-group-{{forloop.counter|add:4}}">{% if mandara|get_custom_name:result > 0 %}{{ mandara|get_custom_name:result }}{% endif %}</span>
+                                                </div>
+                                                {% endwith %}
+                                                {% endwith %}
+                                            </div>
+                                            {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                        </div>
+                                        {% else %}
+                                        <h2 class="text-center">404 NOT FOUND</h2>
+                                        {% endif %}
+                                       
+                                    </div>
+
+                                    {% if mandara is not None %}
+                                    <div class="body-bottom-right">
+                                        <div class="wrapper-title-body-bottom-right">
+                                            <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
+                                        </div>
+                                        <div class="table-body-bottom-right">
+                                            <div class="wrapper-item-table-body-bottom-right-tab-1">
+                                                {% with 'A B C D E F G H' as list %}
+                                                {% for key in list.split %}
+                                                    {% with keyword=key|add:'_keyword' %}
+                                                    {% with dueto=key|add:'_dueto' %}
+                                                    <div class="item-table-body-bottom-right">
+                                                        <div class="wrapper-content-table-body-right">
+                                                            <div class="order">{{ key }}</div>
+                                                            <div class="title-order">キーワード</div>
+                                                            <div class="title-order-right">{{ mandara|get_custom_name:keyword }}</div>
+                                                        </div>
+                                                        <div class="wrapper-content-table-bottom-body-right">
+                                                            <div class="content-table-body-right">
+                                                                <p>課題解決
+                                                                </p>
+                                                            </div>
+                                                            <p class="desc-table-body-right">
+                                                                {{ mandara|get_custom_name:dueto }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                {% endfor %}
+                                                {% endwith %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+   <script type="text/javascript">
+    </script>
+        <script type="text/javascript">
+            var arrayChartGroupA = [{{mandara.A2_result}}, {{mandara.A3_result}}, {{mandara.A4_result}}, {{mandara.A5_result}}, {{mandara.A6_result}}, {{mandara.A7_result}}, {{mandara.A8_result}}, {{mandara.A1_result}}];
+            var arrayChartGroupB = [{{mandara.B2_result}}, {{mandara.B3_result}}, {{mandara.B4_result}}, {{mandara.B5_result}}, {{mandara.B6_result}}, {{mandara.B7_result}}, {{mandara.B8_result}}, {{mandara.B1_result}}];
+            var arrayChartGroupC = [{{mandara.C2_result}}, {{mandara.C3_result}}, {{mandara.C4_result}}, {{mandara.C5_result}}, {{mandara.C6_result}}, {{mandara.C7_result}}, {{mandara.C8_result}}, {{mandara.C1_result}}];
+            var arrayChartGroupH = [{{mandara.H2_result}}, {{mandara.H3_result}}, {{mandara.H4_result}}, {{mandara.H5_result}}, {{mandara.H6_result}}, {{mandara.H7_result}}, {{mandara.H8_result}}, {{mandara.H1_result}}];
+            var arrayChartGroupD = [{{mandara.D2_result}}, {{mandara.D3_result}}, {{mandara.D4_result}}, {{mandara.D5_result}}, {{mandara.D6_result}}, {{mandara.D7_result}}, {{mandara.D8_result}}, {{mandara.D1_result}}];
+            var arrayChartGroupG = [{{mandara.G2_result}}, {{mandara.G3_result}}, {{mandara.G4_result}}, {{mandara.G5_result}}, {{mandara.G6_result}}, {{mandara.G7_result}}, {{mandara.G8_result}}, {{mandara.G1_result}}];
+            var arrayChartGroupF = [{{mandara.F2_result}}, {{mandara.F3_result}}, {{mandara.F4_result}}, {{mandara.F5_result}}, {{mandara.F6_result}}, {{mandara.F7_result}}, {{mandara.F8_result}}, {{mandara.F1_result}}];
+            var arrayChartGroupE = [{{mandara.E2_result}}, {{mandara.E3_result}}, {{mandara.E4_result}}, {{mandara.E5_result}}, {{mandara.E6_result}}, {{mandara.E7_result}}, {{mandara.E8_result}}, {{mandara.E1_result}}];
+        </script>
+        <script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/js/mandara-chart.js"></script>
+    </body>
+</html>

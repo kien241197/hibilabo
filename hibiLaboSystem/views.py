@@ -10,7 +10,7 @@ from django.db.models import Q, Count, Prefetch, OuterRef, FilteredRelation, Sum
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.views.generic import ListView, CreateView, TemplateView, DetailView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,8 +20,20 @@ import calendar
 import datetime
 import pdb
 import json
+# use ReportLab
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+# use wkhtmltopdf
+from django.conf import settings
+import os
+from django.template.loader import get_template
+import pdfkit
 
 User = get_user_model()
+wkhtml_to_pdf = os.path.join(
+    settings.BASE_DIR, "wkhtmltopdf.exe")
 # Create your views here.
 class Home(TemplateView):
     template_name = "home.html"
@@ -1092,6 +1104,7 @@ class MandaraPrint(LoginRequiredMixin, TemplateView):
                H8_result=Sum('mandara_progress__H8_result'),
             ).first()
         kwargs['mandara'] = mandara
+        kwargs['request'] = self.request
         return kwargs
     
 class MandaraCreate(LoginRequiredMixin, TemplateView):
@@ -1474,3 +1487,122 @@ def post_detail_day(request):
         return JsonResponse({'status': 'NG'}, status=400)
     else:
         return HttpResponseBadRequest('Invalid request')
+
+def wkhtml_pdf(request, id):
+    options = {
+        'page-size': 'A4',
+        'page-height': "10in",
+        'page-width': "13in",
+        'margin-top': '0in',
+        'margin-right': '0in',
+        'margin-bottom': '0in',
+        'margin-left': '0in',
+        'encoding': "UTF-8",
+        'no-outline': None,
+        'javascript-delay': 10000
+    }
+
+    template_path = 'mandara/mandara_print_test.html'
+    template = get_template(template_path)
+    company_id = request.user.company_id
+    user_id = request.user.id
+    mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,id=id).annotate(
+           A1_result=Sum('mandara_progress__A1_result'),
+           A2_result=Sum('mandara_progress__A2_result'),
+           A3_result=Sum('mandara_progress__A3_result'),
+           A4_result=Sum('mandara_progress__A4_result'),
+           A5_result=Sum('mandara_progress__A5_result'),
+           A6_result=Sum('mandara_progress__A6_result'),
+           A7_result=Sum('mandara_progress__A7_result'),
+           A8_result=Sum('mandara_progress__A8_result'),
+           B1_result=Sum('mandara_progress__B1_result'),
+           B2_result=Sum('mandara_progress__B2_result'),
+           B3_result=Sum('mandara_progress__B3_result'),
+           B4_result=Sum('mandara_progress__B4_result'),
+           B5_result=Sum('mandara_progress__B5_result'),
+           B6_result=Sum('mandara_progress__B6_result'),
+           B7_result=Sum('mandara_progress__B7_result'),
+           B8_result=Sum('mandara_progress__B8_result'),
+           C1_result=Sum('mandara_progress__C1_result'),
+           C2_result=Sum('mandara_progress__C2_result'),
+           C3_result=Sum('mandara_progress__C3_result'),
+           C4_result=Sum('mandara_progress__C4_result'),
+           C5_result=Sum('mandara_progress__C5_result'),
+           C6_result=Sum('mandara_progress__C6_result'),
+           C7_result=Sum('mandara_progress__C7_result'),
+           C8_result=Sum('mandara_progress__C8_result'),
+           D1_result=Sum('mandara_progress__D1_result'),
+           D2_result=Sum('mandara_progress__D2_result'),
+           D3_result=Sum('mandara_progress__D3_result'),
+           D4_result=Sum('mandara_progress__D4_result'),
+           D5_result=Sum('mandara_progress__D5_result'),
+           D6_result=Sum('mandara_progress__D6_result'),
+           D7_result=Sum('mandara_progress__D7_result'),
+           D8_result=Sum('mandara_progress__D8_result'),
+           E1_result=Sum('mandara_progress__E1_result'),
+           E2_result=Sum('mandara_progress__E2_result'),
+           E3_result=Sum('mandara_progress__E3_result'),
+           E4_result=Sum('mandara_progress__E4_result'),
+           E5_result=Sum('mandara_progress__E5_result'),
+           E6_result=Sum('mandara_progress__E6_result'),
+           E7_result=Sum('mandara_progress__E7_result'),
+           E8_result=Sum('mandara_progress__E8_result'),
+           F1_result=Sum('mandara_progress__F1_result'),
+           F2_result=Sum('mandara_progress__F2_result'),
+           F3_result=Sum('mandara_progress__F3_result'),
+           F4_result=Sum('mandara_progress__F4_result'),
+           F5_result=Sum('mandara_progress__F5_result'),
+           F6_result=Sum('mandara_progress__F6_result'),
+           F7_result=Sum('mandara_progress__F7_result'),
+           F8_result=Sum('mandara_progress__F8_result'),
+           G1_result=Sum('mandara_progress__G1_result'),
+           G2_result=Sum('mandara_progress__G2_result'),
+           G3_result=Sum('mandara_progress__G3_result'),
+           G4_result=Sum('mandara_progress__G4_result'),
+           G5_result=Sum('mandara_progress__G5_result'),
+           G6_result=Sum('mandara_progress__G6_result'),
+           G7_result=Sum('mandara_progress__G7_result'),
+           G8_result=Sum('mandara_progress__G8_result'),
+           H1_result=Sum('mandara_progress__H1_result'),
+           H2_result=Sum('mandara_progress__H2_result'),
+           H3_result=Sum('mandara_progress__H3_result'),
+           H4_result=Sum('mandara_progress__H4_result'),
+           H5_result=Sum('mandara_progress__H5_result'),
+           H6_result=Sum('mandara_progress__H6_result'),
+           H7_result=Sum('mandara_progress__H7_result'),
+           H8_result=Sum('mandara_progress__H8_result'),
+        ).first()
+    context = {'mandara': mandara, 'request': request}
+    html = template.render(context)
+
+    config = pdfkit.configuration(wkhtmltopdf=wkhtml_to_pdf)
+
+    pdf = pdfkit.from_string(html, False, configuration=config, options=options)
+
+    # Generate download
+    response = HttpResponse(pdf, content_type='application/pdf')
+
+    response['Content-Disposition'] = 'attachment; filename="wkhtml_to_pdf.pdf"'
+    # print(response.status_code)
+    if response.status_code != 200:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+class JapanesePDFView(View):
+    def get(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="reportlab_pdf.pdf"'
+
+        p = canvas.Canvas(response, pagesize=letter)
+        p.setFont("Helvetica", 12)  # Replace "Helvetica" with a Japanese Unicode font
+
+        # Japanese text
+        japanese_text = "<span class='content-title'>真ん中の1年後の目標に対する8つの目標からの72個の問い</span>"
+
+        # Write the Japanese text
+        p.drawString(100, 500, japanese_text)
+
+        p.showPage()
+        p.save()
+
+        return response
