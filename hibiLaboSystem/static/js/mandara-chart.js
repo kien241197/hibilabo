@@ -7,7 +7,7 @@ function createCanvas(className, array) {
             labels: ['', '', '', '', '', '', '', ''],
             datasets: [{
                 label: '',
-                data: array,
+                data: [8,8,8,8,8,8,8,8],
                 borderColor: "#e9e2a0",
                 pointBackgroundColor: '#e2db9d',
             }]
@@ -69,28 +69,28 @@ function createCanvas(className, array) {
 
 }
 
-function countValueCenter() {
+// function countValueCenter() {
 
-    const textContentMain = document.querySelectorAll(".value-score");
-    const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
-    textContentMain[8].textContent = valueContentMain
-}
+//     const textContentMain = document.querySelectorAll(".value-score");
+//     const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
+//     textContentMain[8].textContent = valueContentMain
+// }
 
 var mycanvas1 = createCanvas("mycanvas1", arrayChartGroupA);
 
-var mycanvas2 = createCanvas("mycanvas2", arrayChartGroupB);
+// var mycanvas2 = createCanvas("mycanvas2", arrayChartGroupB);
 
-var mycanvas3 = createCanvas("mycanvas3", arrayChartGroupC);
+// var mycanvas3 = createCanvas("mycanvas3", arrayChartGroupC);
 
-var mycanvas4 = createCanvas("mycanvas4", arrayChartGroupH);
+// var mycanvas4 = createCanvas("mycanvas4", arrayChartGroupH);
 
-var mycanvas5 = createCanvas("mycanvasD", arrayChartGroupD);
+// var mycanvas5 = createCanvas("mycanvasD", arrayChartGroupD);
 
-var mycanvas6 = createCanvas("mycanvasG", arrayChartGroupG);
+// var mycanvas6 = createCanvas("mycanvasG", arrayChartGroupG);
 
-var mycanvas7 = createCanvas("mycanvasF", arrayChartGroupF);
+// var mycanvas7 = createCanvas("mycanvasF", arrayChartGroupF);
 
-var mycanvas8 = createCanvas("mycanvasE", arrayChartGroupE);
+// var mycanvas8 = createCanvas("mycanvasE", arrayChartGroupE);
 
 
-countValueCenter()
+// countValueCenter()

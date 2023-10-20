@@ -1490,8 +1490,10 @@ def post_detail_day(request):
 
 def wkhtml_pdf(request, id):
     options = {
+        'lowquality': False,
+        'images' : True,
         'page-size': 'A4',
-        'page-height': "10in",
+        'page-height': "10.5in",
         'page-width': "13in",
         'margin-top': '0in',
         'margin-right': '0in',
@@ -1499,7 +1501,11 @@ def wkhtml_pdf(request, id):
         'margin-left': '0in',
         'encoding': "UTF-8",
         'no-outline': None,
-        'javascript-delay': 10000
+        'javascript-delay': 20000,
+        "enable-local-file-access": None,
+        'quiet': None,
+        'enable-javascript': True,
+        'no-stop-slow-scripts': True,
     }
 
     template_path = 'mandara/mandara_print_test.html'
@@ -1577,7 +1583,7 @@ def wkhtml_pdf(request, id):
 
     config = pdfkit.configuration(wkhtmltopdf=wkhtml_to_pdf)
 
-    pdf = pdfkit.from_string(html, False, configuration=config, options=options)
+    pdf = pdfkit.from_string(html, False,configuration=config, options=options)
 
     # Generate download
     response = HttpResponse(pdf, content_type='application/pdf')
