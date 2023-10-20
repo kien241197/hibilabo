@@ -35,6 +35,42 @@
             size: letter landscape;
         }
     </style>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+  
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+  
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+  
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+  
+          // Create the data table.
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Topping');
+          data.addColumn('number', 'Slices');
+          data.addRows([
+            ['Mushrooms', 3],
+            ['Onions', 1],
+            ['Olives', 1],
+            ['Zucchini', 1],
+            ['Pepperoni', 2]
+          ]);
+  
+          // Set chart options
+          var options = {'title':'How Much Pizza I Ate Last Night',
+                         'width':500,
+                         'height':400};
+  
+          // Instantiate and draw our chart, passing in some options.
+          var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+        }
+      </script>
 </head>
 
 <body>
@@ -49,11 +85,12 @@
                                     <div>
                                         <div class="body-top">
                                             <div class="body-top-left">
-                                               
-                                                <h2 class="text-title" style="font-size: 32px !important; margin-bottom: 25px !important;">MANDARA CHART 1</h2>
-                                                <div style="width:800px;height:200;">
+                                                <div id="chart_div"></div>
+                                                <h2 class="text-title" style="font-size: 32px !important; margin-bottom: 25px !important;">MANDARA CHART </h2>
+                                                <div id="chart_div"></div>
+                                                <!-- <div style="width:800px;height:200;">
                                                     <canvas id="mycanvas1" style="width:800px;height:200;"></canvas>
-                                                </div>
+                                                </div> -->
                                                 <br/>
                                                 <span class="content-title" style="font-size: 25px !important; padding-top: 25px !important;">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                             </div>
@@ -771,100 +808,89 @@
     <script>
 
         
-        Chart.register(ChartDataLabels);
-        (function(setLineDash) {
-    CanvasRenderingContext2D.prototype.setLineDash = function() {
-        if(!arguments[0].length){
-            arguments[0] = [1,0];
-        }
-        // Now, call the original method
-        return setLineDash.apply(this, arguments);
-    };
-})(CanvasRenderingContext2D.prototype.setLineDash);
-Function.prototype.bind = Function.prototype.bind || function (thisp) {
-    var fn = this;
-    return function () {
-        return fn.apply(thisp, arguments);
-    };
-};
-function createCanvas(className, array) {
-     new Chart(document.getElementById('mycanvas1'), {
-        type: 'radar',
-        data: {
-            labels: ['', '', '', '', '', '', '', ''],
-            datasets: [{
-                label: '',
-                data: ["8","8","8","8","8","8","8","8"],
-                borderColor: "#e9e2a0",
-                pointBackgroundColor: '#e2db9d',
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                r: { // https://www.chartjs.org/docs/latest/axes/radial/
-                    angleLines: {
-                        color: '#cbcccd'
-                    },
-                    grid: {
-                        color: '#cbcccd',
-                    },
-                    pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
-                        color: 'white'
-                    },
-                    ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
-                        color: 'none',
-                        backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
-                    },
-                    gridLines: {
-                        color: "red",
+//         Chart.register(ChartDataLabels);
+//         (function(setLineDash) {
+//     CanvasRenderingContext2D.prototype.setLineDash = function() {
+//         if(!arguments[0].length){
+//             arguments[0] = [0,0];
+//         }
+//         return setLineDash.apply(this, arguments);
+//     };
+// })(CanvasRenderingContext2D.prototype.setLineDash);
+// Function.prototype.bind = Function.prototype.bind || function (thisp) {
+//     var fn = this;
+//     return function () {
+//         return fn.apply(thisp, arguments);
+//     };
+// };
+// function createCanvas(className, array) {
+//      new Chart(document.getElementById(className), {
+//         type: 'radar',
+//         data: {
+//             labels: ['', '', '', '', '', '', '', ''],
+//             datasets: [{
+//                 label: '',
+//                 data: [8,8,8,8,8,8,8,8],
+//                 borderColor: "#e9e2a0",
+//                 pointBackgroundColor: '#e2db9d',
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             scales: {
+//                 r: { // https://www.chartjs.org/docs/latest/axes/radial/
+//                     angleLines: {
+//                         color: '#cbcccd'
+//                     },
+//                     grid: {
+//                         color: '#cbcccd',
+//                     },
+//                     pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+//                         color: 'white'
+//                     },
+//                     ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+//                         color: 'none',
+//                         backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+//                     },
+//                     gridLines: {
+//                         color: "red",
 
-                    },
-                    min: 0,
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false, // キャプションを隠す
-                },
-                datalabels: {
-                    display: false, // チャート上のデータ表示を非表示にする
-                },
-            },
-            elements: {
-                line: {
-                    borderWidth: 1,
+//                     },
+//                     min: 0,
+//                 }
+//             },
+//             plugins: {
+//                 legend: {
+//                     display: false, // キャプションを隠す
+//                 },
+//                 datalabels: {
+//                     display: false, // チャート上のデータ表示を非表示にする
+//                 },
+//             },
+//             elements: {
+//                 line: {
+//                     borderWidth: 1,
 
-                },
-                point: {
-                    radius: 1, // 小さい方の円のサイズを設定します
-                    borderWidth: 1, // 円の境界線の幅 円の境界線の幅
-                }
-            },
-            tooltips: {
-                enabled: false,
-            },
-            r: {
+//                 },
+//                 point: {
+//                     radius: 1, // 小さい方の円のサイズを設定します
+//                     borderWidth: 1, // 円の境界線の幅 円の境界線の幅
+//                 }
+//             },
+//             tooltips: {
+//                 enabled: false,
+//             },
+//             r: {
 
-                //メモリ線
-                ticks: {
-                    display: false
-                },
-            }
-        }
-    });
+//                 //メモリ線
+//                 ticks: {
+//                     display: false
+//                 },
+//             }
+//         }
+//     });
 
-}
-
-window.chartColors = {
-	red: 'rgb(255, 99, 132)',
-	orange: 'rgb(255, 159, 64)',
-	yellow: 'rgb(255, 205, 86)',
-	green: 'rgb(75, 192, 192)',
-	blue: 'rgb(54, 162, 235)',
-	purple: 'rgb(153, 102, 255)',
-	grey: 'rgb(201, 203, 207)'
-};
+// }
 
 // function countValueCenter() {
 
@@ -872,9 +898,9 @@ window.chartColors = {
 //     const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
 //     textContentMain[8].textContent = valueContentMain
 // }
-window.onload = function() {
-    createCanvas("mycanvas1", arrayChartGroupA);
-};
+// window.onload = function() {
+//     createCanvas("mycanvas1", arrayChartGroupA);
+// };
 
 
 // var mycanvas2 = createCanvas("mycanvas2", arrayChartGroupB);

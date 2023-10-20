@@ -1501,10 +1501,9 @@ def wkhtml_pdf(request, id):
         'margin-left': '0in',
         'encoding': "UTF-8",
         'no-outline': None,
-        'javascript-delay': 20000,
+        'javascript-delay': 5000,
         "enable-local-file-access": None,
         'quiet': None,
-        'enable-javascript': True,
         'no-stop-slow-scripts': True,
     }
 
