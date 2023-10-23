@@ -23,14 +23,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'assets/css/responsive.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'assets/css/custom-style.css' %}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
-    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
-    crossorigin="anonymous"></script>
-<script
-    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  <script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/js/chart-min.js"
+        crossorigin="anonymous"></script>
+<script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/js/bundle-min.js"></script>
+<script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/js/chartjs-plugin.js"></script>
+
 <link rel="stylesheet" href="{% static '/css/mandara_print.css' %}">
 
 
@@ -48,9 +45,7 @@
                             <div class="wrapper-body-left">
                                 <div>
                                     <div class="body-top">
-                                        <div class="aa"></div>
                                         <div class="body-top-left">
-                                            <img id="base64graph"/>
                                             <h2 class="text-title">MANDARA CHART</h2>
                                             <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                         </div>
@@ -813,12 +808,12 @@ window.onload = function(){
 <script src="{% static 'js/mandara-chart.js' %}"></script>
 
 
- <script>
+ <!-- <script>
         var url_base64 = document.getElementById('mycanvas1').toDataURL('image/png');
         console.log("url_base64", url_base64);
         document.getElementById('base64graph').setAttribute("src", url_base64)
 
-    </script>
+    </script> -->
 
 
 {% endblock %}

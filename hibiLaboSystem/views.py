@@ -1031,7 +1031,7 @@ class BonknowThink(LoginRequiredMixin, TemplateView):
 
 #MASMASMANDARA
 class MandaraPrint(LoginRequiredMixin, TemplateView):
-    template_name = "mandara/mandara_print.html"
+    template_name = "mandara/mandara_print_test.html"
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
@@ -1490,8 +1490,6 @@ def post_detail_day(request):
 
 def wkhtml_pdf(request, id):
     options = {
-        'lowquality': False,
-        'images' : True,
         'page-size': 'A4',
         'page-height': "10.5in",
         'page-width': "13in",
@@ -1501,10 +1499,7 @@ def wkhtml_pdf(request, id):
         'margin-left': '0in',
         'encoding': "UTF-8",
         'no-outline': None,
-        'javascript-delay': 30000,
-        "enable-local-file-access": None,
-        'quiet': None,
-        'no-stop-slow-scripts': True,
+        'javascript-delay': 2000,
     }
 
     template_path = 'mandara/mandara_print_test.html'

@@ -27,11 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
-# Application definition
-WKHTMLTOPDF_CMD_OPTIONS = {
-    'quiet': True,
-}
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

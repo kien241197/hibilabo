@@ -3,7 +3,7 @@
 
 <head>
     <!-- Required meta tags -->
-    <META content="charset=UTF-8">
+    <META charset="UTF-8">
     <title>HIBI_LABOインナーマーケティング</title>
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -21,56 +21,17 @@
         href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/responsive.css">
     <link rel="stylesheet" type="text/css"
         href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/custom-style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
-        integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
-        crossorigin="anonymous"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js" integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+        <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+     
     <link rel="stylesheet" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/css/mandara_print_test.css">
     <style type="text/css">
         @page {
             size: letter landscape;
         }
     </style>
-      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-      <script type="text/javascript">
-  
-        // Load the Visualization API and the corechart package.
-        google.charts.load('current', {'packages':['corechart']});
-  
-        // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(drawChart);
-  
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
-        function drawChart() {
-  
-          // Create the data table.
-          var data = new google.visualization.DataTable();
-          data.addColumn('string', 'Topping');
-          data.addColumn('number', 'Slices');
-          data.addRows([
-            ['Mushrooms', 3],
-            ['Onions', 1],
-            ['Olives', 1],
-            ['Zucchini', 1],
-            ['Pepperoni', 2]
-          ]);
-  
-          // Set chart options
-          var options = {'title':'How Much Pizza I Ate Last Night',
-                         'width':500,
-                         'height':400};
-  
-          // Instantiate and draw our chart, passing in some options.
-          var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-          chart.draw(data, options);
-        }
-      </script>
 </head>
 
 <body>
@@ -85,12 +46,8 @@
                                     <div>
                                         <div class="body-top">
                                             <div class="body-top-left">
-                                                <div id="chart_div"></div>
-                                                <h2 class="text-title" style="font-size: 32px !important; margin-bottom: 25px !important;">MANDARA CHART </h2>
-                                                <div id="chart_div"></div>
-                                                <div style="width:800px;height:200;">
-                                                    <canvas id="mycanvas1" style="width:800px;height:200;"></canvas>
-                                                </div>
+                                                <h2 class="text-title" style="font-size: 32px !important; margin-bottom: 25px !important;">MANDARA CHART 1</h2>
+                                              
                                                 <br/>
                                                 <span class="content-title" style="font-size: 25px !important; padding-top: 25px !important;">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                             </div>
@@ -98,7 +55,10 @@
                                     </div>
                                     <div class="body-bottom-left col-12" id="value-body-bottom-left">
                                         <div class="row">
-                                            <div class="wrapper-item-body-bottom-left col-4">
+                                            <div class="wrapper-item-body-bottom-left col-4" style="position: relative; ">
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvas1" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group1 true col-4" style="height: 80px; border-top: 2px solid #717276; border-left: 2px solid #717276;"
                                                         data-box-type="A1">
@@ -122,15 +82,11 @@
                                                         <p style="font-size: 16px;">A</p>
                                                         <span class="value-group-1"></span>
                                                     </div>
-                                                    <div class="value-table-score SCORE col-4" style="height: 80px; position: relative;">
+                                                    <div class="value-table-score SCORE col-4" style="height: 80px; position: unset !important;">
                                                         <p class="title-value-table-score">AK</p>
                                                         <span class="value-score" style="font-size: 30px !important;">3</span>
                                                         <p>SCORE</p>
-                                                        <!-- <div class="wrapper-canvas" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 818px; height: 409px; z-index: 99999;" >
-                                                            <canvas id="mycanvas1" class="mycanvas" height="100%"
-                                                                width="100%"
-                                                                style="display: block; box-sizing: border-box; height: 100%; width: 100%; width: 818px; height: 409px;"></canvas>
-                                                        </div> -->
+                                                      
                                                     </div>
                                                     <div class="value-table group1 true col-4" style="height: 80px;"
                                                         data-box-type="A4">
@@ -158,6 +114,9 @@
                                                 </div>
                                             </div>
                                             <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvas2" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group2 true col-4" style="height: 80px; border-top: 2px solid #717276;"
                                                         data-box-type="B1">
@@ -216,6 +175,9 @@
                                                 </div>
                                             </div>
                                             <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvas3" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group3 true col-4" style="height: 80px; border-top: 2px solid #717276;"
                                                         data-box-type="C1">
@@ -278,6 +240,9 @@
 
                                         <div class="row">
                                             <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvas4" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group4 true col-4" style="height: 80px; border-left: 2px solid #717276;"
                                                         data-box-type="H1">
@@ -394,6 +359,9 @@
 
 
                                             <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvasD" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group5 true col-4" style="height: 80px;"
                                                         data-box-type="D1">
@@ -458,6 +426,9 @@
 
                                         <div class="row">
                                             <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvasG" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group6 true col-4" style="height: 80px; border-left: 2px solid #717276;"
                                                         data-box-type="G1">
@@ -519,7 +490,9 @@
                                             </div>
 
                                             <div class="wrapper-item-body-bottom-left col-4">
-
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvasF" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group7 true col-4" style="height: 80px;" data-box-type="F1">
                                                         <p>F</p>
@@ -571,6 +544,9 @@
 
                                             </div>
                                             <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 230px; height: 230px; left: 48px; z-index: 99;">
+                                                    <canvas id="mycanvasE" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
                                                 <div class="row">
                                                     <div class="value-table group8 true col-4" style="height: 80px;" data-box-type="E1">
                                                         <p>F</p>
@@ -788,16 +764,16 @@
     </main>
     <!-- <script type="text/javascript">
     </script> -->
-    <!-- <script type="text/javascript">
-        var arrayChartGroupA = [{{ mandara.A2_result }}, { { mandara.A3_result } }, { { mandara.A4_result } }, { { mandara.A5_result } }, { { mandara.A6_result } }, { { mandara.A7_result } }, { { mandara.A8_result } }, { { mandara.A1_result } }];
-        var arrayChartGroupB = [{{ mandara.B2_result }}, { { mandara.B3_result } }, { { mandara.B4_result } }, { { mandara.B5_result } }, { { mandara.B6_result } }, { { mandara.B7_result } }, { { mandara.B8_result } }, { { mandara.B1_result } }];
-        var arrayChartGroupC = [{{ mandara.C2_result }}, { { mandara.C3_result } }, { { mandara.C4_result } }, { { mandara.C5_result } }, { { mandara.C6_result } }, { { mandara.C7_result } }, { { mandara.C8_result } }, { { mandara.C1_result } }];
-        var arrayChartGroupH = [{{ mandara.H2_result }}, { { mandara.H3_result } }, { { mandara.H4_result } }, { { mandara.H5_result } }, { { mandara.H6_result } }, { { mandara.H7_result } }, { { mandara.H8_result } }, { { mandara.H1_result } }];
-        var arrayChartGroupD = [{{ mandara.D2_result }}, { { mandara.D3_result } }, { { mandara.D4_result } }, { { mandara.D5_result } }, { { mandara.D6_result } }, { { mandara.D7_result } }, { { mandara.D8_result } }, { { mandara.D1_result } }];
-        var arrayChartGroupG = [{{ mandara.G2_result }}, { { mandara.G3_result } }, { { mandara.G4_result } }, { { mandara.G5_result } }, { { mandara.G6_result } }, { { mandara.G7_result } }, { { mandara.G8_result } }, { { mandara.G1_result } }];
-        var arrayChartGroupF = [{{ mandara.F2_result }}, { { mandara.F3_result } }, { { mandara.F4_result } }, { { mandara.F5_result } }, { { mandara.F6_result } }, { { mandara.F7_result } }, { { mandara.F8_result } }, { { mandara.F1_result } }];
-        var arrayChartGroupE = [{{ mandara.E2_result }}, { { mandara.E3_result } }, { { mandara.E4_result } }, { { mandara.E5_result } }, { { mandara.E6_result } }, { { mandara.E7_result } }, { { mandara.E8_result } }, { { mandara.E1_result } }];
-    </script> -->
+    <script type="text/javascript">
+        var arrayChartGroupA = [{{ mandara.A2_result }}, {{ mandara.A3_result }}, {{ mandara.A4_result }}, {{ mandara.A5_result }}, {{ mandara.A6_result }}, {{ mandara.A7_result }}, {{ mandara.A8_result }}, {{ mandara.A1_result }}];
+        var arrayChartGroupB = [{{ mandara.B2_result }}, {{ mandara.B3_result }}, {{ mandara.B4_result }}, {{ mandara.B5_result }}, {{ mandara.B6_result }}, {{ mandara.B7_result }}, {{ mandara.B8_result }}, {{ mandara.B1_result }}];
+        var arrayChartGroupC = [{{ mandara.C2_result }}, {{ mandara.C3_result }}, {{ mandara.C4_result }}, {{ mandara.C5_result }}, {{ mandara.C6_result }}, {{ mandara.C7_result }}, {{ mandara.C8_result }}, {{ mandara.C1_result }}];
+        var arrayChartGroupH = [{{ mandara.H2_result }}, {{ mandara.H3_result }}, {{ mandara.H4_result }}, {{ mandara.H5_result }}, {{ mandara.H6_result }}, {{ mandara.H7_result }}, {{ mandara.H8_result }}, {{ mandara.H1_result }}];
+        var arrayChartGroupD = [{{ mandara.D2_result }}, {{ mandara.D3_result }}, {{ mandara.D4_result }}, {{ mandara.D5_result }}, {{ mandara.D6_result }}, {{ mandara.D7_result }}, {{ mandara.D8_result }}, {{ mandara.D1_result }}];
+        var arrayChartGroupG = [{{ mandara.G2_result }}, {{ mandara.G3_result }}, {{ mandara.G4_result }}, {{ mandara.G5_result }}, {{ mandara.G6_result }}, {{ mandara.G7_result }}, {{ mandara.G8_result }}, {{ mandara.G1_result }}];
+        var arrayChartGroupF = [{{ mandara.F2_result }}, {{ mandara.F3_result }}, {{ mandara.F4_result }}, {{ mandara.F5_result }}, {{ mandara.F6_result }}, {{ mandara.F7_result }}, {{ mandara.F8_result }}, {{ mandara.F1_result }}];
+        var arrayChartGroupE = [{{ mandara.E2_result }}, {{ mandara.E3_result }}, {{ mandara.E4_result }}, {{ mandara.E5_result }}, {{ mandara.E6_result }}, {{ mandara.E7_result }}, {{ mandara.E8_result }}, {{ mandara.E1_result }}];
+    </script>
     <!-- <script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/js/mandara-chart.js"></script> -->
     <!-- <script>
         var url_base64 = document.getElementById('mycanvas1').toDataURL('image/png');
@@ -805,45 +781,98 @@
         document.getElementById('base64graph').setAttribute("src", url_base64)
 
     </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script>
 
-        
-        Chart.register(ChartDataLabels);
-//         (function(setLineDash) {
-//     CanvasRenderingContext2D.prototype.setLineDash = function() {
-//         if(!arguments[0].length){
-//             arguments[0] = [0,0];
-//         }
-//         return setLineDash.apply(this, arguments);
-//     };
-// })(CanvasRenderingContext2D.prototype.setLineDash);
-// Function.prototype.bind = Function.prototype.bind || function (thisp) {
-//     var fn = this;
-//     return function () {
-//         return fn.apply(thisp, arguments);
-//     };
-// };
-function createCanvas(className, array) {
-     new Chart(document.getElementById(className), {
+    //     setTimeout(() => {
+    //         new Chart(document.getElementById('mycanvas1'), {
+    //     type: 'radar',
+    //     data: {
+    //         labels: ['', '', '', '', '', '', '', ''],
+    //         datasets: [{
+    //             label: '',
+    //             data: [8,8,8,8,8,8,8,8],
+    //             borderColor: "#e9e2a0",
+    //             pointBackgroundColor: '#e2db9d',
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: false,
+    //         scales: {
+    //             r: { // https://www.chartjs.org/docs/latest/axes/radial/
+    //                 angleLines: {
+    //                     color: '#cbcccd'
+    //                 },
+    //                 grid: {
+    //                     color: '#cbcccd',
+    //                 },
+    //                 pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
+    //                     color: 'white'
+    //                 },
+    //                 ticks: { // https://www.chartjs.org/docs/latest/axes/radial/#ticks
+    //                     color: 'none',
+    //                     backdropColor: 'transparent' // https://www.chartjs.org/docs/latest/axes/_common_ticks.html
+    //                 },
+    //                 gridLines: {
+    //                     color: "red",
+
+    //                 },
+    //                 min: 0,
+    //             }
+    //         },
+    //         // plugins: {
+    //         //     legend: {
+    //         //         display: false, // キャプションを隠す
+    //         //     },
+    //         //     datalabels: {
+    //         //         display: false, // チャート上のデータ表示を非表示にする
+    //         //     },
+    //         // },
+    //         // elements: {
+    //         //     line: {
+    //         //         borderWidth: 1,
+
+    //         //     },
+    //         //     point: {
+    //         //         radius: 1, // 小さい方の円のサイズを設定します
+    //         //         borderWidth: 1, // 円の境界線の幅 円の境界線の幅
+    //         //     }
+    //         // },
+    //         // tooltips: {
+    //         //     enabled: false,
+    //         // },
+    //         // r: {
+
+    //         //     //メモリ線
+    //         //     ticks: {
+    //         //         display: false
+    //         //     },
+    //         // }
+    //     }
+    // });
+    //     }, 100)
+
+function setCanvas(id, value) {
+    Chart.plugins.register(ChartDataLabels);
+    new Chart(document.getElementById(id), {
         type: 'radar',
         data: {
             labels: ['', '', '', '', '', '', '', ''],
             datasets: [{
                 label: '',
-                data: [8,8,8,8,8,8,8,8],
+                data: value,
                 borderColor: "#e9e2a0",
                 pointBackgroundColor: '#e2db9d',
             }]
         },
         options: {
-            responsive: true,
             scales: {
                 r: { // https://www.chartjs.org/docs/latest/axes/radial/
                     angleLines: {
-                        color: '#cbcccd'
+                        color: 'red'
                     },
                     grid: {
-                        color: '#cbcccd',
+                        color: 'red',
                     },
                     pointLabels: { // https://www.chartjs.org/docs/latest/axes/radial/#point-labels
                         color: 'white'
@@ -859,7 +888,8 @@ function createCanvas(className, array) {
                     min: 0,
                 }
             },
-            plugins: {
+        },
+        plugins: {
                 legend: {
                     display: false, // キャプションを隠す
                 },
@@ -867,59 +897,16 @@ function createCanvas(className, array) {
                     display: false, // チャート上のデータ表示を非表示にする
                 },
             },
-            elements: {
-                line: {
-                    borderWidth: 1,
-
-                },
-                point: {
-                    radius: 1, // 小さい方の円のサイズを設定します
-                    borderWidth: 1, // 円の境界線の幅 円の境界線の幅
-                }
-            },
-            tooltips: {
-                enabled: false,
-            },
-            r: {
-
-                //メモリ線
-                ticks: {
-                    display: false
-                },
-            }
-        }
     });
-
 }
-
-// function countValueCenter() {
-
-//     const textContentMain = document.querySelectorAll(".value-score");
-//     const valueContentMain = Number(textContentMain[4].textContent) + Number(textContentMain[5].textContent) + Number(textContentMain[6].textContent) + Number(textContentMain[7].textContent) + Number(textContentMain[9].textContent) + Number(textContentMain[10].textContent) + Number(textContentMain[11].textContent) + Number(textContentMain[12].textContent);
-//     textContentMain[8].textContent = valueContentMain
-// }
-// window.onload = function() {
-//     createCanvas("mycanvas1", null);
-// };
-var mycanvas1 = createCanvas("mycanvas1", null);
-
-// var mycanvas2 = createCanvas("mycanvas2", arrayChartGroupB);
-
-// var mycanvas3 = createCanvas("mycanvas3", arrayChartGroupC);
-
-// var mycanvas4 = createCanvas("mycanvas4", arrayChartGroupH);
-
-// var mycanvas5 = createCanvas("mycanvasD", arrayChartGroupD);
-
-// var mycanvas6 = createCanvas("mycanvasG", arrayChartGroupG);
-
-// var mycanvas7 = createCanvas("mycanvasF", arrayChartGroupF);
-
-// var mycanvas8 = createCanvas("mycanvasE", arrayChartGroupE);
-
-
-// countValueCenter()
-
+setTimeout(setCanvas("mycanvas1", arrayChartGroupA), 100)
+setTimeout(setCanvas("mycanvas2", arrayChartGroupB), 100)
+setTimeout(setCanvas("mycanvas3", arrayChartGroupC), 100)
+setTimeout(setCanvas("mycanvas4", arrayChartGroupH), 100)
+setTimeout(setCanvas("mycanvasD", arrayChartGroupD), 100)
+setTimeout(setCanvas("mycanvasE", arrayChartGroupE), 100)
+setTimeout(setCanvas("mycanvasF", arrayChartGroupF), 100)
+setTimeout(setCanvas("mycanvasG", arrayChartGroupG), 100)
     </script>
 </body>
 
