@@ -835,9 +835,9 @@ body {
 .value-table {
     width: 100%;
     background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
     grid-column: auto;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -895,6 +895,7 @@ body {
     word-wrap: break-word;
     text-align: center;
     min-height: 25px;
+    max-height: 28px;
     z-index: 11;
     padding-left: 2px;
     padding-right: 2px;
@@ -916,7 +917,7 @@ body {
 .value-table-score p {
 
     margin-bottom: 0px !important;
-    font-size: 100%;
+    font-size: 14px;
     font-weight: 700;
     font-family: var(--font-content);
     margin-block: unset !important;
@@ -925,7 +926,9 @@ body {
     letter-spacing: 0.1rem;
     z-index: 11;
     /* color: #85878b; */
+    overflow: hidden;
     color: white;
+    height: 15px;
 }
 
 .table-body-bottom-right {
@@ -1093,13 +1096,15 @@ body {
 }
 
 .content-table-body-right p {
-    transform: rotate(90deg);
-    white-space: nowrap;
+    text-wrap: nowrap;
     margin-block: unset !important;
     font-weight: 700;
-    padding: 30px;
     font-size: 75%;
     letter-spacing: 0.1rem;
+    text-align: center;
+    padding-left: 18px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .wrapper-content-table-bottom-body-right {
@@ -1138,7 +1143,7 @@ body {
     background-color: #e7e7e8;
     position: absolute;
     top: 0;
-    color: unset !important;
+    color: #85878b !important; 
 }
 
 .title-main-score-next {
@@ -1868,7 +1873,7 @@ body {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: normal;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 2;
         /* font-size: 30%; */
     }
 
