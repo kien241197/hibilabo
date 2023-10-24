@@ -32,19 +32,15 @@
                                         <div class="mb-4">
                                             <h2 class="text-title">COMPLETION CHART</h2>
                                         </div>
-                                       <!-- <form action="" method="post">
-                                        {% csrf_token %} -->
+                                       <form action="" method="post">
+                                        {% csrf_token %}
                                             <div class="item-select">
-                                                <select class="select" name="" id="">
-                                                    <option value="">2023年3月</option>
-                                                </select>
+                                                {{ form.start }}
                                                 <p class="to">～</p>
-                                                <select class="select" name="" id="">
-                                                    <option value="">2023年9月</option>
-                                                </select>
+                                                {{ form.end }}
                                                 <button type="submit" class="button">表示</button>
                                             </div>
-                                       <!-- </form> -->
+                                       </form>
                                     </div>
                                 </div>
                                 <div class="item-date">
@@ -53,9 +49,7 @@
                                         <div class="wrapper-date">
                                             <div class="desc-item d-flex justify-content-center align-items-center">
                                                 <div class="mr-2">
-                                                    <b>{{mandara.start_YYYYMM}}</b>
-                                                    <b class="to"> ~ </b>
-                                                    <b>{{mandara.end_YYYYMM}}</b>
+                                                    <b>{{mandara.display_time}}</b>
                                                 </div>
                                                 <svg fill="black" xmlns="http://www.w3.org/2000/svg" width="30"
                                                     height="30" fill="currentColor" class="bi bi-caret-right"

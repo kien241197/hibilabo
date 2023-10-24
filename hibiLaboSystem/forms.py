@@ -1033,3 +1033,12 @@ class MandaraCreateForm(forms.ModelForm):
             }
         )
     )
+
+class MandaraCompleteForm(forms.Form):
+    start = forms.ChoiceField(
+        widget=fields.MandaraMonthYearSelectWidget(),
+    )
+
+    end = forms.ChoiceField(
+        widget=fields.MandaraMonthYearSelectWidget(),
+    )

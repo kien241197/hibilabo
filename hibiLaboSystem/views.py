@@ -1297,40 +1297,29 @@ class MandaraReuse(LoginRequiredMixin, TemplateView):
 
 class MandaraCompletion(LoginRequiredMixin, TemplateView):
     template_name = "mandara/mandara_completion.html"
+    form_class = forms.MandaraCompleteForm
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         today_str = datetime.date.today().strftime("%Y%m")
         mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__lt=today_str).order_by('start_YYYYMM')
-        
-        for item in mandara_get:
-            end_YYYYMM = item.end_YYYYMM
-            start_YYYYMM = item.start_YYYYMM
-            format_end_date = f'{end_YYYYMM[:4]}/{int(end_YYYYMM[4:])}'
-            format_start_date = f'{start_YYYYMM[:4]}/{int(start_YYYYMM[4:])}'
-            item.end_YYYYMM = format_end_date
-            item.start_YYYYMM = format_start_date
 
         kwargs['mandara_get'] = mandara_get
+        kwargs['form'] = self.form_class()
         return kwargs
     
     def post(self, request, *args, **kwargs):
-        company_id = self.request.user.company_id
-        user_id = self.request.user.id
-        today_str = datetime.date.today().strftime("%Y%m")
-        mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__lt=today_str).order_by('start_YYYYMM')
-        
-        for item in mandara_get:
-            end_YYYYMM = item.end_YYYYMM
-            start_YYYYMM = item.start_YYYYMM
-            format_end_date = f'{end_YYYYMM[:4]}/{int(end_YYYYMM[4:])}'
-            format_start_date = f'{start_YYYYMM[:4]}/{int(start_YYYYMM[4:])}'
-            item.end_YYYYMM = format_end_date
-            item.start_YYYYMM = format_start_date
-
-        kwargs['mandara_get'] = mandara_get
-        return kwargs
+        context = self.get_context_data(**kwargs)
+        form = self.form_class(request.POST)
+        context["form"] = form
+        start_YYYYMM = request.POST.get('start')
+        end_YYYYMM = request.POST.get('end')
+        if start_YYYYMM is not None:
+            context['mandara_get'] = context['mandara_get'].filter(start_YYYYMM__gte=start_YYYYMM)
+        if end_YYYYMM is not None:
+            context['mandara_get'] = context['mandara_get'].filter(end_YYYYMM__lte=end_YYYYMM)
+        return self.render_to_response(context)
 
     
 class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):

@@ -764,6 +764,9 @@ class MandaraBase(models.Model):
 	def total_result(self):
 			return self.A_result + self.B_result + self.C_result + self.D_result + self.E_result + self.F_result + self.G_result + self.H_result
 
+	def display_time(self):
+			return f'{self.start_YYYYMM[:4]}/{int(self.start_YYYYMM[4:])} ~ {self.end_YYYYMM[:4]}/{int(self.end_YYYYMM[4:])}'
+
 	class Meta:
 		db_table = 'mandara_base'
 		constraints = [
