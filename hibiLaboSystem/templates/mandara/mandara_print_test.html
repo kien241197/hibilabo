@@ -23,7 +23,6 @@
         href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/custom-style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js" integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
         <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
      
     <link rel="stylesheet" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/css/mandara_print_test.css">
@@ -853,7 +852,6 @@
     //     }, 100)
 
 function setCanvas(id, value) {
-    Chart.plugins.register(ChartDataLabels);
     new Chart(document.getElementById(id), {
         type: 'radar',
         data: {
@@ -867,23 +865,20 @@ function setCanvas(id, value) {
             }]
         },
         options: {
+            tooltips: false,
             legend: {
                 display: false
             },
             scale: {
+                gridLines: {
+                    circular: true
+                },
                 ticks: {
                     display: false
                 }
             },
         },
-        plugins: {
-                legend: {
-                    display: false, // キャプションを隠す
-                },
-                datalabels: {
-                    display: false, // チャート上のデータ表示を非表示にする
-                },
-            },
+       
     });
 }
 setTimeout(setCanvas("mycanvas1", arrayChartGroupA), 100)
