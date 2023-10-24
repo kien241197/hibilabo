@@ -1499,7 +1499,7 @@ def wkhtml_pdf(request, id):
         'margin-left': '0in',
         'encoding': "UTF-8",
         'no-outline': None,
-        'javascript-delay': 2000,
+        'javascript-delay': 200,
     }
 
     template_path = 'mandara/mandara_print_test.html'
