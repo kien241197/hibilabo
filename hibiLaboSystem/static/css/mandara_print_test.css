@@ -905,7 +905,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding-top: 82px;
+    /* padding-top: 70px; */
 }
 
 .wrapper-item-table-body-bottom-right-tab-2 {
@@ -942,6 +942,11 @@ body {
     font-family: var(--font-content);
     z-index: 11;
     color: #85878b;
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
 .value-table-score span {

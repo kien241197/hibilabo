@@ -1491,7 +1491,7 @@ def post_detail_day(request):
 def wkhtml_pdf(request, id):
     options = {
         'page-size': 'A4',
-        'page-height': "10.5in",
+        'page-height': "10in",
         'page-width': "13in",
         'margin-top': '0in',
         'margin-right': '0in',
