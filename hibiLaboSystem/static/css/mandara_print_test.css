@@ -920,14 +920,14 @@ body {
     font-weight: 700;
     font-family: var(--font-content);
     margin-block: unset !important;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
     text-align: center;
     letter-spacing: 0.1rem;
     z-index: 11;
     /* color: #85878b; */
-    overflow: hidden;
+    /* overflow: hidden; */
     color: white;
-    height: 15px;
+    /* height: 15px; */
 }
 
 .table-body-bottom-right {
@@ -1140,7 +1140,6 @@ body {
 .title-main-score {
 
     width: 100%;
-    background-color: #e7e7e8;
     position: absolute;
     top: 0;
     color: #85878b !important; 
@@ -1877,15 +1876,15 @@ body {
         /* font-size: 30%; */
     }
 
-    .value-table-score p {
+    /* .value-table-score p {
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: normal;
-        -webkit-line-clamp: 1;
+        /* overflow: hidden; */
+        /* text-overflow: ellipsis; */
+        /* white-space: normal; */
+        /* -webkit-line-clamp: 1; */
         /* font-size: 30%; */
-    }
+    } */
 
     /* .value-table span {
         font-size: 30% !important;
