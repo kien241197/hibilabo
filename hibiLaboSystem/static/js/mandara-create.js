@@ -1,13 +1,13 @@
 
 const OPTION_LIST = [
-    [0,0,7],
-    [1,8,15],
-    [2,16,23],
-    [4,32,39],
-    [7,56,64],
     [6,48,55],
-    [5,40,47],
     [3,24,31],
+    [1,8,15],
+    [4,32,39],
+    [5,40,47],
+    [0,0,7],
+    [2,16,23],
+    [7,56,64],
 ];
 const choose = document.querySelectorAll(".choose");
 choose[0].classList.add('background-choose-active')
@@ -93,6 +93,7 @@ const inputValue = document.querySelectorAll('.input-table');
 
 const inputValueTab = document.querySelectorAll(".input-value-tab");
 inputValueTab.forEach((element, index) => {
+    
     render_keyword(index, element.value);
     element.addEventListener('change', function () {
         render_keyword(index, element.value);

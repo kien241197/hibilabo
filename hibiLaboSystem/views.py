@@ -1315,9 +1315,10 @@ class MandaraCompletion(LoginRequiredMixin, TemplateView):
         context["form"] = form
         start_YYYYMM = request.POST.get('start')
         end_YYYYMM = request.POST.get('end')
-        if start_YYYYMM is not None:
+        
+        if start_YYYYMM:
             context['mandara_get'] = context['mandara_get'].filter(start_YYYYMM__gte=start_YYYYMM)
-        if end_YYYYMM is not None:
+        if end_YYYYMM:
             context['mandara_get'] = context['mandara_get'].filter(end_YYYYMM__lte=end_YYYYMM)
         return self.render_to_response(context)
 

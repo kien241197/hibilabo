@@ -52,7 +52,7 @@
                                 {% if mandara is not None %}
                                 <div class="body-bottom-left" id="value-body-bottom-left">
                                     {% load custom_filters %}
-                                    {% with 'A B C H' as list %}
+                                    {% with 'F C G B' as list %}
                                     {% for key in list.split %}
                                     <div class="wrapper-item-body-bottom-left">
                                         {% with content=key|add:'1_content' %}
@@ -133,7 +133,7 @@
                                     {% endfor %}
                                     {% endwith %}
                                     <div class="wrapper-item-body-bottom-left">
-                                        {% with 'A B C H' as list %}
+                                        {% with 'F C G B' as list %}
                                         {% for key in list.split %}
                                             {% with keyword=key|add:'_keyword' %}
                                             {% with result=key|add:'_result' %}
@@ -151,7 +151,7 @@
                                             <span class="value-score value-score-center">{{ mandara.total_result }}</span>
                                             <p class="title-main-score-bottom">1年後の目標</p>
                                         </div>
-                                        {% with 'D G F E' as list %}
+                                        {% with 'D E A H' as list %}
                                         {% for key in list.split %}
                                             {% with keyword=key|add:'_keyword' %}
                                             {% with result=key|add:'_result' %}
@@ -165,7 +165,7 @@
                                         {% endfor %}
                                         {% endwith %}
                                     </div>
-                                    {% with 'D G F E' as list %}
+                                    {% with 'D E A H' as list %}
                                     {% for key in list.split %}
                                     <div class="wrapper-item-body-bottom-left">
                                         {% with content=key|add:'1_content' %}

@@ -18,8 +18,8 @@
 {% block content %}
 <main class="bg-main bg-gray">
     <div class="text-center {{ message_class }}"><label>
-        <h5>{{ message }}</h5>
-    </label></div>
+            <h5>{{ message }}</h5>
+        </label></div>
     <section class="site-feedback pd-main">
         <div class="container-fluid">
             <div class="row">
@@ -34,8 +34,10 @@
                                             <div class="body-top-left">
                                                 <div class="wrapper-text-title">
                                                     <h2 class="text-title">MANDARA CHART</h2>
-                                                    <button type="button" class="button-title" id="button-title-1">一括削除</button>
-                                                    <button type="button" class="button-title" id="button-title-2">一時保存</button>
+                                                    <button type="button" class="button-title"
+                                                        id="button-title-1">一括削除</button>
+                                                    <button type="button" class="button-title"
+                                                        id="button-title-2">一時保存</button>
                                                     <input type="submit" class="button-title" value="保存"
                                                         id="button-title-3">
                                                 </div>
@@ -54,83 +56,44 @@
                                         </div>
                                     </div>
                                     <div class="body-bottom-left" id="value-body-bottom-left">
-
                                         <div class="wrapper-item-body-bottom-left">
-                                            <div class="value-table group1" id="value-table-1">
-                                                {{ form.A1_content }}
+                                            <div class="value-table group7">
+                                                {{ form.F1_content }}
                                             </div>
-                                            <div class="value-table group1" id="value-table-2">
-                                                {{ form.A2_content }}
-                                            </div>
-                                            <div class="value-table group1" id="value-table-3">
-                                                {{ form.A3_content }}
-                                            </div>
-                                            <div class="value-table group1">
-                                                {{ form.A8_content }}
-                                            </div>
-                                            <div class="value-table-score SCORE">
-                                                <span class="text-table-score">A</span>
-                                                <p class="title-value-table-score">体づくり</p>
-                                                <div class="wrapper-canvas">
-                                                    <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
-                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                                </div>
-                                            </div>
-                                            <div class="value-table group1">
-                                                {{ form.A4_content }}
-                                            </div>
-                                            <div class="value-table group1">
-                                                {{ form.A7_content }}
-                                            </div>
-                                            <div class="value-table group1">
-                                                {{ form.A6_content }}
-                                            </div>
-                                            <div class="value-table group1">
-                                                {{ form.A5_content }}
-                                                <svg id="triangle1" xmlns="http://www.w3.org/2000/svg" width="52"
-                                                    height="50" viewBox="0 0 52 50" fill="none">
-                                                    <path
-                                                        d="M0.325983 0.574089L51.493 2.07355L14.181 49.8524L0.325983 0.574089Z"
+                                            <div class="value-table group7">
+                                                {{ form.F2_content }}
+                                                <svg id="triangle7" xmlns="http://www.w3.org/2000/svg" width="62"
+                                                    height="42" viewBox="0 0 62 42" fill="none">
+                                                    <path d="M31 42L0.689144 0.750002L61.3109 0.750002L31 42Z"
                                                         fill="#CB99C4" />
                                                 </svg>
                                             </div>
-                                        </div>
-                                        <div class="wrapper-item-body-bottom-left">
-                                            <div class="value-table group2" id="value-table-4">
-                                                {{ form.B1_content }}
+                                            <div class="value-table group7">
+                                                {{ form.F3_content }}
                                             </div>
-                                            <div class="value-table group2" id="value-table-5">
-                                                {{ form.B2_content }}
-                                            </div>
-                                            <div class="value-table group2" id="value-table-6">
-                                                {{ form.B3_content }}
-                                            </div>
-                                            <div class="value-table group2">
-                                                {{ form.B8_content }}
+                                            <div class="value-table group7">
+                                                {{ form.F8_content }}
                                             </div>
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">B</span>
-                                                <p class="title-value-table-score">コントール</p>
+                                                <span class="text-table-score">F</span>
+                                                <p class="title-value-table-score">運</p>
                                                 <div class="wrapper-canvas">
-                                                    <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
+                                                    <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
                                                         style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
                                                 </div>
+
                                             </div>
-                                            <div class="value-table group2">
-                                                {{ form.B4_content }}
+                                            <div class="value-table group7">
+                                                {{ form.F4_content }}
                                             </div>
-                                            <div class="value-table group2">
-                                                {{ form.B7_content }}
+                                            <div class="value-table group7">
+                                                {{ form.F7_content }}
                                             </div>
-                                            <div class="value-table group2">
-                                                {{ form.B6_content }}
-                                                <svg id="triangle" xmlns="http://www.w3.org/2000/svg" width="62"
-                                                    height="42" viewBox="0 0 62 42" fill="none">
-                                                    <path d="M31 0L61.3109 41.25H0.689112L31 0Z" fill="#CB99C4" />
-                                                </svg>
+                                            <div class="value-table group7">
+                                                {{ form.F6_content }}
                                             </div>
-                                            <div class="value-table group2">
-                                                {{ form.B5_content }}
+                                            <div class="value-table group7">
+                                                {{ form.F5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
@@ -174,62 +137,101 @@
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
-                                            <div class="value-table group4">
-                                                {{ form.H1_content }}
+                                            <div class="value-table group6">
+                                                {{ form.G1_content }}
                                             </div>
-                                            <div class="value-table group4">
-                                                {{ form.H2_content }}
+                                            <div class="value-table group6">
+                                                {{ form.G2_content }}
                                             </div>
-                                            <div class="value-table group4">
-                                                {{ form.H3_content }}
-                                            </div>
-                                            <div class="value-table group4">
-                                                {{ form.H8_content }}
-                                            </div>
-                                            <div class="value-table-score SCORE">
-                                                <span class="text-table-score">H</span>
-                                                <p class="title-value-table-score">メンタル</p>
-                                                <div class="wrapper-canvas">
-                                                    <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
-                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                                </div>
-                                            </div>
-                                            <div class="value-table group4">
-                                                {{ form.H4_content }}
-                                                <svg id="triangle4" xmlns="http://www.w3.org/2000/svg" width="42"
-                                                    height="61" viewBox="0 0 42 61" fill="none">
-                                                    <path d="M0.500015 30.5L41.75 0.189098L41.75 60.8109L0.500015 30.5Z"
+                                            <div class="value-table group6">
+                                                {{ form.G3_content }}
+                                                <svg id="triangle6" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                    height="51" viewBox="0 0 52 51" fill="none">
+                                                    <path
+                                                        d="M0.630295 50.975L10.8215 0.810713L51.5483 45.7143L0.630295 50.975Z"
                                                         fill="#CB99C4" />
                                                 </svg>
                                             </div>
-                                            <div class="value-table group4">
-                                                {{ form.H7_content }}
+                                            <div class="value-table group6">
+                                                {{ form.G8_content }}
                                             </div>
-                                            <div class="value-table group4">
-                                                {{ form.H6_content }}
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">G</span>
+                                                <p class="title-value-table-score">人間性</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
                                             </div>
-                                            <div class="value-table group4">
-                                                {{ form.H5_content }}
+                                            <div class="value-table group6">
+                                                {{ form.G4_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G7_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G6_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G5_content }}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group2" id="value-table-4">
+                                                {{ form.B1_content }}
+                                            </div>
+                                            <div class="value-table group2" id="value-table-5">
+                                                {{ form.B2_content }}
+                                            </div>
+                                            <div class="value-table group2" id="value-table-6">
+                                                {{ form.B3_content }}
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">B</span>
+                                                <p class="title-value-table-score">コントール</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B4_content }}
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B7_content }}
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B6_content }}
+                                                <svg id="triangle" xmlns="http://www.w3.org/2000/svg" width="62"
+                                                    height="42" viewBox="0 0 62 42" fill="none">
+                                                    <path d="M31 0L61.3109 41.25H0.689112L31 0Z" fill="#CB99C4" />
+                                                </svg>
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B5_content }}
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">A</span>
+                                                <span class="text-table-score">F</span>
                                                 <p class="title-main-score">体づくり</p>
                                                 <div class="wrapper-top-block"></div>
                                             </div>
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">B</span>
+                                                <span class="text-table-score">C</span>
                                                 <p class="title-main-score">コントール</p>
                                                 <div class="wrapper-top-block"></div>
                                             </div>
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">C</span>
+                                                <span class="text-table-score">G</span>
                                                 <p class="title-main-score">キレ</p>
                                                 <div class="wrapper-top-block"></div>
                                             </div>
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">H</span>
+                                                <span class="text-table-score">B</span>
                                                 <p class="title-main-score">メンタル</p>
                                                 <div class="wrapper-top-block"></div>
                                             </div>
@@ -243,17 +245,17 @@
                                                 <div class="wrapper-top-block"></div>
                                             </div>
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">G</span>
+                                                <span class="text-table-score">E</span>
                                                 <p class="title-main-score">人間性</p>
                                                 <div class="wrapper-top-block"></div>
                                             </div>
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">F</span>
+                                                <span class="text-table-score">A</span>
                                                 <p class="title-main-score">運</p>
                                                 <div class="wrapper-top-block"></div>
                                             </div>
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">E</span>
+                                                <span class="text-table-score">H</span>
                                                 <p class="title-main-score">変化球</p>
                                                 <div class="wrapper-top-block"></div>
                                             </div>
@@ -299,86 +301,6 @@
                                             </div>
                                         </div>
                                         <div class="wrapper-item-body-bottom-left">
-                                            <div class="value-table group6">
-                                                {{ form.G1_content }}
-                                            </div>
-                                            <div class="value-table group6">
-                                                {{ form.G2_content }}
-                                            </div>
-                                            <div class="value-table group6">
-                                                {{ form.G3_content }}
-                                                <svg id="triangle6" xmlns="http://www.w3.org/2000/svg" width="52"
-                                                    height="51" viewBox="0 0 52 51" fill="none">
-                                                    <path
-                                                        d="M0.630295 50.975L10.8215 0.810713L51.5483 45.7143L0.630295 50.975Z"
-                                                        fill="#CB99C4" />
-                                                </svg>
-                                            </div>
-                                            <div class="value-table group6">
-                                                {{ form.G8_content }}
-                                            </div>
-                                            <div class="value-table-score SCORE">
-                                                <span class="text-table-score">G</span>
-                                                <p class="title-value-table-score">人間性</p>
-                                                <div class="wrapper-canvas">
-                                                    <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
-                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                                </div>
-                                            </div>
-                                            <div class="value-table group6">
-                                                {{ form.G4_content }}
-                                            </div>
-                                            <div class="value-table group6">
-                                                {{ form.G7_content }}
-                                            </div>
-                                            <div class="value-table group6">
-                                                {{ form.G6_content }}
-                                            </div>
-                                            <div class="value-table group6">
-                                                {{ form.G5_content }}
-                                            </div>
-                                        </div>
-                                        <div class="wrapper-item-body-bottom-left">
-                                            <div class="value-table group7">
-                                                {{ form.F1_content }}
-                                            </div>
-                                            <div class="value-table group7">
-                                                {{ form.F2_content }}
-                                                <svg id="triangle7" xmlns="http://www.w3.org/2000/svg" width="62"
-                                                    height="42" viewBox="0 0 62 42" fill="none">
-                                                    <path d="M31 42L0.689144 0.750002L61.3109 0.750002L31 42Z"
-                                                        fill="#CB99C4" />
-                                                </svg>
-                                            </div>
-                                            <div class="value-table group7">
-                                                {{ form.F3_content }}
-                                            </div>
-                                            <div class="value-table group7">
-                                                {{ form.F8_content }}
-                                            </div>
-                                            <div class="value-table-score SCORE">
-                                                <span class="text-table-score">F</span>
-                                                <p class="title-value-table-score">運</p>
-                                                <div class="wrapper-canvas">
-                                                    <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
-                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
-                                                </div>
-
-                                            </div>
-                                            <div class="value-table group7">
-                                                {{ form.F4_content }}
-                                            </div>
-                                            <div class="value-table group7">
-                                                {{ form.F7_content }}
-                                            </div>
-                                            <div class="value-table group7">
-                                                {{ form.F6_content }}
-                                            </div>
-                                            <div class="value-table group7">
-                                                {{ form.F5_content }}
-                                            </div>
-                                        </div>
-                                        <div class="wrapper-item-body-bottom-left">
                                             <div class="value-table group8">
                                                 {{ form.E1_content }}
                                                 <svg id="triangle8" xmlns="http://www.w3.org/2000/svg" width="52"
@@ -419,6 +341,85 @@
                                                 {{ form.E5_content }}
                                             </div>
                                         </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group1" id="value-table-1">
+                                                {{ form.A1_content }}
+                                            </div>
+                                            <div class="value-table group1" id="value-table-2">
+                                                {{ form.A2_content }}
+                                            </div>
+                                            <div class="value-table group1" id="value-table-3">
+                                                {{ form.A3_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">A</span>
+                                                <p class="title-value-table-score">体づくり</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A4_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A7_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A6_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A5_content }}
+                                                <svg id="triangle1" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                    height="50" viewBox="0 0 52 50" fill="none">
+                                                    <path
+                                                        d="M0.325983 0.574089L51.493 2.07355L14.181 49.8524L0.325983 0.574089Z"
+                                                        fill="#CB99C4" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group4">
+                                                {{ form.H1_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H2_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H3_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">H</span>
+                                                <p class="title-value-table-score">メンタル</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H4_content }}
+                                                <svg id="triangle4" xmlns="http://www.w3.org/2000/svg" width="42"
+                                                    height="61" viewBox="0 0 42 61" fill="none">
+                                                    <path d="M0.500015 30.5L41.75 0.189098L41.75 60.8109L0.500015 30.5Z"
+                                                        fill="#CB99C4" />
+                                                </svg>
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H7_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H6_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H5_content }}
+                                            </div>
+                                        </div>  
                                     </div>
                                 </div>
                                 <div class="body-bottom-right">
