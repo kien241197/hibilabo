@@ -894,8 +894,7 @@ body {
     margin-block: unset !important;
     word-wrap: break-word;
     text-align: center;
-    min-height: 25px;
-    max-height: 28px;
+    height: 29px;
     z-index: 11;
     padding-left: 2px;
     padding-right: 2px;
@@ -949,6 +948,7 @@ body {
     position: absolute;
     left: 0;
     right: 0;
+    bottom: 15px;
     text-align: center;
 }
 
