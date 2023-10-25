@@ -1031,7 +1031,7 @@ class BonknowThink(LoginRequiredMixin, TemplateView):
 
 #MASMASMANDARA
 class MandaraPrint(LoginRequiredMixin, TemplateView):
-    template_name = "mandara/mandara_print.html"
+    template_name = "mandara/mandara_print_test.html"
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
@@ -1488,7 +1488,7 @@ def wkhtml_pdf(request, id):
         'margin-left': '0in',
         'encoding': "UTF-8",
         'no-outline': None,
-        'javascript-delay': 10000
+        'javascript-delay': 200,
     }
 
     template_path = 'mandara/mandara_print_test.html'
@@ -1566,7 +1566,7 @@ def wkhtml_pdf(request, id):
 
     config = pdfkit.configuration(wkhtmltopdf=wkhtml_to_pdf)
 
-    pdf = pdfkit.from_string(html, False, configuration=config, options=options)
+    pdf = pdfkit.from_string(html, False,configuration=config, options=options)
 
     # Generate download
     response = HttpResponse(pdf, content_type='application/pdf')

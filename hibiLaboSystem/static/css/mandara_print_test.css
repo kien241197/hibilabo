@@ -791,8 +791,8 @@ body {
     /* grid-gap: 2px; */
     /* background-color: #717276; */
     position: relative;
-    border-top: 2px solid #717276;
-    border-left: 2px solid #717276;
+    /* border-top: 2px solid #717276; */
+    /* border-left: 2px solid #717276; */
 }
 
 .wrapper-item-body-bottom-left {
@@ -834,10 +834,10 @@ body {
 
 .value-table {
     width: 100%;
-    background-color: #e7e7e8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: white;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
     grid-column: auto;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -850,14 +850,15 @@ body {
     position: relative;
     border-right: 2px solid #717276;
     border-bottom: 2px solid #717276;
+    text-align: center;
 }
 
 .value-table-score {
 
     width: 100%;
     background-color: #e7e7e8;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     align-items: center;
     grid-column: auto;
     padding-top: 10px;
@@ -870,6 +871,7 @@ body {
     overflow: hidden;
     border-right: 2px solid #717276;
     border-bottom: 2px solid #717276;
+    text-align: center;
 }
 
 .title-value-table-score {
@@ -886,13 +888,13 @@ body {
 
 .value-table p {
 
-    font-size: 75%;
+    /* font-size: 75%; */
     font-weight: 700;
     font-family: var(--font-content);
     margin-block: unset !important;
     word-wrap: break-word;
     text-align: center;
-    min-height: 25px;
+    height: 29px;
     z-index: 11;
     padding-left: 2px;
     padding-right: 2px;
@@ -903,7 +905,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding-top: 82px;
+    /* padding-top: 70px; */
 }
 
 .wrapper-item-table-body-bottom-right-tab-2 {
@@ -913,16 +915,19 @@ body {
 
 .value-table-score p {
 
-    font-size: 75%;
+    margin-bottom: 0px !important;
+    font-size: 14px;
     font-weight: 700;
     font-family: var(--font-content);
     margin-block: unset !important;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
     text-align: center;
     letter-spacing: 0.1rem;
     z-index: 11;
     /* color: #85878b; */
+    /* overflow: hidden; */
     color: white;
+    /* height: 15px; */
 }
 
 .table-body-bottom-right {
@@ -934,21 +939,28 @@ body {
 
 .value-table span {
 
-    font-size: 130%;
+    /* font-size: 130%; */
     font-weight: 700;
     font-family: var(--font-content);
     z-index: 11;
     color: #85878b;
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 15px;
+    text-align: center;
 }
 
 .value-table-score span {
 
-    font-size: 130%;
+    font-size: 30px !important;
     font-weight: 700;
     font-family: var(--font-content);
     z-index: 11;
     /* color: #717276; */
     color: white;
+    
 }
 
 .text-table-score {
@@ -1084,13 +1096,15 @@ body {
 }
 
 .content-table-body-right p {
-    transform: rotate(90deg);
-    white-space: nowrap;
+    text-wrap: nowrap;
     margin-block: unset !important;
     font-weight: 700;
-    padding: 30px;
     font-size: 75%;
     letter-spacing: 0.1rem;
+    text-align: center;
+    padding-left: 18px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .wrapper-content-table-bottom-body-right {
@@ -1115,7 +1129,7 @@ body {
 
 .value-score {
 
-    font-size: 230% !important;
+    /* font-size: 230% !important; */
 }
 
 
@@ -1126,10 +1140,9 @@ body {
 .title-main-score {
 
     width: 100%;
-    background-color: #e7e7e8;
     position: absolute;
     top: 0;
-    color: unset !important;
+    color: #85878b !important; 
 }
 
 .title-main-score-next {
@@ -1244,7 +1257,7 @@ body {
 
 .select-masmas {
 
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 
 
@@ -1260,12 +1273,12 @@ body {
 
     .value-table p {
 
-        font-size: 70%;
+        /* font-size: 70%; */
     }
 
     .value-table-score p {
 
-        font-size: 70%;
+        /* font-size: 70%; */
     }
 
     .title-body-bottom-right {
@@ -1322,13 +1335,13 @@ body {
     }
 
     .value-table p {
-        font-size: 50%;
+        /* font-size: 50%; */
         min-height: 15px;
 
     }
 
     .value-table-score p {
-        font-size: 50%;
+        /* font-size: 50%; */
     }
 
     .title-body-bottom-right {
@@ -1363,7 +1376,7 @@ body {
 
     .content-table-body-right p {
 
-        font-size: 70%;
+        /* font-size: 70%; */
     }
 
     .desc-table-body-right {
@@ -1425,7 +1438,7 @@ body {
     }
 
     .content-table-body-right p {
-        font-size: 50%;
+        /* font-size: 50%; */
     }
 
     .wrapper-content-table-body-right div {
@@ -1466,12 +1479,12 @@ body {
 
     .order {
 
-        width: 5%;
+        /* width: 5%; */
     }
 
     .content-table-body-right {
 
-        width: 5%;
+        /* width: 5%; */
     }
 
     .item-table-body-bottom-right-tab-2 {
@@ -1519,13 +1532,13 @@ body {
     }
 
     .value-table p {
-        font-size: 40%;
+        /* font-size: 40%; */
         min-height: 10px;
 
     }
 
     .value-table-score p {
-        font-size: 40%;
+        /* font-size: 40%; */
     }
 
     .value-score {
@@ -1535,12 +1548,12 @@ body {
 
     .value-table span {
 
-        font-size: 100%;
+        /* font-size: 100%; */
     }
 
     .value-table-score span {
 
-        font-size: 100%;
+        /* font-size: 100%; */
     }
 
 
@@ -1774,11 +1787,11 @@ body {
     }
 
     .value-table p {
-        font-size: 40%;
+        /* font-size: 40%; */
     }
 
     .value-table-score p {
-        font-size: 40%;
+        /* font-size: 40%; */
     }
 
     .body-top {
@@ -1859,19 +1872,19 @@ body {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: normal;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 2;
         /* font-size: 30%; */
     }
 
-    .value-table-score p {
+    /* .value-table-score p {
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: normal;
-        -webkit-line-clamp: 1;
+        /* overflow: hidden; */
+        /* text-overflow: ellipsis; */
+        /* white-space: normal; */
+        /* -webkit-line-clamp: 1; */
         /* font-size: 30%; */
-    }
+    } */
 
     /* .value-table span {
         font-size: 30% !important;
@@ -1997,11 +2010,11 @@ body {
 
 
     .value-table span {
-        font-size: 50%;
+        /* font-size: 50%; */
     }
 
     .value-table-score span {
-        font-size: 50%;
+        /* font-size: 50%; */
     }
 
     .wrapper-item-body-bottom-left {
