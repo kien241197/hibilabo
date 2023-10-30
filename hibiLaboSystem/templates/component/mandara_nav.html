@@ -1,0 +1,26 @@
+{% with request.resolver_match.url_name as url_name %}
+<div class="col-md-2">
+    <div class="sidebar">
+        <ul class="nav">
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'mandara_personal' %}active{% endif %}"  href="{% url 'mandara_personal' %}">
+                    <p>PERSONAL<br/>MANDARA </p>
+                    <span>現状個人別分析</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_type_staticks' %}active{% endif %}" href="#">
+                    <p>MANDARA CHART</p>
+                    <span>推移グラフ</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'honne_index_staticks' %}active{% endif %}" href="#">
+                    <p>COMPLETION MANDARA</p>
+                    <span>完了マンダラ</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endwith %}

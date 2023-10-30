@@ -1577,3 +1577,12 @@ def mandara_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+class MandaraPersonal(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_personal.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs
