@@ -1,762 +1,722 @@
-{% load static %}
+<!doctype html>
+<html lang="ja">
 
-{% block header %}
-<!-- chartの呼び出し -->
-<!-- Required meta tags -->
-<meta charset="UTF-8">
-<title>HIBI_LABOインナーマーケティング</title>
-<!-- ファビコン -->
-<link rel=”icon” href="{% static 'assets/favicon1.png' %}">
-<meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js"></script>
+<head>
+    <!-- Required meta tags -->
+    <META charset="UTF-8">
+    <title>HIBI_LABOインナーマーケティング</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-<!-- 互換表示の解除 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta id="HandheldFriendly" content="True" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="HandheldFriendly" content="True" />
 
-<!-- chromeでキャッシュが効いていると最新のcss等が反映されないその場合には、ctrl+shift+R　-->
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/style.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/custom-style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js" integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+        <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+     
+    <link rel="stylesheet" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/css/mandara_print.css">
+    <style type="text/css">
+        @page {
+            size: letter landscape;
+        }
+    </style>
+</head>
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" type="text/css" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'assets/fontawesome/css/all.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'assets/css/responsive.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'assets/css/custom-style.css' %}">
-  <script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/js/chart-min.js"
-        crossorigin="anonymous"></script>
-<script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/js/bundle-min.js"></script>
-<script src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/js/chartjs-plugin.js"></script>
+<body>
+    <main class="bg-main bg-gray" id="element-to-print">
+        <section class="site-feedback pd-main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="container">
+                        <div class="wrapper-body row">
+                            <div class="body-bottom row col-8">
+                                <div class="wrapper-body-left col-12">
+                                    <div>
+                                        <div class="body-top">
+                                            <div class="body-top-left" style="padding-left: 15px !important;">
+                                                <h2 class="text-title" style="font-size: 32px !important; margin-bottom: 25px !important;">MANDARA CHART</h2>
+                                                <br/>
+                                                <span class="content-title" style="font-size: 25px !important; padding-top: 25px !important;">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="body-bottom-left col-12" id="value-body-bottom-left">
+                                        <div class="row" style="padding-left: 0px !important; margin-left: 0px !important;">
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasF" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-left: 2px solid #717276; border-top: 2px solid #717276;" data-box-type="F1">
+                                                        <p>{{mandara.F1_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-top: 2px solid #717276;" data-box-type="F2">
+                                                        <p>{{mandara.F2_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-top: 2px solid #717276;" data-box-type="F3">
+                                                        <p>{{mandara.F3_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F3_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="F8">
+                                                        <p>{{mandara.F8_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">{{mandara.F_result}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px;" data-box-type="F4">
+                                                        <p>{{mandara.F4_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F4_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="F7">
+                                                        <p>{{mandara.F7_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F7_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px;" data-box-type="F6">
+                                                        <p>{{mandara.F6_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F6_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px;" data-box-type="F5">
+                                                        <p>{{mandara.F5_content}}</p>
+                                                        <span class="value-group-7">{{mandara.F5_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasC" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group3 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="C1">
+                                                        <p>{{mandara.C1_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="C2">
+                                                        <p>{{mandara.C2_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="C3">
+                                                        <p>{{mandara.C3_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C3_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C8">
+                                                        <p>{{mandara.C8_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">{{mandara.C_result}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C4">
+                                                        <p>{{mandara.C4_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C4_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C7">
+                                                        <p>{{mandara.C7_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C7_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C6">
+                                                        <p>{{mandara.C6_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C6_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C5">
+                                                        <p>{{mandara.C5_content}}</p>
+                                                        <span class="value-group-3">{{mandara.C5_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasG" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group6 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="G1">
+                                                        <p>{{mandara.G1_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="G2">
+                                                        <p>{{mandara.G2_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="G3">
+                                                        <p>{{mandara.G3_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G3_result}}</span>
+                                                    </div>
+                                                </div>
 
-<link rel="stylesheet" href="{% static '/css/mandara_print.css' %}">
+                                                <div class="row">
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G8">
+                                                        <p>{{mandara.G8_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">{{mandara.G_result}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G4">
+                                                        <p>{{mandara.G4_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G4_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G7">
+                                                        <p>{{mandara.G7_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G7_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G6">
+                                                        <p>{{mandara.G6_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G6_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G5">
+                                                        <p>{{mandara.G5_content}}</p>
+                                                        <span class="value-group-6">{{mandara.G5_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <div class="row" style="padding-left: 0px !important; margin-left: 0px !important;">
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasB" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group2 true col-4" style=" height: 90px; border-left: 2px solid #717276;"
+                                                        data-box-type="B1">
+                                                        <p>{{mandara.B1_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B2">
+                                                        <p>{{mandara.B2_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B3">
+                                                        <p>{{mandara.B3_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B1_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group2 true col-4" style="height: 90px; border-left: 2px solid #717276;"
+                                                        data-box-type="B8">
+                                                        <p>{{mandara.B8_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">{{mandara.B_result}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B4">
+                                                        <p>{{mandara.B4_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B4_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group2 true col-4" style=" height: 90px; border-left: 2px solid #717276;"
+                                                        data-box-type="B7">
+                                                        <p>{{mandara.B7_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B7_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B6">
+                                                        <p>{{mandara.B6_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B6_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B5">
+                                                        <p>{{mandara.B5_content}}</p>
+                                                        <span class="value-group-2">{{mandara.B5_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div class="row">
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;"> 
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.F_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.F_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.C_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.C_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.G_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.G_result}}</span>
+                                                    </div>
+                                                </div>
 
-{% endblock %}
+                                                <div class="row">
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.B_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.B_result}}</span>
+                                                    </div>
+                                                  
+                                                    <div class="value-table-score SCORE-MAIN col-4" style=" height: 90px; position: relative;">
+                                                        <p class="title-main-score title-main-score-center" style="position: absolute; top: 0; left: 0; right: 0; color: #000; background-color: white !important;">1年後の目標</p>
+                                                        <span class="value-score value-score-center" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{ mandara.total_result }}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.D_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.D_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.E_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.E_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.A_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.A_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >{{mandara.H_keyword}}</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">{{mandara.H_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasD" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D1">
+                                                        <p>{{mandara.D1_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D2">
+                                                        <p>{{mandara.D2_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D3">
+                                                        <p>{{mandara.D3_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D3_result}}</span>
+                                                    </div>
+                                                </div>
 
-<!-- コンテンツ -->
-{% block content %}
-<main class="bg-main bg-gray" id="element-to-print">
-    <section class="site-feedback pd-main">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="container">
-                    <div class="wrapper-body">
-                        <div class="body-bottom">
-                            <div class="wrapper-body-left">
-                                <div>
-                                    <div class="body-top">
-                                        <div class="body-top-left">
-                                            <h2 class="text-title">MANDARA CHART</h2>
-                                            <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
+                                                <div class="row">
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D8">
+                                                        <p>{{mandara.D8_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">{{mandara.D_result}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D4">
+                                                        <p>{{mandara.D4_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D4_result}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D7">
+                                                        <p>{{mandara.D7_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D7_result}}</span>
+                                                    </div>
+
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D6">
+                                                        <p>{{mandara.D6_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D6_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D5">
+                                                        <p>{{mandara.D5_content}}</p>
+                                                        <span class="value-group-5">{{mandara.D5_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="padding-left: 0px !important; margin-left: 0px !important;">
+                                           
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasE" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group8 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="E1">
+                                                        <p>{{mandara.E1_content}}</p>
+                                                        <span class="value-group-8">{{mandara.E1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E2">
+                                                        <p>{{mandara.E2_content}}</p>
+                                                        <span class="value-group-8">{{mandara.E2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E3">
+                                                        <p>{{mandara.E3_content}}</p>
+                                                        <span class="value-group-8">{{mandara.E3_result}}</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="value-table group8 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="E8">
+                                                        <p>{{mandara.E8_content}}</p>
+                                                        <span class="value-group-8">{{mandara.E8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">{{mandara.E_result}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E4">
+                                                        <p>{{mandara.E4_content}}</p>
+                                                        <span class="value-group-8">{{mandara.E4_result}}</span>
+                                                    </div>
+                                                </div>
+                                              
+                                              <div class="row">
+                                                <div class="value-table group8 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="E7">
+                                                    <p>{{mandara.E7_content}}</p>
+                                                    <span class="value-group-8">{{mandara.E5_result}}</span>
+                                                </div>
+                                                <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E6">
+                                                    <p>{{mandara.E6_content}}</p>
+                                                    <span class="value-group-8">{{mandara.E6_result}}</span>
+                                                </div>
+                                                <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E5">
+                                                    <p>{{mandara.E5_content}}</p>
+                                                    <span class="value-group-8">{{mandara.E7_result}}</span>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4" style="position: relative; padding: unset !important;">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasA" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group1 true col-4" style="height: 90px;"
+                                                        data-box-type="A1">
+                                                        <p style="font-size: 14px;">{{mandara.A1_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A2">
+                                                        <p style="font-size: 14px;">{{mandara.A2_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A3">
+                                                        <p style="font-size: 14px;">{{mandara.A3_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A3_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A8">
+                                                        <p style="font-size: 14px;">{{mandara.A8_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative !important;">
+                                                       <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                        <p>SCORE</p>
+                                                        <span class="value-score" style="font-size: 30px !important;">{{mandara.A_result}}</span>
+                                                       </div>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A4">
+                                                        <p style="font-size: 14px;">{{mandara.A4_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A4_result}}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A7">
+                                                        <p style="font-size: 14px;">{{mandara.A7_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A7_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A6">
+                                                        <p style="font-size: 14px;">{{mandara.A6_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A6_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A5">
+                                                        <p style="font-size: 14px;">{{mandara.A5_content}}</p>
+                                                        <span class="value-group-1">{{mandara.A5_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasH" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H1">
+                                                        <p>{{mandara.H1_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H1_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H2">
+                                                        <p>{{mandara.H2_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H2_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H3">
+                                                        <p>{{mandara.H3_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H3_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group4 true col-4" style="height: 90px;"
+                                                        data-box-type="H8">
+                                                        <p>{{mandara.H8_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H8_result}}</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">{{mandara.H_result}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H4">
+                                                        <p>{{mandara.H4_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H4_result}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H7">
+                                                        <p>{{mandara.H7_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H7_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H6">
+                                                        <p>{{mandara.H6_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H6_result}}</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H5">
+                                                        <p>{{mandara.H5_content}}</p>
+                                                        <span class="value-group-4">{{mandara.H5_result}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="body-bottom-left" id="value-body-bottom-left">
-                                    <div class="wrapper-item-body-bottom-left">
-                                        <div class="value-table group1 true" data-box-type="A1">
-                                            <p>A</p>
-                                            <span class="value-group-1">1</span>
-                                        </div>
-                                        <div class="value-table group1 true" data-box-type="A2">
-                                            <p>A</p>
-                                            <span class="value-group-1">1</span>
-                                        </div>
-                                        <div class="value-table group1 true" data-box-type="A3">
-                                            <p>A</p>
-                                            <span class="value-group-1">1</span>
-                                        </div>
-                                        <div class="value-table group1 true" data-box-type="A8">
-                                            <p>A</p>
-                                            <span class="value-group-1"></span>
-                                        </div>
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">3</span>
-                                            <p class="title-value-table-score">AK</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvas1" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        <div class="value-table group1 true" data-box-type="A4">
-                                            <p>A</p>
-                                            <span class="value-group-1"></span>
-                                        </div>
-                                        <div class="value-table group1 true" data-box-type="A7">
-                                            <p>A</p>
-                                            <span class="value-group-1"></span>
-                                        </div>
-                                        <div class="value-table group1 true" data-box-type="A6">
-                                            <p>A</p>
-                                            <span class="value-group-1"></span>
-                                        </div>
-                                        <div class="value-table group1 true" data-box-type="A5">
-                                            <p></p>
-                                            <span class="value-group-1"></span>
-                                        </div>
-                                    </div>
-                                    <div class="wrapper-item-body-bottom-left">
-                                        <div class="value-table group2 true" data-box-type="B1">
-                                            <p>B</p>
-                                            <span class="value-group-2">1</span>
-                                        </div>
-                                        <div class="value-table group2 true" data-box-type="B2">
-                                            <p>B</p>
-                                            <span class="value-group-2">1</span>
-                                        </div>
-                                        <div class="value-table group2 true" data-box-type="B3">
-                                            <p>B</p>
-                                            <span class="value-group-2">1</span>
-                                        </div>
-                                        <div class="value-table group2 true" data-box-type="B8">
-                                            <p>B</p>
-                                            <span class="value-group-2"></span>
-                                        </div>
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">3</span>
-                                            <p class="title-value-table-score">BK</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvas2" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        <div class="value-table group2 true" data-box-type="B4">
-                                            <p>B</p>
-                                            <span class="value-group-2"></span>
-                                        </div>
-                                        <div class="value-table group2 true" data-box-type="B7">
-                                            <p>B</p>
-                                            <span class="value-group-2"></span>
-                                        </div>
-                                        <div class="value-table group2 true" data-box-type="B6">
-                                            <p>B</p>
-                                            <span class="value-group-2"></span>
-                                        </div>
-                                        <div class="value-table group2 true" data-box-type="B5">
-                                            <p></p>
-                                            <span class="value-group-2"></span>
-                                        </div>
-                                    </div>
-                                    <div class="wrapper-item-body-bottom-left">
-                                        <div class="value-table group3 true" data-box-type="C1">
-                                            <p>B</p>
-                                            <span class="value-group-3">1</span>
-                                        </div>
-                                        <div class="value-table group3 true" data-box-type="C2">
-                                            <p>B</p>
-                                            <span class="value-group-3">1</span>
-                                        </div>
-                                        <div class="value-table group3 true" data-box-type="C3">
-                                            <p>B</p>
-                                            <span class="value-group-3"></span>
-                                        </div>
-                                        <div class="value-table group3 true" data-box-type="C8">
-                                            <p>B</p>
-                                            <span class="value-group-3"></span>
-                                        </div>
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">2</span>
-                                            <p class="title-value-table-score">CK</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvas3" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        <div class="value-table group3 true" data-box-type="C4">
-                                            <p>B</p>
-                                            <span class="value-group-3"></span>
-                                        </div>
-                                        <div class="value-table group3 true" data-box-type="C7">
-                                            <p>B</p>
-                                            <span class="value-group-3"></span>
-                                        </div>
-                                        <div class="value-table group3 true" data-box-type="C6">
-                                            <p>B</p>
-                                            <span class="value-group-3"></span>
-                                        </div>
-                                        <div class="value-table group3 true" data-box-type="C5">
-                                            <p></p>
-                                            <span class="value-group-3"></span>
-                                        </div>
-                                    </div>
-                                    <div class="wrapper-item-body-bottom-left">
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H1">
-                                            <p>CC</p>
-                                            <span class="value-group-4">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H2">
-                                            <p>H</p>
-                                            <span class="value-group-4">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H3">
-                                            <p>H</p>
-                                            <span class="value-group-4"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H8">
-                                            <p>H</p>
-                                            <span class="value-group-4"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">2</span>
-                                            <p class="title-value-table-score">HL</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvas4" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H4">
-                                            <p>H</p>
-                                            <span class="value-group-4"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H7">
-                                            <p>H</p>
-                                            <span class="value-group-4"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H6">
-                                            <p>H</p>
-                                            <span class="value-group-4"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group4 true" data-box-type="H5">
-                                            <p></p>
-                                            <span class="value-group-4"></span>
-                                        </div>
-                                        
-                                        
-                                    </div>
-                                    
-                                    
-                                    <div class="wrapper-item-body-bottom-left">
-                                        
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">AK</p>
-                                                <span class="value-score">3</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">BK</p>
-                                                <span class="value-score">3</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">CK</p>
-                                                <span class="value-score">2</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">HL</p>
-                                                <span class="value-score">2</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                        
-                                        <div class="value-table-score SCORE-MAIN">
-                                            <p class="title-main-score title-main-score-center">1年後の目標</p>
-                                            <span class="value-score value-score-center">23</span>
-                                        </div>
-                                        
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">DK</p>
-                                                <span class="value-score">1</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">GK</p>
-                                                <span class="value-score">3</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">FK</p>
-                                                <span class="value-score">5</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                            
-                                            
-                                            <div class="value-table-score SCORE-text">
-                                                <p class="title-main-score">EK</p>
-                                                <span class="value-score">4</span>
-                                            </div>
-                                            
-                                            
-                                        
-                                        
-                                    </div>
-                                    
-                                    
-                                    <div class="wrapper-item-body-bottom-left">
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D1">
-                                            <p>D</p>
-                                            <span class="value-group-5">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D2">
-                                            <p>D</p>
-                                            <span class="value-group-5"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D3">
-                                            <p>D</p>
-                                            <span class="value-group-5"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D8">
-                                            <p>D</p>
-                                            <span class="value-group-5"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">1</span>
-                                            <p class="title-value-table-score">DK</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvasD" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D4">
-                                            <p>D</p>
-                                            <span class="value-group-5"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D7">
-                                            <p>D</p>
-                                            <span class="value-group-5"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D6">
-                                            <p>D</p>
-                                            <span class="value-group-5"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group5 true" data-box-type="D5">
-                                            <p>D</p>
-                                            <span class="value-group-5"></span>
-                                        </div>
-                                        
-                                        
-                                    </div>
-                                    
-                                    <div class="wrapper-item-body-bottom-left">
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G1">
-                                            <p>D</p>
-                                            <span class="value-group-6">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G2">
-                                            <p>G</p>
-                                            <span class="value-group-6">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G3">
-                                            <p>G</p>
-                                            <span class="value-group-6">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G8">
-                                            <p>G</p>
-                                            <span class="value-group-6"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">3</span>
-                                            <p class="title-value-table-score">GK</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvasG" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G4">
-                                            <p>G</p>
-                                            <span class="value-group-6"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G7">
-                                            <p>G</p>
-                                            <span class="value-group-6"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G6">
-                                            <p>G</p>
-                                            <span class="value-group-6"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group6 true" data-box-type="G5">
-                                            <p>G</p>
-                                            <span class="value-group-6"></span>
-                                        </div>
-                                        
-                                        
-                                    </div>
-                                    
-                                    <div class="wrapper-item-body-bottom-left">
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F1">
-                                            <p>F</p>
-                                            <span class="value-group-7">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F2">
-                                            <p>F</p>
-                                            <span class="value-group-7">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F3">
-                                            <p>F</p>
-                                            <span class="value-group-7">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F8">
-                                            <p>F</p>
-                                            <span class="value-group-7"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">5</span>
-                                            <p class="title-value-table-score">FK</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvasF" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F4">
-                                            <p>F</p>
-                                            <span class="value-group-7">1</span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F7">
-                                            <p>F</p>
-                                            <span class="value-group-7"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F6">
-                                            <p>F</p>
-                                            <span class="value-group-7"></span>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="value-table group7 true" data-box-type="F5">
-                                            <p>F</p>
-                                            <span class="value-group-7">1</span>
-                                        </div>
-                                    </div>
-                                    <div class="wrapper-item-body-bottom-left">
-                                        <div class="value-table group8 true" data-box-type="E1">
-                                            <p>F</p>
-                                            <span class="value-group-8">1</span>
-                                        </div>
-                                        <div class="value-table group8 true" data-box-type="E2">
-                                            <p>E</p>
-                                            <span class="value-group-8">1</span>
-                                        </div>
-                                        <div class="value-table group8 true" data-box-type="E3">
-                                            <p>E</p>
-                                            <span class="value-group-8">1</span>
-                                        </div>
-                                        <div class="value-table group8 true" data-box-type="E8">
-                                            <p>E</p>
-                                            <span class="value-group-8"></span>
-                                        </div>
-                                        <div class="value-table-score SCORE">
-                                            <p>SCORE</p>
-                                            <span class="value-score">4</span>
-                                            <p class="title-value-table-score">EK</p>
-                                            <div class="wrapper-canvas">
-                                                <canvas id="mycanvasE" class="mycanvas" height="217" width="217" style="display: block; box-sizing: border-box; height: 217px; width: 217.1px;"></canvas>
-                                            </div>
-                                        </div>
-                                        <div class="value-table group8 true" data-box-type="E4">
-                                            <p>E</p>
-                                            <span class="value-group-8">1</span>
-                                        </div>
-                                        <div class="value-table group8 true" data-box-type="E7">
-                                            <p>E</p>
-                                            <span class="value-group-8"></span>
-                                        </div>
-                                        <div class="value-table group8 true" data-box-type="E6">
-                                            <p>E</p>
-                                            <span class="value-group-8"></span>
-                                        </div>
-                                        <div class="value-table group8 true" data-box-type="E5">
-                                            <p>E</p>
-                                            <span class="value-group-8"></span>
-                                        </div>
-                                    </div>
-                                </div>
                                 </div>
                             </div>
-                            <div class="body-bottom-right">
+                            <div class="body-bottom-right col-4" style="padding-top: 0px !important; margin: unset !important;">
                                 <div class="wrapper-title-body-bottom-right">
                                     <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
                                 </div>
-                                <div class="table-body-bottom-right">
-                                    <div class="wrapper-item-table-body-bottom-right-tab-1">
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">A</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">AK</div>
+                                <div class="table-body-bottom-right" style="padding: unset !important; margin: unset !important;">
+                                    <div class="wrapper-item-table-body-bottom-right-tab-1" style="padding: unset !important; margin: unset !important;">
+                                        <div class="item-table-body-bottom-right" style="padding: unset !important; margin: unset !important;">
+                                            <div class="wrapper-content-table-body-right" style="padding: unset !important; margin: unset !important;">
+                                               <div class="row">
+                                                <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center; display: flex; justify-content: center;">A</div>
+                                                <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                <div class="title-order-right">{{mandara.A_keyword}}</div>
+                                               </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row" style="padding: unset !important; margin: unset !important;">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
                                                 </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        AKAKAKAK
-                                                    </p>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.A_dueto}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right" style="padding: unset !important; margin: unset !important;">
+                                            <div class="wrapper-content-table-body-right" style="padding: unset !important; margin: unset !important;">
+                                               <div class="row" style="padding: unset !important; margin: unset !important;">
+                                                <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">B</div>
+                                                <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                <div class="title-order-right">{{mandara.B_keyword}}</div>
+                                               </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.B_dueto}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">C</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">{{mandara.C_keyword}}</div>
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.C_dueto}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">D</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">{{mandara.D_keyword}}</div>
                                                 </div>
                                             </div>
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">B</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">BK</div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
                                                 </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        BKBKBK
-                                                    </p>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.D_dueto}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">E</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">{{mandara.E_keyword}}</div>
                                                 </div>
                                             </div>
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">C</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">CK</div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
                                                 </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        CKCK
-                                                    </p>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.E_dueto}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">F</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">{{mandara.F_keyword}}</div>
                                                 </div>
                                             </div>
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">D</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">DK</div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
                                                 </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        DKDKDKD
-                                                    </p>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.F_dueto}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">G</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">{{mandara.G_keyword}}</div>
                                                 </div>
                                             </div>
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">E</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">EK</div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
                                                 </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        KKKKKKK
-                                                    </p>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.G_dueto}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">H</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">{{mandara.H_keyword}}</div>
                                                 </div>
                                             </div>
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">F</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">FK</div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
                                                 </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        LLLLLLLL
-                                                    </p>
-                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    {{mandara.H_dueto}}
+                                                </p>
                                             </div>
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">G</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">GK</div>
-                                                </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        GHHJHHJHJ
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="item-table-body-bottom-right">
-                                                <div class="wrapper-content-table-body-right">
-                                                    <div class="order">H</div>
-                                                    <div class="title-order">キーワード</div>
-                                                    <div class="title-order-right">HL</div>
-                                                </div>
-                                                <div class="wrapper-content-table-bottom-body-right">
-                                                    <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
-                                                    </div>
-                                                    <p class="desc-table-body-right">
-                                                        HHHHHHHHH
-                                                    </p>
-                                                </div>
-                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -764,56 +724,62 @@
                     </div>
                 </div>
             </div>
-    </section>
-</main>
+        </section>
+    </main>
+    <script type="text/javascript">
+        var arrayChartGroupA = [{{ mandara.A2_result }}, {{ mandara.A3_result }}, {{ mandara.A4_result }}, {{ mandara.A5_result }}, {{ mandara.A6_result }}, {{ mandara.A7_result }}, {{ mandara.A8_result }}, {{ mandara.A1_result }}];
+        var arrayChartGroupB = [{{ mandara.B2_result }}, {{ mandara.B3_result }}, {{ mandara.B4_result }}, {{ mandara.B5_result }}, {{ mandara.B6_result }}, {{ mandara.B7_result }}, {{ mandara.B8_result }}, {{ mandara.B1_result }}];
+        var arrayChartGroupC = [{{ mandara.C2_result }}, {{ mandara.C3_result }}, {{ mandara.C4_result }}, {{ mandara.C5_result }}, {{ mandara.C6_result }}, {{ mandara.C7_result }}, {{ mandara.C8_result }}, {{ mandara.C1_result }}];
+        var arrayChartGroupH = [{{ mandara.H2_result }}, {{ mandara.H3_result }}, {{ mandara.H4_result }}, {{ mandara.H5_result }}, {{ mandara.H6_result }}, {{ mandara.H7_result }}, {{ mandara.H8_result }}, {{ mandara.H1_result }}];
+        var arrayChartGroupD = [{{ mandara.D2_result }}, {{ mandara.D3_result }}, {{ mandara.D4_result }}, {{ mandara.D5_result }}, {{ mandara.D6_result }}, {{ mandara.D7_result }}, {{ mandara.D8_result }}, {{ mandara.D1_result }}];
+        var arrayChartGroupG = [{{ mandara.G2_result }}, {{ mandara.G3_result }}, {{ mandara.G4_result }}, {{ mandara.G5_result }}, {{ mandara.G6_result }}, {{ mandara.G7_result }}, {{ mandara.G8_result }}, {{ mandara.G1_result }}];
+        var arrayChartGroupF = [{{ mandara.F2_result }}, {{ mandara.F3_result }}, {{ mandara.F4_result }}, {{ mandara.F5_result }}, {{ mandara.F6_result }}, {{ mandara.F7_result }}, {{ mandara.F8_result }}, {{ mandara.F1_result }}];
+        var arrayChartGroupE = [{{ mandara.E2_result }}, {{ mandara.E3_result }}, {{ mandara.E4_result }}, {{ mandara.E5_result }}, {{ mandara.E6_result }}, {{ mandara.E7_result }}, {{ mandara.E8_result }}, {{ mandara.E1_result }}];
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
 
+        function setCanvas(id, value) {
+            new Chart(document.getElementById(id), {
+                type: 'radar',
+                data: {
+                    labels: ['', '', '', '', '', '', '', ''],
+                    datasets: [{
+                        label: '',
+                        data: value,
+                        fill: true,
+                        borderColor: "#e9e2a0",
+                        pointBackgroundColor: '#e2db9d',
+                    }]
+                },
+                options: {
+                    tooltips: false,
+                    legend: {
+                        display: false
+                    },
+                    scale: {
+                        gridLines: {
+                            circular: false,
+                            color: "gray"
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                },
+            
+            });
+        }
+        
+        setTimeout(setCanvas("mycanvasA", arrayChartGroupA), 100)
+        setTimeout(setCanvas("mycanvasB", arrayChartGroupB), 100)
+        setTimeout(setCanvas("mycanvasC", arrayChartGroupC), 100)
+        setTimeout(setCanvas("mycanvasH", arrayChartGroupH), 100)
+        setTimeout(setCanvas("mycanvasD", arrayChartGroupD), 100)
+        setTimeout(setCanvas("mycanvasE", arrayChartGroupE), 100)
+        setTimeout(setCanvas("mycanvasF", arrayChartGroupF), 100)
+        setTimeout(setCanvas("mycanvasG", arrayChartGroupG), 100)
+    </script>
+</body>
 
-<script type="text/javascript">
-    var arrayChartGroupA = [{{mandara.A2_result}}, {{mandara.A3_result}}, {{mandara.A4_result}}, {{mandara.A5_result}}, {{mandara.A6_result}}, {{mandara.A7_result}}, {{mandara.A8_result}}, {{mandara.A1_result}}];
-    var arrayChartGroupB = [{{mandara.B2_result}}, {{mandara.B3_result}}, {{mandara.B4_result}}, {{mandara.B5_result}}, {{mandara.B6_result}}, {{mandara.B7_result}}, {{mandara.B8_result}}, {{mandara.B1_result}}];
-    var arrayChartGroupC = [{{mandara.C2_result}}, {{mandara.C3_result}}, {{mandara.C4_result}}, {{mandara.C5_result}}, {{mandara.C6_result}}, {{mandara.C7_result}}, {{mandara.C8_result}}, {{mandara.C1_result}}];
-    var arrayChartGroupH = [{{mandara.H2_result}}, {{mandara.H3_result}}, {{mandara.H4_result}}, {{mandara.H5_result}}, {{mandara.H6_result}}, {{mandara.H7_result}}, {{mandara.H8_result}}, {{mandara.H1_result}}];
-    var arrayChartGroupD = [{{mandara.D2_result}}, {{mandara.D3_result}}, {{mandara.D4_result}}, {{mandara.D5_result}}, {{mandara.D6_result}}, {{mandara.D7_result}}, {{mandara.D8_result}}, {{mandara.D1_result}}];
-    var arrayChartGroupG = [{{mandara.G2_result}}, {{mandara.G3_result}}, {{mandara.G4_result}}, {{mandara.G5_result}}, {{mandara.G6_result}}, {{mandara.G7_result}}, {{mandara.G8_result}}, {{mandara.G1_result}}];
-    var arrayChartGroupF = [{{mandara.F2_result}}, {{mandara.F3_result}}, {{mandara.F4_result}}, {{mandara.F5_result}}, {{mandara.F6_result}}, {{mandara.F7_result}}, {{mandara.F8_result}}, {{mandara.F1_result}}];
-    var arrayChartGroupE = [{{mandara.E2_result}}, {{mandara.E3_result}}, {{mandara.E4_result}}, {{mandara.E5_result}}, {{mandara.E6_result}}, {{mandara.E7_result}}, {{mandara.E8_result}}, {{mandara.E1_result}}];
-</script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-window.onload = function() {
-    window.print();
-};
-
-window.onload = function(){
-    
-    html2canvas(document.getElementById('element-to-print')).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-          orientation: 'landscape',
-          pageSize: 'A3',
-        });
-        // const imgProps= pdf.getImageProperties(imgData);
-        const pdfWidth = 400;
-        const pdfHeight = 210;
-        pdf.addImage(imgData, 'PNG', -50, 0, pdfWidth, pdfHeight);
-        pdf.save('mandara_pdf.pdf');
-      });
-
-      window.close()
-}
-</script>
-<script src="{% static 'js/mandara-chart.js' %}"></script>
-
-
- <!-- <script>
-        var url_base64 = document.getElementById('mycanvas1').toDataURL('image/png');
-        console.log("url_base64", url_base64);
-        document.getElementById('base64graph').setAttribute("src", url_base64)
-
-    </script> -->
-
-
-{% endblock %}
+</html>

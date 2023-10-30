@@ -1478,7 +1478,7 @@ def post_detail_day(request):
     else:
         return HttpResponseBadRequest('Invalid request')
 
-def wkhtml_pdf(request, id):
+def mandara_pdf(request, id):
     options = {
         'page-size': 'A4',
         'page-height': "10in",
@@ -1492,7 +1492,7 @@ def wkhtml_pdf(request, id):
         'javascript-delay': 200,
     }
 
-    template_path = 'mandara/mandara_print_test.html'
+    template_path = 'mandara/mandara_print.html'
     template = get_template(template_path)
     company_id = request.user.company_id
     user_id = request.user.id
@@ -1577,22 +1577,3 @@ def wkhtml_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
-class JapanesePDFView(View):
-    def get(self, request, *args, **kwargs):
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'inline; filename="reportlab_pdf.pdf"'
-
-        p = canvas.Canvas(response, pagesize=letter)
-        p.setFont("Helvetica", 12)  # Replace "Helvetica" with a Japanese Unicode font
-
-        # Japanese text
-        japanese_text = "<span class='content-title'>真ん中の1年後の目標に対する8つの目標からの72個の問い</span>"
-
-        # Write the Japanese text
-        p.drawString(100, 500, japanese_text)
-
-        p.showPage()
-        p.save()
-
-        return response
