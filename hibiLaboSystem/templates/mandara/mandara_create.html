@@ -1,0 +1,676 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<!-- chartの呼び出し -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/mandara_create.css' %}">
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <div class="text-center {{ message_class }}"><label>
+            <h5>{{ message }}</h5>
+        </label></div>
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="wrapper-body">
+                            <div class="body-bottom">
+                                <div class="wrapper-body-left">
+                                    <div>
+                                        <div class="body-top">
+                                            <div class="body-top-left">
+                                                <div class="wrapper-text-title">
+                                                    <h2 class="text-title">MANDARA CHART</h2>
+                                                    <button type="button" class="button-title"
+                                                        id="button-title-1">一括削除</button>
+                                                    <button type="button" class="button-title"
+                                                        id="button-title-2">一時保存</button>
+                                                    <input type="submit" class="button-title" value="保存"
+                                                        id="button-title-3">
+                                                </div>
+                                                <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
+                                            </div>
+                                            <div class="content-body-center">
+                                                <div class="item-body-center">
+                                                    <p class="title-center">目標入力</p>
+                                                    <button type="button" class="choose">1</button>
+                                                </div>
+                                                <div class="item-body-center">
+                                                    <p class="title-center">日々検証</p>
+                                                    <button type="button" class="choose">2</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="body-bottom-left" id="value-body-bottom-left">
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group7">
+                                                {{ form.F1_content }}
+                                            </div>
+                                            <div class="value-table group7">
+                                                {{ form.F2_content }}
+                                            </div>
+                                            <div class="value-table group7">
+                                                {{ form.F3_content }}
+                                            </div>
+                                            <div class="value-table group7">
+                                                {{ form.F8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">F</span>
+                                                <p class="title-value-table-score">運</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas7" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group7">
+                                                {{ form.F4_content }}
+                                            </div>
+                                            <div class="value-table group7">
+                                                {{ form.F7_content }}
+                                            </div>
+                                            <div class="value-table group7">
+                                                {{ form.F6_content }}
+                                            </div>
+                                            <div class="value-table group7">
+                                                {{ form.F5_content }}
+                                                <svg id="triangle1" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="50" viewBox="0 0 52 50" fill="none">
+                                                <path
+                                                    d="M0.325983 0.574089L51.493 2.07355L14.181 49.8524L0.325983 0.574089Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group3" id="value-table-7">
+                                                {{ form.C1_content }}
+                                            </div>
+                                            <div class="value-table group3" id="value-table-8">
+                                                {{ form.C2_content }}
+                                            </div>
+                                            <div class="value-table group3" id="value-table-9">
+                                                {{ form.C3_content }}
+                                            </div>
+                                            <div class="value-table group3">
+                                                {{ form.C8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">C</span>
+                                                <p class="title-value-table-score">キレ</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas3" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group3">
+                                                {{ form.C4_content }}
+                                            </div>
+                                            <div class="value-table group3">
+                                                {{ form.C7_content }}
+                                            </div>
+                                            <div class="value-table group3">
+                                                {{ form.C6_content }}
+                                                <svg id="triangle" xmlns="http://www.w3.org/2000/svg" width="62"
+                                                height="42" viewBox="0 0 62 42" fill="none">
+                                                <path d="M31 0L61.3109 41.25H0.689112L31 0Z" fill="#CB99C4" />
+                                            </svg>
+                                            </div>
+                                            <div class="value-table group3">
+                                                {{ form.C5_content }}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group6">
+                                                {{ form.G1_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G2_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G3_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">G</span>
+                                                <p class="title-value-table-score">人間性</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas6" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G4_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G7_content }}
+                                                <svg id="triangle3" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="52" viewBox="0 0 52 52" fill="none">
+                                                <path
+                                                    d="M51.0836 0.699342L44.2828 51.4345L0.63365 9.36608L51.0836 0.699342Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G6_content }}
+                                            </div>
+                                            <div class="value-table group6">
+                                                {{ form.G5_content }}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group2" id="value-table-4">
+                                                {{ form.B1_content }}
+                                            </div>
+                                            <div class="value-table group2" id="value-table-5">
+                                                {{ form.B2_content }}
+                                            </div>
+                                            <div class="value-table group2" id="value-table-6">
+                                                {{ form.B3_content }}
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">B</span>
+                                                <p class="title-value-table-score">コントール</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas2" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B4_content }}
+                                                <svg id="triangle4" xmlns="http://www.w3.org/2000/svg" width="42"
+                                                height="61" viewBox="0 0 42 61" fill="none">
+                                                <path d="M0.500015 30.5L41.75 0.189098L41.75 60.8109L0.500015 30.5Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B7_content }}
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B6_content }}
+                                               
+                                            </div>
+                                            <div class="value-table group2">
+                                                {{ form.B5_content }}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">F</span>
+                                                <p class="title-main-score">体づくり</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">C</span>
+                                                <p class="title-main-score">コントール</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">G</span>
+                                                <p class="title-main-score">キレ</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">B</span>
+                                                <p class="title-main-score">メンタル</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                            <div class="value-table-score SCORE-MAIN">
+                                                <p class="title-main-score-center">1年後の目標</p>
+                                                {{ form.total_mission }}
+                                            </div>
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">D</span>
+                                                <p class="title-main-score">スピード160km/h</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">E</span>
+                                                <p class="title-main-score">人間性</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">A</span>
+                                                <p class="title-main-score">運</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                            <div class="value-table-score SCORE-text">
+                                                <span class="text-table-score">H</span>
+                                                <p class="title-main-score">変化球</p>
+                                                <div class="wrapper-top-block"></div>
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group5">
+                                                {{ form.D1_content }}
+                                            </div>
+                                            <div class="value-table group5">
+                                                {{ form.D2_content }}
+                                            </div>
+                                            <div class="value-table group5">
+                                                {{ form.D3_content }}
+                                            </div>
+                                            <div class="value-table group5">
+                                                {{ form.D8_content }}
+                                                <svg id="triangle5" xmlns="http://www.w3.org/2000/svg" width="42"
+                                                    height="61" viewBox="0 0 42 61" fill="none">
+                                                    <path d="M41.5 30.5L0.25001 60.8109L0.25001 0.189111L41.5 30.5Z"
+                                                        fill="#CB99C4" />
+                                                </svg>
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">D</span>
+                                                <p class="title-value-table-score">スピード</p>
+                                                <div class="wrapper-canvas ">
+                                                    <canvas id="mycanvas5" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+
+                                            </div>
+                                            <div class="value-table group5">
+                                                {{ form.D4_content }}
+                                            </div>
+                                            <div class="value-table group5">
+                                                {{ form.D7_content }}
+                                            </div>
+                                            <div class="value-table group5">
+                                                {{ form.D6_content }}
+                                            </div>
+                                            <div class="value-table group5">
+                                                {{ form.D5_content }}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group8">
+                                                {{ form.E1_content }}
+                                            </div>
+                                            <div class="value-table group8">
+                                                {{ form.E2_content }}
+                                            </div>
+                                            <div class="value-table group8">
+                                                {{ form.E3_content }}
+                                                <svg id="triangle6" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="51" viewBox="0 0 52 51" fill="none">
+                                                <path
+                                                    d="M0.630295 50.975L10.8215 0.810713L51.5483 45.7143L0.630295 50.975Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                            </div>
+                                            <div class="value-table group8">
+                                                {{ form.E8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">E</span>
+                                                <p class="title-value-table-score">変化球</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas8" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+
+                                            </div>
+                                            <div class="value-table group8">
+                                                {{ form.E4_content }}
+                                            </div>
+                                            <div class="value-table group8">
+                                                {{ form.E7_content }}
+                                            </div>
+                                            <div class="value-table group8">
+                                                {{ form.E6_content }}
+                                            </div>
+                                            <div class="value-table group8">
+                                                {{ form.E5_content }}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group1" id="value-table-1">
+                                                {{ form.A1_content }}
+                                            </div>
+                                            <div class="value-table group1" id="value-table-2">
+                                                {{ form.A2_content }}
+                                                <svg id="triangle7" xmlns="http://www.w3.org/2000/svg" width="62"
+                                                    height="42" viewBox="0 0 62 42" fill="none">
+                                                    <path d="M31 42L0.689144 0.750002L61.3109 0.750002L31 42Z"
+                                                        fill="#CB99C4" />
+                                                </svg>
+                                            </div>
+                                            <div class="value-table group1" id="value-table-3">
+                                                {{ form.A3_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">A</span>
+                                                <p class="title-value-table-score">体づくり</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas1" class="mycanvas" height="148" width="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A4_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A7_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A6_content }}
+                                            </div>
+                                            <div class="value-table group1">
+                                                {{ form.A5_content }}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-body-bottom-left">
+                                            <div class="value-table group4">
+                                                {{ form.H1_content }}
+                                                <svg id="triangle8" xmlns="http://www.w3.org/2000/svg" width="52"
+                                                height="51" viewBox="0 0 52 51" fill="none">
+                                                <path
+                                                    d="M51.3689 50.9759L0.451211 45.713L41.1799 0.811178L51.3689 50.9759Z"
+                                                    fill="#CB99C4" />
+                                            </svg>
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H2_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H3_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H8_content }}
+                                            </div>
+                                            <div class="value-table-score SCORE">
+                                                <span class="text-table-score">H</span>
+                                                <p class="title-value-table-score">メンタル</p>
+                                                <div class="wrapper-canvas">
+                                                    <canvas id="mycanvas4" class="mycanvas" width="148" height="148"
+                                                        style="display: block; box-sizing: border-box; height: 148px; width: 148.9px;"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H4_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H7_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H6_content }}
+                                            </div>
+                                            <div class="value-table group4">
+                                                {{ form.H5_content }}
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                                <div class="body-bottom-right">
+                                    <div class="wrapper-title-body-bottom-right">
+                                        <h2 class="title-body-bottom-right">RULE</h2>
+                                        <p class="content-rule">①ど真ん中の一年後の目標を設定します</p>
+                                        <p class="content-rule">②A〜H の項目を入力してください</p>
+                                    </div>
+                                    <div class="content-body-right">
+                                        <p class="title-content-body-left">目標期間は 1 年</p>
+                                        <div class="item-select">
+                                            {{ form.start_YYYYMM }}
+                                            <p class="to">～</p>
+                                            {{ form.end_YYYYMM }}
+                                            <!-- <button class="button">表示</button> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="table-body-bottom-right">
+                                        <div class="wrapper-tab">
+                                            <div class="tab tab1">Content</div>
+                                            <div class="tab tab2">Score</div>
+                                        </div>
+                                        <div class="wrapper-item-table-body-bottom-right-tab-1">
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">A</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.A_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.A_dueto }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">B</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.B_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.B_dueto }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">C</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.C_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.C_dueto }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">D</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.D_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.D_dueto }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">E</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.E_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.E_dueto }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">F</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.F_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.F_dueto }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">G</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.G_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.G_dueto }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-table-body-bottom-right">
+                                                <div class="wrapper-content-table-body-right">
+                                                    <div class="order">H</div>
+                                                    <div class="title-order">キーワード</div>
+                                                    <div class="title-order-right">
+                                                        {{ form.H_keyword }}
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper-content-table-bottom-body-right">
+                                                    <div class="content-table-body-right">
+                                                        <p>課題解決
+                                                        </p>
+                                                    </div>
+                                                    <div class="desc-table-body-right">
+                                                        {{ form.H_dueto }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wrapper-item-table-body-bottom-right-tab-2">
+                                            <div
+                                                class="item-table-body-bottom-right item-table-body-bottom-right-tab-2">
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas9" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">体づくり</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas10" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">コントール</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas11" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">キレ</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas12" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">メンタル</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab wrapper-mycanvas-tab-center">
+                                                    <p class="text-canvas-center">●●後の目標</p>
+                                                    <p class="value-vanvas-center">188</p>
+                                                    <p class="text-canvas-center">ドライチ 8 球団</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas13" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">スピード</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas14" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">人間性</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas15" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">運</p>
+                                                </div>
+                                                <div class="wrapper-mycanvas-tab">
+                                                    <div>
+                                                        <canvas id="mycanvas16" width="100%" height="100%"
+                                                            class="mycanvas-tab"></canvas>
+                                                    </div>
+                                                    <p class="text-canvas">変化球</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script src="{% static 'js/mandara-create.js' %}"></script>
+{% endblock %}

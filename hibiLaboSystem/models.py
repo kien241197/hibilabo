@@ -640,3 +640,225 @@ class ThinkResult(models.Model):
 
 	class Meta:
 		db_table = 'think_results'
+
+# MANDARA
+class MandaraBase(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='mandara_base',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.DO_NOTHING,
+	    related_name='mandara_base',
+	    blank=True,
+	    null=True
+	)
+	start_YYYYMM = models.CharField(
+		max_length=6
+	)
+	end_YYYYMM = models.CharField(
+		max_length=6
+	)
+	total_mission = models.CharField(max_length=20, blank=True, null=True)
+
+	A_keyword = models.CharField(max_length=20, blank=True, null=True)
+	A_dueto = models.TextField(blank=True, null=True)
+	A_result = models.IntegerField(default=0)
+	A1_content = models.CharField(max_length=20)
+	A2_content = models.CharField(max_length=20)
+	A3_content = models.CharField(max_length=20)
+	A4_content = models.CharField(max_length=20)
+	A5_content = models.CharField(max_length=20)
+	A6_content = models.CharField(max_length=20)
+	A7_content = models.CharField(max_length=20)
+	A8_content = models.CharField(max_length=20)
+
+	B_keyword = models.CharField(max_length=20, blank=True, null=True)
+	B_dueto = models.TextField(blank=True, null=True)
+	B_result = models.IntegerField(default=0)
+	B1_content = models.CharField(max_length=20)
+	B2_content = models.CharField(max_length=20)
+	B3_content = models.CharField(max_length=20)
+	B4_content = models.CharField(max_length=20)
+	B5_content = models.CharField(max_length=20)
+	B6_content = models.CharField(max_length=20)
+	B7_content = models.CharField(max_length=20)
+	B8_content = models.CharField(max_length=20)
+
+	C_keyword = models.CharField(max_length=20, blank=True, null=True)
+	C_dueto = models.TextField(blank=True, null=True)
+	C_result = models.IntegerField(default=0)
+	C1_content = models.CharField(max_length=20)
+	C2_content = models.CharField(max_length=20)
+	C3_content = models.CharField(max_length=20)
+	C4_content = models.CharField(max_length=20)
+	C5_content = models.CharField(max_length=20)
+	C6_content = models.CharField(max_length=20)
+	C7_content = models.CharField(max_length=20)
+	C8_content = models.CharField(max_length=20)
+
+	D_keyword = models.CharField(max_length=20, blank=True, null=True)
+	D_dueto = models.TextField(blank=True, null=True)
+	D_result = models.IntegerField(default=0)
+	D1_content = models.CharField(max_length=20)
+	D2_content = models.CharField(max_length=20)
+	D3_content = models.CharField(max_length=20)
+	D4_content = models.CharField(max_length=20)
+	D5_content = models.CharField(max_length=20)
+	D6_content = models.CharField(max_length=20)
+	D7_content = models.CharField(max_length=20)
+	D8_content = models.CharField(max_length=20)
+
+	E_keyword = models.CharField(max_length=20, blank=True, null=True)
+	E_dueto = models.TextField(blank=True, null=True)
+	E_result = models.IntegerField(default=0)
+	E1_content = models.CharField(max_length=20)
+	E2_content = models.CharField(max_length=20)
+	E3_content = models.CharField(max_length=20)
+	E4_content = models.CharField(max_length=20)
+	E5_content = models.CharField(max_length=20)
+	E6_content = models.CharField(max_length=20)
+	E7_content = models.CharField(max_length=20)
+	E8_content = models.CharField(max_length=20)
+
+	F_keyword = models.CharField(max_length=20, blank=True, null=True)
+	F_dueto = models.TextField(blank=True, null=True)
+	F_result = models.IntegerField(default=0)
+	F1_content = models.CharField(max_length=20)
+	F2_content = models.CharField(max_length=20)
+	F3_content = models.CharField(max_length=20)
+	F4_content = models.CharField(max_length=20)
+	F5_content = models.CharField(max_length=20)
+	F6_content = models.CharField(max_length=20)
+	F7_content = models.CharField(max_length=20)
+	F8_content = models.CharField(max_length=20)
+
+	G_keyword = models.CharField(max_length=20, blank=True, null=True)
+	G_dueto = models.TextField(blank=True, null=True)
+	G_result = models.IntegerField(default=0)
+	G1_content = models.CharField(max_length=20)
+	G2_content = models.CharField(max_length=20)
+	G3_content = models.CharField(max_length=20)
+	G4_content = models.CharField(max_length=20)
+	G5_content = models.CharField(max_length=20)
+	G6_content = models.CharField(max_length=20)
+	G7_content = models.CharField(max_length=20)
+	G8_content = models.CharField(max_length=20)
+
+	H_keyword = models.CharField(max_length=20, blank=True, null=True)
+	H_dueto = models.TextField(blank=True, null=True)
+	H_result = models.IntegerField(default=0)
+	H1_content = models.CharField(max_length=20, blank=True, null=True)
+	H2_content = models.CharField(max_length=20, blank=True, null=True)
+	H3_content = models.CharField(max_length=20, blank=True, null=True)
+	H4_content = models.CharField(max_length=20, blank=True, null=True)
+	H5_content = models.CharField(max_length=20, blank=True, null=True)
+	H6_content = models.CharField(max_length=20, blank=True, null=True)
+	H7_content = models.CharField(max_length=20, blank=True, null=True)
+	H8_content = models.CharField(max_length=20, blank=True, null=True)
+
+	def total_result(self):
+			return self.A_result + self.B_result + self.C_result + self.D_result + self.E_result + self.F_result + self.G_result + self.H_result
+
+	def display_time(self):
+			return f'{self.start_YYYYMM[:4]}/{int(self.start_YYYYMM[4:])} ~ {self.end_YYYYMM[:4]}/{int(self.end_YYYYMM[4:])}'
+
+	class Meta:
+		db_table = 'mandara_base'
+		constraints = [
+	        models.UniqueConstraint(fields=['user_id', 'company_id', 'start_YYYYMM', 'end_YYYYMM'], name='unique_mandara')
+	    ]
+
+class MandaraProgress(models.Model):
+	mandara_base = models.ForeignKey(
+	    MandaraBase,
+	    on_delete=models.DO_NOTHING,
+	    related_name='mandara_progress',
+	    blank=True,
+	    null=True
+	)
+	date = models.DateField(blank=True, null=True)
+
+	A1_result = models.IntegerField(default=0)
+	A2_result = models.IntegerField(default=0)
+	A3_result = models.IntegerField(default=0)
+	A4_result = models.IntegerField(default=0)
+	A5_result = models.IntegerField(default=0)
+	A6_result = models.IntegerField(default=0)
+	A7_result = models.IntegerField(default=0)
+	A8_result = models.IntegerField(default=0)
+
+	B1_result = models.IntegerField(default=0)
+	B2_result = models.IntegerField(default=0)
+	B3_result = models.IntegerField(default=0)
+	B4_result = models.IntegerField(default=0)
+	B5_result = models.IntegerField(default=0)
+	B6_result = models.IntegerField(default=0)
+	B7_result = models.IntegerField(default=0)
+	B8_result = models.IntegerField(default=0)
+
+	C1_result = models.IntegerField(default=0)
+	C2_result = models.IntegerField(default=0)
+	C3_result = models.IntegerField(default=0)
+	C4_result = models.IntegerField(default=0)
+	C5_result = models.IntegerField(default=0)
+	C6_result = models.IntegerField(default=0)
+	C7_result = models.IntegerField(default=0)
+	C8_result = models.IntegerField(default=0)
+
+	D1_result = models.IntegerField(default=0)
+	D2_result = models.IntegerField(default=0)
+	D3_result = models.IntegerField(default=0)
+	D4_result = models.IntegerField(default=0)
+	D5_result = models.IntegerField(default=0)
+	D6_result = models.IntegerField(default=0)
+	D7_result = models.IntegerField(default=0)
+	D8_result = models.IntegerField(default=0)
+
+	E1_result = models.IntegerField(default=0)
+	E2_result = models.IntegerField(default=0)
+	E3_result = models.IntegerField(default=0)
+	E4_result = models.IntegerField(default=0)
+	E5_result = models.IntegerField(default=0)
+	E6_result = models.IntegerField(default=0)
+	E7_result = models.IntegerField(default=0)
+	E8_result = models.IntegerField(default=0)
+
+	F1_result = models.IntegerField(default=0)
+	F2_result = models.IntegerField(default=0)
+	F3_result = models.IntegerField(default=0)
+	F4_result = models.IntegerField(default=0)
+	F5_result = models.IntegerField(default=0)
+	F6_result = models.IntegerField(default=0)
+	F7_result = models.IntegerField(default=0)
+	F8_result = models.IntegerField(default=0)
+
+	G1_result = models.IntegerField(default=0)
+	G2_result = models.IntegerField(default=0)
+	G3_result = models.IntegerField(default=0)
+	G4_result = models.IntegerField(default=0)
+	G5_result = models.IntegerField(default=0)
+	G6_result = models.IntegerField(default=0)
+	G7_result = models.IntegerField(default=0)
+	G8_result = models.IntegerField(default=0)
+
+	H1_result = models.IntegerField(default=0)
+	H2_result = models.IntegerField(default=0)
+	H3_result = models.IntegerField(default=0)
+	H4_result = models.IntegerField(default=0)
+	H5_result = models.IntegerField(default=0)
+	H6_result = models.IntegerField(default=0)
+	H7_result = models.IntegerField(default=0)
+	H8_result = models.IntegerField(default=0)
+
+	def sum_result(self):
+		return self.A1_result + self.B1_result + self.C1_result + self.D1_result + self.E1_result + self.F1_result + self.G1_result + self.H1_result + self.A2_result + self.B2_result + self.C2_result + self.D2_result + self.E2_result + self.F2_result + self.G2_result + self.H2_result + self.A3_result + self.B3_result + self.C3_result + self.D3_result + self.E3_result + self.F3_result + self.G3_result + self.H3_result + self.A4_result + self.B4_result + self.C4_result + self.D4_result + self.E4_result + self.F4_result + self.G4_result + self.H4_result + self.A5_result + self.B5_result + self.C5_result + self.D5_result + self.E5_result + self.F5_result + self.G5_result + self.H5_result + self.A6_result + self.B6_result + self.C6_result + self.D6_result + self.E6_result + self.F6_result + self.G6_result + self.H6_result + self.A7_result + self.B7_result + self.C7_result + self.D7_result + self.E7_result + self.F7_result + self.G7_result + self.H7_result + self.A8_result + self.B8_result + self.C8_result + self.D8_result + self.E8_result + self.F8_result + self.G8_result + self.H8_result
+	class Meta:
+		db_table = 'mandara_progress'
+		constraints = [
+	        models.UniqueConstraint(fields=['mandara_base_id', 'date'], name='unique_mandara_progress')
+	    ]

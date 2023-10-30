@@ -1,8 +1,8 @@
 from . import forms
-from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult
+from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult, MandaraBase, MandaraProgress
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from pprint import pprint
@@ -10,16 +10,30 @@ from django.db.models import Q, Count, Prefetch, OuterRef, FilteredRelation, Sum
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.views.generic import ListView, CreateView, TemplateView, DetailView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.functions import ExtractMonth, ExtractYear, ExtractDay
 from .constants import SELFCHECK_ANSWER, CIRCL, SQUARE, TRAIANGLE
 import calendar
 import datetime
 import pdb
+import json
+# use ReportLab
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+# use wkhtmltopdf
+from django.conf import settings
+import os
+from django.template.loader import get_template
+import pdfkit
 
 User = get_user_model()
+wkhtml_to_pdf = os.path.join(
+    settings.BASE_DIR, "wkhtmltopdf.exe")
 # Create your views here.
 class Home(TemplateView):
     template_name = "home.html"
@@ -32,7 +46,7 @@ class Home(TemplateView):
         return context
 
 class Login(LoginView):
-    # Staff: staff_1, Pass: 11223344k
+    # Staff: staff_1, Pass: 0339497769k
     # Admin: tiah_1, Pass: 11223344k
     form_class = forms.LoginForm
     template_name = 'login.html'
@@ -113,7 +127,7 @@ class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'info/password_change_done.html'
 
 #Honne
-class HonneSheet(TemplateView):
+class HonneSheet(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_sheet.html"
     form_class = forms.HonneForm
 
@@ -281,7 +295,7 @@ class HonneSheet(TemplateView):
 
         return self.render_to_response(context)
 
-class HonneTotal(TemplateView):
+class HonneTotal(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_total.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -320,7 +334,7 @@ class HonneTotal(TemplateView):
                     context['max_type'] = max(context['result'], key=context['result'].get)
         return self.render_to_response(context)
 
-class HonneTypeStaticks(TemplateView):
+class HonneTypeStaticks(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_type_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -342,7 +356,7 @@ class HonneTypeStaticks(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneTypePersonalGraph(TemplateView):
+class HonneTypePersonalGraph(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_type_personal_graph.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -364,7 +378,7 @@ class HonneTypePersonalGraph(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneIndexStaticks(TemplateView):
+class HonneIndexStaticks(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_index_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -386,7 +400,7 @@ class HonneIndexStaticks(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneChart(TemplateView):
+class HonneChart(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_chart.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -408,7 +422,7 @@ class HonneChart(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneQrStaticks(TemplateView):
+class HonneQrStaticks(LoginRequiredMixin, TemplateView):
     template_name = "honne/honne_qr_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -457,7 +471,7 @@ class HonneQrStaticks(TemplateView):
         return self.render_to_response(context)
 
 # Selfcheck
-class SelfcheckIndex(TemplateView):
+class SelfcheckIndex(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_index.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -479,7 +493,7 @@ class SelfcheckIndex(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckIndexChart(TemplateView):
+class SelfcheckIndexChart(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_index_chart.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -501,7 +515,7 @@ class SelfcheckIndexChart(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckQuestions(TemplateView):
+class SelfcheckQuestions(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_questions.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -549,7 +563,7 @@ class SelfcheckQuestions(TemplateView):
                 context["qr_list"] = result_list
         return self.render_to_response(context)
 
-class SelfcheckType(TemplateView):
+class SelfcheckType(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_type.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -571,7 +585,7 @@ class SelfcheckType(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckTypeChart(TemplateView):
+class SelfcheckTypeChart(LoginRequiredMixin, TemplateView):
     template_name = "selfcheck/selfcheck_type_chart.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -593,7 +607,7 @@ class SelfcheckTypeChart(TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckSheet(TemplateView):
+class SelfcheckSheet(LoginRequiredMixin, TemplateView):
     template_name = 'selfcheck/selfcheck_sheet.html'
     form_class = forms.SelfcheckForm
 
@@ -801,7 +815,7 @@ class SelfcheckSheet(TemplateView):
         return self.render_to_response(context)
 
 #Bonknow
-class BonknowSheet(TemplateView):
+class BonknowSheet(LoginRequiredMixin, TemplateView):
     template_name = "bonknow/bonknow_sheet.html"
 
     def get_context_data(self, **kwargs):
@@ -939,7 +953,7 @@ class BonknowSheet(TemplateView):
         return self.render_to_response(context)
 
 
-class BonknowRespons(TemplateView):
+class BonknowRespons(LoginRequiredMixin, TemplateView):
     template_name = "bonknow/bonknow_respons.html"
     form_class = forms.BonknowForm
 
@@ -977,7 +991,7 @@ class BonknowRespons(TemplateView):
 
         return self.render_to_response(context)
 
-class BonknowThink(TemplateView):
+class BonknowThink(LoginRequiredMixin, TemplateView):
     template_name = "bonknow/bonknow_think.html"
     form_class = forms.BonknowForm
 
@@ -1015,11 +1029,551 @@ class BonknowThink(TemplateView):
 
         return self.render_to_response(context)
 
-class Mandara(TemplateView):
-    template_name = "mandara/index.html"
+#MASMASMANDARA
+class MandaraPrint(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_print_test.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        id = self.kwargs.get('id')
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,id=id).annotate(
+               A1_result=Sum('mandara_progress__A1_result'),
+               A2_result=Sum('mandara_progress__A2_result'),
+               A3_result=Sum('mandara_progress__A3_result'),
+               A4_result=Sum('mandara_progress__A4_result'),
+               A5_result=Sum('mandara_progress__A5_result'),
+               A6_result=Sum('mandara_progress__A6_result'),
+               A7_result=Sum('mandara_progress__A7_result'),
+               A8_result=Sum('mandara_progress__A8_result'),
+               B1_result=Sum('mandara_progress__B1_result'),
+               B2_result=Sum('mandara_progress__B2_result'),
+               B3_result=Sum('mandara_progress__B3_result'),
+               B4_result=Sum('mandara_progress__B4_result'),
+               B5_result=Sum('mandara_progress__B5_result'),
+               B6_result=Sum('mandara_progress__B6_result'),
+               B7_result=Sum('mandara_progress__B7_result'),
+               B8_result=Sum('mandara_progress__B8_result'),
+               C1_result=Sum('mandara_progress__C1_result'),
+               C2_result=Sum('mandara_progress__C2_result'),
+               C3_result=Sum('mandara_progress__C3_result'),
+               C4_result=Sum('mandara_progress__C4_result'),
+               C5_result=Sum('mandara_progress__C5_result'),
+               C6_result=Sum('mandara_progress__C6_result'),
+               C7_result=Sum('mandara_progress__C7_result'),
+               C8_result=Sum('mandara_progress__C8_result'),
+               D1_result=Sum('mandara_progress__D1_result'),
+               D2_result=Sum('mandara_progress__D2_result'),
+               D3_result=Sum('mandara_progress__D3_result'),
+               D4_result=Sum('mandara_progress__D4_result'),
+               D5_result=Sum('mandara_progress__D5_result'),
+               D6_result=Sum('mandara_progress__D6_result'),
+               D7_result=Sum('mandara_progress__D7_result'),
+               D8_result=Sum('mandara_progress__D8_result'),
+               E1_result=Sum('mandara_progress__E1_result'),
+               E2_result=Sum('mandara_progress__E2_result'),
+               E3_result=Sum('mandara_progress__E3_result'),
+               E4_result=Sum('mandara_progress__E4_result'),
+               E5_result=Sum('mandara_progress__E5_result'),
+               E6_result=Sum('mandara_progress__E6_result'),
+               E7_result=Sum('mandara_progress__E7_result'),
+               E8_result=Sum('mandara_progress__E8_result'),
+               F1_result=Sum('mandara_progress__F1_result'),
+               F2_result=Sum('mandara_progress__F2_result'),
+               F3_result=Sum('mandara_progress__F3_result'),
+               F4_result=Sum('mandara_progress__F4_result'),
+               F5_result=Sum('mandara_progress__F5_result'),
+               F6_result=Sum('mandara_progress__F6_result'),
+               F7_result=Sum('mandara_progress__F7_result'),
+               F8_result=Sum('mandara_progress__F8_result'),
+               G1_result=Sum('mandara_progress__G1_result'),
+               G2_result=Sum('mandara_progress__G2_result'),
+               G3_result=Sum('mandara_progress__G3_result'),
+               G4_result=Sum('mandara_progress__G4_result'),
+               G5_result=Sum('mandara_progress__G5_result'),
+               G6_result=Sum('mandara_progress__G6_result'),
+               G7_result=Sum('mandara_progress__G7_result'),
+               G8_result=Sum('mandara_progress__G8_result'),
+               H1_result=Sum('mandara_progress__H1_result'),
+               H2_result=Sum('mandara_progress__H2_result'),
+               H3_result=Sum('mandara_progress__H3_result'),
+               H4_result=Sum('mandara_progress__H4_result'),
+               H5_result=Sum('mandara_progress__H5_result'),
+               H6_result=Sum('mandara_progress__H6_result'),
+               H7_result=Sum('mandara_progress__H7_result'),
+               H8_result=Sum('mandara_progress__H8_result'),
+            ).first()
+        kwargs['mandara'] = mandara
+        kwargs['request'] = self.request
+        return kwargs
+    
+class MandaraCreate(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_create.html"
+    form_class = forms.MandaraCreateForm
+
+    def get_context_data(self, **kwargs):
+        today = datetime.date.today().strftime("%Y%m")
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        mandara = MandaraBase.objects.all().filter(
+            user_id=user_id,company_id=company_id,start_YYYYMM__gt=today
+        ).order_by('start_YYYYMM').first()
+
+        kwargs['form'] = self.form_class(instance=mandara)
+        kwargs['mandara'] = mandara
+
+        return kwargs
+
+    def post(self, request, *args, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        context = self.get_context_data(**kwargs)
+        form = self.form_class(request.POST, instance=context["mandara"])
+        context["form"] = form
+        context["message_class"] = 'text-danger'
+        start_YYYYMM = request.POST.get('start_YYYYMM')
+        end_YYYYMM = request.POST.get('end_YYYYMM')
+        if start_YYYYMM == '' or end_YYYYMM == '':
+            context["message"] = '-- 目標期間は 1 年。--'
+            return self.render_to_response(context)
+
+        form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
+        form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
+        diff = int(end_YYYYMM) - int(start_YYYYMM)
+        check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exists()
+        if context["mandara"] is not None:
+            check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exclude (pk=context["mandara"].id).exists()
+        if check_exists:
+            context["message"] = '-- マンダラの期限が重複しているため、作成できません。--'
+            return self.render_to_response(context)
+
+        if diff != 99:
+            context["message"] = '-- 目標期間は 1 年。--'
+            return self.render_to_response(context)
+
+        if form.is_valid():
+            mandara = form.save(commit=False)
+            mandara.user_id = user_id
+            mandara.company_id = company_id
+            mandara.save()
+            if context["mandara"] is not None:
+                MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
+            sdate = datetime.date(int(start_YYYYMM[0:4]), int(start_YYYYMM[4:6]), 1)   # start date
+            edate = datetime.date(int(end_YYYYMM[0:4]), int(end_YYYYMM[4:6]) + 1, 1)   # end date
+            delta = edate - sdate
+            bulk_list = list()
+            for i in range(delta.days):
+                day = sdate + datetime.timedelta(days=i)
+                bulk_list.append(
+                    MandaraProgress(date=day, mandara_base_id=mandara.id)
+                )
+
+            bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
+            context["message"] = '-- 保存しました。--'
+            context["message_class"] = 'text-success'
+        else:
+            context["message"] = form.errors.as_data()
+
+        return self.render_to_response(context)
+
+    
+class MandaraSheet(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_sheet.html"
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
 
         return kwargs
+    
+    
+class MandaraReuse(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_reuse.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        today = datetime.date.today().strftime("%Y%m")
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today).annotate(
+               A1_result=Sum('mandara_progress__A1_result'),
+               A2_result=Sum('mandara_progress__A2_result'),
+               A3_result=Sum('mandara_progress__A3_result'),
+               A4_result=Sum('mandara_progress__A4_result'),
+               A5_result=Sum('mandara_progress__A5_result'),
+               A6_result=Sum('mandara_progress__A6_result'),
+               A7_result=Sum('mandara_progress__A7_result'),
+               A8_result=Sum('mandara_progress__A8_result'),
+               B1_result=Sum('mandara_progress__B1_result'),
+               B2_result=Sum('mandara_progress__B2_result'),
+               B3_result=Sum('mandara_progress__B3_result'),
+               B4_result=Sum('mandara_progress__B4_result'),
+               B5_result=Sum('mandara_progress__B5_result'),
+               B6_result=Sum('mandara_progress__B6_result'),
+               B7_result=Sum('mandara_progress__B7_result'),
+               B8_result=Sum('mandara_progress__B8_result'),
+               C1_result=Sum('mandara_progress__C1_result'),
+               C2_result=Sum('mandara_progress__C2_result'),
+               C3_result=Sum('mandara_progress__C3_result'),
+               C4_result=Sum('mandara_progress__C4_result'),
+               C5_result=Sum('mandara_progress__C5_result'),
+               C6_result=Sum('mandara_progress__C6_result'),
+               C7_result=Sum('mandara_progress__C7_result'),
+               C8_result=Sum('mandara_progress__C8_result'),
+               D1_result=Sum('mandara_progress__D1_result'),
+               D2_result=Sum('mandara_progress__D2_result'),
+               D3_result=Sum('mandara_progress__D3_result'),
+               D4_result=Sum('mandara_progress__D4_result'),
+               D5_result=Sum('mandara_progress__D5_result'),
+               D6_result=Sum('mandara_progress__D6_result'),
+               D7_result=Sum('mandara_progress__D7_result'),
+               D8_result=Sum('mandara_progress__D8_result'),
+               E1_result=Sum('mandara_progress__E1_result'),
+               E2_result=Sum('mandara_progress__E2_result'),
+               E3_result=Sum('mandara_progress__E3_result'),
+               E4_result=Sum('mandara_progress__E4_result'),
+               E5_result=Sum('mandara_progress__E5_result'),
+               E6_result=Sum('mandara_progress__E6_result'),
+               E7_result=Sum('mandara_progress__E7_result'),
+               E8_result=Sum('mandara_progress__E8_result'),
+               F1_result=Sum('mandara_progress__F1_result'),
+               F2_result=Sum('mandara_progress__F2_result'),
+               F3_result=Sum('mandara_progress__F3_result'),
+               F4_result=Sum('mandara_progress__F4_result'),
+               F5_result=Sum('mandara_progress__F5_result'),
+               F6_result=Sum('mandara_progress__F6_result'),
+               F7_result=Sum('mandara_progress__F7_result'),
+               F8_result=Sum('mandara_progress__F8_result'),
+               G1_result=Sum('mandara_progress__G1_result'),
+               G2_result=Sum('mandara_progress__G2_result'),
+               G3_result=Sum('mandara_progress__G3_result'),
+               G4_result=Sum('mandara_progress__G4_result'),
+               G5_result=Sum('mandara_progress__G5_result'),
+               G6_result=Sum('mandara_progress__G6_result'),
+               G7_result=Sum('mandara_progress__G7_result'),
+               G8_result=Sum('mandara_progress__G8_result'),
+               H1_result=Sum('mandara_progress__H1_result'),
+               H2_result=Sum('mandara_progress__H2_result'),
+               H3_result=Sum('mandara_progress__H3_result'),
+               H4_result=Sum('mandara_progress__H4_result'),
+               H5_result=Sum('mandara_progress__H5_result'),
+               H6_result=Sum('mandara_progress__H6_result'),
+               H7_result=Sum('mandara_progress__H7_result'),
+               H8_result=Sum('mandara_progress__H8_result'),
+            ).first()
+        kwargs['mandara'] = mandara
+        kwargs['month'] = datetime.date.today().strftime("%m")
+        if mandara is not None:
+            kwargs['check_today'] = MandaraProgress.objects.all().filter(mandara_base_id=mandara.id,date=datetime.date.today()).first()
+            results = MandaraProgress.objects.all().filter(mandara_base_id=mandara.id,date__lte=datetime.date.today()).annotate(
+                month=ExtractMonth('date'),
+                year=ExtractYear('date')
+            )
+            data = {}
+            for i in results:
+                key = str(i.year) + '/' + str(i.month)
+                if key not in data:
+                    data[key] = i.sum_result()
+                else:
+                    data[key] += i.sum_result()
+            list_month = []
+            list_value = []
+            for key, value in data.items():
+                list_month.append(key)
+                list_value.append(value)
+
+            kwargs['data_month'] = list_month
+            kwargs['data_value'] = list_value
+            
+            kwargs['fix'] = True
+            if mandara.start_YYYYMM > today:
+                kwargs['fix'] = False
+
+            start = mandara.start_YYYYMM[0:4] + '年' + mandara.start_YYYYMM[4:6] + '月'
+            end = mandara.end_YYYYMM[0:4] + '年' + mandara.end_YYYYMM[4:6] + '月'
+            kwargs['start'] = start
+            kwargs['end'] = end
+
+        return kwargs
+
+class MandaraCompletion(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_completion.html"
+    form_class = forms.MandaraCompleteForm
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        today_str = datetime.date.today().strftime("%Y%m")
+        mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__lt=today_str).order_by('start_YYYYMM')
+
+        kwargs['mandara_get'] = mandara_get
+        kwargs['form'] = self.form_class()
+        return kwargs
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = self.form_class(request.POST)
+        context["form"] = form
+        start_YYYYMM = request.POST.get('start')
+        end_YYYYMM = request.POST.get('end')
+        
+        if start_YYYYMM:
+            context['mandara_get'] = context['mandara_get'].filter(start_YYYYMM__gte=start_YYYYMM)
+        if end_YYYYMM:
+            context['mandara_get'] = context['mandara_get'].filter(end_YYYYMM__lte=end_YYYYMM)
+        return self.render_to_response(context)
+
+    
+class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_completion_detail.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        id = self.kwargs.get('id')
+        get_mandara_detail = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,id=id).annotate(
+               A1_result=Sum('mandara_progress__A1_result'),
+               A2_result=Sum('mandara_progress__A2_result'),
+               A3_result=Sum('mandara_progress__A3_result'),
+               A4_result=Sum('mandara_progress__A4_result'),
+               A5_result=Sum('mandara_progress__A5_result'),
+               A6_result=Sum('mandara_progress__A6_result'),
+               A7_result=Sum('mandara_progress__A7_result'),
+               A8_result=Sum('mandara_progress__A8_result'),
+               B1_result=Sum('mandara_progress__B1_result'),
+               B2_result=Sum('mandara_progress__B2_result'),
+               B3_result=Sum('mandara_progress__B3_result'),
+               B4_result=Sum('mandara_progress__B4_result'),
+               B5_result=Sum('mandara_progress__B5_result'),
+               B6_result=Sum('mandara_progress__B6_result'),
+               B7_result=Sum('mandara_progress__B7_result'),
+               B8_result=Sum('mandara_progress__B8_result'),
+               C1_result=Sum('mandara_progress__C1_result'),
+               C2_result=Sum('mandara_progress__C2_result'),
+               C3_result=Sum('mandara_progress__C3_result'),
+               C4_result=Sum('mandara_progress__C4_result'),
+               C5_result=Sum('mandara_progress__C5_result'),
+               C6_result=Sum('mandara_progress__C6_result'),
+               C7_result=Sum('mandara_progress__C7_result'),
+               C8_result=Sum('mandara_progress__C8_result'),
+               D1_result=Sum('mandara_progress__D1_result'),
+               D2_result=Sum('mandara_progress__D2_result'),
+               D3_result=Sum('mandara_progress__D3_result'),
+               D4_result=Sum('mandara_progress__D4_result'),
+               D5_result=Sum('mandara_progress__D5_result'),
+               D6_result=Sum('mandara_progress__D6_result'),
+               D7_result=Sum('mandara_progress__D7_result'),
+               D8_result=Sum('mandara_progress__D8_result'),
+               E1_result=Sum('mandara_progress__E1_result'),
+               E2_result=Sum('mandara_progress__E2_result'),
+               E3_result=Sum('mandara_progress__E3_result'),
+               E4_result=Sum('mandara_progress__E4_result'),
+               E5_result=Sum('mandara_progress__E5_result'),
+               E6_result=Sum('mandara_progress__E6_result'),
+               E7_result=Sum('mandara_progress__E7_result'),
+               E8_result=Sum('mandara_progress__E8_result'),
+               F1_result=Sum('mandara_progress__F1_result'),
+               F2_result=Sum('mandara_progress__F2_result'),
+               F3_result=Sum('mandara_progress__F3_result'),
+               F4_result=Sum('mandara_progress__F4_result'),
+               F5_result=Sum('mandara_progress__F5_result'),
+               F6_result=Sum('mandara_progress__F6_result'),
+               F7_result=Sum('mandara_progress__F7_result'),
+               F8_result=Sum('mandara_progress__F8_result'),
+               G1_result=Sum('mandara_progress__G1_result'),
+               G2_result=Sum('mandara_progress__G2_result'),
+               G3_result=Sum('mandara_progress__G3_result'),
+               G4_result=Sum('mandara_progress__G4_result'),
+               G5_result=Sum('mandara_progress__G5_result'),
+               G6_result=Sum('mandara_progress__G6_result'),
+               G7_result=Sum('mandara_progress__G7_result'),
+               G8_result=Sum('mandara_progress__G8_result'),
+               H1_result=Sum('mandara_progress__H1_result'),
+               H2_result=Sum('mandara_progress__H2_result'),
+               H3_result=Sum('mandara_progress__H3_result'),
+               H4_result=Sum('mandara_progress__H4_result'),
+               H5_result=Sum('mandara_progress__H5_result'),
+               H6_result=Sum('mandara_progress__H6_result'),
+               H7_result=Sum('mandara_progress__H7_result'),
+               H8_result=Sum('mandara_progress__H8_result'),
+            ).first()
+        
+        end_YYYYMM = get_mandara_detail.end_YYYYMM
+        start_YYYYMM = get_mandara_detail.start_YYYYMM
+
+        format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月'
+        format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月'
+
+        month = datetime.date.today().strftime("%m")
+
+        kwargs['get_mandara_detail'] = get_mandara_detail
+        kwargs['format_end_date'] = format_end_date
+        kwargs['format_start_date'] = format_start_date
+        kwargs['month'] = month
+        
+        return kwargs
+
+@login_required
+def get_detail_month(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            try:
+                company_id = request.user.company_id
+                user_id = request.user.id
+                today_str = datetime.date.today().strftime("%Y%m")
+                year = datetime.date.today().strftime("%Y")
+                month = datetime.date.today().strftime("%m")
+                box = request.GET['type_box']
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today_str).order_by('start_YYYYMM').first()
+                if mandara_get is not None:
+                    list_resp = list(mandara_get.mandara_progress.annotate(day=ExtractDay('date')).filter(date__year=year,date__month=month).values('day', box + '_result'))
+                    return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    else:
+        return HttpResponseBadRequest('Invalid request')
+
+@login_required
+def post_detail_day(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                company_id = request.user.company_id
+                user_id = request.user.id
+                today_str = datetime.date.today().strftime("%Y%m")
+                data = json.load(request)
+                todo = data.get('box')
+                field = todo + '_result'
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today_str).order_by('start_YYYYMM').first()
+                if mandara_get is not None:
+                    today_progress = MandaraProgress.objects.filter(mandara_base_id=mandara_get.id,date=datetime.date.today())
+                    check = today_progress.values(todo+'_result').first()
+                    if check[field] == 0:
+                        today_progress.update(**{field: 1})
+                        if 'A' in todo:
+                            mandara_get.A_result += 1
+                        if 'B' in todo:
+                            mandara_get.B_result += 1 
+                        if 'C' in todo:
+                            mandara_get.C_result += 1 
+                        if 'D' in todo:
+                            mandara_get.D_result += 1 
+                        if 'E' in todo:
+                            mandara_get.E_result += 1 
+                        if 'F' in todo:
+                            mandara_get.F_result += 1 
+                        if 'G' in todo:
+                            mandara_get.G_result += 1 
+                        if 'H' in todo:
+                            mandara_get.H_result += 1
+                        mandara_get.save()
+                        return JsonResponse({'status': 'OK'})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'NG'}, status=400)
+    else:
+        return HttpResponseBadRequest('Invalid request')
+
+def mandara_pdf(request, id):
+    options = {
+        'page-size': 'A4',
+        'page-height': "10in",
+        'page-width': "13in",
+        'margin-top': '0in',
+        'margin-right': '0in',
+        'margin-bottom': '0in',
+        'margin-left': '0in',
+        'encoding': "UTF-8",
+        'no-outline': None,
+        'javascript-delay': 200,
+    }
+
+    template_path = 'mandara/mandara_print.html'
+    template = get_template(template_path)
+    company_id = request.user.company_id
+    user_id = request.user.id
+    mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,id=id).annotate(
+           A1_result=Sum('mandara_progress__A1_result'),
+           A2_result=Sum('mandara_progress__A2_result'),
+           A3_result=Sum('mandara_progress__A3_result'),
+           A4_result=Sum('mandara_progress__A4_result'),
+           A5_result=Sum('mandara_progress__A5_result'),
+           A6_result=Sum('mandara_progress__A6_result'),
+           A7_result=Sum('mandara_progress__A7_result'),
+           A8_result=Sum('mandara_progress__A8_result'),
+           B1_result=Sum('mandara_progress__B1_result'),
+           B2_result=Sum('mandara_progress__B2_result'),
+           B3_result=Sum('mandara_progress__B3_result'),
+           B4_result=Sum('mandara_progress__B4_result'),
+           B5_result=Sum('mandara_progress__B5_result'),
+           B6_result=Sum('mandara_progress__B6_result'),
+           B7_result=Sum('mandara_progress__B7_result'),
+           B8_result=Sum('mandara_progress__B8_result'),
+           C1_result=Sum('mandara_progress__C1_result'),
+           C2_result=Sum('mandara_progress__C2_result'),
+           C3_result=Sum('mandara_progress__C3_result'),
+           C4_result=Sum('mandara_progress__C4_result'),
+           C5_result=Sum('mandara_progress__C5_result'),
+           C6_result=Sum('mandara_progress__C6_result'),
+           C7_result=Sum('mandara_progress__C7_result'),
+           C8_result=Sum('mandara_progress__C8_result'),
+           D1_result=Sum('mandara_progress__D1_result'),
+           D2_result=Sum('mandara_progress__D2_result'),
+           D3_result=Sum('mandara_progress__D3_result'),
+           D4_result=Sum('mandara_progress__D4_result'),
+           D5_result=Sum('mandara_progress__D5_result'),
+           D6_result=Sum('mandara_progress__D6_result'),
+           D7_result=Sum('mandara_progress__D7_result'),
+           D8_result=Sum('mandara_progress__D8_result'),
+           E1_result=Sum('mandara_progress__E1_result'),
+           E2_result=Sum('mandara_progress__E2_result'),
+           E3_result=Sum('mandara_progress__E3_result'),
+           E4_result=Sum('mandara_progress__E4_result'),
+           E5_result=Sum('mandara_progress__E5_result'),
+           E6_result=Sum('mandara_progress__E6_result'),
+           E7_result=Sum('mandara_progress__E7_result'),
+           E8_result=Sum('mandara_progress__E8_result'),
+           F1_result=Sum('mandara_progress__F1_result'),
+           F2_result=Sum('mandara_progress__F2_result'),
+           F3_result=Sum('mandara_progress__F3_result'),
+           F4_result=Sum('mandara_progress__F4_result'),
+           F5_result=Sum('mandara_progress__F5_result'),
+           F6_result=Sum('mandara_progress__F6_result'),
+           F7_result=Sum('mandara_progress__F7_result'),
+           F8_result=Sum('mandara_progress__F8_result'),
+           G1_result=Sum('mandara_progress__G1_result'),
+           G2_result=Sum('mandara_progress__G2_result'),
+           G3_result=Sum('mandara_progress__G3_result'),
+           G4_result=Sum('mandara_progress__G4_result'),
+           G5_result=Sum('mandara_progress__G5_result'),
+           G6_result=Sum('mandara_progress__G6_result'),
+           G7_result=Sum('mandara_progress__G7_result'),
+           G8_result=Sum('mandara_progress__G8_result'),
+           H1_result=Sum('mandara_progress__H1_result'),
+           H2_result=Sum('mandara_progress__H2_result'),
+           H3_result=Sum('mandara_progress__H3_result'),
+           H4_result=Sum('mandara_progress__H4_result'),
+           H5_result=Sum('mandara_progress__H5_result'),
+           H6_result=Sum('mandara_progress__H6_result'),
+           H7_result=Sum('mandara_progress__H7_result'),
+           H8_result=Sum('mandara_progress__H8_result'),
+        ).first()
+    context = {'mandara': mandara, 'request': request}
+    html = template.render(context)
+
+    config = pdfkit.configuration(wkhtmltopdf=wkhtml_to_pdf)
+
+    pdf = pdfkit.from_string(html, False,configuration=config, options=options)
+
+    # Generate download
+    response = HttpResponse(pdf, content_type='application/pdf')
+
+    response['Content-Disposition'] = 'attachment; filename="wkhtml_to_pdf.pdf"'
+    # print(response.status_code)
+    if response.status_code != 200:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

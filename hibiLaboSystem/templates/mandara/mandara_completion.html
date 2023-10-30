@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<!-- chartの呼び出し -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/mandara_completion.css' %}">
+
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="wrapper-body">
+                        <div class="body-bottom">
+                            <div class="wrapper-body-left">
+                                <div class="body-top mb-4">
+                                    <div class="body-top-left">
+                                        <div class="mb-4">
+                                            <h2 class="text-title">COMPLETION CHART</h2>
+                                        </div>
+                                       <form action="" method="post">
+                                        {% csrf_token %}
+                                            <div class="item-select">
+                                                {{ form.start }}
+                                                <p class="to">～</p>
+                                                {{ form.end }}
+                                                <button type="submit" class="button">表示</button>
+                                            </div>
+                                       </form>
+                                    </div>
+                                </div>
+                                <div class="item-date">
+                                    {% for mandara in mandara_get %}
+                                    <a href="{% url 'mandara_completion_detail' mandara.id %}">
+                                        <div class="wrapper-date">
+                                            <div class="desc-item d-flex justify-content-center align-items-center">
+                                                <div class="mr-2">
+                                                    <b>{{mandara.display_time}}</b>
+                                                </div>
+                                                <svg fill="black" xmlns="http://www.w3.org/2000/svg" width="30"
+                                                    height="30" fill="currentColor" class="bi bi-caret-right"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
