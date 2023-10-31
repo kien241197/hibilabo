@@ -1586,3 +1586,12 @@ class MandaraPersonal(LoginRequiredMixin, TemplateView):
         user_id = self.request.user.id
 
         return kwargs
+
+class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_masmas_chart.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs

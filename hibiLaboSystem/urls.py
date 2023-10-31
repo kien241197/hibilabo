@@ -41,4 +41,6 @@ urlpatterns = [
     path('mandara/ajax/get-detail', views.get_detail_month, name='mandara_ajax_get_detail'),
     path('mandara/ajax/post-day', views.post_detail_day, name='mandara_ajax_post_day'),
     path('mandara-personal', views.MandaraPersonal.as_view(), name='mandara_personal'),
+    path('mandara-masmas-chart', views.MandaraMasMasChart.as_view(), name='mandara_masmas_chart'),
+    
 ]
