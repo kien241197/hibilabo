@@ -925,3 +925,19 @@ body {
     padding: 20px;
 }
 
+
+.select-label {
+    min-width: 150px;
+    height: 40px;
+    background: #fff;
+    border-radius: 10px;
+    font-size: 15px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(118, 118, 118);
+    color: #000;
+}
+

@@ -4,9 +4,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
     integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
     crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js" integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"
+    integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A=="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/mandara_personal.css' %}">
 
@@ -23,12 +25,12 @@
                     <div class="tab-content col-md-8">
                         <div class="tab-pane fade active show" id="tab1">
                             <div class="feedback-content">
-                                <div class="title">
+                                <div class="title mb-5">
                                     <h2>MANDARA CHART</h2>
                                 </div>
                                 <div class="filter">
                                     <form action="" method="post" enctype="multipart/form-data">
-                                        <select name="evaluation_unit" class="form" required="" id="id_evaluation_unit">
+                                        <select name="evaluation_unit" class="form font-weight-bold" required="" id="id_evaluation_unit">
                                             <option value="" selected="">----</option>
 
                                             <option value="1">Test_9th</option>
@@ -43,7 +45,8 @@
                                     <div class="body-bottom-left" id="value-body-bottom-left">
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasF" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasF"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
                                             <div class="value-table group1 true" data-box-type="F1">
                                                 <p>F</p>
@@ -62,10 +65,8 @@
                                                 <span class="value-group-1"></span>
                                             </div>
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">F</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">5</span>
-                                                <p class="title-value-table-score">FK</p>
                                             </div>
 
 
@@ -105,7 +106,8 @@
 
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasC" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasC"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
 
                                             <div class="value-table group2 true" data-box-type="C1">
@@ -141,10 +143,8 @@
 
 
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">C</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">2</span>
-                                                <p class="title-value-table-score">CK</p>
                                             </div>
 
 
@@ -185,7 +185,8 @@
                                         <div class="wrapper-item-body-bottom-left">
 
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasG" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasG"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
                                             <div class="value-table group3 true" data-box-type="G1">
                                                 <p>D</p>
@@ -220,10 +221,8 @@
 
 
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">G</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">3</span>
-                                                <p class="title-value-table-score">GK</p>
                                             </div>
 
 
@@ -264,7 +263,8 @@
                                         <div class="wrapper-item-body-bottom-left">
 
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasB" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasB"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
                                             <div class="value-table group4 true" data-box-type="B1">
                                                 <p>B</p>
@@ -299,10 +299,8 @@
 
 
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">B</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">3</span>
-                                                <p class="title-value-table-score">BK</p>
                                             </div>
 
 
@@ -347,8 +345,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">F</span>
-                                                <p class="title-main-score">FK</p>
+                                                <div class="title-main-score">
+                                                    <p>体づくり</p>
+                                                </div>
                                                 <span class="value-score">5</span>
                                             </div>
 
@@ -357,8 +356,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">C</span>
-                                                <p class="title-main-score">CK</p>
+                                                <div class="title-main-score">
+                                                    <p>コントール</p>
+                                                </div>
                                                 <span class="value-score">2</span>
                                             </div>
 
@@ -367,8 +367,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">G</span>
-                                                <p class="title-main-score">GK</p>
+                                                <div class="title-main-score">
+                                                    <p>キ レ</p>
+                                                </div>
                                                 <span class="value-score">3</span>
                                             </div>
 
@@ -377,8 +378,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">B</span>
-                                                <p class="title-main-score">BK</p>
+                                                <div class="title-main-score">
+                                                    <p>メンタル</p>
+                                                </div>
                                                 <span class="value-score">3</span>
                                             </div>
 
@@ -395,8 +397,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">D</span>
-                                                <p class="title-main-score">DK</p>
+                                                <div class="title-main-score">
+                                                    <p>スピード 160km/h</p>
+                                                </div>
                                                 <span class="value-score">1</span>
                                             </div>
 
@@ -405,8 +408,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">E</span>
-                                                <p class="title-main-score">EK</p>
+                                                <div class="title-main-score">
+                                                    <p> 人間性</p>
+                                                </div>
                                                 <span class="value-score">4</span>
                                             </div>
 
@@ -415,8 +419,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">A</span>
-                                                <p class="title-main-score">AK</p>
+                                                <div class="title-main-score">
+                                                    <p>運</p>
+                                                </div>
                                                 <span class="value-score">3</span>
                                             </div>
 
@@ -425,8 +430,9 @@
 
 
                                             <div class="value-table-score SCORE-text">
-                                                <span class="text-table-score">H</span>
-                                                <p class="title-main-score">HL</p>
+                                                <div class="title-main-score">
+                                                    <p>変化球</p>
+                                                </div>
                                                 <span class="value-score">2</span>
                                             </div>
 
@@ -439,7 +445,8 @@
                                         <div class="wrapper-item-body-bottom-left">
 
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasD" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasD"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
                                             <div class="value-table group5 true" data-box-type="D1">
                                                 <p>D</p>
@@ -474,10 +481,8 @@
 
 
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">D</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">1</span>
-                                                <p class="title-value-table-score">DK</p>
                                             </div>
 
 
@@ -517,7 +522,8 @@
 
                                         <div class="wrapper-item-body-bottom-left">
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasE" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasE"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
 
                                             <div class="value-table group6 true" data-box-type="E1">
@@ -553,10 +559,8 @@
 
 
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">E</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">4</span>
-                                                <p class="title-value-table-score">EK</p>
                                             </div>
 
 
@@ -597,7 +601,8 @@
                                         <div class="wrapper-item-body-bottom-left">
 
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasA" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasA"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
                                             <div class="value-table group7 true" data-box-type="A1">
                                                 <p>A</p>
@@ -632,10 +637,8 @@
 
 
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">A</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">3</span>
-                                                <p class="title-value-table-score">AK</p>
                                             </div>
 
 
@@ -676,7 +679,8 @@
                                         <div class="wrapper-item-body-bottom-left">
 
                                             <div class="canvas-personal">
-                                                <canvas class="canvas" id="mycanvasH" style="width: 100%; height: 100%;"></canvas>
+                                                <canvas class="canvas" id="mycanvasH"
+                                                    style="width: 100%; height: 100%;"></canvas>
                                             </div>
                                             <div class="value-table group8 true" data-box-type="H1">
                                                 <p>CC</p>
@@ -711,10 +715,8 @@
 
 
                                             <div class="value-table-score SCORE">
-                                                <span class="text-table-score">H</span>
                                                 <p>SCORE</p>
                                                 <span class="value-score">2</span>
-                                                <p class="title-value-table-score">HL</p>
                                             </div>
 
 
@@ -3318,16 +3320,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="items">
-                            <span class="btn-cus btn-red">集計</span>
-                            <div class="items_content">
-                                <h3><a href="#">MANDARA</a></h3>
-                                <span class="date">2023/3/7</span>
-                                <a class="btn-custom btn-white" href="#">CHECK</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -3335,47 +3327,47 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <script>
+<script>
 
-        function setCanvas(id, value) {
-            new Chart(document.getElementById(id), {
-                type: 'radar',
-                data: {
-                    labels: ['', '', '', '', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: [8,8,8,8,8,8,8,8],
-                        fill: true,
-                        borderColor: "#e9e2a0",
-                        pointBackgroundColor: '#e2db9d',
-                    }]
+    function setCanvas(id, value) {
+        new Chart(document.getElementById(id), {
+            type: 'radar',
+            data: {
+                labels: ['', '', '', '', '', '', '', ''],
+                datasets: [{
+                    label: '',
+                    data: [8, 8, 8, 8, 8, 8, 8, 8],
+                    fill: true,
+                    borderColor: "#e9e2a0",
+                    pointBackgroundColor: '#e2db9d',
+                }]
+            },
+            options: {
+                tooltips: false,
+                legend: {
+                    display: false
                 },
-                options: {
-                    tooltips: false,
-                    legend: {
+                scale: {
+                    gridLines: {
+                        circular: false,
+                        color: "gray"
+                    },
+                    ticks: {
                         display: false
-                    },
-                    scale: {
-                        gridLines: {
-                            circular: false,
-                            color: "gray"
-                        },
-                        ticks: {
-                            display: false
-                        }
-                    },
+                    }
                 },
-            
-            });
-        }
-        
-        setTimeout(setCanvas("mycanvasA", null), 100)
-        setTimeout(setCanvas("mycanvasB", null), 100)
-        setTimeout(setCanvas("mycanvasC", null), 100)
-        setTimeout(setCanvas("mycanvasH", null), 100)
-        setTimeout(setCanvas("mycanvasD", null), 100)
-        setTimeout(setCanvas("mycanvasE", null), 100)
-        setTimeout(setCanvas("mycanvasF", null), 100)
-        setTimeout(setCanvas("mycanvasG", null), 100)
-    </script>
+            },
+
+        });
+    }
+
+    setTimeout(setCanvas("mycanvasA", null), 100)
+    setTimeout(setCanvas("mycanvasB", null), 100)
+    setTimeout(setCanvas("mycanvasC", null), 100)
+    setTimeout(setCanvas("mycanvasH", null), 100)
+    setTimeout(setCanvas("mycanvasD", null), 100)
+    setTimeout(setCanvas("mycanvasE", null), 100)
+    setTimeout(setCanvas("mycanvasF", null), 100)
+    setTimeout(setCanvas("mycanvasG", null), 100)
+</script>
 {% endblock %}
