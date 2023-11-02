@@ -1604,3 +1604,92 @@ class MandaraCompletionTab(LoginRequiredMixin, TemplateView):
         user_id = self.request.user.id
 
         return kwargs
+    
+class MandaraCompletionTabDetail(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_completion_tab_detail.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        id = self.kwargs.get('id')
+        get_mandara_detail = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,id=id).annotate(
+               A1_result=Sum('mandara_progress__A1_result'),
+               A2_result=Sum('mandara_progress__A2_result'),
+               A3_result=Sum('mandara_progress__A3_result'),
+               A4_result=Sum('mandara_progress__A4_result'),
+               A5_result=Sum('mandara_progress__A5_result'),
+               A6_result=Sum('mandara_progress__A6_result'),
+               A7_result=Sum('mandara_progress__A7_result'),
+               A8_result=Sum('mandara_progress__A8_result'),
+               B1_result=Sum('mandara_progress__B1_result'),
+               B2_result=Sum('mandara_progress__B2_result'),
+               B3_result=Sum('mandara_progress__B3_result'),
+               B4_result=Sum('mandara_progress__B4_result'),
+               B5_result=Sum('mandara_progress__B5_result'),
+               B6_result=Sum('mandara_progress__B6_result'),
+               B7_result=Sum('mandara_progress__B7_result'),
+               B8_result=Sum('mandara_progress__B8_result'),
+               C1_result=Sum('mandara_progress__C1_result'),
+               C2_result=Sum('mandara_progress__C2_result'),
+               C3_result=Sum('mandara_progress__C3_result'),
+               C4_result=Sum('mandara_progress__C4_result'),
+               C5_result=Sum('mandara_progress__C5_result'),
+               C6_result=Sum('mandara_progress__C6_result'),
+               C7_result=Sum('mandara_progress__C7_result'),
+               C8_result=Sum('mandara_progress__C8_result'),
+               D1_result=Sum('mandara_progress__D1_result'),
+               D2_result=Sum('mandara_progress__D2_result'),
+               D3_result=Sum('mandara_progress__D3_result'),
+               D4_result=Sum('mandara_progress__D4_result'),
+               D5_result=Sum('mandara_progress__D5_result'),
+               D6_result=Sum('mandara_progress__D6_result'),
+               D7_result=Sum('mandara_progress__D7_result'),
+               D8_result=Sum('mandara_progress__D8_result'),
+               E1_result=Sum('mandara_progress__E1_result'),
+               E2_result=Sum('mandara_progress__E2_result'),
+               E3_result=Sum('mandara_progress__E3_result'),
+               E4_result=Sum('mandara_progress__E4_result'),
+               E5_result=Sum('mandara_progress__E5_result'),
+               E6_result=Sum('mandara_progress__E6_result'),
+               E7_result=Sum('mandara_progress__E7_result'),
+               E8_result=Sum('mandara_progress__E8_result'),
+               F1_result=Sum('mandara_progress__F1_result'),
+               F2_result=Sum('mandara_progress__F2_result'),
+               F3_result=Sum('mandara_progress__F3_result'),
+               F4_result=Sum('mandara_progress__F4_result'),
+               F5_result=Sum('mandara_progress__F5_result'),
+               F6_result=Sum('mandara_progress__F6_result'),
+               F7_result=Sum('mandara_progress__F7_result'),
+               F8_result=Sum('mandara_progress__F8_result'),
+               G1_result=Sum('mandara_progress__G1_result'),
+               G2_result=Sum('mandara_progress__G2_result'),
+               G3_result=Sum('mandara_progress__G3_result'),
+               G4_result=Sum('mandara_progress__G4_result'),
+               G5_result=Sum('mandara_progress__G5_result'),
+               G6_result=Sum('mandara_progress__G6_result'),
+               G7_result=Sum('mandara_progress__G7_result'),
+               G8_result=Sum('mandara_progress__G8_result'),
+               H1_result=Sum('mandara_progress__H1_result'),
+               H2_result=Sum('mandara_progress__H2_result'),
+               H3_result=Sum('mandara_progress__H3_result'),
+               H4_result=Sum('mandara_progress__H4_result'),
+               H5_result=Sum('mandara_progress__H5_result'),
+               H6_result=Sum('mandara_progress__H6_result'),
+               H7_result=Sum('mandara_progress__H7_result'),
+               H8_result=Sum('mandara_progress__H8_result'),
+            ).first()
+        
+        end_YYYYMM = get_mandara_detail.end_YYYYMM
+        start_YYYYMM = get_mandara_detail.start_YYYYMM
+
+        format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月'
+        format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月'
+
+        month = datetime.date.today().strftime("%m")
+
+        kwargs['get_mandara_detail'] = get_mandara_detail
+        kwargs['format_end_date'] = format_end_date
+        kwargs['format_start_date'] = format_start_date
+        kwargs['month'] = month
+        
+        return kwargs
