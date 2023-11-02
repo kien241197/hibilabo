@@ -793,13 +793,13 @@ body {
 
 .title-main-score-center {
     top: 0 !important;
-    background-color: #e7e7e8;
+    /* background-color: #e7e7e8; */
 }
 
 .title-main-score-bottom {
 
     width: 100%;
-    background-color: #e7e7e8;
+    background-color: white;
     position: absolute;
     bottom: 0;
     color: unset !important;
