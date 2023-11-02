@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/mandara_completion_tab.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/mandara_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="h-100">
+                            <div class="tab-pane fade active show" id="tab1">
+                                <div class="feedback-content">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <div class="title mb-5">
+                                                <h2>COMPLETION MANDARA</h2>
+                                            </div>
+                                            <div class="filter">
+                                                <form action="" method="post" enctype="multipart/form-data">
+                                                    <div class="item-select d-flex align-items-center gap-2"
+                                                        style="display: flex;">
+                                                        <label name="start"
+                                                            class="d-lfex items-center select font-weight-bold select-label border-1 bg-white"
+                                                            style="width: 150px; height: 40px;">
+                                                            2023 年 3 月
+                                                        </label>
+                                                        <p class="to m-0 px-3">～</p>
+                                                        <label name="start"
+                                                            class="d-lfex select mr-3 items-center font-weight-bold select-label border-1 bg-white"
+                                                            style="width: 150px; height: 40px;">
+                                                            2024 年 3 月
+                                                        </label>
+                                                        <select name="evaluation_unit"
+                                                            class="form border-1 font-weight-bold" required=""
+                                                            id="id_evaluation_unit">
+                                                            <option value="" selected="">----</option>
+
+                                                            <option value="1">Test_9th</option>
+
+                                                        </select>
+                                                        <input type="hidden" name="csrfmiddlewaretoken"
+                                                            value="PqPJA4r51NOoVIFkeutKexSc4kBCNORc3jFCxxJvLPo2elpkjJN6Pd7npD9eUqp3">
+                                                        <button class="mx-3" type="submit" name="submit">表示</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="item-date">
+
+                                            <a href="#">
+                                                <div class="wrapper-date">
+                                                    <div
+                                                        class="desc-item d-flex justify-content-center align-items-center">
+                                                        <div class="mr-2">
+                                                            <b>2021/7 ~ 2022/6</b>
+                                                        </div>
+                                                        <svg fill="black" xmlns="http://www.w3.org/2000/svg" width="30"
+                                                            height="30" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </a>
+
+                                            <a href="#">
+                                                <div class="wrapper-date">
+                                                    <div
+                                                        class="desc-item d-flex justify-content-center align-items-center">
+                                                        <div class="mr-2">
+                                                            <b>2022/7 ~ 2023/6</b>
+                                                        </div>
+                                                        <svg fill="black" xmlns="http://www.w3.org/2000/svg" width="30"
+                                                            height="30" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

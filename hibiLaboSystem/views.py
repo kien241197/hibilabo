@@ -1595,3 +1595,12 @@ class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
         user_id = self.request.user.id
 
         return kwargs
+    
+class MandaraCompletionTab(LoginRequiredMixin, TemplateView):
+    template_name = "mandara/mandara_completion_tab.html"
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        return kwargs
