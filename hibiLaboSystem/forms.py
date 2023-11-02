@@ -223,7 +223,6 @@ class SelfcheckEvaluationUnitForm(forms.Form):
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
-        self.fields['user_id'].queryset = queryset
 
 class BonknowForm(forms.Form):
     start = forms.ChoiceField(
@@ -1042,3 +1041,39 @@ class MandaraCompleteForm(forms.Form):
     end = forms.ChoiceField(
         widget=fields.MandaraMonthYearSelectWidget(),
     )
+
+class MandaraChartForm(forms.Form):
+
+    # 評価対象社員の選択
+    user_id = forms.ModelChoiceField(
+        empty_label='全社員',
+        label='対象社員',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form font-weight-bold'}),
+        queryset=models.User.objects.none()
+    )
+
+    def __init__(self, request, *args, **kwargs):
+        super(MandaraChartForm, self).__init__(*args, **kwargs)
+        queryset = models.User.objects.all()
+        if request.user:
+            queryset = queryset.filter(company_id=request.user.company_id)
+        self.fields['user_id'].queryset = queryset
+
+class MandaraForm(forms.Form):
+
+    # 評価対象社員の選択
+    user_id = forms.ModelChoiceField(
+        empty_label='----',
+        label='対象社員',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form font-weight-bold'}),
+        queryset=models.User.objects.none()
+    )
+
+    def __init__(self, request, *args, **kwargs):
+        super(MandaraForm, self).__init__(*args, **kwargs)
+        queryset = models.User.objects.all()
+        if request.user:
+            queryset = queryset.filter(company_id=request.user.company_id)
+        self.fields['user_id'].queryset = queryset
