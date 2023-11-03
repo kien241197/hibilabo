@@ -32,25 +32,18 @@
                                                 <h2>MASMAS MANDARA CHART</h2>
                                             </div>
                                             <div class="filter">
-                                                <form action="" method="post" enctype="multipart/form-data">
+                                                <form action="" method="post">
+                                                    {% csrf_token %}
                                                     <div class="item-select d-flex align-items-center gap-2"
                                                         style="display: flex;">
                                                         <label name="start" class="d-lfex items-center select font-weight-bold select-label border-1 bg-white" style="width: 150px; height: 40px;">
-                                                            2023 年 3 月
+                                                            {{ start }}
                                                         </label>
                                                         <p class="to m-0 px-3">～</p>
                                                         <label name="start" class="d-lfex select mr-3 items-center font-weight-bold select-label border-1 bg-white" style="width: 150px; height: 40px;">
-                                                            2024 年 3 月
+                                                            {{ end }}
                                                         </label>
-                                                        <select  name="evaluation_unit" class="form border-1 font-weight-bold" required=""
-                                                            id="id_evaluation_unit">
-                                                            <option value="" selected="">----</option>
-
-                                                            <option value="1">Test_9th</option>
-
-                                                        </select>
-                                                        <input type="hidden" name="csrfmiddlewaretoken"
-                                                            value="PqPJA4r51NOoVIFkeutKexSc4kBCNORc3jFCxxJvLPo2elpkjJN6Pd7npD9eUqp3">
+                                                        {{ form.user_id }}
                                                         <button class="mx-3" type="submit" name="submit">表示</button>
                                                     </div>
                                                 </form>
@@ -78,10 +71,10 @@
         return new Chart(barChart1, {
             type: 'bar',
             data: {
-                labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+                labels: {{ data_month|safe }},
                 datasets: [{
                     label: '',
-                    data: [48, 53, 66, 78, 73, 70, 85],
+                    data: {{ data_value|safe }},
                     backgroundColor: '#C8C9CA',
                 }]
             },
