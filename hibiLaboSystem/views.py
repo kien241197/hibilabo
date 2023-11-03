@@ -1637,12 +1637,32 @@ class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
     
 class MandaraCompletionTab(LoginRequiredMixin, TemplateView):
     template_name = "mandara/mandara_completion_tab.html"
+    form_class = forms.MandaraForm
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
+        kwargs['form'] = self.form_class(self.request)
+        today = datetime.date.today().strftime("%Y%m")
+        user_id = self.request.POST.get("user_id")
+        mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__lt=today)
+        max_time = mandaras.order_by('-end_YYYYMM').first()
+        min_time = mandaras.order_by('start_YYYYMM').first()
+        start = min_time.start_YYYYMM[0:4] + '年' + min_time.start_YYYYMM[4:6] + '月'
+        end = max_time.end_YYYYMM[0:4] + '年' + max_time.end_YYYYMM[4:6] + '月'
+        kwargs['start'] = start
+        kwargs['end'] = end
+        if user_id is not None and user_id != '':
+            kwargs['mandaras'] = mandaras.filter(user_id=user_id)
 
         return kwargs
-    
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = self.form_class(request, request.POST)
+        context['form'] = form
+
+        return self.render_to_response(context)
+
 class MandaraCompletionTabDetail(LoginRequiredMixin, TemplateView):
     template_name = "mandara/mandara_completion_tab_detail.html"
 
@@ -1650,7 +1670,7 @@ class MandaraCompletionTabDetail(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         id = self.kwargs.get('id')
-        get_mandara_detail = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,id=id).annotate(
+        get_mandara_detail = MandaraBase.objects.filter(company_id=company_id,id=id).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
