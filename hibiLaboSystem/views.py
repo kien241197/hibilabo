@@ -1600,6 +1600,7 @@ class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
         mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today)
         if user_id is not None and user_id != '':
             mandaras = mandaras.filter(user_id=user_id)
+        first_mandara = mandaras.first()
         results = MandaraProgress.objects.all().filter(mandara_base__in=mandaras).annotate(
             month=ExtractMonth('date'),
             year=ExtractYear('date')
@@ -1621,8 +1622,8 @@ class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
         kwargs['data_value'] = list_value
 
 
-        start = mandaras.first().start_YYYYMM[0:4] + '年' + mandaras.first().start_YYYYMM[4:6] + '月'
-        end = mandaras.first().end_YYYYMM[0:4] + '年' + mandaras.first().end_YYYYMM[4:6] + '月'
+        start = first_mandara.start_YYYYMM[0:4] + '年' + first_mandara.start_YYYYMM[4:6] + '月'
+        end = first_mandara.end_YYYYMM[0:4] + '年' + first_mandara.end_YYYYMM[4:6] + '月'
         kwargs['start'] = start
         kwargs['end'] = end
 
