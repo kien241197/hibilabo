@@ -40,4 +40,10 @@ urlpatterns = [
     path('mandara-completion-detail/<id>', views.MandaraCompletionDetail.as_view(), name='mandara_completion_detail'), #Display Detail
     path('mandara/ajax/get-detail', views.get_detail_month, name='mandara_ajax_get_detail'),
     path('mandara/ajax/post-day', views.post_detail_day, name='mandara_ajax_post_day'),
+    path('mandara-personal', views.MandaraPersonal.as_view(), name='mandara_personal'),
+    path('mandara-masmas-chart', views.MandaraMasMasChart.as_view(), name='mandara_masmas_chart'),
+    path('mandara-completion-tab', views.MandaraCompletionTab.as_view(), name='mandara_completion_tab'),
+    path('mandara-completion-tab-detail/<id>', views.MandaraCompletionTabDetail.as_view(), name='mandara_completion_tab_detail'), #Display Detail
+    
+    
 ]

@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/mandara_masmas_chart.css' %}">
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/mandara_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="">
+                            <div class="tab-pane fade active show" id="tab1">
+                                <div class="feedback-content">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <div class="title mb-5">
+                                                <h2>MASMAS MANDARA CHART</h2>
+                                            </div>
+                                            <div class="filter">
+                                                <form action="" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="item-select d-flex align-items-center gap-2"
+                                                        style="display: flex;">
+                                                        <label name="start" class="d-lfex items-center select font-weight-bold select-label border-1 bg-white" style="width: 150px; height: 40px;">
+                                                            {{ start }}
+                                                        </label>
+                                                        <p class="to m-0 px-3">～</p>
+                                                        <label name="start" class="d-lfex select mr-3 items-center font-weight-bold select-label border-1 bg-white" style="width: 150px; height: 40px;">
+                                                            {{ end }}
+                                                        </label>
+                                                        {{ form.user_id }}
+                                                        <button class="mx-3" type="submit" name="submit">表示</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <canvas id="barChart" class="chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    Chart.register(ChartDataLabels);
+
+    function createBarChart() {
+        const barChart1 = document.getElementById('barChart').getContext('2d');
+        return new Chart(barChart1, {
+            type: 'bar',
+            data: {
+                labels: {{ data_month|safe }},
+                datasets: [{
+                    label: '',
+                    data: {{ data_value|safe }},
+                    backgroundColor: '#C8C9CA',
+                }]
+            },
+            options: {
+                plugins: {
+
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        offset: -5,
+                        color: "#2CAEB5",
+                        font: { size: 22, weight: 700 },
+                        formatter: function (value, context) {
+                            return value;
+                        },
+
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#000000',
+
+                        }
+                    },
+                    y: {
+                        max: 100,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#000000',
+
+                        }
+                    },
+                }
+            },
+        });
+    }
+
+    createBarChart()
+</script>
+{% endblock %}

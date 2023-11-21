@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from . import models, forms, utils
 from django.http import HttpResponse
 from django.shortcuts import render
 from import_export.admin import ImportMixin
 from django.contrib.auth.hashers import make_password
+from django.core.exceptions import ValidationError
+from . import models, forms, utils, validate
 import json
 
 # Register your models here.
@@ -23,6 +24,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         import_object_status = []
         create_new_characters = []
         if request.method == "POST":
+            validators = [validate.MinimumLengthValidator, validate.NumberValidator, validate.UppercaseValidator, validate.LowercaseValidator, validate.SymbolValidator]
             # clear the list for every new request
             create_new_characters = []
             # capture payload from request
@@ -32,22 +34,31 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             # helper class for validation and other stuff
             # look into git repo
             util_obj = utils.ImportUtils(column_headers)
-
+            array_user = []
             for row in reader:
-                id = row[util_obj.get_column("id")]
-                company_id = util_obj.validate_data(row[util_obj.get_column("company_id")])
-                branch_id = util_obj.validate_data(row[util_obj.get_column("branch_id")])
                 username = row[util_obj.get_column("username")]
                 password = row[util_obj.get_column("password")]
-                create_new_characters.append(
-                    models.User(
-                        id=id, company_id=company_id, branch_id=branch_id, username=username, password=password,
-                    )
-                )
-                import_object_status.append({"username": username,"company_id": company_id,"branch_id": branch_id, "status": "FINISHED",
-                                            "msg": "User created successfully!"})
+                if models.User.objects.filter(username=username).exists() or username in array_user:
+                    import_object_status.append({"username": username, "status": "ERROR",
+                                                "msg": "username already exist!"})
+                else:
+                    array_user.append(username)
+                    try:
+                        for validator in validators:
+                            validator().validate(password)
+                        create_new_characters.append(
+                            models.User(
+                                username=username, password=make_password(password),
+                            )
+                        )
+                        import_object_status.append({"username": username, "status": "FINISHED",
+                                                    "msg": "User created successfully!"})
+                    except ValidationError as e:
+                        import_object_status.append({"username": username, "status": "ERROR",
+                                                    "msg": str(e.args[0])})
+
             # bulk create objects
-            # models.Characters.objects.bulk_create(create_new_characters)
+            models.User.objects.bulk_create(create_new_characters)
             # return the response to the AJAX call
             context = {
                 "file": csv_file,
@@ -59,7 +70,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         form = forms.CsvImportForm()
         context = {"form": form, "form_title": "Upload users csv file.",
                     "description": "The file should have following headers: "
-                                    "[id,company_id,branch_id,username,password]."
+                                    "[username,password]."
                                     " The Following rows should contain information for the same.",
                                     "endpoint": "/admin/hibiLaboSystem/user/import/"}
         return render(

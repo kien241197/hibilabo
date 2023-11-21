@@ -56,8 +56,6 @@
   <table>
     <tr>
       <th>Username</th>
-      <th>Company ID</th>
-      <th>Branch ID</th>
       <th>Status</th>
       <th>Message</th>
     </tr>
@@ -171,11 +169,12 @@
           totalentries += data.entries;
           $("#entries").text(totalentries);
           $("table").append(
-            `<tr class="parent" onclick="handlecollapse($(this))"><td class="checkpoint">Entries: ${offset} to ${limit}</td><td></td><td></td><td></td><td></td></tr>`
+            `<tr class="parent" onclick="handlecollapse($(this))"><td class="checkpoint">Entries: ${offset} to ${limit}</td><td></td><td></td></tr>`
           );
           data.results.forEach((obj) => {
+            let style = obj.status == 'ERROR' ? 'red' : 'green';
             $("table").append(
-              `<tr class="child"><td>${obj.username}</td><td>${obj.company_id}</td><td>${obj.branch_id}</td><td>${obj.status}</td><td>${obj.msg}</td></tr>`
+              `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.msg}</td></tr>`
             );
           });
           deferred.resolve(data);
