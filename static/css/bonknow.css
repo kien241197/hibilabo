@@ -1,0 +1,93 @@
+.desc-chart {
+
+    padding-top: 50px;
+}
+.desc-chart b {
+    font-size: 130%;
+    letter-spacing: 0.1rem;
+    text-indent: 0.1rem;
+}
+
+.desc-content-top {
+
+    font-weight: 700;
+    color: #000000;
+}
+
+
+.desc-content-bottom {
+
+    font-size: 90%;
+    font-weight: 500;
+}
+
+
+@media screen and (max-width: 960px) {
+    .desc-chart {
+
+        padding-top: 30px;
+    }
+
+    .desc-chart b {
+        font-size: 80%;
+    }
+
+    .desc-content-bottom {
+
+        font-size: 60%;
+    }
+
+}
+
+@media screen and (max-width: 640px) {
+    .desc-chart b {
+        font-size: 130%;
+       
+    }
+
+    .desc-content-bottom {
+
+        font-size: 90%;
+    }
+}
+
+@media screen and (max-width: 384px) {
+    .desc-chart b {
+        font-size: 100%;
+       
+    }
+
+    .desc-content-bottom {
+
+        font-size: 90%;
+    }
+}
+
+
+@media print {
+
+    #mycanvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    #mycanvas2 {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .content-chart {
+        width: 500px !important;
+        height: 500px !important;
+    }
+
+    .content-chart {
+        width: 500px !important;
+        height: 500px !important;
+    }
+
+    .button-chart {
+
+        display: none;
+    }
+}
