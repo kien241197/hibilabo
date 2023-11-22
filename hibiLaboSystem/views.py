@@ -30,6 +30,7 @@ from django.conf import settings
 import os
 from django.template.loader import get_template
 import pdfkit
+import subprocess
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
@@ -1488,7 +1489,7 @@ def mandara_pdf(request, id):
         ).first()
     context = {'mandara': mandara, 'request': request}
     html = template.render(context)
-
+    subprocess.run(wkhtml_to_pdf, check=False)
     config = pdfkit.configuration(wkhtmltopdf=wkhtml_to_pdf)
 
     pdf = pdfkit.from_string(html, False,configuration=config, options=options)
