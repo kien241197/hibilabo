@@ -1414,7 +1414,7 @@ def mandara_pdf(request, id):
         'margin-left': '0in',
         'encoding': "UTF-8",
         'no-outline': None,
-        'javascript-delay': 200,
+        'javascript-delay': 100,
     }
 
     template_path = 'mandara/mandara_print.html'
