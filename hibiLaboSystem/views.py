@@ -1621,11 +1621,11 @@ class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
         kwargs['data_month'] = list_month
         kwargs['data_value'] = list_value
 
-
-        start = first_mandara.start_YYYYMM[0:4] + '年' + first_mandara.start_YYYYMM[4:6] + '月'
-        end = first_mandara.end_YYYYMM[0:4] + '年' + first_mandara.end_YYYYMM[4:6] + '月'
-        kwargs['start'] = start
-        kwargs['end'] = end
+        if first_mandara is not None:
+            start = first_mandara.start_YYYYMM[0:4] + '年' + first_mandara.start_YYYYMM[4:6] + '月'
+            end = first_mandara.end_YYYYMM[0:4] + '年' + first_mandara.end_YYYYMM[4:6] + '月'
+            kwargs['start'] = start
+            kwargs['end'] = end
 
         return kwargs
 
@@ -1648,10 +1648,12 @@ class MandaraCompletionTab(LoginRequiredMixin, TemplateView):
         mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__lt=today)
         max_time = mandaras.order_by('-end_YYYYMM').first()
         min_time = mandaras.order_by('start_YYYYMM').first()
-        start = min_time.start_YYYYMM[0:4] + '年' + min_time.start_YYYYMM[4:6] + '月'
-        end = max_time.end_YYYYMM[0:4] + '年' + max_time.end_YYYYMM[4:6] + '月'
-        kwargs['start'] = start
-        kwargs['end'] = end
+        if min_time is not None:
+            start = min_time.start_YYYYMM[0:4] + '年' + min_time.start_YYYYMM[4:6] + '月'
+            kwargs['start'] = start
+        if max_time is not None:
+            end = max_time.end_YYYYMM[0:4] + '年' + max_time.end_YYYYMM[4:6] + '月'
+            kwargs['end'] = end
         if user_id is not None and user_id != '':
             kwargs['mandaras'] = mandaras.filter(user_id=user_id)
 
