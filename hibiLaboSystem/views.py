@@ -34,7 +34,7 @@ import subprocess
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
-    settings.BASE_DIR, "wkhtmltopdf.exe")
+    settings.BASE_DIR, "wkhtmltox.deb")
 # Create your views here.
 class Home(TemplateView):
     template_name = "home.html"
