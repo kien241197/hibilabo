@@ -30,11 +30,11 @@ from django.conf import settings
 import os
 from django.template.loader import get_template
 import pdfkit
-import subprocess
 
 User = get_user_model()
-wkhtml_to_pdf = os.path.join(
-    settings.BASE_DIR, "wkhtmltox.deb")
+# wkhtml_to_pdf = os.path.join(
+#     settings.BASE_DIR, "wkhtmltopdf.exe")
+wkhtml_to_pdf = '/usr/bin/wkhtmltopdf'
 # Create your views here.
 class Home(TemplateView):
     template_name = "home.html"
@@ -1489,7 +1489,7 @@ def mandara_pdf(request, id):
         ).first()
     context = {'mandara': mandara, 'request': request}
     html = template.render(context)
-    subprocess.call(['sh', wkhtml_to_pdf])
+
     config = pdfkit.configuration(wkhtmltopdf=wkhtml_to_pdf)
 
     pdf = pdfkit.from_string(html, False,configuration=config, options=options)
