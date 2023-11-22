@@ -1489,7 +1489,7 @@ def mandara_pdf(request, id):
         ).first()
     context = {'mandara': mandara, 'request': request}
     html = template.render(context)
-    subprocess.run(wkhtml_to_pdf, check=False)
+    subprocess.call(['sh', wkhtml_to_pdf])
     config = pdfkit.configuration(wkhtmltopdf=wkhtml_to_pdf)
 
     pdf = pdfkit.from_string(html, False,configuration=config, options=options)
