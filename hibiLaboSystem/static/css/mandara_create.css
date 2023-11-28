@@ -1015,6 +1015,9 @@ body {
     gap: 2px;
 }
 
+.box-required {
+    border: 1px solid red;
+}
 
 @media screen and (max-width: 1746px) {
 
