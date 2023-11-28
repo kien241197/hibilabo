@@ -673,4 +673,7 @@
     </section>
 </main>
 <script src="{% static 'js/mandara-create.js' %}"></script>
+{% if mandara is None %}
+<script src="{% static 'js/mandara-rule.js' %}" async></script>
+{% endif %}
 {% endblock %}
