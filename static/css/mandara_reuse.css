@@ -1038,13 +1038,14 @@ body {
 }
 
 .content-table-body-right p {
-    transform: rotate(90deg);
+    /* transform: rotate(90deg); */
     white-space: nowrap;
     margin-block: unset !important;
     font-weight: 700;
-    padding: 30px;
+    padding: 10px;
     font-size: 75%;
     letter-spacing: 0.1rem;
+    font-family: var(--font-content);
 }
 
 .wrapper-content-table-bottom-body-right {
