@@ -36,10 +36,11 @@
                                                     <h2 class="text-title">MANDARA CHART</h2>
                                                     <button type="button" class="button-title"
                                                         id="button-title-1">一括削除</button>
-                                                    <button type="button" class="button-title"
-                                                        id="button-title-2">一時保存</button>
-                                                    <input type="submit" class="button-title" value="保存"
+                                                    <input type="submit" class="button-title" name="save_tmp" value="一時保存"
+                                                        id="button-title-2">
+                                                    <input type="submit" class="button-title" name="save" value="保存"
                                                         id="button-title-3">
+                                                    {{ form.field_stop }}
                                                 </div>
                                                 <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                             </div>
@@ -673,7 +674,7 @@
     </section>
 </main>
 <script src="{% static 'js/mandara-create.js' %}"></script>
-{% if mandara is None %}
+{% if mandara is None or mandara.flg_finished == False %}
 <script src="{% static 'js/mandara-rule.js' %}" async></script>
 {% endif %}
 {% endblock %}

@@ -16,20 +16,23 @@ class Partner(models.Model):
 		return f"{self.name}"
 
 class Company(models.Model):
-	name = models.CharField(blank=True, null=True, max_length=255)
-	date_start = models.DateField(blank=True, null=True)
-	date_end = models.DateField(blank=True, null=True)
-	active_flag = models.BooleanField(blank=True, null=True)
+	name = models.CharField(blank=True, null=True, max_length=255, verbose_name="会社名")
+	date_start = models.DateField(blank=True, null=True, verbose_name='開始日')
+	date_end = models.DateField(blank=True, null=True, verbose_name='終了日')
+	active_flag = models.BooleanField(blank=True, null=True, verbose_name='アクティブ')
 	partner = models.ForeignKey(
 	    Partner,
 	    on_delete=models.DO_NOTHING,
 	    related_name='companies',
 	    blank=True,
-	    null=True
+	    null=True,
+	    verbose_name='相棒'
 	)
 
 	class Meta:
 			db_table = "companies"
+			verbose_name = '会社'
+			verbose_name_plural = '会社'
 
 	def __str__(self):
 		return f"{self.name}"
@@ -53,11 +56,11 @@ class Branch(models.Model):
 
 class User(AbstractUser):
 	class Roles(Enum):
-		日々研 = '99'
-		Partner = '40'
-		CompanyAdmin = '30'
-		CompanySuperVisor = '20'
-		CompanyStaff = '10'
+		日々研 = 99
+		Partner = 40
+		CompanyAdmin = 30
+		CompanySuperVisor = 20
+		CompanyStaff = 10
 
 	company = models.ForeignKey(
 	    Company,
@@ -75,6 +78,7 @@ class User(AbstractUser):
 	)
 	birth = models.DateField(blank=True, null=True)
 	role_id = models.IntegerField(
+		default=99,
 		blank=True,
 		null=True,
 		choices=[
@@ -103,6 +107,8 @@ class User(AbstractUser):
 
 	class Meta:
 		db_table = 'users'
+		verbose_name = 'ユーザー'
+		verbose_name_plural = 'ユーザー'
 
 	def full_name(self):
 		return self.last_name + self.first_name
@@ -128,7 +134,7 @@ class Hierarchy(models.Model):
 # HONNE
 class HonneQuestion(models.Model):
 	class Meta:
-		verbose_name = 'Honne question'
+		verbose_name = 'HONNE質問'
 
 	question = models.TextField()
 	sort_no = models.IntegerField(blank=True, null=True)
@@ -168,17 +174,20 @@ class HonneEvaluationPeriod(models.Model):
 	    blank=True,
 	    null=True
 	)
-	evaluation_name = models.TextField()
-	evaluation_start = models.DateField(blank=True, null=True)
-	evaluation_end = models.DateField(blank=True, null=True)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
 	honne_questions = models.ManyToManyField(
 		HonneQuestion,
 	    related_name='honne_evaluation_periods',
 	    blank=True,
+	    verbose_name = 'HONNE質問'
 	)
 
 	class Meta:
 		db_table = 'honne_evaluation_periods'
+		verbose_name = 'HONNE 評価期間'
+		verbose_name_plural = 'HONNE 評価期間'
 
 	def __str__(self):
 		return f"{self.evaluation_name}"
@@ -760,6 +769,8 @@ class MandaraBase(models.Model):
 	H6_content = models.CharField(max_length=20, blank=True, null=True)
 	H7_content = models.CharField(max_length=20, blank=True, null=True)
 	H8_content = models.CharField(max_length=20, blank=True, null=True)
+	flg_finished = models.BooleanField(default=False)
+	field_stop = models.CharField(max_length=20, blank=True, null=True)
 
 	def total_result(self):
 			return self.A_result + self.B_result + self.C_result + self.D_result + self.E_result + self.F_result + self.G_result + self.H_result

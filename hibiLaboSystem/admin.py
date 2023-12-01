@@ -5,19 +5,55 @@ from django.shortcuts import render
 from import_export.admin import ImportMixin
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
-from . import models, forms, utils, validate
+from . import forms, utils, validate
+from django.forms import CheckboxSelectMultiple
+from django.db import models
+from .models import *
+from django.contrib.auth.admin import UserAdmin
 import json
 
 # Register your models here.
 CustomeUser = get_user_model()
+class HonneEvaluationPeriodInline(admin.TabularInline):
+    model = HonneEvaluationPeriod
+    extra = 0  # Number of empty forms to display
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+class SelfcheckEvaluationPeriodInline(admin.TabularInline):
+    model = SelfcheckEvaluationPeriod
+    extra = 0  # Number of empty forms to display
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+class BonknowEvaluationPeriodInline(admin.TabularInline):
+    model = BonknowEvaluationPeriod
+    extra = 0  # Number of empty forms to display
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+class UserInline(admin.TabularInline):
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'email', 'role_id']
+    extra = 0  # Number of empty forms to display
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+class CompanyAdmin(admin.ModelAdmin):
+    inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
+admin.site.register(Company, CompanyAdmin)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ('name', 'date_start', 'date_end', 'active_flag', 'partner', 'honne_evaluations')
 
-admin.site.register(models.Company)
-admin.site.register(models.Partner)
-admin.site.register(models.Branch)
-# admin.site.register(models.Hierarchy)
+    def person_name(self, obj):
+        return obj.person.name if obj.person else '-'  # Replace 'name' with the actual field name in Person
+    person_name.short_description = 'Person'
+admin.site.register(Partner)
+admin.site.register(Branch)
+# admin.site.register(Hierarchy)
 
-@admin.register(models.User)
-class UsersAdmin(ImportMixin,admin.ModelAdmin):
+@admin.register(User)
+class UsersAdmin(ImportMixin,UserAdmin):
     list_display = ("id","username")
 
     def import_action(self,request):
@@ -38,7 +74,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             for row in reader:
                 username = row[util_obj.get_column("username")]
                 password = row[util_obj.get_column("password")]
-                if models.User.objects.filter(username=username).exists() or username in array_user:
+                if User.objects.filter(username=username).exists() or username in array_user:
                     import_object_status.append({"username": username, "status": "ERROR",
                                                 "msg": "username already exist!"})
                 else:
@@ -47,7 +83,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                         for validator in validators:
                             validator().validate(password)
                         create_new_characters.append(
-                            models.User(
+                            User(
                                 username=username, password=make_password(password),
                             )
                         )
@@ -58,7 +94,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                                                     "msg": str(e.args[0])})
 
             # bulk create objects
-            models.User.objects.bulk_create(create_new_characters)
+            User.objects.bulk_create(create_new_characters)
             # return the response to the AJAX call
             context = {
                 "file": csv_file,
@@ -76,13 +112,15 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         return render(
             request, "admin/import_users.html", context
         )
+    def get_queryset(self, request):
+        qs = super(UsersAdmin, self).get_queryset(request)
+        if not request.user.is_superuser:
+            return qs.filter(is_superuser=False)
+        return qs
 # Honne
-admin.site.register(models.HonneQuestion)
-admin.site.register(models.HonneEvaluationPeriod)
+admin.site.register(HonneQuestion)
 # Selfcheck
-admin.site.register(models.SelfcheckQuestion)
-admin.site.register(models.SelfcheckEvaluationPeriod)
+admin.site.register(SelfcheckQuestion)
 # Bonknow
-admin.site.register(models.ResponsQuestion)
-admin.site.register(models.ThinkQuestion)
-admin.site.register(models.BonknowEvaluationPeriod)
+admin.site.register(ResponsQuestion)
+admin.site.register(ThinkQuestion)

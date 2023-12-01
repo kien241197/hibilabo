@@ -51,7 +51,7 @@ valueTab1.addEventListener('click', () => {
 // 
 const buttonTitle = document.getElementById('button-title-1');
 buttonTitle.addEventListener("click", function () {
-
+    document.getElementById('id_total_mission').value = '';
     const valueInput = document.querySelectorAll(".input-table");
     const inputValueTab = document.querySelectorAll(".input-value-tab");
     const titleValueTableScore = document.querySelectorAll(".title-value-table-score");

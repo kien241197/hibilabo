@@ -246,16 +246,17 @@ class MandaraCreateForm(forms.ModelForm):
 
     start_YYYYMM = forms.ChoiceField(
         widget=fields.BetweenYearSelectWidgetStart(),
-        required=True
+        required=False
     )
 
     end_YYYYMM = forms.ChoiceField(
         widget=fields.BetweenYearSelectWidgetEnd(),
-        required=True
+        required=False
     )
 
     total_mission = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-value-score",
@@ -267,6 +268,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     A_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -276,6 +278,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -287,6 +290,7 @@ class MandaraCreateForm(forms.ModelForm):
     A_result = forms.IntegerField(required=False)
     A1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -297,6 +301,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -307,6 +312,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -317,6 +323,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -326,6 +333,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -335,6 +343,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -344,6 +353,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -353,6 +363,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -363,6 +374,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     B_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -372,6 +384,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -383,6 +396,7 @@ class MandaraCreateForm(forms.ModelForm):
     B_result = forms.IntegerField(required=False)
     B1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -393,6 +407,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -403,6 +418,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -413,6 +429,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -422,6 +439,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -431,6 +449,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -440,6 +459,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -449,6 +469,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -459,6 +480,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     C_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -468,6 +490,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -479,6 +502,7 @@ class MandaraCreateForm(forms.ModelForm):
     C_result = forms.IntegerField(required=False)
     C1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -489,6 +513,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -499,6 +524,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -509,6 +535,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -518,6 +545,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -527,6 +555,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -536,6 +565,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -545,6 +575,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -555,6 +586,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     D_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -564,6 +596,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -575,6 +608,7 @@ class MandaraCreateForm(forms.ModelForm):
     D_result = forms.IntegerField(required=False)
     D1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -585,6 +619,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -595,6 +630,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -605,6 +641,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -614,6 +651,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -623,6 +661,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -632,6 +671,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -641,6 +681,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -651,6 +692,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     E_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -660,6 +702,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -671,6 +714,7 @@ class MandaraCreateForm(forms.ModelForm):
     E_result = forms.IntegerField(required=False)
     E1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -681,6 +725,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -691,6 +736,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -701,6 +747,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -710,6 +757,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -719,6 +767,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -728,6 +777,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -737,6 +787,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -747,6 +798,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     F_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -756,6 +808,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -767,6 +820,7 @@ class MandaraCreateForm(forms.ModelForm):
     F_result = forms.IntegerField(required=False)
     F1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -777,6 +831,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -787,6 +842,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -797,6 +853,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -806,6 +863,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -815,6 +873,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -824,6 +883,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -833,6 +893,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -843,6 +904,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     G_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -852,6 +914,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -863,6 +926,7 @@ class MandaraCreateForm(forms.ModelForm):
     G_result = forms.IntegerField(required=False)
     G1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -873,6 +937,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -883,6 +948,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -893,6 +959,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -902,6 +969,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -911,6 +979,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -920,6 +989,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -929,6 +999,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -939,6 +1010,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     H_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -948,6 +1020,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -959,6 +1032,7 @@ class MandaraCreateForm(forms.ModelForm):
     H_result = forms.IntegerField(required=False)
     H1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -969,6 +1043,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -979,6 +1054,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -989,6 +1065,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -998,6 +1075,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -1007,6 +1085,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -1016,6 +1095,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -1025,10 +1105,20 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
                 'rows':0
+            }
+        )
+    )
+    field_stop = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': "hidden",
             }
         )
     )

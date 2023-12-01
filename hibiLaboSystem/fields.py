@@ -33,7 +33,7 @@ class BetweenYearSelectWidgetStart(forms.Widget):
         super().__init__(attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
-        output = '<select name="%s" class="select" required>' % name
+        output = '<select name="%s" class="select" id="id_%s">' % (name, name)
         output += '<option value="" selected>%s</option>' % self.empty_label
 
         for year in range(datetime.date.today().year, datetime.date.today().year + 2):
@@ -52,7 +52,7 @@ class BetweenYearSelectWidgetEnd(forms.Widget):
         super().__init__(attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
-        output = '<select name="%s" class="select" required>' % name
+        output = '<select name="%s" class="select" id="id_%s">' % (name, name)
         output += '<option value="" selected>%s</option>' % self.empty_label
 
         for year in range(datetime.date.today().year + 1, datetime.date.today().year + 3):

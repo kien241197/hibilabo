@@ -1040,10 +1040,11 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         mandara = MandaraBase.objects.all().filter(
-            user_id=user_id,company_id=company_id,start_YYYYMM__gt=today
+            Q(user_id=user_id) & Q(company_id=company_id) & (Q(start_YYYYMM__gt=today) | Q(flg_finished=False))
         ).order_by('start_YYYYMM').first()
-
-        kwargs['form'] = self.form_class(instance=mandara)
+        kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
+        if mandara is not None:
+            kwargs['form'] = self.form_class(instance=mandara)
         kwargs['mandara'] = mandara
 
         return kwargs
@@ -1057,42 +1058,47 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
         context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
         end_YYYYMM = request.POST.get('end_YYYYMM')
-        if start_YYYYMM == '' or end_YYYYMM == '':
-            context["message"] = '-- 目標期間は 1 年。--'
-            return self.render_to_response(context)
-
         form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
         form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
-        diff = int(end_YYYYMM) - int(start_YYYYMM)
-        check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exists()
-        if context["mandara"] is not None:
-            check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exclude (pk=context["mandara"].id).exists()
-        if check_exists:
-            context["message"] = '-- マンダラの期限が重複しているため、作成できません。--'
-            return self.render_to_response(context)
+        if start_YYYYMM is not None:
+            if context["mandara"] is not None:
+                check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exclude (pk=context["mandara"].id).exists()
+            else:
+                check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exists()
+            if check_exists:
+                context["message"] = '-- マンダラの期限が重複しているため、作成できません。--'
+                return self.render_to_response(context)
+        if 'save' in request.POST:
+            if start_YYYYMM == '' or end_YYYYMM == '':
+                context["message"] = '-- 目標期間は 1 年。--'
+                return self.render_to_response(context)
 
-        if diff != 99:
-            context["message"] = '-- 目標期間は 1 年。--'
-            return self.render_to_response(context)
+            diff = int(end_YYYYMM) - int(start_YYYYMM)
+
+            if diff != 99:
+                context["message"] = '-- 目標期間は 1 年。--'
+                return self.render_to_response(context)
 
         if form.is_valid():
             mandara = form.save(commit=False)
             mandara.user_id = user_id
             mandara.company_id = company_id
-            mandara.save()
-            if context["mandara"] is not None:
-                MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
-            sdate = datetime.date(int(start_YYYYMM[0:4]), int(start_YYYYMM[4:6]), 1)   # start date
-            edate = datetime.date(int(end_YYYYMM[0:4]), int(end_YYYYMM[4:6]) + 1, 1)   # end date
-            delta = edate - sdate
-            bulk_list = list()
-            for i in range(delta.days):
-                day = sdate + datetime.timedelta(days=i)
-                bulk_list.append(
-                    MandaraProgress(date=day, mandara_base_id=mandara.id)
-                )
+            if 'save' in request.POST:
+                mandara.flg_finished = True
+                if context["mandara"] is not None:
+                    MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
+                sdate = datetime.date(int(start_YYYYMM[0:4]), int(start_YYYYMM[4:6]), 1)   # start date
+                edate = datetime.date(int(end_YYYYMM[0:4]), int(end_YYYYMM[4:6]) + 1, 1)   # end date
+                delta = edate - sdate
+                bulk_list = list()
+                for i in range(delta.days):
+                    day = sdate + datetime.timedelta(days=i)
+                    bulk_list.append(
+                        MandaraProgress(date=day, mandara_base_id=mandara.id)
+                    )
 
-            bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
+                bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
+            mandara.save()
             context["message"] = '-- 保存しました。--'
             context["message_class"] = 'text-success'
         else:
@@ -1118,7 +1124,7 @@ class MandaraReuse(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         today = datetime.date.today().strftime("%Y%m")
-        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today).annotate(
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1227,7 +1233,7 @@ class MandaraCompletion(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         today_str = datetime.date.today().strftime("%Y%m")
-        mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__lt=today_str).order_by('start_YYYYMM')
+        mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__lt=today_str,flg_finished=True).order_by('start_YYYYMM')
 
         kwargs['mandara_get'] = mandara_get
         kwargs['form'] = self.form_class()
@@ -1254,7 +1260,7 @@ class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         id = self.kwargs.get('id')
-        get_mandara_detail = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,id=id).annotate(
+        get_mandara_detail = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,id=id,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1520,7 +1526,7 @@ class MandaraPersonal(LoginRequiredMixin, TemplateView):
         user_id = self.request.POST.get("user_id")
 
         today = datetime.date.today().strftime("%Y%m")
-        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today).annotate(
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1598,7 +1604,7 @@ class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
         today = datetime.date.today().strftime("%Y%m")
         user_id = self.request.POST.get("user_id")
         kwargs['form'] = self.form_class(self.request)
-        mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today)
+        mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today,flg_finished=True)
         if user_id is not None and user_id != '':
             mandaras = mandaras.filter(user_id=user_id)
         first_mandara = mandaras.first()
@@ -1646,7 +1652,7 @@ class MandaraCompletionTab(LoginRequiredMixin, TemplateView):
         kwargs['form'] = self.form_class(self.request)
         today = datetime.date.today().strftime("%Y%m")
         user_id = self.request.POST.get("user_id")
-        mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__lt=today)
+        mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__lt=today,flg_finished=True)
         max_time = mandaras.order_by('-end_YYYYMM').first()
         min_time = mandaras.order_by('start_YYYYMM').first()
         if min_time is not None:
@@ -1674,7 +1680,7 @@ class MandaraCompletionTabDetail(LoginRequiredMixin, TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         id = self.kwargs.get('id')
-        get_mandara_detail = MandaraBase.objects.filter(company_id=company_id,id=id).annotate(
+        get_mandara_detail = MandaraBase.objects.filter(company_id=company_id,id=id,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
