@@ -78,7 +78,6 @@ class User(AbstractUser):
 	)
 	birth = models.DateField(blank=True, null=True)
 	role_id = models.IntegerField(
-		default=99,
 		blank=True,
 		null=True,
 		choices=[

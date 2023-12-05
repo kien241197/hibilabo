@@ -53,7 +53,7 @@ admin.site.register(Branch)
 # admin.site.register(Hierarchy)
 
 @admin.register(User)
-class UsersAdmin(ImportMixin,UserAdmin):
+class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ("id","username")
 
     def import_action(self,request):

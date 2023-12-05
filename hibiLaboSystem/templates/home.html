@@ -81,8 +81,8 @@
                             </div>
                         </div>
                     </div>
-
-                    {% if request.user.role_id != 99 %}
+                    {% with list='99 20' %}
+                    {% if request.user.role_id|slugify in list.split %}
                     <div class="col-md-5-cols">
                         <div class="items">
                             <span class="btn-cus btn-red">集計</span>
@@ -134,6 +134,7 @@
                         </div>
                     </div>
                     {% endif %}
+                    {% endwith %}
                 </div>
             </div>
         </section>

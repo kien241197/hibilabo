@@ -1,4 +1,4 @@
-from . import forms
+from . import forms, middlewares
 from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult, MandaraBase, MandaraProgress
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
@@ -16,6 +16,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView,
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.functions import ExtractMonth, ExtractYear, ExtractDay
 from .constants import SELFCHECK_ANSWER, CIRCL, SQUARE, TRAIANGLE
+from django.utils.decorators import method_decorator
 import calendar
 import datetime
 import pdb
@@ -128,7 +129,9 @@ class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'info/password_change_done.html'
 
 #Honne
-class HonneSheet(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneMiddleware, name='dispatch')
+class HonneSheet(TemplateView):
     template_name = "honne/honne_sheet.html"
     form_class = forms.HonneForm
 
@@ -296,7 +299,9 @@ class HonneSheet(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(context)
 
-class HonneTotal(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class HonneTotal(TemplateView):
     template_name = "honne/honne_total.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -335,7 +340,9 @@ class HonneTotal(LoginRequiredMixin, TemplateView):
                     context['max_type'] = max(context['result'], key=context['result'].get)
         return self.render_to_response(context)
 
-class HonneTypeStaticks(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class HonneTypeStaticks(TemplateView):
     template_name = "honne/honne_type_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -357,7 +364,9 @@ class HonneTypeStaticks(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneTypePersonalGraph(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class HonneTypePersonalGraph(TemplateView):
     template_name = "honne/honne_type_personal_graph.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -379,7 +388,9 @@ class HonneTypePersonalGraph(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneIndexStaticks(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class HonneIndexStaticks(TemplateView):
     template_name = "honne/honne_index_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -401,7 +412,9 @@ class HonneIndexStaticks(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneChart(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class HonneChart(TemplateView):
     template_name = "honne/honne_chart.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -423,7 +436,9 @@ class HonneChart(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class HonneQrStaticks(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class HonneQrStaticks(TemplateView):
     template_name = "honne/honne_qr_staticks.html"
     form_class = forms.HonneEvaluationUnitForm
 
@@ -472,7 +487,9 @@ class HonneQrStaticks(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 # Selfcheck
-class SelfcheckIndex(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
+class SelfcheckIndex(TemplateView):
     template_name = "selfcheck/selfcheck_index.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -494,7 +511,9 @@ class SelfcheckIndex(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckIndexChart(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
+class SelfcheckIndexChart(TemplateView):
     template_name = "selfcheck/selfcheck_index_chart.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -516,7 +535,9 @@ class SelfcheckIndexChart(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckQuestions(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
+class SelfcheckQuestions(TemplateView):
     template_name = "selfcheck/selfcheck_questions.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -564,7 +585,9 @@ class SelfcheckQuestions(LoginRequiredMixin, TemplateView):
                 context["qr_list"] = result_list
         return self.render_to_response(context)
 
-class SelfcheckType(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
+class SelfcheckType(TemplateView):
     template_name = "selfcheck/selfcheck_type.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -586,7 +609,9 @@ class SelfcheckType(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckTypeChart(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
+class SelfcheckTypeChart(TemplateView):
     template_name = "selfcheck/selfcheck_type_chart.html"
     form_class = forms.SelfcheckEvaluationUnitForm
 
@@ -608,7 +633,9 @@ class SelfcheckTypeChart(LoginRequiredMixin, TemplateView):
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
-class SelfcheckSheet(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.SelfcheckMiddleware, name='dispatch')
+class SelfcheckSheet(TemplateView):
     template_name = 'selfcheck/selfcheck_sheet.html'
     form_class = forms.SelfcheckForm
 
@@ -816,7 +843,9 @@ class SelfcheckSheet(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 #Bonknow
-class BonknowSheet(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.BonknowMiddleware, name='dispatch')
+class BonknowSheet(TemplateView):
     template_name = "bonknow/bonknow_sheet.html"
 
     def get_context_data(self, **kwargs):
@@ -953,8 +982,9 @@ class BonknowSheet(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(context)
 
-
-class BonknowRespons(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.BonknowTotalMiddleware, name='dispatch')
+class BonknowRespons(TemplateView):
     template_name = "bonknow/bonknow_respons.html"
     form_class = forms.BonknowForm
 
@@ -992,7 +1022,9 @@ class BonknowRespons(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(context)
 
-class BonknowThink(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.BonknowTotalMiddleware, name='dispatch')
+class BonknowThink(TemplateView):
     template_name = "bonknow/bonknow_think.html"
     form_class = forms.BonknowForm
 
@@ -1031,7 +1063,9 @@ class BonknowThink(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 #MASMASMANDARA
-class MandaraCreate(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraMiddleware, name='dispatch')
+class MandaraCreate(TemplateView):
     template_name = "mandara/mandara_create.html"
     form_class = forms.MandaraCreateForm
 
@@ -1106,8 +1140,9 @@ class MandaraCreate(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(context)
 
-    
-class MandaraSheet(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraMiddleware, name='dispatch')    
+class MandaraSheet(TemplateView):
     template_name = "mandara/mandara_sheet.html"
 
     def get_context_data(self, **kwargs):
@@ -1116,8 +1151,9 @@ class MandaraSheet(LoginRequiredMixin, TemplateView):
 
         return kwargs
     
-    
-class MandaraReuse(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraMiddleware, name='dispatch')    
+class MandaraReuse(TemplateView):
     template_name = "mandara/mandara_reuse.html"
 
     def get_context_data(self, **kwargs):
@@ -1225,7 +1261,9 @@ class MandaraReuse(LoginRequiredMixin, TemplateView):
 
         return kwargs
 
-class MandaraCompletion(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraMiddleware, name='dispatch')
+class MandaraCompletion(TemplateView):
     template_name = "mandara/mandara_completion.html"
     form_class = forms.MandaraCompleteForm
 
@@ -1252,8 +1290,10 @@ class MandaraCompletion(LoginRequiredMixin, TemplateView):
             context['mandara_get'] = context['mandara_get'].filter(end_YYYYMM__lte=end_YYYYMM)
         return self.render_to_response(context)
 
-    
-class MandaraCompletionDetail(LoginRequiredMixin, TemplateView):
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraMiddleware, name='dispatch')    
+class MandaraCompletionDetail(TemplateView):
     template_name = "mandara/mandara_completion_detail.html"
 
     def get_context_data(self, **kwargs):
@@ -1509,7 +1549,9 @@ def mandara_pdf(request, id):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-class MandaraPersonal(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')
+class MandaraPersonal(TemplateView):
     template_name = "mandara/mandara_personal.html"
     form_class = forms.MandaraForm
 
@@ -1595,7 +1637,9 @@ class MandaraPersonal(LoginRequiredMixin, TemplateView):
         context['mandara'] = mandara
         return self.render_to_response(context)
 
-class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')
+class MandaraMasMasChart(TemplateView):
     template_name = "mandara/mandara_masmas_chart.html"
     form_class = forms.MandaraChartForm
 
@@ -1642,8 +1686,10 @@ class MandaraMasMasChart(LoginRequiredMixin, TemplateView):
         context['form'] = form
 
         return self.render_to_response(context)
-    
-class MandaraCompletionTab(LoginRequiredMixin, TemplateView):
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')    
+class MandaraCompletionTab(TemplateView):
     template_name = "mandara/mandara_completion_tab.html"
     form_class = forms.MandaraForm
 
@@ -1673,7 +1719,9 @@ class MandaraCompletionTab(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(context)
 
-class MandaraCompletionTabDetail(LoginRequiredMixin, TemplateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')
+class MandaraCompletionTabDetail(TemplateView):
     template_name = "mandara/mandara_completion_tab_detail.html"
 
     def get_context_data(self, **kwargs):
