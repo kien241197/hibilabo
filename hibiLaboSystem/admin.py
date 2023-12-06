@@ -40,14 +40,20 @@ class UserInline(admin.TabularInline):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 class CompanyAdmin(admin.ModelAdmin):
+    exclude = ("created_by",)
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
-admin.site.register(Company, CompanyAdmin)
-class AddressAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date_start', 'date_end', 'active_flag', 'partner', 'honne_evaluations')
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.password = make_password(obj.password)
+            obj.created_by = request.user.id
+        obj.save()
 
-    def person_name(self, obj):
-        return obj.person.name if obj.person else '-'  # Replace 'name' with the actual field name in Person
-    person_name.short_description = 'Person'
+    def get_queryset(self, request):
+        qs = super(CompanyAdmin, self).get_queryset(request)
+        if not request.user.is_superuser:
+            return qs.filter(created_by=request.user.id)
+        return qs
+admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
 admin.site.register(Branch)
 # admin.site.register(Hierarchy)
@@ -55,6 +61,26 @@ admin.site.register(Branch)
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ("id","username")
+    exclude = ('created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user.id
+        obj.save()
+
+    def get_form(self, request, obj=None, **kwargs):
+        if not request.user.is_superuser:
+            self.exclude = ("user_permissions", "is_superuser", "groups", "is_staff", "is_active",'created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
+        form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
+        return form
+
+    def get_field_queryset(self, db, db_field, request):
+        if db_field.name == 'company' and not request.user.is_superuser:
+            return db_field.remote_field.model._default_manager.filter(
+                              created_by=request.user.id,
+            )
+
+        super().get_field_queryset(db, db_field, request)
 
     def import_action(self,request):
         import_object_status = []
@@ -115,7 +141,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(UsersAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
-            return qs.filter(is_superuser=False)
+            return qs.filter(is_superuser=False,created_by=request.user.id)
         return qs
 # Honne
 admin.site.register(HonneQuestion)

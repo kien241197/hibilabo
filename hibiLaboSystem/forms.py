@@ -245,12 +245,12 @@ class MandaraCreateForm(forms.ModelForm):
         exclude = ["user", "company"]
 
     start_YYYYMM = forms.ChoiceField(
-        widget=fields.BetweenYearSelectWidgetStart(),
+        widget=fields.MandaraYearSelectWidget(),
         required=False
     )
 
     end_YYYYMM = forms.ChoiceField(
-        widget=fields.BetweenYearSelectWidgetEnd(),
+        widget=fields.MandaraYearSelectWidget(),
         required=False
     )
 
@@ -1167,3 +1167,8 @@ class MandaraForm(forms.Form):
         if request.user:
             queryset = queryset.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
+
+class UserAdminForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        exclude = ['is_superuser']

@@ -27,7 +27,7 @@ class MonthYearSelectWidget(forms.Widget):
         output += '</select>'
         return output
 
-class BetweenYearSelectWidgetStart(forms.Widget):
+class MandaraYearSelectWidget(forms.Widget):
     def __init__(self, attrs=None, empty_label="----"):
         self.empty_label = empty_label
         super().__init__(attrs)
@@ -36,31 +36,14 @@ class BetweenYearSelectWidgetStart(forms.Widget):
         output = '<select name="%s" class="select" id="id_%s">' % (name, name)
         output += '<option value="" selected>%s</option>' % self.empty_label
 
-        for year in range(datetime.date.today().year, datetime.date.today().year + 2):
-            value_option = datetime.date(year, 7, 1)
-            # Format the option value as "YYYY-MM"
-            value_option_str = value_option.strftime("%Y%m")
-            month_selected = "selected" if value_option_str == value else ""
-            output += '<option value="%s" %s>%s年%s</option>' % (value_option_str, month_selected, year, JAPANESE_MONTHS[7])
-
-        output += '</select>'
-        return output
-
-class BetweenYearSelectWidgetEnd(forms.Widget):
-    def __init__(self, attrs=None, empty_label="----"):
-        self.empty_label = empty_label
-        super().__init__(attrs)
-
-    def render(self, name, value, attrs=None, renderer=None):
-        output = '<select name="%s" class="select" id="id_%s">' % (name, name)
-        output += '<option value="" selected>%s</option>' % self.empty_label
-
-        for year in range(datetime.date.today().year + 1, datetime.date.today().year + 3):
-            value_option = datetime.date(year, 6, 1)
-            # Format the option value as "YYYY-MM"
-            value_option_str = value_option.strftime("%Y%m")
-            month_selected = "selected" if value_option_str == value else ""
-            output += '<option value="%s" %s>%s年%s</option>' % (value_option_str, month_selected, year, JAPANESE_MONTHS[6])
+        for year in range(datetime.date.today().year, datetime.date.today().year + 3):
+            for month in range(1, 13):
+                if month > datetime.date.today().month or year > datetime.date.today().year:
+                    value_option = datetime.date(year, month, 1)
+                    # Format the option value as "YYYY-MM"
+                    value_option_str = value_option.strftime("%Y%m")
+                    month_selected = "selected" if value_option_str == value else ""
+                    output += '<option value="%s" %s>%s年%s</option>' % (value_option_str, month_selected, year, JAPANESE_MONTHS[month])
 
         output += '</select>'
         return output
@@ -74,7 +57,7 @@ class MandaraMonthYearSelectWidget(forms.Widget):
         output = '<select name="%s" class="select border-0">' % name
         output += '<option value="" selected>%s</option>' % self.empty_label
 
-        for year in range(2021, datetime.date.today().year + 1):
+        for year in range(2023, datetime.date.today().year + 1):
             for month in range(1, 13):
                 value_option = datetime.date(year, month, 1)
                 # Format the option value as "YYYY-MM"

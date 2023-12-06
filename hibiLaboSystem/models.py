@@ -28,6 +28,7 @@ class Company(models.Model):
 	    null=True,
 	    verbose_name='相棒'
 	)
+	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
 	class Meta:
 			db_table = "companies"
@@ -67,16 +68,18 @@ class User(AbstractUser):
 	    on_delete=models.DO_NOTHING,
 	    related_name='users',
 	    blank=True,
-	    null=True
+	    null=True,
+	    verbose_name='会社'
 	)
 	branch = models.ForeignKey(
 	    Branch,
 	    on_delete=models.DO_NOTHING,
 	    related_name='users',
 	    blank=True,
-	    null=True
+	    null=True,
+	    verbose_name='支店'
 	)
-	birth = models.DateField(blank=True, null=True)
+	birth = models.DateField(blank=True, null=True, verbose_name='誕生日')
 	role_id = models.IntegerField(
 		blank=True,
 		null=True,
@@ -86,7 +89,8 @@ class User(AbstractUser):
 			(30, 'Company Admin'),
 			(20, 'Company Super Visor'),
 			(10, 'Company Staff'),
-		]
+		],
+		verbose_name='役割'
     )
 	preferred_day = models.BooleanField(blank=True, null=True)
 	preferred_hour = models.IntegerField(blank=True, null=True)
@@ -103,6 +107,7 @@ class User(AbstractUser):
 	preferred_day7 = models.BooleanField(blank=True, null=True)
 	preferred_hour7 = models.IntegerField(blank=True, null=True)
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
+	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
 	class Meta:
 		db_table = 'users'
@@ -328,17 +333,20 @@ class SelfcheckEvaluationPeriod(models.Model):
 	    blank=True,
 	    null=True
 	)
-	evaluation_name = models.TextField()
-	evaluation_start = models.DateField(blank=True, null=True)
-	evaluation_end = models.DateField(blank=True, null=True)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
 	selfcheck_questions = models.ManyToManyField(
 		SelfcheckQuestion,
 	    related_name='selfcheck_evaluation_periods',
 	    blank=True,
+	    verbose_name = 'SELFCHECK質問'
 	)
 
 	class Meta:
 		db_table = 'selfcheck_evaluation_periods'
+		verbose_name = 'SELFCHECK 評価期間'
+		verbose_name_plural = 'SELFCHECK 評価期間'
 
 	def __str__(self):
 		return f"{self.evaluation_name}"
@@ -505,22 +513,26 @@ class BonknowEvaluationPeriod(models.Model):
 	    blank=True,
 	    null=True
 	)
-	evaluation_name = models.TextField()
-	evaluation_start = models.DateField(blank=True, null=True)
-	evaluation_end = models.DateField(blank=True, null=True)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
 	respons_questions = models.ManyToManyField(
 		ResponsQuestion,
 	    related_name='bonknow_evaluation_periods',
 	    blank=True,
+	    verbose_name='RESPONS質問'
 	)
 	think_questions = models.ManyToManyField(
 		ThinkQuestion,
 	    related_name='bonknow_evaluation_periods',
 	    blank=True,
+	    verbose_name='THINK質問'
 	)
 
 	class Meta:
 		db_table = 'bonknow_evaluation_periods'
+		verbose_name = 'BONKNOW 評価期間'
+		verbose_name_plural = 'BONKNOW 評価期間'
 
 	def __str__(self):
 		return f"{self.evaluation_name}"
