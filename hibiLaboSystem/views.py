@@ -31,6 +31,7 @@ from django.conf import settings
 import os
 from django.template.loader import get_template
 import pdfkit
+from django.db.models import Q
 
 User = get_user_model()
 # wkhtml_to_pdf = os.path.join(
@@ -132,7 +133,7 @@ class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
 
 #Honne
 @method_decorator(login_required, name='dispatch')
-@method_decorator(middlewares.HonneMiddleware, name='dispatch')
+# @method_decorator(middlewares.HonneMiddleware, name='dispatch')
 class HonneSheet(TemplateView):
     template_name = "honne/honne_sheet.html"
     form_class = forms.HonneForm
@@ -168,7 +169,7 @@ class HonneSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('answer')[:1]
-        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
+        ).filter((Q(apply_start_date__lte=datetime.date.today()) | Q(apply_start_date__isnull=True)) & ( Q(apply_end_date__isnull=True) | Q(apply_end_date__gte=datetime.date.today()))).order_by('sort_no')
 
         obj_index = evaluation_period.honne_index_results.filter(user_id=user_id,company_id=company_id).first()
         obj_type = evaluation_period.honne_type_results.filter(user_id=user_id,company_id=company_id).first()
