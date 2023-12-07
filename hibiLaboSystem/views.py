@@ -42,10 +42,11 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        company_id = self.request.user.company_id
-        context["period_honne"] = HonneEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
-        context["period_selfcheck"] = SelfcheckEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
-        context["period_bonknow"] = BonknowEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
+        if self.request.user.is_authenticated:
+            company_id = self.request.user.company_id
+            context["period_honne"] = HonneEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
+            context["period_selfcheck"] = SelfcheckEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
+            context["period_bonknow"] = BonknowEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
         return context
 
 class Login(LoginView):
