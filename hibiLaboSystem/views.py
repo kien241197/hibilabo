@@ -132,7 +132,7 @@ class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
 
 #Honne
 @method_decorator(login_required, name='dispatch')
-@method_decorator(middlewares.HonneMiddleware, name='dispatch')
+# @method_decorator(middlewares.HonneMiddleware, name='dispatch')
 class HonneSheet(TemplateView):
     template_name = "honne/honne_sheet.html"
     form_class = forms.HonneForm
@@ -636,7 +636,7 @@ class SelfcheckTypeChart(TemplateView):
         return self.render_to_response(context)
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(middlewares.SelfcheckMiddleware, name='dispatch')
+# @method_decorator(middlewares.SelfcheckMiddleware, name='dispatch')
 class SelfcheckSheet(TemplateView):
     template_name = 'selfcheck/selfcheck_sheet.html'
     form_class = forms.SelfcheckForm
@@ -846,7 +846,7 @@ class SelfcheckSheet(TemplateView):
 
 #Bonknow
 @method_decorator(login_required, name='dispatch')
-@method_decorator(middlewares.BonknowMiddleware, name='dispatch')
+# @method_decorator(middlewares.BonknowMiddleware, name='dispatch')
 class BonknowSheet(TemplateView):
     template_name = "bonknow/bonknow_sheet.html"
 
@@ -1294,7 +1294,7 @@ class MandaraCompletion(TemplateView):
 
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(middlewares.MandaraMiddleware, name='dispatch')    
+# @method_decorator(middlewares.MandaraMiddleware, name='dispatch')    
 class MandaraCompletionDetail(TemplateView):
     template_name = "mandara/mandara_completion_detail.html"
 
@@ -1722,7 +1722,7 @@ class MandaraCompletionTab(TemplateView):
         return self.render_to_response(context)
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')
+# @method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')
 class MandaraCompletionTabDetail(TemplateView):
     template_name = "mandara/mandara_completion_tab_detail.html"
 

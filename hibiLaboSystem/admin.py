@@ -44,7 +44,6 @@ class CompanyAdmin(admin.ModelAdmin):
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
     def save_model(self, request, obj, form, change):
         if not change:
-            obj.password = make_password(obj.password)
             obj.created_by = request.user.id
         obj.save()
 
