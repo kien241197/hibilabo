@@ -69,8 +69,14 @@ for (let i = 0; i < key_array.length; i++) {
 	$(`textarea[name="${key_array[i]}_dueto"]`).change(function () {
 		$(`textarea[name="${key_array[i]}_dueto"]`).removeClass('box-required');
 		if (i < key_array.length - 1) {
+			if (!$(`input[name="${key_array[i + 1]}_keyword"]`).attr("disabled")) return;
 			$(`input[name="${key_array[i + 1]}_keyword"]`).addClass('box-required');
 			$(`input[name="${key_array[i + 1]}_keyword"]`).removeAttr("disabled");
+		} else {
+			if (!$(`textarea[name="${key_array[0]}1_content"]`).attr("disabled")) return;
+			$(`textarea[name="${key_array[0]}1_content"]`).removeAttr("disabled");
+			$(`textarea[name="${key_array[0]}1_content"]`).closest('.value-table').addClass('box-required');
+			$('#id_field_stop').val(`${key_array[0]}1_content`);
 		}
 	});
 
@@ -85,10 +91,7 @@ for (let i = 0; i < key_array.length; i++) {
 		} else {
 			$(`textarea[name="${key_array[i]}_dueto"]`).addClass("box-required");
 			$(`textarea[name="${key_array[i]}_dueto"]`).removeAttr("disabled");
-			if (!$(`textarea[name="${key_array[0]}1_content"]`).attr("disabled")) return;
-			$(`textarea[name="${key_array[0]}1_content"]`).removeAttr("disabled");
-			$(`textarea[name="${key_array[0]}1_content"]`).closest('.value-table').addClass('box-required');
-			$('#id_field_stop').val(`${key_array[0]}1_content`);
+			
 		}
 	});
 	for (let j = 1; j < 9; j++) {
