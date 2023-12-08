@@ -1018,7 +1018,7 @@ body {
 
 .box-required {
 /*    border: 2px solid red;*/
-    background-color: #f00;
+    background-color: rgba(0,123,255,.5);
 }
 
 @media screen and (max-width: 1746px) {
