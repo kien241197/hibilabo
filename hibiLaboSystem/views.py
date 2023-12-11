@@ -31,6 +31,7 @@ from django.conf import settings
 import os
 from django.template.loader import get_template
 import pdfkit
+from django.db.models import Q
 
 User = get_user_model()
 # wkhtml_to_pdf = os.path.join(
@@ -168,15 +169,15 @@ class HonneSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('answer')[:1]
-        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
-
+        ).filter((Q(apply_start_date__lte=datetime.date.today()) | Q(apply_start_date__isnull=True)) & ( Q(apply_end_date__isnull=True) | Q(apply_end_date__gte=datetime.date.today()))).filter().order_by('sort_no')
+        honne_questions = honne_questions.filter(Q(apply_start_date__isnull=False) | Q(apply_end_date__isnull=False) )
         obj_index = evaluation_period.honne_index_results.filter(user_id=user_id,company_id=company_id).first()
         obj_type = evaluation_period.honne_type_results.filter(user_id=user_id,company_id=company_id).first()
         if obj_index is not None :
             index_list = [obj_index.kartet_index1, obj_index.kartet_index2, obj_index.kartet_index3, obj_index.kartet_index4, obj_index.kartet_index5, obj_index.kartet_index6, obj_index.kartet_index7, obj_index.kartet_index8]
         if obj_type is not None:
             initial_values['flg_finished'] = obj_type.flg_finished
-
+        
         kwargs = super(HonneSheet, self).get_context_data(**kwargs)
         kwargs['questions'] = honne_questions
         kwargs['q_list'] = list(honne_questions.values_list('id', flat=True))
