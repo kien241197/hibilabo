@@ -636,6 +636,7 @@ body {
     color: #000;
     font-weight: bold;
     width: 100%;
+    padding-left: 10px;
 }
 
 .value-table-score p {
@@ -780,7 +781,7 @@ body {
 
     display: flex;
     border-bottom: 2px solid #a0a1a4;
-    gap: 5px;
+    /* gap: 5px; */
     font-family: var(--font-text);
     text-align: center;
     min-height: 15px;
@@ -804,6 +805,7 @@ body {
 .title-order {
     border-right: 2px solid #a0a1a4;
     padding-right: 10px;
+    padding-left: 10px;
     font-family: var(--font-text);
     font-weight: 700;
     font-size: 75%;
@@ -855,13 +857,13 @@ body {
     font-family: var(--font-content);
     letter-spacing: 0.3rem;
     font-weight: 700;
-    padding-top: 1rem;
     width: 90%;
-    padding-left: 10px;
     z-index: 10;
-    padding: 10px;
 }
 
+.desc-table-body-right textarea {
+    padding: 10px;
+}
 
 
 .value-score {
