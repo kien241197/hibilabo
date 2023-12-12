@@ -57,7 +57,7 @@ class Login(LoginView):
     template_name = 'login.html'
 
 class Logout(LogoutView):
-    template_name = 'login.html'
+    template_name = 'logout.html'
 
 class Register(CreateView):
     template_name = 'register.html'
