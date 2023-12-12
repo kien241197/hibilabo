@@ -107,3 +107,4 @@ function render_keyword(numb, value) {
     document.querySelectorAll(".title-value-table-score")[OPTION_LIST[numb][0]].textContent = value;
 }
 console.log(window.innerWidth)
+

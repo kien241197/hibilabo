@@ -39,9 +39,18 @@ class UserInline(admin.TabularInline):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+
+class MandaraPeriosInline(admin.TabularInline):
+    model = MandaraPeriod
+    # fields = ['start_date', 'end_date', 'company_id']
+    extra = 0  # Number of empty forms to display
+    # formfield_overrides = {
+    #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    # }
+
 class CompanyAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
-    inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
+    inlines = [MandaraPeriosInline, HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
     def save_model(self, request, obj, form, change):
         if not change:
             obj.created_by = request.user.id

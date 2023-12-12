@@ -57,7 +57,7 @@ class Login(LoginView):
     template_name = 'login.html'
 
 class Logout(LogoutView):
-    template_name = 'logout.html'
+    template_name = 'login.html'
 
 class Register(CreateView):
     template_name = 'register.html'
@@ -1812,3 +1812,4 @@ class MandaraCompletionTabDetail(TemplateView):
         kwargs['month'] = month
         
         return kwargs
+            

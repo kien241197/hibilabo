@@ -43,7 +43,6 @@ urlpatterns = [
     path('mandara-personal', views.MandaraPersonal.as_view(), name='mandara_personal'),
     path('mandara-masmas-chart', views.MandaraMasMasChart.as_view(), name='mandara_masmas_chart'),
     path('mandara-completion-tab', views.MandaraCompletionTab.as_view(), name='mandara_completion_tab'),
-    path('mandara-completion-tab-detail/<id>', views.MandaraCompletionTabDetail.as_view(), name='mandara_completion_tab_detail'), #Display Detail
-    
+    path('mandara-completion-tab-detail/<id>', views.MandaraCompletionTabDetail.as_view(), name='mandara_completion_tab_detail'), #Display Detailc
     
 ]

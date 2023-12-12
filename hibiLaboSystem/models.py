@@ -671,8 +671,16 @@ class MandaraPeriod(models.Model):
 	    blank=True,
 	    null=True
 	)
-	start_date = models.DateField()
-	end_date = models.DateField()
+	start_date = models.DateField(verbose_name="評価開始時間")
+	end_date = models.DateField(verbose_name="評価終了時間")
+
+	class Meta:
+		db_table = 'mandara_periods'
+		verbose_name = 'MANDARA 評価期間'
+		verbose_name_plural = 'MANDARA 評価期間'
+		
+	def __str__(self):
+		return str("")
 
 	def clean(self):
 		if self.start_date > self.end_date:
@@ -680,7 +688,9 @@ class MandaraPeriod(models.Model):
 		check_time = self.__class__.objects.filter(company_id=self.company_id,end_date__gte=self.start_date,start_date__lte=self.end_date).exists()
 		if check_time is True:
 			raise ValidationError("日付が重複しています。")
+		
 
+		
 class MandaraBase(models.Model):
 	company = models.ForeignKey(
 	    Company,
