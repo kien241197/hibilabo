@@ -109,7 +109,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                             validator().validate(password)
                         create_new_characters.append(
                             User(
-                                username=username, password=make_password(password),
+                                username=username, password=make_password(password), created_by=request.user.id
                             )
                         )
                         import_object_status.append({"username": username, "status": "FINISHED",

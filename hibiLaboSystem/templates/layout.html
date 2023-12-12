@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>HIBI_LABOインナーマーケティング</title>
     <!-- ファビコン -->
-	<link rel=”icon” href="{% static 'assets/favicon1.png' %}">
+	<link rel="icon" type="image/x-icon" href="{% static 'assets/favicon1.png' %}">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
     <!-- 互換表示の解除 -->
@@ -51,9 +51,6 @@
                           <a href="{% url 'register' %}">Sign up</a>
                         　</li>
                       {% else %}
-                         <!-- <li>
-                           <a href="#">My Menu</a>
-                         </li> -->
                          <li>
                            <a href="{% url 'my_info' %}">My Info</a>
                          </li>

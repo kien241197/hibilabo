@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from enum import Enum 
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class Partner(models.Model):
@@ -662,6 +663,24 @@ class ThinkResult(models.Model):
 		db_table = 'think_results'
 
 # MANDARA
+class MandaraPeriod(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='mandara_periods',
+	    blank=True,
+	    null=True
+	)
+	start_date = models.DateField()
+	end_date = models.DateField()
+
+	def clean(self):
+		if self.start_date > self.end_date:
+			raise ValidationError("日付が間違っています。")
+		check_time = self.__class__.objects.filter(company_id=self.company_id,end_date__gte=self.start_date,start_date__lte=self.end_date).exists()
+		if check_time is True:
+			raise ValidationError("日付が重複しています。")
+
 class MandaraBase(models.Model):
 	company = models.ForeignKey(
 	    Company,
@@ -677,11 +696,12 @@ class MandaraBase(models.Model):
 	    blank=True,
 	    null=True
 	)
-	start_YYYYMM = models.CharField(
-		max_length=6
-	)
-	end_YYYYMM = models.CharField(
-		max_length=6
+	mandara_period = models.ForeignKey(
+	    MandaraPeriod,
+	    on_delete=models.DO_NOTHING,
+	    related_name='mandara_base',
+	    blank=True,
+	    null=True
 	)
 	total_mission = models.CharField(max_length=20, blank=True, null=True)
 
@@ -786,14 +806,14 @@ class MandaraBase(models.Model):
 	def total_result(self):
 			return self.A_result + self.B_result + self.C_result + self.D_result + self.E_result + self.F_result + self.G_result + self.H_result
 
-	def display_time(self):
-			return f'{self.start_YYYYMM[:4]}/{int(self.start_YYYYMM[4:])} ~ {self.end_YYYYMM[:4]}/{int(self.end_YYYYMM[4:])}'
+	# def display_time(self):
+	# 		return f'{self.start_YYYYMM[:4]}/{int(self.start_YYYYMM[4:])} ~ {self.end_YYYYMM[:4]}/{int(self.end_YYYYMM[4:])}'
 
 	class Meta:
 		db_table = 'mandara_base'
-		constraints = [
-	        models.UniqueConstraint(fields=['user_id', 'company_id', 'start_YYYYMM', 'end_YYYYMM'], name='unique_mandara')
-	    ]
+		# constraints = [
+	    #     models.UniqueConstraint(fields=['user_id', 'company_id', 'start_YYYYMM', 'end_YYYYMM'], name='unique_mandara')
+	    # ]
 
 class MandaraProgress(models.Model):
 	mandara_base = models.ForeignKey(
