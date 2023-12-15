@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from enum import Enum 
 from django.core.exceptions import ValidationError
+import datetime
 
 # Create your models here.
 class Partner(models.Model):
@@ -683,13 +684,22 @@ class MandaraPeriod(models.Model):
 		return str("")
 
 	def clean(self):
+		if self.start_date <= datetime.date.today() and self.pk is None:
+			raise ValidationError("今日より始まりは大きくなければなりません。")
 		if self.start_date > self.end_date:
 			raise ValidationError("日付が間違っています。")
-		check_time = self.__class__.objects.filter(company_id=self.company_id,end_date__gte=self.start_date,start_date__lte=self.end_date).exists()
+		if self.pk:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,end_date__gte=self.start_date,start_date__lte=self.end_date).exclude(pk=self.pk).exists()
+		else:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,end_date__gte=self.start_date,start_date__lte=self.end_date).exists()
+
 		if check_time is True:
 			raise ValidationError("日付が重複しています。")
-		
 
+	def display_time_start(self):
+		return f'{self.start_date.year}年{self.start_date.month}月'
+	def display_time_end(self):
+		return f'{self.end_date.year}年{self.end_date.month}月'
 		
 class MandaraBase(models.Model):
 	company = models.ForeignKey(

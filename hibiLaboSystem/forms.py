@@ -1,4 +1,5 @@
 from django import forms
+from .models import *
 from django.core import validators
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
@@ -244,15 +245,15 @@ class MandaraCreateForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["user", "company"]
 
-    start_YYYYMM = forms.ChoiceField(
-        widget=fields.MandaraYearSelectWidget(),
-        required=False
-    )
+    # start_YYYYMM = forms.ChoiceField(
+    #     widget=fields.MandaraYearSelectWidget(),
+    #     required=False
+    # )
 
-    end_YYYYMM = forms.ChoiceField(
-        widget=fields.MandaraYearSelectWidget(),
-        required=False
-    )
+    # end_YYYYMM = forms.ChoiceField(
+    #     widget=fields.MandaraYearSelectWidget(),
+    #     required=False
+    # )
 
     total_mission = forms.CharField(
         max_length=20,
@@ -1124,13 +1125,31 @@ class MandaraCreateForm(forms.ModelForm):
     )
 
 class MandaraCompleteForm(forms.Form):
-    start = forms.ChoiceField(
-        widget=fields.MandaraMonthYearSelectWidget(),
-    )
+    def __init__(self, company_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-    end = forms.ChoiceField(
-        widget=fields.MandaraMonthYearSelectWidget(),
-    )
+        # Dynamically set the widget choices based on company_id
+        start_periods = MandaraPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('start_date')
+
+        end_periods = MandaraPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('start_date')
+
+        start_choices = [(period.start_date, period.display_time_start) for period in start_periods]
+        end_choices = [(period.start_date, period.display_time_start) for period in end_periods]
+
+        self.fields['start'] = forms.ChoiceField(
+            choices=[('', '----')] + start_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['end'] = forms.ChoiceField(
+            choices=[('', '----')] + end_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )
+
 
 class MandaraChartForm(forms.Form):
 

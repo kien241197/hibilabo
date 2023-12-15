@@ -1,4 +1,5 @@
 from django import forms
+from .models import *
 import datetime
 
 JAPANESE_MONTHS = {
@@ -49,21 +50,26 @@ class MandaraYearSelectWidget(forms.Widget):
         return output
 
 class MandaraMonthYearSelectWidget(forms.Widget):
-    def __init__(self, attrs=None, empty_label="----"):
+    def __init__(self, company_id=None, attrs=None, empty_label="----"):
         self.empty_label = empty_label
+        self.company_id = company_id
         super().__init__(attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
+        today = datetime.date.today()
+        mandara_periods = MandaraPeriod.objects.all().filter(company_id=self.company_id,end_date__lt=today
+                ).order_by('start_date')
         output = '<select name="%s" class="select border-0">' % name
         output += '<option value="" selected>%s</option>' % self.empty_label
-
-        for year in range(2023, datetime.date.today().year + 1):
-            for month in range(1, 13):
-                value_option = datetime.date(year, month, 1)
-                # Format the option value as "YYYY-MM"
-                value_option_str = value_option.strftime("%Y%m")
-                month_selected = "selected" if value_option_str == value else ""
-                output += '<option value="%s" %s>%s年%s</option>' % (value_option_str, month_selected, year, JAPANESE_MONTHS[month])
+        print(value)
+        for period in mandara_periods:
+            date = period.start_date.strftime("%Y-%m-%d")
+            date_text = period.display_time_start()
+            if name == 'end':
+                date = period.end_date.strftime("%Y-%m-%d")
+                date_text = period.display_time_end()
+            month_selected = "selected" if date == value else ""
+            output += '<option value="%s" %s>%s</option>' % (date, month_selected, date_text)
 
         output += '</select>'
         return output

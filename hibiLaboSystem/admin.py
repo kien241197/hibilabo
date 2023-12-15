@@ -10,6 +10,7 @@ from django.forms import CheckboxSelectMultiple
 from django.db import models
 from .models import *
 from django.contrib.auth.admin import UserAdmin
+from django.db.models import Q
 import json
 
 # Register your models here.
@@ -39,6 +40,12 @@ class UserInline(admin.TabularInline):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+
+    def get_queryset(self, request):
+        qs = super(UserInline, self).get_queryset(request)
+        if not request.user.is_superuser:
+            return qs.filter(Q(created_by=request.user.id) | Q(company__created_by=request.user.id))
+        return qs
 
 class MandaraPeriosInline(admin.TabularInline):
     model = MandaraPeriod
@@ -85,7 +92,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     def get_field_queryset(self, db, db_field, request):
         if db_field.name == 'company' and not request.user.is_superuser:
             return db_field.remote_field.model._default_manager.filter(
-                              created_by=request.user.id,
+                              Q(created_by=request.user.id)
             )
 
         super().get_field_queryset(db, db_field, request)

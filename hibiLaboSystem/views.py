@@ -1,5 +1,5 @@
 from . import forms, middlewares
-from .models import User, HonneQuestion, HonneTypeResult, HonneIndexResult, HonneQuestion, HonneAnswerResult, HonneEvaluationPeriod, Company, SelfcheckEvaluationPeriod, SelfcheckAnswerResult, SelfcheckQuestion, SelfcheckTypeResult, SelfcheckIndexResult, BonknowEvaluationPeriod, ResponsAnswer, ThinkAnswer, ResponsResult, ThinkResult, MandaraBase, MandaraProgress
+from .models import *
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
@@ -34,9 +34,9 @@ import pdfkit
 from django.db.models import Q
 
 User = get_user_model()
-# wkhtml_to_pdf = os.path.join(
-#     settings.BASE_DIR, "wkhtmltopdf.exe")
-wkhtml_to_pdf = '/usr/bin/wkhtmltopdf'
+wkhtml_to_pdf = os.path.join(
+    settings.BASE_DIR, "wkhtmltopdf.exe")
+# wkhtml_to_pdf = '/usr/bin/wkhtmltopdf'
 # Create your views here.
 class Home(TemplateView):
     template_name = "home.html"
@@ -1073,16 +1073,20 @@ class MandaraCreate(TemplateView):
     form_class = forms.MandaraCreateForm
 
     def get_context_data(self, **kwargs):
-        today = datetime.date.today().strftime("%Y%m")
+        today = datetime.date.today()
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         mandara = MandaraBase.objects.all().filter(
-            Q(user_id=user_id) & Q(company_id=company_id) & (Q(start_YYYYMM__gt=today) | Q(flg_finished=False))
-        ).order_by('start_YYYYMM').first()
+            Q(user_id=user_id) & Q(company_id=company_id) & (Q(mandara_period__start_date__gt=today) | Q(flg_finished=False))
+        ).order_by('mandara_period__start_date').first()
+        kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
+        mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gt=today)
+        ).order_by('start_date')
         kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
         if mandara is not None:
             kwargs['form'] = self.form_class(instance=mandara)
         kwargs['mandara'] = mandara
+        kwargs['mandara_periods'] = mandara_periods
 
         return kwargs
 
@@ -1095,46 +1099,29 @@ class MandaraCreate(TemplateView):
         context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
         end_YYYYMM = request.POST.get('end_YYYYMM')
-        form.fields['start_YYYYMM'].choices = [(start_YYYYMM, start_YYYYMM)]
-        form.fields['end_YYYYMM'].choices = [(end_YYYYMM, end_YYYYMM)]
-        if start_YYYYMM is not None:
-            if context["mandara"] is not None:
-                check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exclude (pk=context["mandara"].id).exists()
-            else:
-                check_exists = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=start_YYYYMM).exists()
-            if check_exists:
-                context["message"] = '-- マンダラの期限が重複しているため、作成できません。--'
-                return self.render_to_response(context)
-        if 'save' in request.POST:
-            if start_YYYYMM == '' or end_YYYYMM == '':
-                context["message"] = '-- 目標期間は 1 年。--'
-                return self.render_to_response(context)
-
-            diff = int(end_YYYYMM) - int(start_YYYYMM)
-
-            if diff != 99:
-                context["message"] = '-- 目標期間は 1 年。--'
-                return self.render_to_response(context)
 
         if form.is_valid():
+            mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
             mandara = form.save(commit=False)
             mandara.user_id = user_id
             mandara.company_id = company_id
+            mandara.mandara_period = mandara_period
             if 'save' in request.POST:
                 mandara.flg_finished = True
                 if context["mandara"] is not None:
                     MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
-                sdate = datetime.date(int(start_YYYYMM[0:4]), int(start_YYYYMM[4:6]), 1)   # start date
-                edate = datetime.date(int(end_YYYYMM[0:4]), int(end_YYYYMM[4:6]) + 1, 1)   # end date
-                delta = edate - sdate
-                bulk_list = list()
-                for i in range(delta.days):
-                    day = sdate + datetime.timedelta(days=i)
-                    bulk_list.append(
-                        MandaraProgress(date=day, mandara_base_id=mandara.id)
-                    )
+                if mandara_period is not None:
+                    sdate = mandara_period.start_date   # start date
+                    edate = mandara_period.end_date   # end date
+                    delta = edate - sdate
+                    bulk_list = list()
+                    for i in range(delta.days + 1):
+                        day = sdate + datetime.timedelta(days=i)
+                        bulk_list.append(
+                            MandaraProgress(date=day, mandara_base_id=mandara.id)
+                        )
 
-                bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
+                    bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
             mandara.save()
             context["message"] = '-- 保存しました。--'
             context["message_class"] = 'text-success'
@@ -1162,8 +1149,8 @@ class MandaraReuse(TemplateView):
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
-        today = datetime.date.today().strftime("%Y%m")
-        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today,flg_finished=True).annotate(
+        today = datetime.date.today()
+        mandara = MandaraBase.objects.select_related('mandara_period').filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1232,11 +1219,11 @@ class MandaraReuse(TemplateView):
         kwargs['mandara'] = mandara
         kwargs['month'] = datetime.date.today().strftime("%m")
         if mandara is not None:
-            kwargs['check_today'] = MandaraProgress.objects.all().filter(mandara_base_id=mandara.id,date=datetime.date.today()).first()
             results = MandaraProgress.objects.all().filter(mandara_base_id=mandara.id,date__lte=datetime.date.today()).annotate(
                 month=ExtractMonth('date'),
                 year=ExtractYear('date')
             )
+            kwargs['check_today'] = results.filter(date=datetime.date.today()).first()
             data = {}
             for i in results:
                 key = str(i.year) + '/' + str(i.month)
@@ -1254,13 +1241,11 @@ class MandaraReuse(TemplateView):
             kwargs['data_value'] = list_value
             
             kwargs['fix'] = True
-            if mandara.start_YYYYMM > today:
+            if mandara.mandara_period.start_date > today:
                 kwargs['fix'] = False
 
-            start = mandara.start_YYYYMM[0:4] + '年' + mandara.start_YYYYMM[4:6] + '月'
-            end = mandara.end_YYYYMM[0:4] + '年' + mandara.end_YYYYMM[4:6] + '月'
-            kwargs['start'] = start
-            kwargs['end'] = end
+            kwargs['start'] = mandara.mandara_period.display_time_start
+            kwargs['end'] = mandara.mandara_period.display_time_end
 
         return kwargs
 
@@ -1273,24 +1258,27 @@ class MandaraCompletion(TemplateView):
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
-        today_str = datetime.date.today().strftime("%Y%m")
-        mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__lt=today_str,flg_finished=True).order_by('start_YYYYMM')
+        today_str = datetime.date.today()
+        mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,mandara_period__end_date__lt=today_str,flg_finished=True).order_by('mandara_period__start_date')
+        mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(end_date__lt=today_str)).order_by('start_date')
 
         kwargs['mandara_get'] = mandara_get
-        kwargs['form'] = self.form_class()
+        kwargs['mandara_get'] = mandara_get
+        kwargs['form'] = self.form_class(company_id)
         return kwargs
     
     def post(self, request, *args, **kwargs):
+        company_id = request.user.company_id
         context = self.get_context_data(**kwargs)
-        form = self.form_class(request.POST)
+        form = self.form_class(company_id, request.POST)
         context["form"] = form
         start_YYYYMM = request.POST.get('start')
         end_YYYYMM = request.POST.get('end')
         
-        if start_YYYYMM:
-            context['mandara_get'] = context['mandara_get'].filter(start_YYYYMM__gte=start_YYYYMM)
         if end_YYYYMM:
-            context['mandara_get'] = context['mandara_get'].filter(end_YYYYMM__lte=end_YYYYMM)
+            context['mandara_get'] = context['mandara_get'].filter(mandara_period__end_date__lte=end_YYYYMM)
+        if start_YYYYMM:
+            context['mandara_get'] = context['mandara_get'].filter(mandara_period__start_date__gte=start_YYYYMM)
         return self.render_to_response(context)
 
 
@@ -1303,7 +1291,7 @@ class MandaraCompletionDetail(TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         id = self.kwargs.get('id')
-        get_mandara_detail = MandaraBase.objects.filter(user_id=user_id,company_id=company_id,id=id,flg_finished=True).annotate(
+        get_mandara_detail = MandaraBase.objects.select_related('mandara_period').filter(user_id=user_id,company_id=company_id,id=id,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1370,17 +1358,17 @@ class MandaraCompletionDetail(TemplateView):
                H8_result=Sum('mandara_progress__H8_result'),
             ).first()
         
-        end_YYYYMM = get_mandara_detail.end_YYYYMM
-        start_YYYYMM = get_mandara_detail.start_YYYYMM
+        # end_YYYYMM = get_mandara_detail.mandara_period.end_date
+        # start_YYYYMM = get_mandara_detail.mandara_period.start_date
 
-        format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月'
-        format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月'
+        # format_end_date = f'{end_YYYYMM.year} 年 {int(end_YYYYMM[4:])} 月'
+        # format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月'
 
         month = datetime.date.today().strftime("%m")
 
         kwargs['get_mandara_detail'] = get_mandara_detail
-        kwargs['format_end_date'] = format_end_date
-        kwargs['format_start_date'] = format_start_date
+        kwargs['format_end_date'] = get_mandara_detail.mandara_period.display_time_end
+        kwargs['format_start_date'] = get_mandara_detail.mandara_period.display_time_start
         kwargs['month'] = month
         
         return kwargs
@@ -1394,11 +1382,11 @@ def get_detail_month(request):
             try:
                 company_id = request.user.company_id
                 user_id = request.user.id
-                today_str = datetime.date.today().strftime("%Y%m")
+                today_str = datetime.date.today()
                 year = datetime.date.today().strftime("%Y")
                 month = datetime.date.today().strftime("%m")
                 box = request.GET['type_box']
-                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today_str).order_by('start_YYYYMM').first()
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gt=today_str).order_by('mandara_period__start_date').first()
                 if mandara_get is not None:
                     list_resp = list(mandara_get.mandara_progress.annotate(day=ExtractDay('date')).filter(date__year=year,date__month=month).values('day', box + '_result'))
                     return JsonResponse({'context': list_resp})
@@ -1417,11 +1405,11 @@ def post_detail_day(request):
             try:
                 company_id = request.user.company_id
                 user_id = request.user.id
-                today_str = datetime.date.today().strftime("%Y%m")
+                today_str = datetime.date.today()
                 data = json.load(request)
                 todo = data.get('box')
                 field = todo + '_result'
-                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gt=today_str).order_by('start_YYYYMM').first()
+                mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gt=today_str).order_by('mandara_period__start_date').first()
                 if mandara_get is not None:
                     today_progress = MandaraProgress.objects.filter(mandara_base_id=mandara_get.id,date=datetime.date.today())
                     check = today_progress.values(todo+'_result').first()
@@ -1570,8 +1558,8 @@ class MandaraPersonal(TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.POST.get("user_id")
 
-        today = datetime.date.today().strftime("%Y%m")
-        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today,flg_finished=True).annotate(
+        today = datetime.date.today()
+        mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1648,10 +1636,10 @@ class MandaraMasMasChart(TemplateView):
 
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
-        today = datetime.date.today().strftime("%Y%m")
+        today = datetime.date.today()
         user_id = self.request.POST.get("user_id")
         kwargs['form'] = self.form_class(self.request)
-        mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__gte=today,start_YYYYMM__lte=today,flg_finished=True)
+        mandaras = MandaraBase.objects.select_related('mandara_period').filter(company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True)
         if user_id is not None and user_id != '':
             mandaras = mandaras.filter(user_id=user_id)
         first_mandara = mandaras.first()
@@ -1676,8 +1664,8 @@ class MandaraMasMasChart(TemplateView):
         kwargs['data_value'] = list_value
 
         if first_mandara is not None:
-            start = first_mandara.start_YYYYMM[0:4] + '年' + first_mandara.start_YYYYMM[4:6] + '月'
-            end = first_mandara.end_YYYYMM[0:4] + '年' + first_mandara.end_YYYYMM[4:6] + '月'
+            start = first_mandara.mandara_period.display_time_start
+            end = first_mandara.mandara_period.display_time_end
             kwargs['start'] = start
             kwargs['end'] = end
 
@@ -1699,17 +1687,15 @@ class MandaraCompletionTab(TemplateView):
     def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         kwargs['form'] = self.form_class(self.request)
-        today = datetime.date.today().strftime("%Y%m")
+        today = datetime.date.today()
         user_id = self.request.POST.get("user_id")
-        mandaras = MandaraBase.objects.filter(company_id=company_id,end_YYYYMM__lt=today,flg_finished=True)
-        max_time = mandaras.order_by('-end_YYYYMM').first()
-        min_time = mandaras.order_by('start_YYYYMM').first()
+        mandaras = MandaraBase.objects.select_related('mandara_period').filter(company_id=company_id,mandara_period__end_date__lt=today,flg_finished=True)
+        max_time = mandaras.order_by('-mandara_period__end_date').first()
+        min_time = mandaras.order_by('mandara_period__start_date').first()
         if min_time is not None:
-            start = min_time.start_YYYYMM[0:4] + '年' + min_time.start_YYYYMM[4:6] + '月'
-            kwargs['start'] = start
+            kwargs['start'] = min_time.mandara_period.display_time_start
         if max_time is not None:
-            end = max_time.end_YYYYMM[0:4] + '年' + max_time.end_YYYYMM[4:6] + '月'
-            kwargs['end'] = end
+            kwargs['end'] = max_time.mandara_period.display_time_end
         if user_id is not None and user_id != '':
             kwargs['mandaras'] = mandaras.filter(user_id=user_id)
 
@@ -1731,7 +1717,7 @@ class MandaraCompletionTabDetail(TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         id = self.kwargs.get('id')
-        get_mandara_detail = MandaraBase.objects.filter(company_id=company_id,id=id,flg_finished=True).annotate(
+        get_mandara_detail = MandaraBase.objects.select_related('mandara_period').filter(company_id=company_id,id=id,flg_finished=True).annotate(
                A1_result=Sum('mandara_progress__A1_result'),
                A2_result=Sum('mandara_progress__A2_result'),
                A3_result=Sum('mandara_progress__A3_result'),
@@ -1798,17 +1784,17 @@ class MandaraCompletionTabDetail(TemplateView):
                H8_result=Sum('mandara_progress__H8_result'),
             ).first()
         
-        end_YYYYMM = get_mandara_detail.end_YYYYMM
-        start_YYYYMM = get_mandara_detail.start_YYYYMM
+        # end_YYYYMM = get_mandara_detail.end_YYYYMM
+        # start_YYYYMM = get_mandara_detail.start_YYYYMM
 
-        format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月'
-        format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月'
+        # format_end_date = f'{end_YYYYMM[:4]} 年 {int(end_YYYYMM[4:])} 月'
+        # format_start_date = f'{start_YYYYMM[:4]} 年 {int(start_YYYYMM[4:])} 月'
 
         month = datetime.date.today().strftime("%m")
 
         kwargs['get_mandara_detail'] = get_mandara_detail
-        kwargs['format_end_date'] = format_end_date
-        kwargs['format_start_date'] = format_start_date
+        kwargs['format_end_date'] = get_mandara_detail.mandara_period.display_time_end
+        kwargs['format_start_date'] = get_mandara_detail.mandara_period.display_time_start
         kwargs['month'] = month
         
         return kwargs
