@@ -1,3 +1,4 @@
+from typing import Any
 from . import forms, middlewares
 from .models import *
 from django.urls import reverse_lazy, reverse
@@ -1799,3 +1800,11 @@ class MandaraCompletionTabDetail(TemplateView):
         
         return kwargs
             
+class Watasheet(TemplateView):
+    template_name = "watasheet/watasheet.html"
+
+    def get_context_data(self, **kwargs: Any):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        id = self.kwargs.get('id')
+        return kwargs
