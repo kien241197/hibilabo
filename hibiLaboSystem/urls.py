@@ -45,4 +45,5 @@ urlpatterns = [
     path('mandara-completion-tab', views.MandaraCompletionTab.as_view(), name='mandara_completion_tab'),
     path('mandara-completion-tab-detail/<id>', views.MandaraCompletionTabDetail.as_view(), name='mandara_completion_tab_detail'), #Display Detail
     
+	path('watasheet', views.Watasheet.as_view(), name="watasheet")
 ]
