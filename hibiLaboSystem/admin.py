@@ -59,9 +59,9 @@ class WatasheetInline(admin.TabularInline):
     model = WatasheetEvaluationPeriod
     # fields = ['start_date', 'end_date', 'company_id']
     extra = 0  # Number of empty forms to display
-    # formfield_overrides = {
-    #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
-    # }
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
 
 
 class CompanyAdmin(admin.ModelAdmin):
