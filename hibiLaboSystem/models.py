@@ -924,3 +924,121 @@ class MandaraProgress(models.Model):
 		constraints = [
 	        models.UniqueConstraint(fields=['mandara_base_id', 'date'], name='unique_mandara_progress')
 	    ]
+
+# WATASHEET
+class WatasheetQuestion(models.Model):
+	class Meta:
+		verbose_name = 'WATASHEET質問'
+
+	question = models.TextField()
+	sort_no = models.IntegerField(blank=True, null=True)
+	group = models.CharField(
+		verbose_name="カルテット分布",
+		max_length=1,
+		null=True,
+		choices=[
+			('A', 'A'),
+			('B', 'B'),
+			('C', 'C'),
+			('D', 'D'),
+			('E', 'E'),
+			('F', 'F'),
+		]
+	)
+
+	class Meta:
+		db_table = 'watasheet_questions'
+
+	def __str__(self):
+		return str(self.question)
+
+class WatasheetEvaluationPeriod(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='watasheet_evaluation_periods',
+	    blank=True,
+	    null=True
+	)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
+	watasheet_questions = models.ManyToManyField(
+		WatasheetQuestion,
+	    related_name='watasheet_evaluation_periods',
+	    blank=True,
+	    verbose_name = 'WATASHEET質問'
+	)
+
+	class Meta:
+		db_table = 'watasheet_evaluation_periods'
+		verbose_name = 'WATASHEET 評価期間'
+		verbose_name_plural = 'WATASHEET 評価期間'
+
+	def __str__(self):
+		return f"{self.evaluation_name}"
+
+class WatasheetResult(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='watasheet_results',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.DO_NOTHING,
+	    related_name='watasheet_results',
+	    blank=True,
+	    null=True
+	)
+	watasheet_question = models.ForeignKey(
+	    WatasheetQuestion,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_results'
+	)
+	evaluation_period = models.ForeignKey(
+	    WatasheetEvaluationPeriod,
+	    on_delete=models.DO_NOTHING,
+	    related_name='watasheet_results',
+	    blank=True,
+	    null=True
+	)
+
+	class Meta:
+		db_table = 'watasheet_answer_results'
+
+class WatasheetTypeResult(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.DO_NOTHING,
+	    related_name='watasheet_type_results',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.DO_NOTHING,
+	    related_name='watasheet_type_results',
+	    blank=True,
+	    null=True
+	)
+	evaluation_period = models.ForeignKey(
+	    WatasheetEvaluationPeriod,
+	    on_delete=models.DO_NOTHING,
+	    related_name='watasheet_type_results',
+	    blank=True,
+	    null=True
+	)
+	watasheet_type_a = models.IntegerField(blank=True, null=True)
+	watasheet_type_b = models.IntegerField(blank=True, null=True)
+	watasheet_type_c = models.IntegerField(blank=True, null=True)
+	watasheet_type_d = models.IntegerField(blank=True, null=True)
+	watasheet_type_e = models.IntegerField(blank=True, null=True)
+	watasheet_type_f = models.IntegerField(blank=True, null=True)
+	watasheet_context = models.TextField(blank=True, null=True)
+	flg_finished = models.BooleanField(default=False)
+
+	class Meta:
+		db_table = 'watasheet_type_results'
