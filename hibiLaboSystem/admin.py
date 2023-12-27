@@ -55,9 +55,18 @@ class MandaraPeriosInline(admin.TabularInline):
     #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     # }
 
+class WatasheetInline(admin.TabularInline):
+    model = WatasheetEvaluationPeriod
+    # fields = ['start_date', 'end_date', 'company_id']
+    extra = 0  # Number of empty forms to display
+    # formfield_overrides = {
+    #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    # }
+
+
 class CompanyAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
-    inlines = [MandaraPeriosInline, HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
+    inlines = [WatasheetInline, MandaraPeriosInline, HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
     def save_model(self, request, obj, form, change):
         if not change:
             obj.created_by = request.user.id
@@ -71,6 +80,8 @@ class CompanyAdmin(admin.ModelAdmin):
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
 admin.site.register(Branch)
+
+
 # admin.site.register(Hierarchy)
 
 @admin.register(User)
@@ -165,3 +176,10 @@ admin.site.register(SelfcheckQuestion)
 # Bonknow
 admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)
+# Watasheet
+admin.site.register(WatasheetQuestion)
+
+
+
+
+

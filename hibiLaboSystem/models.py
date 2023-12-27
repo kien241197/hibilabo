@@ -978,6 +978,19 @@ class WatasheetEvaluationPeriod(models.Model):
 	def __str__(self):
 		return f"{self.evaluation_name}"
 
+	def clean(self):
+		if self.evaluation_start <= datetime.date.today() and self.pk is None:
+			raise ValidationError("今日より始まりは大きくなければなりません。")
+		if self.evaluation_start > self.evaluation_end:
+			raise ValidationError("日付が間違っています。")
+		if self.pk:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,evaluation_end__gte=self.evaluation_start,evaluation_start__lte=self.evaluation_end).exclude(pk=self.pk).exists()
+		else:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,evaluation_end__gte=self.evaluation_start,evaluation_start__lte=self.evaluation_end).exists()
+
+		if check_time is True:
+			raise ValidationError("日付が重複しています。")
+
 class WatasheetResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
