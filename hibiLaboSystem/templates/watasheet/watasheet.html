@@ -12,7 +12,6 @@
     };
 </script>
 <script src="{% static 'js/watasheet.js' %}"></script>
-
 {% endblock %}
 {% block content %}
 <main class="bg-main bg-gray">
@@ -31,139 +30,685 @@
                             <div class="title">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="number">
-                                        <ul>
+                                        <ul class="list-1 nav" id="myTab" role="tablist">
                                             <li class="number-1">1</li>
                                             <li class="number-2">2</li>
-                                            <li class="active">3</li>
-                                            <li>4</li>
-                                            <li>5</li>
-                                            <li>6</li>
-                                            <li>7</li>
-                                            <li>8</li>
+                                            <li class="active button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="true">3</li>
+                                            <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">4</li>
+                                            <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">5</li>
+                                            <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">6</li>
+                                            <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">7</li>
+                                            <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">8</li>
                                         </ul>
                                     </div>
-                                    <span style="font-weight: bold; color: #000; font-size: 20px;">3/8</span>
+                                    <span id="value-tab" style="font-weight: bold; color: #000; font-size: 20px;">3/8</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-success text-center"><label><h5>{{ message }}</h5></label></div>
+            <div class="text-success text-center"><label>
+                    <h5>{{ message }}</h5>
+                </label></div>
             <form action="" method="POST">
                 {% csrf_token %}
-                <div class="section-content">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="content-chart content-chart-2 content-chart-mb">
-                                <div class="title">
-                                    <h2>PROFESSIONAL</h2>
-                                    <p>わたしが望んでいる仕事を知る</p>
-                                    <p></p>
-                                    <h3>INTEREST </h3>
-                                    <p>リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- Tab 3 -->
+                    <div class="tab-pane fade show active" id="nav-3" role="tabpanel">
+                        <div class="section-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="content-chart content-chart-2 content-chart-mb">
+                                        <div class="title">
+                                            <h2>PROFESSIONAL</h2>
+                                            <p>わたしが望んでいる仕事を知る</p>
+                                            <p></p>
+                                            <h3>INTEREST </h3>
+                                            <p>リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+                                        </div>
+                                        <table class="table">
+                                            <tbody>
+                                                {% for record in questions %}
+                                                <tr>
+                                                    {% for item in record %}
+                                                    <td>
+                                                        <label>
+                                                            <input type="checkbox" data-group="{{ item.group }}" data-anw="{{ item.answer_value }}" name="questions" value="{{ item.id }}" onchange="func_count_type(this)" {% if item.answer_value is not None %}checked{% endif %} {{ disabled }}>
+                                                            <span>{{ item.question }}</span>
+                                                        </label>
+                                                    </td>
+                                                    {% endfor %}
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <table class="table">
-                                    <tbody>
-                                        {% for record in questions %}
-                                        <tr>
-                                            {% for item in record %}
-                                            <td>
-                                                <label>
-                                                    <input type="checkbox" data-group="{{ item.group }}" data-anw="{{ item.answer_value }}" name="questions" value="{{ item.id }}" onchange="func_count_type(this)" {% if item.answer_value is not None %}checked{% endif %} {{ disabled }}>
-                                                    <span>{{ item.question }}</span>
-                                                </label>
-                                            </td>
-                                            {% endfor %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                <div class="col-lg-6">
+                                    <div class="content-chart content-chart-2 content-chart-page3">
+                                        <div class="title" style="margin-bottom:115px">
+                                            <p>わたしが求めているものを知る</p>
+                                        </div>
+                                        <table class="table table2">
+                                            <tbody>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>個　数</th>
+                                                    <th>仕 事 内 容</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr>
+                                                    <td>A</td>
+                                                    <td id="type_A">{{ type_A }}</td>
+                                                    <td class="text-center">対人接触の多い仕事</td>
+                                                    <td class="text-center" rowspan="2">人 と の 接 触 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>B</td>
+                                                    <td id="type_B">{{ type_B }}</td>
+                                                    <td class="text-center">1人でコツコツやる仕事</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>C</td>
+                                                    <td id="type_C">{{ type_C }}</td>
+                                                    <td class="text-center">長期的安定的な仕事</td>
+                                                    <td class="text-center" rowspan="2">仕 事 の 変 化 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>D</td>
+                                                    <td id="type_D">{{ type_D }}</td>
+                                                    <td class="text-center">変化に富んだ仕事</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>E</td>
+                                                    <td id="type_E">{{ type_E }}</td>
+                                                    <td class="text-center">じっくり頭を使う仕事</td>
+                                                    <td class="text-center" rowspan="2">発 揮 す る 能 力</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>F</td>
+                                                    <td id="type_F">{{ type_F }}</td>
+                                                    <td class="text-center">バリバリと行動力を活かす仕事</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="title">
+                                            <p class="m-0">わたしが求めているもの（まとめ）</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="content" class="form-control" rows="5" {{ disabled }}>{{ type_content }}</textarea>
+                                        </div>
+                                        <label class="checkbox"><input type="checkbox" name="flg_check" {{ disabled }}> 「いとなみ研究室」サイトへの記事連動を承認します。</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="content-chart content-chart-2 content-chart-page3">
-                                <div class="title" style="margin-bottom:115px">
-                                    <p>わたしが求めているものを知る</p>
+                    </div>
+                    <!-- Tab 4 -->
+                    <div class="tab-pane fade" id="nav-4" role="tabpanel">
+                        <div id="page4" class="content-chart">
+                            <div class="title title-page4" style="margin-bottom:30px;">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div>
+                            <div class="content-box">
+                                <div class="row">
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-block">
+                                                <h3>KEY WORD </h3>
+                                                <p>私を作り出している要因・キーワードを３つ記入してください</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-block">
+                                                <h3>WHY I WANT </h3>
+                                                <p>私がそうしたい理由</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-block">
+                                                <h3>MY RULE </h3>
+                                                <p>私の役割（なぜ私がしなければならないのか）を3つ記入してください</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-block">
+                                                <h3>MY VISION </h3>
+                                                <p>私のビジョン</p>
+                                            </div>
+                                            <ul>
+                                                <li>（1年後）（歳） <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>（5年後）（歳） <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>（10年後）（歳）<span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-block">
+                                                <h3>MY VISION </h3>
+                                                <p>私のミッションを記入してください</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-block">
+                                                <h3>MY CONCEPT </h3>
+                                                <p>私の芯</p>
+                                            </div>
+                                            <ul>
+                                                <li>（ひとつ） <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <table class="table table2">
-                                    <tbody>
-                                        <tr>
-                                            <th></th>
-                                            <th>個　数</th>
-                                            <th>仕 事 内 容</th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <td>A</td>
-                                            <td id="type_A">{{ type_A }}</td>
-                                            <td class="text-center">対人接触の多い仕事</td>
-                                            <td class="text-center" rowspan="2">人 と の 接 触 </td>
-                                        </tr>
-                                        <tr>
-                                            <td>B</td>
-                                            <td id="type_B">{{ type_B }}</td>
-                                            <td class="text-center">1人でコツコツやる仕事</td>
-                                        </tr>
-                                        <tr>
-                                            <td>C</td>
-                                            <td id="type_C">{{ type_C }}</td>
-                                            <td class="text-center">長期的安定的な仕事</td>
-                                            <td class="text-center" rowspan="2">仕 事 の 変 化 </td>
-                                        </tr>
-                                        <tr>
-                                            <td>D</td>
-                                            <td id="type_D">{{ type_D }}</td>
-                                            <td class="text-center">変化に富んだ仕事</td>
-                                        </tr>
-                                        <tr>
-                                            <td>E</td>
-                                            <td id="type_E">{{ type_E }}</td>
-                                            <td class="text-center">じっくり頭を使う仕事</td>
-                                            <td class="text-center" rowspan="2">発 揮 す る 能 力</td>
-                                        </tr>
-                                        <tr>
-                                            <td>F</td>
-                                            <td id="type_F">{{ type_F }}</td>
-                                            <td class="text-center">バリバリと行動力を活かす仕事</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="title">
-                                    <p class="m-0">わたしが求めているもの（まとめ）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab 5 -->
+                    <div class="tab-pane fade" id="nav-5" role="tabpanel">
+                        <div class="section-content">
+                            <div class="title title-page4">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div>
+                            <div class="content-box">
+                                <div class="row">
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>KEY WHOM </h3>
+                                                <p>3Pのミッションや「こと」は誰のために？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>FOR WHAT JOB </h3>
+                                                <p>今の仕事は何のために選んだのか？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>FOR WHAT </h3>
+                                                <p>3Pのミッションや「こと」は何のために？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>DON`T WANT TO GO </h3>
+                                                <p>向かいたくない方向性</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>KEY WHOM JOB </h3>
+                                                <p>今の仕事は誰のために選んだのか？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>DON`T WANT TO THINK </h3>
+                                                <p>そんな考え方にはなりたくない！と思う考え方を3つ</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <textarea name="content" class="form-control" rows="5" {{ disabled }}>{{ type_content }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab 6 -->
+                    <div class="tab-pane fade" id="nav-6" role="tabpanel">
+                        <div class="section-content">
+                            <div class="title title-page4">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div>
+                            <div class="content-box">
+                                <div class="row">
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>MY WANT </h3>
+                                                <p>3Pのミッションや「こと」は誰のために？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>Not MY want </h3>
+                                                <p>今の仕事は何のために選んだのか？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>MY HAPPINESS </h3>
+                                                <p>3Pのミッションや「こと」は何のために？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>Not HAPPINESS </h3>
+                                                <p>向かいたくない方向性</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>MY INPORTANT </h3>
+                                                <p>今の仕事は誰のために選んだのか？</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>NOT INPORTANT </h3>
+                                                <p>そんな考え方にはなりたくない！と思う考え方を3つ</p>
+                                            </div>
+                                            <ul>
+                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <label class="checkbox"><input type="checkbox" name="flg_check" {{ disabled }}> 「いとなみ研究室」サイトへの記事連動を承認します。</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab 7 -->
+                    <div class="tab-pane fade" id="nav-7" role="tabpanel">
+                        <div class="section-content">
+                            <div class="title title-page4">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div>
+                            <div class="content-box content-box-page7">
+                                <div class="row">
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>WORK</h3>
+                                            </div>
+                                            <ul>
+                                                <li>短期<span><input type="text" placeholder=""></span></li>
+                                                <li>中期 <span><input type="text" placeholder=""></span></li>
+                                                <li>長期 <span><input type="text" placeholder=""></span></li>
+                                            </ul>
+                                            <span class="te">能力開発</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>HEALTH </h3>
+                                            </div>
+                                            <ul>
+                                                <li>短期<span><input type="text" placeholder=""></span></li>
+                                                <li>中期 <span><input type="text" placeholder=""></span></li>
+                                                <li>長期 <span><input type="text" placeholder=""></span></li>
+                                            </ul>
+                                            <span class="te">能力開発</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>DEVELOPMENT </h3>
+                                            </div>
+                                            <ul>
+                                                <li>短期<span><input type="text" placeholder=""></span></li>
+                                                <li>中期 <span><input type="text" placeholder=""></span></li>
+                                                <li>長期 <span><input type="text" placeholder=""></span></li>
+                                            </ul>
+                                            <span class="te">能力開発</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>HOBBY </h3>
+                                            </div>
+                                            <ul>
+                                                <li>短期<span><input type="text" placeholder=""></span></li>
+                                                <li>中期 <span><input type="text" placeholder=""></span></li>
+                                                <li>長期 <span><input type="text" placeholder=""></span></li>
+                                            </ul>
+                                            <span class="te">能力開発</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>FAMILY </h3>
+                                            </div>
+                                            <ul>
+                                                <li>短期<span><input type="text" placeholder=""></span></li>
+                                                <li>中期 <span><input type="text" placeholder=""></span></li>
+                                                <li>長期 <span><input type="text" placeholder=""></span></li>
+                                            </ul>
+                                            <span class="te">能力開発</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>ECONOMY </h3>
+                                            </div>
+                                            <ul>
+                                                <li>短期<span><input type="text" placeholder=""></span></li>
+                                                <li>中期 <span><input type="text" placeholder=""></span></li>
+                                                <li>長期 <span><input type="text" placeholder=""></span></li>
+                                            </ul>
+                                            <span class="te">能力開発</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab 8 -->
+                    <div class="tab-pane fade" id="nav-8" role="tabpanel">
+                        <div class="section-content">
+                            <div class="title title-page4">
+                                <h2>MY time line </h2>
+                                <p>わたしの過去・現在・未来の年表を作ってみよう！</p>
+                            </div>
+                            <div class="content-box content-box-page7 display-pc">
+                                <div class="row">
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>0 - 10 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>30 - 40 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>10 - 20 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>40 - 50</span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>20 - 30 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items items-2">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old old-bd">
+                                                <span>50 - 70 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                            <div class="title-box" style="padding-top:20px;">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>70 - 100 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-box content-box-page7 display-mobile">
+                                <div class="row">
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>0 - 10 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>10 - 20 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>20 - 30 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>30 - 40 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>50 - 70</span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span>70 - 100 </span>
+                                                <textarea></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="button-chart">
-                    <div class="checkbox">
-                        {{ form.flg_finished }}{{ form.flg_finished.label }}
-                    </div>
+                    <label class="checkbox d-flex align-items-center" style="gap: 5px;">
+                        {{ form.flg_finished }} {{ form.flg_finished.label }}
+                    </label>
                     <div class="flex-chart">
                         <button class="btn-custom-button" type="submit">一時保存</button>
                         <button class="btn-custom-button" type="submit">保存</button>
                     </div>
-                </div>      
+                </div>
             </form>
             <div class="number border-bottom-custom">
-                <ul class="justify-content-center">
+                <ul class="list-2 nav justify-content-center" id="myTab" role="tablist">
                     <li class="number-1">1</li>
                     <li class="number-2">2</li>
-                    <li class="active">3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
+                    <li class="active button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="true">3</li>
+                    <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">4</li>
+                    <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">5</li>
+                    <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">6</li>
+                    <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">7</li>
+                    <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">8</li>
                 </ul>
                 <span>3P</span>
             </div>
         </div>
     </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Xử lý sự kiện click cho các button tab
+    $('.button-tab').click(function() {
+
+        // Loại bỏ class active từ tất cả các button tab
+        $('.button-tab').removeClass('active');
+
+        // Thêm class active cho button tab được click
+        var index = $(this).index();
+        $('.list-1 .button-tab').eq(index - 2).addClass('active');
+        $('.list-2 .button-tab').eq(index - 2).addClass('active');
+
+        // 
+        var text = $(this).text();
+        $('#value-tab').text(`${text}/8`);
+    });
+});
+</script>
 {% endblock%}
