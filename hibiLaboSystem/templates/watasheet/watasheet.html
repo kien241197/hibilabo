@@ -1,4 +1,19 @@
 {% extends 'layout.html' %}
+{% block header %}
+{% load static %}
+<script>
+    var typeList = {
+        A: {{ type_A }},
+        B: {{ type_B }},
+        C: {{ type_C }},
+        D: {{ type_D }},
+        E: {{ type_E }},
+        F: {{ type_F }},
+    };
+</script>
+<script src="{% static 'js/watasheet.js' %}"></script>
+
+{% endblock %}
 {% block content %}
 <main class="bg-main bg-gray">
     <section class="site-chart pd-main">
@@ -34,251 +49,107 @@
                     </div>
                 </div>
             </div>
-            <div class="section-content">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="content-chart content-chart-2 content-chart-mb">
-                            <div class="title">
-                                <h2>PROFESSIONAL</h2>
-                                <p>わたしが望んでいる仕事を知る</p>
-                                <p></p>
-                                <h3>INTEREST </h3>
-                                <p>リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+            <div class="text-success text-center"><label><h5>{{ message }}</h5></label></div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="section-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="content-chart content-chart-2 content-chart-mb">
+                                <div class="title">
+                                    <h2>PROFESSIONAL</h2>
+                                    <p>わたしが望んでいる仕事を知る</p>
+                                    <p></p>
+                                    <h3>INTEREST </h3>
+                                    <p>リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+                                </div>
+                                <table class="table">
+                                    <tbody>
+                                        {% for record in questions %}
+                                        <tr>
+                                            {% for item in record %}
+                                            <td>
+                                                <label>
+                                                    <input type="checkbox" data-group="{{ item.group }}" data-anw="{{ item.answer_value }}" name="questions" value="{{ item.id }}" onchange="func_count_type(this)" {% if item.answer_value is not None %}checked{% endif %} {{ disabled }}>
+                                                    <span>{{ item.question }}</span>
+                                                </label>
+                                            </td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox">
-                                                <span>テストテストテストテスト <br> テストテストテストテスト <br> テストテストテストテスト</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="content-chart content-chart-2 content-chart-page3">
-                            <div class="title" style="margin-bottom:115px">
-                                <p>わたしが求めているものを知る</p>
+                        <div class="col-lg-6">
+                            <div class="content-chart content-chart-2 content-chart-page3">
+                                <div class="title" style="margin-bottom:115px">
+                                    <p>わたしが求めているものを知る</p>
+                                </div>
+                                <table class="table table2">
+                                    <tbody>
+                                        <tr>
+                                            <th></th>
+                                            <th>個　数</th>
+                                            <th>仕 事 内 容</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td>A</td>
+                                            <td id="type_A">{{ type_A }}</td>
+                                            <td class="text-center">対人接触の多い仕事</td>
+                                            <td class="text-center" rowspan="2">人 と の 接 触 </td>
+                                        </tr>
+                                        <tr>
+                                            <td>B</td>
+                                            <td id="type_B">{{ type_B }}</td>
+                                            <td class="text-center">1人でコツコツやる仕事</td>
+                                        </tr>
+                                        <tr>
+                                            <td>C</td>
+                                            <td id="type_C">{{ type_C }}</td>
+                                            <td class="text-center">長期的安定的な仕事</td>
+                                            <td class="text-center" rowspan="2">仕 事 の 変 化 </td>
+                                        </tr>
+                                        <tr>
+                                            <td>D</td>
+                                            <td id="type_D">{{ type_D }}</td>
+                                            <td class="text-center">変化に富んだ仕事</td>
+                                        </tr>
+                                        <tr>
+                                            <td>E</td>
+                                            <td id="type_E">{{ type_E }}</td>
+                                            <td class="text-center">じっくり頭を使う仕事</td>
+                                            <td class="text-center" rowspan="2">発 揮 す る 能 力</td>
+                                        </tr>
+                                        <tr>
+                                            <td>F</td>
+                                            <td id="type_F">{{ type_F }}</td>
+                                            <td class="text-center">バリバリと行動力を活かす仕事</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="title">
+                                    <p class="m-0">わたしが求めているもの（まとめ）</p>
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="content" class="form-control" rows="5" {{ disabled }}>{{ type_content }}</textarea>
+                                </div>
+                                <label class="checkbox"><input type="checkbox" name="flg_check" {{ disabled }}> 「いとなみ研究室」サイトへの記事連動を承認します。</label>
                             </div>
-                            <table class="table table2">
-                                <tbody>
-                                    <tr>
-                                        <th></th>
-                                        <th>個　数</th>
-                                        <th>仕 事 内 容</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>1</td>
-                                        <td class="text-center">対人接触の多い仕事</td>
-                                        <td class="text-center" rowspan="2">人 と の 接 触 </td>
-                                    </tr>
-                                    <tr>
-                                        <td>B</td>
-                                        <td>2</td>
-                                        <td class="text-center">1人でコツコツやる仕事</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C</td>
-                                        <td>3</td>
-                                        <td class="text-center">長期的安定的な仕事</td>
-                                        <td class="text-center" rowspan="2">仕 事 の 変 化 </td>
-                                    </tr>
-                                    <tr>
-                                        <td>D</td>
-                                        <td>4</td>
-                                        <td class="text-center">変化に富んだ仕事</td>
-                                    </tr>
-                                    <tr>
-                                        <td>E</td>
-                                        <td>5</td>
-                                        <td class="text-center">じっくり頭を使う仕事</td>
-                                        <td class="text-center" rowspan="2">発 揮 す る 能 力</td>
-                                    </tr>
-                                    <tr>
-                                        <td>F</td>
-                                        <td>6</td>
-                                        <td class="text-center">バリバリと行動力を活かす仕事</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="title">
-                                <p class="m-0">わたしが求めているもの（まとめ）</p>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5"></textarea>
-                            </div>
-                            <label class="checkbox"><input type="checkbox"> 「いとなみ研究室」サイトへの記事連動を承認します。</label>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="button-chart">
-                <div class="checkbox">
-                    <label><input type="checkbox"> 提出する</label>
-                </div>
-                <div class="flex-chart">
-                    <button class="btn-custom-button" type="submit">一時保存</button>
-                    <button class="btn-custom-button" type="submit">保存</button>
-                </div>
-            </div>
+                <div class="button-chart">
+                    <div class="checkbox">
+                        {{ form.flg_finished }}{{ form.flg_finished.label }}
+                    </div>
+                    <div class="flex-chart">
+                        <button class="btn-custom-button" type="submit">一時保存</button>
+                        <button class="btn-custom-button" type="submit">保存</button>
+                    </div>
+                </div>      
+            </form>
             <div class="number border-bottom-custom">
                 <ul class="justify-content-center">
                     <li class="number-1">1</li>

@@ -1191,3 +1191,11 @@ class UserAdminForm(forms.ModelForm):
     class Meta:
         model = models.User
         exclude = ['is_superuser']
+
+class WatasheetForm(forms.Form):
+    flg_finished = forms.BooleanField(
+        initial=False,
+        label='提出する',
+        required=False,
+        help_text='提出する'
+    )

@@ -1,4 +1,3 @@
-from typing import Any
 from . import forms, middlewares
 from .models import *
 from django.urls import reverse_lazy, reverse
@@ -38,17 +37,26 @@ User = get_user_model()
 wkhtml_to_pdf = os.path.join(
     settings.BASE_DIR, "wkhtmltopdf.exe")
 # wkhtml_to_pdf = '/usr/bin/wkhtmltopdf'
+
+def divide_chunks(l, n): 
+      
+    # looping till length l 
+    for i in range(0, len(l), n):  
+        yield l[i:i + n] 
+
 # Create your views here.
 class Home(TemplateView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        today = datetime.date.today()
         if self.request.user.is_authenticated:
             company_id = self.request.user.company_id
-            context["period_honne"] = HonneEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
-            context["period_selfcheck"] = SelfcheckEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
-            context["period_bonknow"] = BonknowEvaluationPeriod.objects.all().filter(evaluation_start__lte=datetime.date.today(),evaluation_end__gte=datetime.date.today(),company_id=company_id).first()
+            context["period_honne"] = HonneEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
+            context["period_selfcheck"] = SelfcheckEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
+            context["period_bonknow"] = BonknowEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
+            context["period_watasheet"] = WatasheetEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
         return context
 
 class Login(LoginView):
@@ -1799,12 +1807,121 @@ class MandaraCompletionTabDetail(TemplateView):
         kwargs['month'] = month
         
         return kwargs
-            
+
+@method_decorator(login_required, name='dispatch')            
 class Watasheet(TemplateView):
     template_name = "watasheet/watasheet.html"
+    form_class = forms.WatasheetForm
+    test = None
 
-    def get_context_data(self, **kwargs: Any):
+    def get_context_data(self, **kwargs):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
-        id = self.kwargs.get('id')
+
+        initial_values = {
+            "flg_finished": False,
+        }
+
+        evaluation_period = get_object_or_404(
+            WatasheetEvaluationPeriod,
+            company_id=company_id,
+            evaluation_start__lte=datetime.date.today(),
+            evaluation_end__gte=datetime.date.today()
+        )
+        self.test = evaluation_period.id
+        watasheet_questions = evaluation_period.watasheet_questions.prefetch_related(
+            Prefetch(
+                'watasheet_results',
+                queryset=(
+                    WatasheetResult.objects
+                        .filter(evaluation_period_id=evaluation_period.id,user_id=user_id,company_id=company_id)
+                )
+            )
+        ).all().annotate(
+            answer_value=WatasheetResult.objects.filter(
+                watasheet_question=OuterRef("pk"),
+                evaluation_period_id=evaluation_period.id,
+                company_id=company_id,
+                user_id=user_id
+            ).values('id')[:1]
+        ).order_by('sort_no')
+        obj_type = evaluation_period.watasheet_type_results.filter(user_id=user_id,company_id=company_id).first()
+        if obj_type is not None:
+            initial_values['flg_finished'] = obj_type.flg_finished
+        
+        kwargs = super(Watasheet, self).get_context_data(**kwargs)
+        kwargs['evaluation_period'] = evaluation_period
+        kwargs['watasheet_questions'] = watasheet_questions
+        kwargs['questions'] = list(divide_chunks(watasheet_questions, 3))
+        kwargs['type_A'] = obj_type.watasheet_type_a if obj_type is not None else 0
+        kwargs['type_B'] = obj_type.watasheet_type_b if obj_type is not None else 0
+        kwargs['type_C'] = obj_type.watasheet_type_c if obj_type is not None else 0
+        kwargs['type_D'] = obj_type.watasheet_type_d if obj_type is not None else 0
+        kwargs['type_E'] = obj_type.watasheet_type_e if obj_type is not None else 0
+        kwargs['type_F'] = obj_type.watasheet_type_f if obj_type is not None else 0
+        kwargs['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
+        kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
+        kwargs['form'] = self.form_class(initial_values)
         return kwargs
+
+    def post(self, request, *args, **kwargs):
+        context_get = self.get_context_data(**kwargs)
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        flg_finished = self.request.POST.get("flg_finished") or False
+        questions = self.request.POST.getlist("questions")
+        if self.request.POST.get("content") is not None:
+            WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id).delete()
+            bulk_list = list()
+            types = {
+                "A" : 0,
+                "B" : 0,
+                "C" : 0,
+                "D" : 0,
+                "E" : 0,
+                "F" : 0,
+            }
+            for q in questions:
+                question = next(
+                    (obj for obj in context_get['watasheet_questions'] if int(obj.id) == int(q)),
+                    None
+                )
+                if question is not None:
+                    types[question.group] = int(types[question.group]) + 1
+                    bulk_list.append(
+                        WatasheetResult(
+                            company_id=company_id,
+                            user_id=user_id,
+                            evaluation_period_id=context_get["evaluation_period"].id,
+                            watasheet_question_id=q,
+                        )
+                    )
+
+            bulk_msj = WatasheetResult.objects.bulk_create(bulk_list)
+            obj = WatasheetTypeResult.objects.update_or_create(
+                company_id=company_id,
+                user_id=user_id,
+                evaluation_period_id=context_get["evaluation_period"].id,
+                defaults={
+                    "watasheet_type_a": types['A'],
+                    "watasheet_type_b": types['B'],
+                    "watasheet_type_c": types['C'],
+                    "watasheet_type_d": types['D'],
+                    "watasheet_type_e": types['E'],
+                    "watasheet_type_f": types['F'],
+                    "watasheet_context": self.request.POST.get("content"),
+                    "flg_finished": bool(flg_finished),
+                }
+            )
+        else:
+            obj = WatasheetTypeResult.objects.update_or_create(
+                company_id=company_id,
+                user_id=user_id,
+                evaluation_period_id=context_get["evaluation_period"].id,
+                defaults={
+                    "flg_finished": bool(flg_finished),
+                }
+            )
+        context = self.get_context_data(**kwargs)
+        context["message"] = '-- 保存しました。--'
+        return self.render_to_response(context)
