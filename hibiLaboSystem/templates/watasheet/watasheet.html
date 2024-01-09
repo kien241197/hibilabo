@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block header %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/watasheet.css' %}">
 <script>
     var typeList = {
         A: {{ type_A }},
@@ -18,10 +19,20 @@
     <section class="site-chart pd-main">
         <div class="container-fluid">
             <div class="section-title">
-                <div class="row">
+                <div class="row align-items-baseline">
                     <div class="col-lg-6">
                         <div class="content-chart content-chart-2 content-chart-mb">
                             <div class="title">
+                                <h2 class="title-tab">
+                                    PROFESSIONAL
+                                    {% if questions|length > 0 %}
+                                    TYPE {{ questions|length}}
+                                    {% endif %}
+                                </h2>
+                                <p class="desc-tab">わたしが望んでいる仕事を知る</p>
+                                <p></p>
+                                <h3 class="title-tab-h3 mt-2">INTEREST </h3>
+                                <p class="desc-tab-p">リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
                             </div>
                         </div>
                     </div>
@@ -60,13 +71,13 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="content-chart content-chart-2 content-chart-mb">
-                                        <div class="title">
+                                        <!-- <div class="title">
                                             <h2>PROFESSIONAL</h2>
                                             <p>わたしが望んでいる仕事を知る</p>
                                             <p></p>
                                             <h3>INTEREST </h3>
                                             <p>リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
-                                        </div>
+                                        </div> -->
                                         <table class="table">
                                             <tbody>
                                                 {% for record in questions %}
@@ -87,9 +98,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="content-chart content-chart-2 content-chart-page3">
-                                        <div class="title" style="margin-bottom:115px">
+                                        <!-- <div class="title" style="margin-bottom:115px">
                                             <p>わたしが求めているものを知る</p>
-                                        </div>
+                                        </div> -->
                                         <table class="table table2">
                                             <tbody>
                                                 <tr>
@@ -148,91 +159,91 @@
                     <!-- Tab 4 -->
                     <div class="tab-pane fade" id="nav-4" role="tabpanel">
                         <div id="page4" class="content-chart">
-                            <div class="title title-page4" style="margin-bottom:30px;">
+                            <!-- <div class="title title-page4" style="margin-bottom:30px;">
                                 <h2>KNOW MYSELF </h2>
                                 <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
-                            </div>
+                            </div> -->
                             <div class="content-box">
                                 <div class="row">
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box title-box2 d-block">
-                                                <h3>KEY WORD </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">1 </h3>
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-flex mb-2">
+                                                <h3 class="mr-4">KEY WORD </h3>
                                                 <p>私を作り出している要因・キーワードを３つ記入してください</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box title-box2 d-block">
-                                                <h3>WHY I WANT </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">4 </h3>
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-flex mb-2">
+                                                <h3 class="mr-4">WHY I WANT </h3>
                                                 <p>私がそうしたい理由</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box title-box2 d-block">
-                                                <h3>MY RULE </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">2 </h3>
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-flex mb-2">
+                                                <h3 class="mr-4">MY RULE </h3>
                                                 <p>私の役割（なぜ私がしなければならないのか）を3つ記入してください</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box title-box2 d-block">
-                                                <h3>MY VISION </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">5 </h3>
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-flex mb-2">
+                                                <h3 class="mr-4">MY VISION </h3>
                                                 <p>私のビジョン</p>
                                             </div>
-                                            <ul>
-                                                <li>（1年後）（歳） <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>（5年後）（歳） <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>（10年後）（歳）<span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>（1年後）（歳） <span><input type="text"></span></li>
+                                                <li>（5年後）（歳） <span><input type="text"></span></li>
+                                                <li>（10年後）（歳）<span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box title-box2 d-block">
-                                                <h3>MY VISION </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">3 </h3>
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-flex mb-2">
+                                                <h3 class="mr-4">MY VISION </h3>
                                                 <p>私のミッションを記入してください</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box title-box2 d-block">
-                                                <h3>MY CONCEPT </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">6 </h3>
+                                        <div class="items">
+                                            <div class="title-box title-box2 d-flex mb-2">
+                                                <h3 class="mr-4">MY CONCEPT</h3>
                                                 <p>私の芯</p>
                                             </div>
-                                            <ul>
-                                                <li>（ひとつ） <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0" style="height: 120px">
+                                                <li>（ひとつ） <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
                                             </ul>
                                         </div>
                                     </div>
@@ -243,93 +254,93 @@
                     <!-- Tab 5 -->
                     <div class="tab-pane fade" id="nav-5" role="tabpanel">
                         <div class="section-content">
-                            <div class="title title-page4">
+                            <!--  <div class="title title-page4">
                                 <h2>KNOW MYSELF </h2>
                                 <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
-                            </div>
+                            </div> -->
                             <div class="content-box">
                                 <div class="row">
                                     <div class="col-md-6 mb-30">
                                         <div class="items position-relative">
-                                            <div class="title-box">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>KEY WHOM </h3>
                                                 <h3 class="position-absolute" style="bottom: 15px; right: 15px;">1 </h3>
-                                                <p>3Pのミッションや「こと」は誰のために？</p>
+                                                <p class="pl-0">3Pのミッションや「こと」は誰のために？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items position-relative">
-                                            <div class="title-box">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>FOR WHAT JOB </h3>
                                                 <h3 class="position-absolute" style="bottom: 15px; right: 15px;">4 </h3>
-                                                <p>今の仕事は何のために選んだのか？</p>
+                                                <p class="pl-0">今の仕事は何のために選んだのか？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items position-relative">
-                                            <div class="title-box">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>FOR WHAT </h3>
                                                 <h3 class="position-absolute" style="bottom: 15px; right: 15px;">2 </h3>
-                                                <p>3Pのミッションや「こと」は何のために？</p>
+                                                <p class="pl-0">3Pのミッションや「こと」は何のために？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items position-relative">
-                                            <div class="title-box">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>DON`T WANT TO GO </h3>
                                                 <h3 class="position-absolute" style="bottom: 15px; right: 15px;">5 </h3>
-                                                <p>向かいたくない方向性</p>
+                                                <p class="pl-0">向かいたくない方向性</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items position-relative">
-                                            <div class="title-box">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>KEY WHOM JOB </h3>
                                                 <h3 class="position-absolute" style="bottom: 15px; right: 15px;">3 </h3>
-                                                <p>今の仕事は誰のために選んだのか？</p>
+                                                <p class="pl-0">今の仕事は誰のために選んだのか？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items position-relative">
-                                            <div class="title-box">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>DON`T WANT TO THINK </h3>
                                                 <h3 class="position-absolute" style="bottom: 15px; right: 15px;">6 </h3>
-                                                <p>そんな考え方にはなりたくない！と思う考え方を3つ</p>
+                                                <p class="pl-0">そんな考え方にはなりたくない！と思う考え方を3つ</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -340,93 +351,93 @@
                     <!-- Tab 6 -->
                     <div class="tab-pane fade" id="nav-6" role="tabpanel">
                         <div class="section-content">
-                            <div class="title title-page4">
+                            <!-- <div class="title title-page4">
                                 <h2>KNOW MYSELF </h2>
                                 <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
-                            </div>
+                            </div> -->
                             <div class="content-box">
                                 <div class="row">
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box">
+                                        <div class="items">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY WANT </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">1 </h3>
-                                                <p>3Pのミッションや「こと」は誰のために？</p>
+                                                <p class="pl-0">3Pのミッションや「こと」は誰のために？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box">
+                                        <div class="items">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>Not MY want </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">4 </h3>
-                                                <p>今の仕事は何のために選んだのか？</p>
+                                                <p class="pl-0">今の仕事は何のために選んだのか？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box">
+                                        <div class="items">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY HAPPINESS </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">2 </h3>
-                                                <p>3Pのミッションや「こと」は何のために？</p>
+                                                <p class="pl-0">3Pのミッションや「こと」は何のために？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box">
+                                        <div class="items">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>Not HAPPINESS </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">5 </h3>
-                                                <p>向かいたくない方向性</p>
+                                                <p class="pl-0">向かいたくない方向性</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box">
+                                        <div class="items">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY INPORTANT </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">3 </h3>
-                                                <p>今の仕事は誰のために選んだのか？</p>
+                                                <p class="pl-0">今の仕事は誰のために選んだのか？</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-30">
-                                        <div class="items position-relative">
-                                            <div class="title-box">
+                                        <div class="items">
+                                            <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>NOT INPORTANT </h3>
-                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">6 </h3>
-                                                <p>そんな考え方にはなりたくない！と思う考え方を3つ</p>
+                                                <p class="pl-0">そんな考え方にはなりたくない！と思う考え方を3つ</p>
                                             </div>
-                                            <ul>
-                                                <li>(1) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(2) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
-                                                <li>(3) <span><input type="text" placeholder="ココに文字が入力されます"></span></li>
+                                            <ul class="position-relative pl-0">
+                                                <li>(1) <span><input type="text"></span></li>
+                                                <li>(2) <span><input type="text"></span></li>
+                                                <li>(3) <span><input type="text"></span></li>
+                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
                                             </ul>
                                         </div>
                                     </div>
@@ -437,15 +448,15 @@
                     <!-- Tab 7 -->
                     <div class="tab-pane fade" id="nav-7" role="tabpanel">
                         <div class="section-content">
-                            <div class="title title-page4">
+                            <!--  <div class="title title-page4">
                                 <h2>KNOW MYSELF </h2>
                                 <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
-                            </div>
+                            </div> -->
                             <div class="content-box content-box-page7">
                                 <div class="row">
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>WORK</h3>
                                             </div>
                                             <ul>
@@ -458,7 +469,7 @@
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>HEALTH </h3>
                                             </div>
                                             <ul>
@@ -471,7 +482,7 @@
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>DEVELOPMENT </h3>
                                             </div>
                                             <ul>
@@ -484,7 +495,7 @@
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>HOBBY </h3>
                                             </div>
                                             <ul>
@@ -497,7 +508,7 @@
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>FAMILY </h3>
                                             </div>
                                             <ul>
@@ -510,7 +521,7 @@
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>ECONOMY </h3>
                                             </div>
                                             <ul>
@@ -523,7 +534,7 @@
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>HUMAN </h3>
                                             </div>
                                             <ul>
@@ -536,7 +547,7 @@
                                     </div>
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
-                                            <div class="title-box">
+                                            <div class="title-box position-absolute right-2">
                                                 <h3>ETC </h3>
                                             </div>
                                             <ul>
@@ -554,10 +565,10 @@
                     <!-- Tab 8 -->
                     <div class="tab-pane fade" id="nav-8" role="tabpanel">
                         <div class="section-content">
-                            <div class="title title-page4">
+                            <!-- <div class="title title-page4">
                                 <h2>MY time line </h2>
                                 <p>わたしの過去・現在・未来の年表を作ってみよう！</p>
-                            </div>
+                            </div> -->
                             <div class="content-box content-box-page7 display-pc">
                                 <div class="row">
                                     <div class="col-md-6 mb-30">
@@ -750,7 +761,23 @@ $(document).ready(function() {
         // 
         var text = $(this).text();
         $('#value-tab').text(`${text}/8`);
-        $('#number-page').text(`${text}P`)
+        $('#number-page').text(`${text}P`);
+
+        //
+        if (index == 0) {
+
+            const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
+            $('.title-tab').text(`PROFESSIONAL ${length}`);
+            $('.desc-tab').text("わたしが望んでいる仕事を知る");
+            $('.title-tab-h3').text("INTEREST");
+            $('.desc-tab-p').text("リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。");
+        } else {
+
+            $('.title-tab').text("KNOW MYSELF");
+            $('.desc-tab').text("自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）");
+            $('.title-tab-h3').text("");
+            $('.desc-tab-p').text("");
+        }
     });
 });
 </script>

@@ -1,0 +1,21 @@
+h3 {
+
+    font-size: 20pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #727171;
+    font-family: var(--font-text);
+    letter-spacing: 2px;
+}
+
+.items {
+
+	margin-bottom: 0px;
+}
+
+.right-2 {
+
+	right: 2em;
+}
+

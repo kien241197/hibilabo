@@ -11,3 +11,4 @@ function func_count_type(element){
         }
     }
 }
+
