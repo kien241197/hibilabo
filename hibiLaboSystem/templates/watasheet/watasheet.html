@@ -81,12 +81,18 @@
                                         <table class="table">
                                             <tbody>
                                                 {% for record in questions %}
+                                                {% for item in record %}
+                                                {% if forloop.counter|divisibleby:3 %}
+                                                </tr>
+                                                <tr>
+                                                    {% endif %}
+                                                    {% endfor %}
                                                 <tr>
                                                     {% for item in record %}
                                                     <td>
                                                         <label>
                                                             <input type="checkbox" data-group="{{ item.group }}" data-anw="{{ item.answer_value }}" name="questions" value="{{ item.id }}" onchange="func_count_type(this)" {% if item.answer_value is not None %}checked{% endif %} {{ disabled }}>
-                                                            <span>{{ item.question }}</span>
+                                                            <span>{{ item.question }} /{{item.group}}</span>
                                                         </label>
                                                     </td>
                                                     {% endfor %}
@@ -112,35 +118,62 @@
                                                 <tr>
                                                     <td>A</td>
                                                     <td id="type_A">{{ type_A }}</td>
-                                                    <td class="text-center">対人接触の多い仕事</td>
-                                                    <td class="text-center" rowspan="2">人 と の 接 触 </td>
+                                                    <td class="text-center">
+                                                        <h3>BALANCE </h3>
+                                                        対人接触の多い仕事
+                                                    </td>
+                                                    <td class="text-center" rowspan="2">
+                                                        <h3>MIND </h3>
+                                                        人 と の 接 触
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>B</td>
                                                     <td id="type_B">{{ type_B }}</td>
-                                                    <td class="text-center">1人でコツコツやる仕事</td>
+                                                    <td class="text-center">
+                                                        <h3>CAREFUL </h3>
+                                                        1人でコツコツやる仕事
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>C</td>
                                                     <td id="type_C">{{ type_C }}</td>
-                                                    <td class="text-center">長期的安定的な仕事</td>
-                                                    <td class="text-center" rowspan="2">仕 事 の 変 化 </td>
+                                                    <td class="text-center">
+                                                        <h3>COORDINATOR </h3>
+                                                        長期的安定的な仕事
+                                                    </td>
+                                                    <td class="text-center" rowspan="2">
+                                                        <h3>MESSAAGGGE </h3>
+                                                        仕 事 の 変 化
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>D</td>
                                                     <td id="type_D">{{ type_D }}</td>
-                                                    <td class="text-center">変化に富んだ仕事</td>
+                                                    <td class="text-center">
+                                                        <h3>CONTROLLER </h3>
+                                                        変化に富んだ仕事
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>E</td>
                                                     <td id="type_E">{{ type_E }}</td>
-                                                    <td class="text-center">じっくり頭を使う仕事</td>
-                                                    <td class="text-center" rowspan="2">発 揮 す る 能 力</td>
+                                                    <td class="text-center">
+                                                        <h3>SUPPORTER </h3>
+                                                        じっくり頭を使う仕事
+                                                    </td>
+                                                    <td class="text-center" rowspan="2">
+                                                        <h3>MOTION </h3>
+                                                        発 揮 す る 能 力
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>F</td>
                                                     <td id="type_F">{{ type_F }}</td>
-                                                    <td class="text-center">バリバリと行動力を活かす仕事</td>
+                                                    <td class="text-center">
+                                                        <h3>CHALLANGER </h3>
+                                                        バリバリと行動力を活かす仕事
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -766,7 +799,7 @@ $(document).ready(function() {
         //
         if (index == 0) {
 
-            const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
+            const length = {{ questions | length }} > 0 ? "TYPE {{ questions|length }}" : "";
             $('.title-tab').text(`PROFESSIONAL ${length}`);
             $('.desc-tab').text("わたしが望んでいる仕事を知る");
             $('.title-tab-h3').text("INTEREST");
