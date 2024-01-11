@@ -1876,9 +1876,7 @@ class Watasheet(TemplateView):
         questions = self.request.POST.getlist("questions")
         form = self.form_class(request.POST, instance=context_get["watasheet_type_result"])
 
-        if self.request.POST.get("content") is not None:
-           
-            
+        if self.request.POST.get("watasheet_context") is not None:
 
             WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id).delete()
             bulk_list = list()
@@ -1907,9 +1905,8 @@ class Watasheet(TemplateView):
                     )
 
             bulk_msj = WatasheetResult.objects.bulk_create(bulk_list)
-
+            
             if form.is_valid():
-
                 watasheet_type_result=form.save(commit=False)
                 watasheet_type_result.user_id = user_id
                 watasheet_type_result.company_id = company_id
@@ -1921,42 +1918,15 @@ class Watasheet(TemplateView):
                 watasheet_type_result.watasheet_type_f = types['F']
                 watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
                 watasheet_type_result.save()
-
-                # watasheet_type_result.user_id = user_id
-                # watasheet_type_result.company_id = company_id
-                # aaa.save()
-
-            
-            # obj = WatasheetTypeResult.objects.update_or_create(
-            #     company_id=company_id,
-            #     user_id=user_id,
-            #     evaluation_period_id=context_get["evaluation_period"].id,
-            #     defaults={
-            #         "watasheet_type_a": types['A'],
-            #         "watasheet_type_b": types['B'],
-            #         "watasheet_type_c": types['C'],
-            #         "watasheet_type_d": types['D'],
-            #         "watasheet_type_e": types['E'],
-            #         "watasheet_type_f": types['F'],
-            #         "watasheet_context": self.request.POST.get("content"),
-            #         "flg_finished": bool(flg_finished),
-            #     }
-            # )
         else:
-            watasheet_type_result=form.save(commit=False)
-            watasheet_type_result.user_id = user_id
-            watasheet_type_result.company_id = company_id
-            watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
-            watasheet_type_result.flg_finished = bool(flg_finished)
-            watasheet_type_result.save()
-            # obj = WatasheetTypeResult.objects.update_or_create(
-            #     company_id=company_id,
-            #     user_id=user_id,
-            #     evaluation_period_id=context_get["evaluation_period"].id,
-            #     defaults={
-            #         "flg_finished =": bool(flg_finished),
-            #     }
-            # )
+            obj = WatasheetTypeResult.objects.update_or_create(
+                company_id=company_id,
+                user_id=user_id,
+                evaluation_period_id=context_get["evaluation_period"].id,
+                defaults={
+                    "flg_finished": bool(flg_finished),
+                }
+            )
         context = self.get_context_data(**kwargs)
         context["message"] = '-- 保存しました。--'
         return self.render_to_response(context)
