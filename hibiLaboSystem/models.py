@@ -1051,6 +1051,118 @@ class WatasheetTypeResult(models.Model):
 	watasheet_type_e = models.IntegerField(blank=True, null=True)
 	watasheet_type_f = models.IntegerField(blank=True, null=True)
 	watasheet_context = models.TextField(blank=True, null=True)
+	# Key word
+	keyword_1st = models.TextField(blank=True, null=True)
+	keyword_2nd = models.TextField(blank=True, null=True)
+	keyword_3rd = models.TextField(blank=True, null=True)
+	# Why i want
+	w_want_1st = models.TextField(blank=True, null=True)
+	w_want_2nd = models.TextField(blank=True, null=True)
+	w_want_3rd = models.TextField(blank=True, null=True)
+	# My rule
+	rule_1st = models.TextField(blank=True, null=True)
+	rule_2nd = models.TextField(blank=True, null=True)
+	rule_3rd = models.TextField(blank=True, null=True)
+	# My vision
+	vision_1st = models.TextField(blank=True, null=True)
+	vision_2nd = models.TextField(blank=True, null=True)
+	vision_3rd = models.TextField(blank=True, null=True)
+	# My mission
+	mission_1st = models.TextField(blank=True, null=True)
+	mission_2nd = models.TextField(blank=True, null=True)
+	mission_3rd = models.TextField(blank=True, null=True)
+	# My concept
+	concept_1st = models.TextField(blank=True, null=True)
+	concept_2nd = models.TextField(blank=True, null=True)
+	concept_3rd = models.TextField(blank=True, null=True)
+	# Key whom
+	kw_1st = models.TextField(blank=True, null=True)
+	kw_2nd = models.TextField(blank=True, null=True)
+	kw_3rd = models.TextField(blank=True, null=True)
+	# For what
+	fw_1st = models.TextField(blank=True, null=True)
+	fw_2nd = models.TextField(blank=True, null=True)
+	fw_3rd = models.TextField(blank=True, null=True)
+	# Key whom job
+	kw_job_1st = models.TextField(blank=True, null=True)
+	kw_job_2nd = models.TextField(blank=True, null=True)
+	kw_job_3rd = models.TextField(blank=True, null=True)
+	# For what job
+	fw_job_1st = models.TextField(blank=True, null=True)
+	fw_job_2nd = models.TextField(blank=True, null=True)
+	fw_job_3rd = models.TextField(blank=True, null=True)
+	# Don't want to go
+	dwt_go_1st = models.TextField(blank=True, null=True)
+	dwt_go_2nd = models.TextField(blank=True, null=True)
+	dwt_go_3rd = models.TextField(blank=True, null=True)
+	# Don't want to think
+	dwt_think_1st = models.TextField(blank=True, null=True)
+	dwt_think_2nd = models.TextField(blank=True, null=True)
+	dwt_think_3rd = models.TextField(blank=True, null=True)
+	# My want
+	want_1st = models.TextField(blank=True, null=True)
+	want_2nd = models.TextField(blank=True, null=True)
+	want_3rd = models.TextField(blank=True, null=True)
+	# My happiness
+	happiness_1st = models.TextField(blank=True, null=True)
+	happiness_2nd = models.TextField(blank=True, null=True)
+	happiness_3rd = models.TextField(blank=True, null=True)
+	# My inportant
+	inportant_1st = models.TextField(blank=True, null=True)
+	inportant_2nd = models.TextField(blank=True, null=True)
+	inportant_3rd = models.TextField(blank=True, null=True)
+	# Not my want
+	n_want_1st = models.TextField(blank=True, null=True)
+	n_want_2nd = models.TextField(blank=True, null=True)
+	n_want_3rd = models.TextField(blank=True, null=True)
+	# Not happiness
+	n_happiness_1st = models.TextField(blank=True, null=True)
+	n_happiness_2nd = models.TextField(blank=True, null=True)
+	n_happiness_3rd = models.TextField(blank=True, null=True)
+	# Not inportant
+	n_inportant_1st = models.TextField(blank=True, null=True)
+	n_inportant_2nd = models.TextField(blank=True, null=True)
+	n_inportant_3rd = models.TextField(blank=True, null=True)
+	# Work
+	work_short = models.TextField(blank=True, null=True)
+	work_medium = models.TextField(blank=True, null=True)
+	work_long = models.TextField(blank=True, null=True)
+	# Development
+	development_short = models.TextField(blank=True, null=True)
+	development_medium = models.TextField(blank=True, null=True)
+	development_long = models.TextField(blank=True, null=True)
+	# Family
+	family_short = models.TextField(blank=True, null=True)
+	family_medium = models.TextField(blank=True, null=True)
+	family_long = models.TextField(blank=True, null=True)
+	# Human
+	human_short = models.TextField(blank=True, null=True)
+	human_medium = models.TextField(blank=True, null=True)
+	human_long = models.TextField(blank=True, null=True)
+	# Health
+	health_short = models.TextField(blank=True, null=True)
+	health_medium = models.TextField(blank=True, null=True)
+	health_long = models.TextField(blank=True, null=True)
+	# Hobby
+	hobby_short = models.TextField(blank=True, null=True)
+	hobby_medium = models.TextField(blank=True, null=True)
+	hobby_long = models.TextField(blank=True, null=True)
+	# Economy
+	economy_short = models.TextField(blank=True, null=True)
+	economy_medium = models.TextField(blank=True, null=True)
+	economy_long = models.TextField(blank=True, null=True)
+	# Etc
+	etc_short = models.TextField(blank=True, null=True)
+	etc_medium = models.TextField(blank=True, null=True)
+	etc_long = models.TextField(blank=True, null=True)
+	# Years old
+	years_old_0_10 = models.TextField(blank=True, null=True)
+	years_old_10_20 = models.TextField(blank=True, null=True)
+	years_old_20_30 = models.TextField(blank=True, null=True)
+	years_old_30_40 = models.TextField(blank=True, null=True)
+	years_old_40_50 = models.TextField(blank=True, null=True)
+	years_old_50_70 = models.TextField(blank=True, null=True)
+	years_old_70_100 = models.TextField(blank=True, null=True)
 	flg_finished = models.BooleanField(default=False)
 
 	class Meta:
