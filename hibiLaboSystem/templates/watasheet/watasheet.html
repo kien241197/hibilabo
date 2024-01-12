@@ -69,7 +69,7 @@
                     <div class="tab-pane fade show active" id="nav-3" role="tabpanel">
                         <div class="section-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 col-12">
                                     <div class="content-chart content-chart-2 content-chart-mb">
                                         <!-- <div class="title">
                                             <h2>PROFESSIONAL</h2>
@@ -89,10 +89,10 @@
                                                     {% endfor %}
                                                 <tr>
                                                     {% for item in record %}
-                                                    <td>
-                                                        <label>
+                                                    <td class="white-space break-word w-33">
+                                                        <label class="white-space">
                                                             <input type="checkbox" data-group="{{ item.group }}" data-anw="{{ item.answer_value }}" name="questions" value="{{ item.id }}" onchange="func_count_type(this)" {% if item.answer_value is not None %}checked{% endif %} {{ disabled }}>
-                                                            <span>{{ item.question }} /{{item.group}}</span>
+                                                            <span class="white-space max-width break-word">{{ item.question }} /{{item.group}}</span>
                                                         </label>
                                                     </td>
                                                     {% endfor %}
@@ -102,7 +102,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 col-12">
                                     <div class="content-chart content-chart-2 content-chart-page3">
                                         <!-- <div class="title" style="margin-bottom:115px">
                                             <p>わたしが求めているものを知る</p>

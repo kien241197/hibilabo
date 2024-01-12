@@ -11,11 +11,74 @@ h3 {
 
 .items {
 
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .right-2 {
 
-	right: 2em;
+    right: 2em;
 }
 
+
+/*.w-33 {
+
+    max-width: 33%;
+}*/
+
+.flex-fill {
+
+    flex: 1;
+}
+
+.white-space {
+
+    white-space: normal;
+}
+
+.break-word {
+
+    word-wrap: break-word;
+}
+
+.content-chart-2 table tr td label span {
+    word-break: break-word;
+}
+
+@media (min-width: 900px) {
+    .max-width {
+
+        width: 110px;
+    }
+}
+
+@media (min-width: 1300px) {
+
+    .max-width {
+
+        width: 150px;
+    }
+}
+
+@media (min-width: 1390px) {
+
+    .max-width {
+
+        width: 169px;
+    }
+}
+
+@media (min-width: 1430px) {
+
+    .max-width {
+
+        width: 175px;
+    }
+}
+
+@media (min-width: 1600px) {
+
+    .max-width {
+
+        width: 200px;
+    }
+}
