@@ -39,7 +39,7 @@
                     <div class="col-lg-6">
                         <div class="content-chart content-chart-2 content-chart-page3">
                             <div class="title">
-                                <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center justify-content-end">
                                     <div class="number">
                                         <ul class="list-1 nav" id="myTab" role="tablist" style="user-select: none;">
                                             <!--  <li class="number-1">1</li>
@@ -52,7 +52,6 @@
                                             <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">6</li>
                                         </ul>
                                     </div>
-                                    <span id="value-tab" style="font-weight: bold; color: #000; font-size: 20px;">1/8</span>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +142,7 @@
                                                         長期的安定的な仕事
                                                     </td>
                                                     <td class="text-center" rowspan="2">
-                                                        <h3>MESSAAGGGE </h3>
+                                                        <h3>MESSAGE </h3>
                                                         仕 事 の 変 化
                                                     </td>
                                                 </tr>
@@ -762,17 +761,6 @@
                     </div>
                 </div>
             </form>
-            <div class="number border-bottom-custom">
-                <ul class="list-2 nav justify-content-center" id="myTab" role="tablist">
-                    <li class="active button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="true">1</li>
-                    <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
-                    <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
-                    <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">4</li>
-                    <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">5</li>
-                    <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">6</li>
-                </ul>
-                <span class="number-page" id=number-page>1P</span>
-            </div>
         </div>
     </section>
 </main>
@@ -790,11 +778,6 @@ $(document).ready(function() {
         var index = $(this).index();
         $('.list-1 .button-tab').eq(index).addClass('active');
         $('.list-2 .button-tab').eq(index).addClass('active');
-
-        // 
-        var text = $(this).text();
-        $('#value-tab').text(`${text}/8`);
-        $('#number-page').text(`${text}P`);
 
         //
         if (index == 0) {
