@@ -88,7 +88,7 @@
                                                     {% endfor %}
                                                 <tr>
                                                     {% for item in record %}
-                                                    <td class="white-space break-word w-33">
+                                                    <td class="white-space break-word">
                                                         <label class="white-space">
                                                             <input type="checkbox" data-group="{{ item.group }}" data-anw="{{ item.answer_value }}" name="questions" value="{{ item.id }}" onchange="func_count_type(this)" {% if item.answer_value is not None %}checked{% endif %} {{ disabled }}>
                                                             <span class="white-space max-width break-word">{{ item.question }} /{{item.group}}</span>

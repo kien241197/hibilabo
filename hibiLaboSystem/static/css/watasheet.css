@@ -20,11 +20,6 @@ h3 {
 }
 
 
-/*.w-33 {
-
-    max-width: 33%;
-}*/
-
 .flex-fill {
 
     flex: 1;
@@ -44,10 +39,26 @@ h3 {
     word-break: break-word;
 }
 
-@media (min-width: 900px) {
+/*@media (min-width: 900px) {
     .max-width {
 
         width: 110px;
+    }
+}*/
+
+@media (min-width: 1200px) {
+
+    .max-width {
+
+        width: 135px;
+    }
+}
+
+@media (min-width: 1100px) {
+
+    .max-width {
+
+        width: 112px;
     }
 }
 
