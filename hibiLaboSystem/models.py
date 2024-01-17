@@ -175,7 +175,7 @@ class HonneQuestion(models.Model):
 class HonneEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_evaluation_periods',
 	    blank=True,
 	    null=True
@@ -201,14 +201,14 @@ class HonneEvaluationPeriod(models.Model):
 class HonneAnswerResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_results',
 	    blank=True,
 	    null=True
@@ -220,7 +220,7 @@ class HonneAnswerResult(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    HonneEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_answer_results',
 	    blank=True,
 	    null=True
@@ -234,21 +234,21 @@ class HonneAnswerResult(models.Model):
 class HonneIndexResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_index_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_index_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    HonneEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_index_results',
 	    blank=True,
 	    null=True
@@ -271,21 +271,21 @@ class HonneIndexResult(models.Model):
 class HonneTypeResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_type_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_type_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    HonneEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_type_results',
 	    blank=True,
 	    null=True
@@ -330,7 +330,7 @@ class SelfcheckQuestion(models.Model):
 class SelfcheckEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_evaluation_periods',
 	    blank=True,
 	    null=True
@@ -356,14 +356,14 @@ class SelfcheckEvaluationPeriod(models.Model):
 class SelfcheckAnswerResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_results',
 	    blank=True,
 	    null=True
@@ -375,7 +375,7 @@ class SelfcheckAnswerResult(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    SelfcheckEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_answer_results',
 	    blank=True,
 	    null=True
@@ -389,21 +389,21 @@ class SelfcheckAnswerResult(models.Model):
 class SelfcheckIndexResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_index_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_index_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    SelfcheckEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_index_results',
 	    blank=True,
 	    null=True
@@ -430,21 +430,21 @@ class SelfcheckIndexResult(models.Model):
 class SelfcheckTypeResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_type_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_type_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    SelfcheckEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_type_results',
 	    blank=True,
 	    null=True
@@ -510,7 +510,7 @@ class ThinkQuestion(models.Model):
 class BonknowEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='bonknow_evaluation_periods',
 	    blank=True,
 	    null=True
@@ -542,14 +542,14 @@ class BonknowEvaluationPeriod(models.Model):
 class ResponsAnswer(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_answers',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_answers',
 	    blank=True,
 	    null=True
@@ -561,7 +561,7 @@ class ResponsAnswer(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_answers',
 	    blank=True,
 	    null=True
@@ -575,14 +575,14 @@ class ResponsAnswer(models.Model):
 class ThinkAnswer(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_answers',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_answers',
 	    blank=True,
 	    null=True
@@ -594,7 +594,7 @@ class ThinkAnswer(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_answers',
 	    blank=True,
 	    null=True
@@ -608,21 +608,21 @@ class ThinkAnswer(models.Model):
 class ResponsResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_results',
 	    blank=True,
 	    null=True
@@ -637,21 +637,21 @@ class ResponsResult(models.Model):
 class ThinkResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_results',
 	    blank=True,
 	    null=True
@@ -667,7 +667,7 @@ class ThinkResult(models.Model):
 class MandaraPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_periods',
 	    blank=True,
 	    null=True
@@ -704,21 +704,21 @@ class MandaraPeriod(models.Model):
 class MandaraBase(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_base',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_base',
 	    blank=True,
 	    null=True
 	)
 	mandara_period = models.ForeignKey(
 	    MandaraPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_base',
 	    blank=True,
 	    null=True
@@ -838,7 +838,7 @@ class MandaraBase(models.Model):
 class MandaraProgress(models.Model):
 	mandara_base = models.ForeignKey(
 	    MandaraBase,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_progress',
 	    blank=True,
 	    null=True
@@ -994,14 +994,14 @@ class WatasheetEvaluationPeriod(models.Model):
 class WatasheetResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_results',
 	    blank=True,
 	    null=True
@@ -1013,7 +1013,7 @@ class WatasheetResult(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    WatasheetEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_results',
 	    blank=True,
 	    null=True
@@ -1025,21 +1025,21 @@ class WatasheetResult(models.Model):
 class WatasheetTypeResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_type_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_type_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    WatasheetEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_type_results',
 	    blank=True,
 	    null=True
