@@ -396,6 +396,7 @@ select {
   letter-spacing: 7px;
   text-indent: 1em;
   font-size: 12px; 
+  cursor: pointer;
 }
 
 .items .btn-cus:first-child {
