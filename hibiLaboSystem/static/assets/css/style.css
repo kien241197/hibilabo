@@ -400,7 +400,7 @@ select {
 
 .items .btn-cus:first-child {
 
-  background: pink !important;
+  background: var(--color-pink) !important;
 }
 
 .items .btn-cus:last-child {
@@ -431,7 +431,7 @@ select {
 
 .items_content_tab {
 
-  background: pink !important;
+  background: var(--color-pink) !important;
   padding: 50px 10px 20px 10px !important;
 }
 .nav-pills .nav-link {
