@@ -393,8 +393,20 @@ select {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   margin-right: 20px;
-  letter-spacing: 1em;
-  text-indent: 1em; }
+  letter-spacing: 7px;
+  text-indent: 1em;
+  font-size: 12px; 
+}
+
+.items .btn-cus:first-child {
+
+  background: pink !important;
+}
+
+.items .btn-cus:last-child {
+
+      background: var(--color-blue) !important;
+}
 
 .items_content {
   text-align: center;
@@ -416,6 +428,32 @@ select {
   background: var(--color-blue);
   border-radius: 10px;
   padding: 50px 30px; }
+
+.items_content_tab {
+
+  background: pink !important;
+  padding: 50px 10px 20px 10px !important;
+}
+
+.items_content_tab div {
+
+  font-size: 12px;
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+  font-weight: 500;
+  text-align: justify;
+  margin-top: 10px;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.nav-pills .nav-link.active {
+
+  color: #000 !important;
+}
 
 .items_content h3 a {
   font-size: 180%;

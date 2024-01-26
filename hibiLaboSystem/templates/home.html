@@ -6,134 +6,325 @@
 {% endblock %}
 
 {% block content %}
-    {% if not user.is_authenticated %}
-    <div class="container">
-        <h2><table><tr>
-            <td><a class="nav-link" href="{% url 'login' %}">Log in</a></td>
-            <td><span>又は</span></td>
-            <td><a class="nav-link" href="{% url 'register' %}">Sign up</a></td>
-            <td><span>をしてください</span></td></tr></table></h2>
-    </div>
-    {% else %}
-    <main class="bg-main" style="background-image: url({% static 'assets/images/bg-back.png' %});">
-        <section class="site-content pd-main" >
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-yellow">個人</span>
-                            <div class="items_content">
-                                <h3><a href="#">HONNE</a></h3>
-                                {% if period_honne is not None %}
-                                <span class="date">{{ period_honne.evaluation_end|date:"Y/m/d" }}</span>
-                                <a class="btn-custom btn-white" href="{% url 'honne_sheet' period_honne.id %}">CHECK</a>
-                                {% endif %}
+{% if not user.is_authenticated %}
+<div class="container">
+    <h2>
+        <table>
+            <tr>
+                <td><a class="nav-link" href="{% url 'login' %}">Log in</a></td>
+                <td><span>又は</span></td>
+                <td><a class="nav-link" href="{% url 'register' %}">Sign up</a></td>
+                <td><span>をしてください</span></td>
+            </tr>
+        </table>
+    </h2>
+</div>
+{% else %}
+<main class="bg-main" style="background-image: url({% static 'assets/images/bg-back.png' %});">
+    <section class="site-content pd-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <!--   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <span class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</span>
+                            <span class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</span>
+                            <span class="nav-link" id="v-pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#v-pills-disabled" type="button" role="tab" aria-controls="v-pills-disabled" aria-selected="false" disabled>Disabled</span>
+                            <span class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</span>
+                            <span class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</span>
+                        </div> -->
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id=" honne-tab" data-bs-toggle="pill" data-bs-target="#honne" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="honne-active-tab" data-bs-toggle="pill" data-bs-target="#honne-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="honne" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">HONNE</a></h3>
+                                    <div>
+                                        ５０の質問から、 会社の課題を 「ひと」
+                                        指数と 「こと」 指数で見える化します
+                                        そこから自社のバランスを知り、 成長
+                                        指数を特定し、 経過観察していきます
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="honne-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">HONNE active</a></h3>
+                                    {% if period_honne is not None %}
+                                    <span class="date">{{ period_honne.evaluation_end|date:"Y/m/d" }}</span>
+                                    <a class="btn-custom btn-white" href="{% url 'honne_sheet' period_honne.id %}">CHECK</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-yellow">個人</span>
-                            <div class="items_content">
-                                <h3><a href="#">SELFCHECK</a></h3>
-                                {% if period_selfcheck is not None %}
-                                <span class="date">{{ period_selfcheck.evaluation_end|date:"Y/m/d" }}</span>
-                                <a class="btn-custom btn-white" href="{% url 'selfcheck_sheet' period_selfcheck.id %}">CHECK</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-yellow">個人</span>
-                            <div class="items_content">
-                                <h3><a href="#">WATASHEET</a></h3>
-                                {% if period_watasheet is not None %}
-                                <span class="date">{{ period_watasheet.evaluation_end|date:"Y/m/d" }}</span>
-                                <a class="btn-custom btn-white" href="{% url 'watasheet' %}">CHECK</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-yellow">個人</span>
-                            <div class="items_content">
-                                <h3><a href="#">BONKNOW</a></h3>
-                                {% if period_bonknow is not None %}
-                                <span class="date">{{ period_bonknow.evaluation_end|date:"Y/m/d" }}</span>
-                                <a class="btn-custom btn-white" href="{% url 'bonknow_sheet' period_bonknow.id %}">CHECK</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-yellow">個人</span>
-                            <div class="items_content">
-                                <h3><a href="#">MANDARA</a></h3>
-                                <span class="date"></span>
-                                <a class="btn-custom btn-white" href="{% url 'mandara_sheet' %}">CHECK</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% with list='99 20' %}
-                    {% if request.user.role_id|slugify in list.split %}
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-red">集計</span>
-                            <div class="items_content">
-                                <h3><a href="#">HONNE</a></h3>
-                                <span class="date"></span>
-                                <a class="btn-custom btn-white" href="{% url 'honne_total'%}">CHECK</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-red">集計</span>
-                            <div class="items_content">
-                                <h3><a href="#">SELFCHECK</a></h3>
-                                <span class="date"></span>
-                                <a class="btn-custom btn-white" href="{% url 'selfcheck_type' %}">CHECK</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-red">一覧</span>
-                            <div class="items_content">
-                                <h3><a href="#">WATASHEET</a></h3>
-                                <span class="date"></span>
-                                <a class="btn-custom btn-white" href="#">CHECK</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-red">一覧</span>
-                            <div class="items_content">
-                                <h3><a href="#">BONKNOW</a></h3>
-                                <span class="date"></span>
-                                <a class="btn-custom btn-white" href="{% url 'bonknow_think' %}">CHECK</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5-cols">
-                        <div class="items">
-                            <span class="btn-cus btn-red">一覧</span>
-                            <div class="items_content">
-                                <h3><a href="#">MANDARA</a></h3>
-                                <span class="date"></span>
-                                <a class="btn-custom btn-white" href="{% url 'mandara_personal' %}">CHECK</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endwith %}
                 </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="selfcheck-tab" data-bs-toggle="pill" data-bs-target="#selfcheck" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="selfcheck-active-tab" data-bs-toggle="pill" data-bs-target="#selfcheck-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="selfcheck" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">SELFCHECK</a></h3>
+                                    <div>
+                                        ６０の質問から、 企業が求める仕事の
+                                        能力に対して、 本人ができる能力を
+                                        分析するシートです。 本人の得意な
+                                        点から自分のタイプもわかります
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="selfcheck-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">SELFCHECK</a></h3>
+                                    {% if period_selfcheck is not None %}
+                                    <span class="date">{{ period_selfcheck.evaluation_end|date:"Y/m/d" }}</span>
+                                    <a class="btn-custom btn-white" href="{% url 'selfcheck_sheet' period_selfcheck.id %}">CHECK</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="watasheet-tab" data-bs-toggle="pill" data-bs-target="#watasheet" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="watasheet-active-tab" data-bs-toggle="pill" data-bs-target="#watasheet-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="watasheet" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">WATASHEET</a></h3>
+                                    <div>
+                                        30 個の言葉と質問から、 自分の
+                                        求めていること、 向き合うこと、 自分
+                                        自身を作りだす根本を見つめ直し
+                                        自分の現在地を探ります
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="watasheet-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">WATASHEET</a></h3>
+                                    {% if period_watasheet is not None %}
+                                    <span class="date">{{ period_watasheet.evaluation_end|date:"Y/m/d" }}</span>
+                                    <a class="btn-custom btn-white" href="{% url 'watasheet' %}">CHECK</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="bonknow-tab" data-bs-toggle="pill" data-bs-target="#bonknow" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="bonknow-active-tab" data-bs-toggle="pill" data-bs-target="#bonknow-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="bonknow" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">BONKNOW</a></h3>
+                                    <div>
+                                        １０８つの質問を通して、 自分の脳
+                                        を４つのパターンで分類し、 自分の
+                                        タイプを知ることができます
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="bonknow-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">BONKNOW</a></h3>
+                                    {% if period_bonknow is not None %}
+                                    <span class="date">{{ period_bonknow.evaluation_end|date:"Y/m/d" }}</span>
+                                    <a class="btn-custom btn-white" href="{% url 'bonknow_sheet' period_bonknow.id %}">CHECK</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="mandara-tab" data-bs-toggle="pill" data-bs-target="#mandara" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="mandara-active-tab" data-bs-toggle="pill" data-bs-target="#mandara-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="mandara" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">MANDARA</a></h3>
+                                    <div>
+                                        ９×９の８１マスで構成される目標
+                                        達成のフレームワークで、 日々の
+                                        習慣になるように、 点数化し継続
+                                        習慣 ・ 達成を目指します
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="mandara-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">MANDARA</a></h3>
+                                    <span class="date"></span>
+                                    <a class="btn-custom btn-white" href="{% url 'mandara_sheet' %}">CHECK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% with list='99 20' %}
+                {% if request.user.role_id|slugify in list.split %}
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="honne-user-tab" data-bs-toggle="pill" data-bs-target="#honne-user" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="honne-user-active-tab" data-bs-toggle="pill" data-bs-target="#honne-user-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="honne-user" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">HONNE</a></h3>
+                                    <div>
+                                        ５０の質問から、 会社の課題を 「ひと」
+                                        指数と 「こと」 指数で見える化します
+                                        そこから自社のバランスを知り、 成長
+                                        指数を特定し、 経過観察していきます
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="honne-user-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">HONNE</a></h3>
+                                    <span class="date"></span>
+                                    <a class="btn-custom btn-white" href="{% url 'honne_total'%}">CHECK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="selfcheck-user-tab" data-bs-toggle="pill" data-bs-target="#selfcheck-user" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="selfcheck-user-active-tab" data-bs-toggle="pill" data-bs-target="#selfcheck-user-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="selfcheck-user" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">SELFCHECK</a></h3>
+                                    <div>
+                                        ６０の質問から、 企業が求める仕事の
+                                        能力に対して、 本人ができる能力を
+                                        分析するシートです。 本人の得意な
+                                        点から自分のタイプもわかります
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="selfcheck-user-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">SELFCHECK</a></h3>
+                                    <span class="date"></span>
+                                    <a class="btn-custom btn-white" href="{% url 'selfcheck_type' %}">CHECK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="watasheet-user-tab" data-bs-toggle="pill" data-bs-target="#watasheet-user" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="watasheet-user-active-tab" data-bs-toggle="pill" data-bs-target="#watasheet-user-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="watasheet-user" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">WATASHEET</a></h3>
+                                    <div>
+                                        30 個の言葉と質問から、 自分の
+                                        求めていること、 向き合うこと、 自分
+                                        自身を作りだす根本を見つめ直し
+                                        自分の現在地を探ります
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="watasheet-user-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">WATASHEET</a></h3>
+                                    <span class="date"></span>
+                                    <a class="btn-custom btn-white" href="#">CHECK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="bonknow-user-tab" data-bs-toggle="pill" data-bs-target="#bonknow-user" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="bonknow-user-active-tab" data-bs-toggle="pill" data-bs-target="#bonknow-user-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="bonknow-user" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">BONKNOW</a></h3>
+                                    <div>
+                                        １０８つの質問を通して、 自分の脳
+                                        を４つのパターンで分類し、 自分の
+                                        タイプを知ることができます
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="bonknow-user-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">BONKNOW</a></h3>
+                                    <span class="date"></span>
+                                    <a class="btn-custom btn-white" href="{% url 'bonknow_think' %}">CHECK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5-cols">
+                    <div class="items">
+                        <div class="d-flex justify-content-end pr-2 nav nav-pills">
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 nav-link" id="mandara-user-tab" data-bs-toggle="pill" data-bs-target="#mandara-user" type="button" role="tab" aria-selected="false">説明</span>
+                            <span class="btn-cus btn-yellow mx-0 pr-0 pl-0 ml-1 nav-link active" id="mandara-user-active-tab" data-bs-toggle="pill" data-bs-target="#mandara-user-active" type="button" role="tab" aria-selected="true">組織/個人</span>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="mandara-user" role="tabpanel">
+                                <div class="items_content items_content_tab">
+                                    <h3><a href="#">MANDARA</a></h3>
+                                    <div>
+                                        ９×９の８１マスで構成される目標
+                                        達成のフレームワークで、 日々の
+                                        習慣になるように、 点数化し継続
+                                        習慣 ・ 達成を目指しますきます
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="mandara-user-active" role="tabpanel">
+                                <div class="items_content">
+                                    <h3><a href="#">MANDARA</a></h3>
+                                    <span class="date"></span>
+                                    <a class="btn-custom btn-white" href="{% url 'mandara_personal' %}">CHECK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
             </div>
-        </section>
-    </main>
-    {% endif %}
+        </div>
+    </section>
+</main>
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 {% endblock %}
