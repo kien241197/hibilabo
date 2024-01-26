@@ -434,6 +434,12 @@ select {
   background: pink !important;
   padding: 50px 10px 20px 10px !important;
 }
+.nav-pills .nav-link {
+
+  border-bottom-left-radius: unset !important;
+  border-bottom-right-radius: unset !important;
+
+}
 
 .items_content_tab div {
 
