@@ -399,12 +399,12 @@ select {
   cursor: pointer;
 }
 
-.items .btn-cus:first-child {
+.items .btn-cus-tab:first-child {
 
   background: var(--color-pink) !important;
 }
 
-.items .btn-cus:last-child {
+.items .btn-cus-tab:last-child {
 
       background: var(--color-blue) !important;
 }
@@ -428,7 +428,7 @@ select {
   flex-direction: column;
   background: var(--color-blue);
   border-radius: 10px;
-  padding: 50px 30px; }
+  padding: 26px 30px; }
 
 .items_content_tab {
 
@@ -1198,4 +1198,8 @@ select {
 .bg-title-custom {
   background: #EFE9A2;
 }
+
+
+.btn-yellow-user {
+  background: var(--color-yellow) !important; }
 /*# sourceMappingURL=style.css.map */
