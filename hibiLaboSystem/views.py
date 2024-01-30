@@ -1110,7 +1110,10 @@ class MandaraCreate(TemplateView):
         end_YYYYMM = request.POST.get('end_YYYYMM')
 
         if form.is_valid():
-            mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
+            mandara_period = None
+            if start_YYYYMM:
+                mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
+            
             mandara = form.save(commit=False)
             mandara.user_id = user_id
             mandara.company_id = company_id
@@ -1136,6 +1139,8 @@ class MandaraCreate(TemplateView):
             context["message_class"] = 'text-success'
         else:
             context["message"] = form.errors.as_data()
+
+        context = self.get_context_data(**kwargs)
 
         return self.render_to_response(context)
 
