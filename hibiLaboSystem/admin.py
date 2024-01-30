@@ -169,7 +169,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(UsersAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
-            return qs.filter(is_superuser=False,created_by=request.user.id)
+            return qs.filter(Q(is_superuser=False) & (Q(created_by=request.user.id) | Q(company_id=request.user.company_id)))
         return qs
 # Honne
 admin.site.register(HonneQuestion)
