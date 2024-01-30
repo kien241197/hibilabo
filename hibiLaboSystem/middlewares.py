@@ -11,7 +11,7 @@ class HonneMiddleware(MiddlewareMixin):
 
 class HonneTotalMiddleware(MiddlewareMixin):
     def __call__(self, request, *args, **kwargs):
-        if request.user.role_id not in [99, 20]:
+        if request.user.role_id not in [30, 20]:
             raise PermissionDenied()
         return super().__call__(request)
 
@@ -23,7 +23,7 @@ class SelfcheckMiddleware(MiddlewareMixin):
 
 class SelfcheckTotalMiddleware(MiddlewareMixin):
     def __call__(self, request, *args, **kwargs):
-        if request.user.role_id not in [99, 20]:
+        if request.user.role_id not in [30, 20]:
             raise PermissionDenied()
         return super().__call__(request)
 
@@ -35,7 +35,7 @@ class BonknowMiddleware(MiddlewareMixin):
 
 class BonknowTotalMiddleware(MiddlewareMixin):
     def __call__(self, request, *args, **kwargs):
-        if request.user.role_id not in [99, 20]:
+        if request.user.role_id not in [30, 20]:
             raise PermissionDenied()
         return super().__call__(request)
 
@@ -47,6 +47,6 @@ class MandaraMiddleware(MiddlewareMixin):
 
 class MandaraTotalMiddleware(MiddlewareMixin):
     def __call__(self, request, *args, **kwargs):
-        if request.user.role_id not in [99, 20]:
+        if request.user.role_id not in [30, 20]:
             raise PermissionDenied()
         return super().__call__(request)
