@@ -979,7 +979,7 @@ class WatasheetEvaluationPeriod(models.Model):
 		return f"{self.evaluation_name}"
 
 	def clean(self):
-		if self.evaluation_start <= datetime.date.today() and self.pk is None:
+		if self.evaluation_start < datetime.date.today() and self.pk is None:
 			raise ValidationError("今日より始まりは大きくなければなりません。")
 		if self.evaluation_start > self.evaluation_end:
 			raise ValidationError("日付が間違っています。")
