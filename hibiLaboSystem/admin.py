@@ -75,7 +75,7 @@ class CompanyAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(CompanyAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
-            return qs.filter(Q(created_by=request.user.id) | Q(company_id=request.user.company_id))
+            return qs.filter(Q(created_by=request.user.id) | Q(id=request.user.company_id))
         return qs
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
