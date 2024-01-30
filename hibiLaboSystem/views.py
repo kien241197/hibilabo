@@ -1135,12 +1135,11 @@ class MandaraCreate(TemplateView):
 
                     bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
             mandara.save()
+            context['mandara'] = mandara
             context["message"] = '-- 保存しました。--'
             context["message_class"] = 'text-success'
         else:
             context["message"] = form.errors.as_data()
-
-        context = self.get_context_data(**kwargs)
 
         return self.render_to_response(context)
 
