@@ -125,6 +125,8 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             array_user = []
             for row in reader:
                 username = row[util_obj.get_column("username")]
+                first_name = row[util_obj.get_column("first_name")]
+                last_name = row[util_obj.get_column("last_name")]
                 password = row[util_obj.get_column("password")]
                 if User.objects.filter(username=username).exists() or username in array_user:
                     import_object_status.append({"username": username, "status": "ERROR",
