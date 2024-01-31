@@ -1,5 +1,4 @@
 Chart.register(ChartDataLabels);
-
 function daysInThisMonth() {
   var now = new Date();
   return new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
@@ -268,7 +267,7 @@ openPopup.forEach((element, index) => {
                     let contentHtml = ''
                     for (var i = 0; i < daysInThisMonth(); i++) {
                         let find = data.context.find(item => item.day == i + 1);
-                        let active = find[element.dataset.boxType+'_result'] == 1 ? 'active' : '';
+                        let active = find !== undefined && find[element.dataset.boxType+'_result'] == 1 ? 'active' : '';
                         contentHtml += `<div class="wrapper-text text-center ${active}">${i + 1}</div>`;
                     }
                     popup.querySelector('.wrapper-item').innerHTML = contentHtml;
