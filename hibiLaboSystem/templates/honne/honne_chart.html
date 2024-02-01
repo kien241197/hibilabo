@@ -43,7 +43,11 @@
                                         {% for record in orderby_records %}
                                         <div class="col-md-4">
                                             <div class="images">
-                                                <p>{{ record.user.full_name }}</p>
+                                                <p>
+                                                    {% if user.company.visble_flag == True %}
+                                                    {{ record.user.full_name }}
+                                                    {% endif %}
+                                                </p>
                                                 <canvas id="mycanvas-{{ record.user.id }}"></canvas>
                                             </div>
                                         </div>

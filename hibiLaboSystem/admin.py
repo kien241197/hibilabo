@@ -103,7 +103,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     def get_field_queryset(self, db, db_field, request):
         if db_field.name == 'company' and not request.user.is_superuser:
             return db_field.remote_field.model._default_manager.filter(
-                              Q(created_by=request.user.id) | Q(company_id=request.user.company_id)
+                              Q(created_by=request.user.id) | Q(id=request.user.company_id)
             )
 
         super().get_field_queryset(db, db_field, request)
