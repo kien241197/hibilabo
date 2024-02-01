@@ -66,7 +66,7 @@ class WatasheetInline(admin.TabularInline):
 
 class CompanyAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
-    inlines = [WatasheetInline, MandaraPeriosInline, HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, BonknowEvaluationPeriodInline, UserInline]
+    inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline, UserInline]
     def save_model(self, request, obj, form, change):
         if not change:
             obj.created_by = request.user.id

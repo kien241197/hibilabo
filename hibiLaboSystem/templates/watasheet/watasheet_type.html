@@ -1,0 +1,811 @@
+{% extends 'layout.html' %}
+{% block header %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/watasheet.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/watasheet-type.css' %}">
+{% endblock %}
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/watasheet_nav.html" %}
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="container-fluid">
+                            <div class="section-title">
+                                <div class="row align-items-baseline">
+                                    <div class="col-lg-6">
+                                        <div class="content-chart content-chart-2 content-chart-mb">
+                                            <div class="title">
+                                                <div class="filter mb-3">
+                                                    <form action="" method="post" enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <select name="evaluation_unit" class="form" required="" id="id_evaluation_unit">
+                                                            <option value="" selected="">----</option>
+                                                            <option value="1">Feb2024</option>
+                                                        </select>
+                                                        <button type="submit" name="submit">表示</button>
+                                                    </form>
+                                                </div>
+                                                <h2 class="title-tab">
+                                                    PROFESSIONAL
+                                                    {% if questions|length > 0 %}
+                                                    TYPE {{ questions|length}}
+                                                    {% endif %}
+                                                </h2>
+                                                <p class="desc-tab">わたしが望んでいる仕事を知る</p>
+                                                <p></p>
+                                                <h3 class="title-tab-h3 mt-2">INTEREST </h3>
+                                                <p class="desc-tab-p">リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="content-chart content-chart-2 content-chart-page3">
+                                            <div class="title">
+                                                <div class="d-flex align-items-center justify-content-end">
+                                                    <div class="number">
+                                                        <ul class="list-1 nav" id="myTab" role="tablist" style="user-select: none;">
+                                                            <!--  <li class="number-1">1</li>
+                                            <li class="number-2">2</li> -->
+                                                            <li class="active button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="true">1</li>
+                                                            <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
+                                                            <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
+                                                            <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">4</li>
+                                                            <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">5</li>
+                                                            <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">6</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-success text-center"><label>
+                                    <h5>{{ message }}</h5>
+                                </label></div>
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <div class="tab-content" id="nav-tabContent">
+                                    <!-- Tab 3 -->
+                                    <div class="tab-pane fade show active" id="nav-3" role="tabpanel">
+                                        <div class="section-content">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-12">
+                                                    <div class="content-chart content-chart-2 content-chart-mb">
+                                                        <!-- <div class="title">
+                                            <h2>PROFESSIONAL</h2>
+                                            <p>わたしが望んでいる仕事を知る</p>
+                                            <p></p>
+                                            <h3>INTEREST </h3>
+                                            <p>リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+                                        </div> -->
+                                                        <table class="table">
+                                                            <tbody>
+                                                                {% for record in questions %}
+                                                                {% for item in record %}
+                                                                {% if forloop.counter|divisibleby:3 %}
+                                                                </tr>
+                                                                <tr>
+                                                                    {% endif %}
+                                                                    {% endfor %}
+                                                                <tr>
+                                                                    {% for item in record %}
+                                                                    <td class="white-space break-word">
+                                                                        <label class="white-space">
+                                                                            <input type="checkbox" data-group="{{ item.group }}" data-anw="{{ item.answer_value }}" name="questions" value="{{ item.id }}" onchange="func_count_type(this)" {% if item.answer_value is not None %}checked{% endif %} disabled>
+                                                                            <span class="white-space max-width break-word">{{ item.question }} /{{item.group}}</span>
+                                                                        </label>
+                                                                    </td>
+                                                                    {% endfor %}
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-12">
+                                                    <div class="content-chart content-chart-2 content-chart-page3">
+                                                        <!-- <div class="title" style="margin-bottom:115px">
+                                            <p>わたしが求めているものを知る</p>
+                                        </div> -->
+                                                        <table class="table table2">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>個　数</th>
+                                                                    <th>仕 事 内 容</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>A</td>
+                                                                    <td id="type_A">{{ type_A }}</td>
+                                                                    <td class="text-center">
+                                                                        <h3>BALANCE </h3>
+                                                                        対人接触の多い仕事
+                                                                    </td>
+                                                                    <td class="text-center" rowspan="2">
+                                                                        <h3>MIND </h3>
+                                                                        人 と の 接 触
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>B</td>
+                                                                    <td id="type_B">{{ type_B }}</td>
+                                                                    <td class="text-center">
+                                                                        <h3>CAREFUL </h3>
+                                                                        1人でコツコツやる仕事
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>C</td>
+                                                                    <td id="type_C">{{ type_C }}</td>
+                                                                    <td class="text-center">
+                                                                        <h3>COORDINATOR </h3>
+                                                                        長期的安定的な仕事
+                                                                    </td>
+                                                                    <td class="text-center" rowspan="2">
+                                                                        <h3>MESSAGE </h3>
+                                                                        仕 事 の 変 化
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>D</td>
+                                                                    <td id="type_D">{{ type_D }}</td>
+                                                                    <td class="text-center">
+                                                                        <h3>CONTROLLER </h3>
+                                                                        変化に富んだ仕事
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>E</td>
+                                                                    <td id="type_E">{{ type_E }}</td>
+                                                                    <td class="text-center">
+                                                                        <h3>SUPPORTER </h3>
+                                                                        じっくり頭を使う仕事
+                                                                    </td>
+                                                                    <td class="text-center" rowspan="2">
+                                                                        <h3>MOTION </h3>
+                                                                        発 揮 す る 能 力
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>F</td>
+                                                                    <td id="type_F">{{ type_F }}</td>
+                                                                    <td class="text-center">
+                                                                        <h3>CHALLANGER </h3>
+                                                                        バリバリと行動力を活かす仕事
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="title">
+                                                            <p class="m-0">わたしが求めているもの（まとめ）</p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <textarea name="watasheet_context" class="form-control" rows="5" disabled>{{ watasheet_type_result.watasheet_context }}</textarea>
+                                                        </div>
+                                                        <label class="checkbox"><input disabled type="checkbox" name="flg_check" disabled> 「いとなみ研究室」サイトへの記事連動を承認します。</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 4 -->
+                                    <div class="tab-pane fade" id="nav-4" role="tabpanel">
+                                        <div id="page4" class="content-chart">
+                                            <!-- <div class="title title-page4" style="margin-bottom:30px;">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div> -->
+                                            <div class="content-box">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box title-box2 d-flex mb-2">
+                                                                <h3 class="mr-4">KEY WORD </h3>
+                                                                <p>私を作り出している要因・キーワードを３つ記入してください</p>
+                                                            </div>
+                                                            <ul class="position-relative">
+                                                                <li>(1) <span><input disabled name="keyword_1st" value={{watasheet_type_result.keyword_1st}}></span></li>
+                                                                <li>(2) <span><input disabled name="keyword_2nd" value={{watasheet_type_result.keyword_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled name="keyword_3rd" value={{watasheet_type_result.keyword_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box title-box2 d-flex mb-2">
+                                                                <h3 class="mr-4">WHY I WANT </h3>
+                                                                <p>私がそうしたい理由</p>
+                                                            </div>
+                                                            <ul class="position-relative">
+                                                                <li>(1) <span><input disabled name="w_want_1st" value="{{watasheet_type_result.w_want_1st}}"></span></li>
+                                                                <li>(2) <span><input disabled name="w_want_2nd" value="{{watasheet_type_result.w_want_2nd}}"></span></li>
+                                                                <li>(3) <span><input disabled name="w_want_3rd" value="{{watasheet_type_result.w_want_3rd}}"></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box title-box2 d-flex mb-2">
+                                                                <h3 class="mr-4">MY RULE </h3>
+                                                                <p>私の役割（なぜ私がしなければならないのか）を3つ記入してください</p>
+                                                            </div>
+                                                            <ul class="position-relative">
+                                                                <li>(1) <span><input disabled name="rule_1st" value="{{watasheet_type_result.rule_1st}}"></span></li>
+                                                                <li>(2) <span><input disabled name="rule_2nd" value="{{watasheet_type_result.rule_2nd}}"></span></li>
+                                                                <li>(3) <span><input disabled name="rule_3rd" value="{{watasheet_type_result.rule_3rd}}"></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box title-box2 d-flex mb-2">
+                                                                <h3 class="mr-4">MY VISION </h3>
+                                                                <p>私のビジョン</p>
+                                                            </div>
+                                                            <ul class="position-relative">
+                                                                <li>（1年後）（歳） <span><input disabled name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span></li>
+                                                                <li>（5年後）（歳） <span><input disabled name="vision_2nd" value="{{watasheet_type_result.vision_2nd}}"></span></li>
+                                                                <li>（10年後）（歳）<span><input disabled name="vision_3rd" value="{{watasheet_type_result.vision_3rd}}"></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box title-box2 d-flex mb-2">
+                                                                <h3 class="mr-4">MY MISSION </h3>
+                                                                <p>私のミッションを記入してください</p>
+                                                            </div>
+                                                            <ul class="position-relative">
+                                                                <li>(1) <span><input disabled name="mission_1st" value="{{watasheet_type_result.mission_1st}}"></span></li>
+                                                                <li>(2) <span><input disabled name="mission_2nd" value="{{watasheet_type_result.mission_2nd}}"></span></li>
+                                                                <li>(3) <span><input disabled name="mission_3rd" value="{{watasheet_type_result.mission_3rd}}"></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box title-box2 d-flex mb-2">
+                                                                <h3 class="mr-4">MY CONCEPT</h3>
+                                                                <p>私の芯</p>
+                                                            </div>
+                                                            <ul class="position-relative" style="height: 120px">
+                                                                <li>（ひとつ） <span><input disabled name="concept_1st" value="{{watasheet_type_result.concept_1st}}"></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 5 -->
+                                    <div class="tab-pane fade" id="nav-5" role="tabpanel">
+                                        <div class="section-content">
+                                            <!--  <div class="title title-page4">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div> -->
+                                            <div class="content-box">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items ">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>KEY WHOM </h3>
+                                                                <p class="pl-0">3Pのミッションや「こと」は誰のために？</p>
+                                                            </div>
+                                                            <ul class="pl-0 position-relative">
+                                                                <li>(1) <span><input disabled type="text" name="kw_1st" value={{watasheet_type_result.kw_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="kw_2nd" value={{watasheet_type_result.kw_2nd}}></li>
+                                                                <li>(3) <span><input disabled type="text" name="kw_3rd" value={{watasheet_type_result.kw_3rd}}></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>FOR WHAT JOB </h3>
+                                                                <p class="pl-0">今の仕事は何のために選んだのか？</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="fw_job_1st" value={{watasheet_type_result.fw_job_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="fw_job_2nd" value={{watasheet_type_result.fw_job_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="fw_job_3rd" value={{watasheet_type_result.fw_job_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>FOR WHAT </h3>
+                                                                <p class="pl-0">3Pのミッションや「こと」は何のために？</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="fw_1st" value={{watasheet_type_result.fw_1st}}></li>
+                                                                <li>(2) <span><input disabled type="text" name="fw_2nd" value={{watasheet_type_result.fw_2nd}}></li>
+                                                                <li>(3) <span><input disabled type="text" name="fw_3rd" value={{watasheet_type_result.fw_3rd}}></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>DON`T WANT TO GO </h3>
+                                                                <p class="pl-0">向かいたくない方向性</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="dwt_go_1st" value={{watasheet_type_result.dwt_go_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="dwt_go_2nd" value={{watasheet_type_result.dwt_go_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="dwt_go_3rd" value={{watasheet_type_result.dwt_go_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>KEY WHOM JOB </h3>
+                                                                <p class="pl-0">今の仕事は誰のために選んだのか？</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="kw_job_1st" value={{watasheet_type_result.kw_job_1st}}></li>
+                                                                <li>(2) <span><input disabled type="text" name="kw_job_2nd" value={{watasheet_type_result.kw_job_2nd}}></li>
+                                                                <li>(3) <span><input disabled type="text" name="kw_job_3rd" value={{watasheet_type_result.kw_job_3rd}}></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>DON`T WANT TO THINK </h3>
+                                                                <p class="pl-0">そんな考え方にはなりたくない！と思う考え方を3つ</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="dwt_go_1st" value={{watasheet_type_result.dwt_go_1st}}></li>
+                                                                <li>(2) <span><input disabled type="text" name="dwt_go_2nd" value={{watasheet_type_result.dwt_go_2nd}}></li>
+                                                                <li>(3) <span><input disabled type="text" name="dwt_go_3rd" value={{watasheet_type_result.dwt_go_3rd}}></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 6 -->
+                                    <div class="tab-pane fade" id="nav-6" role="tabpanel">
+                                        <div class="section-content">
+                                            <!-- <div class="title title-page4">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div> -->
+                                            <div class="content-box">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>MY WANT </h3>
+                                                                <p class="pl-0">3Pのミッションや「こと」は誰のために？</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="want_1st" value={{watasheet_type_result.want_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="want_2nd" value={{watasheet_type_result.want_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="want_3rd" value={{watasheet_type_result.want_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>Not MY want </h3>
+                                                                <p class="pl-0">今の仕事は何のために選んだのか？</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="n_want_1st" value={{watasheet_type_result.n_want_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="n_want_2nd" value={{watasheet_type_result.n_want_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="n_want_3rd" value={{watasheet_type_result.n_want_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>MY HAPPINESS </h3>
+                                                                <p class="pl-0">3Pのミッションや「こと」は何のために？</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="happiness_1st" value={{watasheet_type_result.happiness_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="happiness_2nd" value={{watasheet_type_result.happiness_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="happiness_3rd" value={{watasheet_type_result.happiness_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>Not HAPPINESS </h3>
+                                                                <p class="pl-0">向かいたくない方向性</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="n_happiness_1st" value={{watasheet_type_result.n_happiness_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="n_happiness_2nd" value={{watasheet_type_result.n_happiness_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="n_happiness_3rd" value={{watasheet_type_result.n_happiness_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>MY INPORTANT </h3>
+                                                                <p class="pl-0">今の仕事は誰のために選んだのか？</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="inportant_1st" value={{watasheet_type_result.inportant_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="inportant_2nd" value={{watasheet_type_result.inportant_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="inportant_3rd" value={{watasheet_type_result.inportant_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box flex-column align-items-start mb-2">
+                                                                <h3>NOT INPORTANT </h3>
+                                                                <p class="pl-0">そんな考え方にはなりたくない！と思う考え方を3つ</p>
+                                                            </div>
+                                                            <ul class="position-relative pl-0">
+                                                                <li>(1) <span><input disabled type="text" name="n_inportant_1st" value={{watasheet_type_result.n_inportant_1st}}></span></li>
+                                                                <li>(2) <span><input disabled type="text" name="n_inportant_2nd" value={{watasheet_type_result.n_inportant_2nd}}></span></li>
+                                                                <li>(3) <span><input disabled type="text" name="n_inportant_3rd" value={{watasheet_type_result.n_inportant_3rd}}></span></li>
+                                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 7 -->
+                                    <div class="tab-pane fade" id="nav-7" role="tabpanel">
+                                        <div class="section-content">
+                                            <!--  <div class="title title-page4">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div> -->
+                                            <div class="content-box content-box-page7">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>WORK</h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="work_short" value={{watasheet_type_result.work_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="work_medium" value={{watasheet_type_result.work_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="work_long" value={{watasheet_type_result.work_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>HEALTH </h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="health_short" value={{watasheet_type_result.health_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="health_medium" value={{watasheet_type_result.health_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="health_long" value={{watasheet_type_result.health_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>DEVELOPMENT </h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="development_short" value={{watasheet_type_result.development_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="development_medium" value={{watasheet_type_result.development_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="development_long" value={{watasheet_type_result.development_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>HOBBY </h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="hobby_short" value={{watasheet_type_result.hobby_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="hobby_medium" value={{watasheet_type_result.hobby_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="hobby_long" value={{watasheet_type_result.hobby_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>FAMILY </h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="family_short" value={{watasheet_type_result.family_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="family_medium" value={{watasheet_type_result.family_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="family_long" value={{watasheet_type_result.family_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>ECONOMY </h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="economy_short" value={{watasheet_type_result.economy_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="economy_medium" value={{watasheet_type_result.economy_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="economy_long" value={{watasheet_type_result.economy_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>HUMAN </h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="human_short" value={{watasheet_type_result.human_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="human_medium" value={{watasheet_type_result.human_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="human_long" value={{watasheet_type_result.human_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box position-absolute right-2">
+                                                                <h3>ETC </h3>
+                                                            </div>
+                                                            <ul>
+                                                                <li>短期<span><input disabled type="text" name="etc_short" value={{watasheet_type_result.etc_short}}></span></li>
+                                                                <li>中期 <span><input disabled type="text" name="etc_medium" value={{watasheet_type_result.etc_medium}}></span></li>
+                                                                <li>長期 <span><input disabled type="text" name="etc_long" value={{watasheet_type_result.etc_long}}></span></li>
+                                                            </ul>
+                                                            <span class="te">能力開発</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 8 -->
+                                    <div class="tab-pane fade" id="nav-8" role="tabpanel">
+                                        <div class="section-content">
+                                            <!-- <div class="title title-page4">
+                                <h2>MY time line </h2>
+                                <p>わたしの過去・現在・未来の年表を作ってみよう！</p>
+                            </div> -->
+                                            <div class="content-box content-box-page7">
+                                                <div class="row">
+                                                    <div class="col-md-6 md-12 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box">
+                                                                <h3>YEARS OLD</h3>
+                                                            </div>
+                                                            <div class="old">
+                                                                <span class="user-select-none" style="pointer-events: none;">0 - 10 </span>
+                                                                <textarea name="years_old_0_10" disabled>{{watasheet_type_result.years_old_0_10}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 md-12 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box">
+                                                                <h3>YEARS OLD </h3>
+                                                            </div>
+                                                            <div class="old">
+                                                                <span class="user-select-none" style="pointer-events: none;">30 - 40 </span>
+                                                                <textarea name="years_old_30_40" disabled>{{watasheet_type_result.years_old_30_40}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 md-12 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box">
+                                                                <h3>YEARS OLD </h3>
+                                                            </div>
+                                                            <div class="old">
+                                                                <span class="user-select-none" style="pointer-events: none;">10 - 20 </span>
+                                                                <textarea name="years_old_10_20" disabled>{{watasheet_type_result.years_old_10_20}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 md-12 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box">
+                                                                <h3>YEARS OLD </h3>
+                                                            </div>
+                                                            <div class="old">
+                                                                <span class="user-select-none" style="pointer-events: none;">40 - 50</span>
+                                                                <textarea name="years_old_40_50" disabled>{{watasheet_type_result.years_old_40_50}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 md-12 mb-30">
+                                                        <div class="items">
+                                                            <div class="title-box">
+                                                                <h3>YEARS OLD </h3>
+                                                            </div>
+                                                            <div class="old">
+                                                                <span class="user-select-none" style="pointer-events: none;">20 - 30 </span>
+                                                                <textarea name="years_old_20_30" disabled>{{watasheet_type_result.years_old_20_30}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 md-12 mb-30">
+                                                        <div class="items items-2">
+                                                            <div class="title-box">
+                                                                <h3>YEARS OLD </h3>
+                                                            </div>
+                                                            <div class="old old-bd">
+                                                                <span class="user-select-none" style="pointer-events: none;">50 - 70 </span>
+                                                                <textarea name="years_old_50_70" disabled>{{watasheet_type_result.years_old_50_70}}</textarea>
+                                                            </div>
+                                                            <div class="title-box" style="padding-top:20px;">
+                                                                <h3>YEARS OLD </h3>
+                                                            </div>
+                                                            <div class="old">
+                                                                <span class="user-select-none" style="pointer-events: none;">70 - 100 </span>
+                                                                <textarea name="years_old_70_100" disabled>{{watasheet_type_result.years_old_70_100}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--    <div class="content-box content-box-page7 display-mobile">
+                                <div class="row">
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span class="user-select-none" style="pointer-events: none;">0 - 10 </span>
+                                                <textarea name="years_old_0_10" disabled>{{watasheet_type_result.years_old_0_10}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span class="user-select-none" style="pointer-events: none;">10 - 20 </span>
+                                                <textarea name="years_old_10_20" disabled>{{watasheet_type_result.years_old_10_20}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span class="user-select-none" style="pointer-events: none;">20 - 30 </span>
+                                                <textarea name="years_old_20_30" disabled>{{watasheet_type_result.years_old_20_30}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span class="user-select-none" style="pointer-events: none;">30 - 40 </span>
+                                                <textarea name="years_old_30_40" disabled>{{watasheet_type_result.years_old_30_40}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span class="user-select-none" style="pointer-events: none;">50 - 70</span>
+                                                <textarea name="years_old_50_70" disabled>{{watasheet_type_result.years_old_50_70}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-30">
+                                        <div class="items">
+                                            <div class="title-box">
+                                                <h3>YEARS OLD </h3>
+                                            </div>
+                                            <div class="old">
+                                                <span class="user-select-none" style="pointer-events: none;">70 - 100 </span>
+                                                <textarea name="years_old_70_100" disabled>{{watasheet_type_result.years_old_70_100}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-chart">
+                                    <label class="checkbox d-flex align-items-center" style="gap: 5px;">
+                                        {{ form.flg_finished }} {{ form.flg_finished.label }}
+                                    </label>
+                                    <div class="flex-chart">
+                                        <button class="btn-custom-button" type="submit">一時保存</button>
+                                        <button class="btn-custom-button" type="submit">保存</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Xử lý sự kiện click cho các button tab
+    $('.button-tab').click(function() {
+
+        // Loại bỏ class active từ tất cả các button tab
+        $('.button-tab').removeClass('active');
+
+        // Thêm class active cho button tab được click
+        var index = $(this).index();
+        $('.list-1 .button-tab').eq(index).addClass('active');
+        $('.list-2 .button-tab').eq(index).addClass('active');
+
+        //
+        if (index == 0) {
+
+            const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
+            $('.title-tab').text(`PROFESSIONAL ${length}`);
+            $('.desc-tab').text("わたしが望んでいる仕事を知る");
+            $('.title-tab-h3').text("INTEREST");
+            $('.desc-tab-p').text("リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。");
+        } else {
+
+            $('.title-tab').text("KNOW MYSELF");
+            $('.desc-tab').text("自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）");
+            $('.title-tab-h3').text("");
+            $('.desc-tab-p').text("");
+        }
+    });
+});
+</script>
+{% endblock %}
