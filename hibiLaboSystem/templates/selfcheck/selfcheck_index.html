@@ -10,7 +10,7 @@
 <!-- コンテンツ -->
 {% block content %}
 <main class="bg-main bg-gray">
-    <section class="site-feedback pd-main">
+    <section class="site-feedback pd-main overflow-auto">
         <div class="container-fluid">
             <div class="row">
                 {% include "component/selfcheck_nav.html" %}
@@ -30,7 +30,7 @@
                                         <button type="submit" name="submit">表示</button>
                                     </form>
                                 </div>
-                                <div class="content-chart content-chart-2 overflow-auto">
+                                <div class="content-chart content-chart-2">
                                     <table class="table table2" id="td1">
                                         <tr>
                                             <th></th>
