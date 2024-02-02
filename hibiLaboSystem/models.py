@@ -31,6 +31,7 @@ class Company(models.Model):
 	    verbose_name='相棒'
 	)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
+	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
 
 	class Meta:
 			db_table = "companies"

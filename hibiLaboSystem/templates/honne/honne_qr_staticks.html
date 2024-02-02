@@ -36,7 +36,11 @@
                                             <th>No.</th>
                                             <th>質問</th>
                                             {% for obj in staff_list %}
-                                              <th>{{ obj.full_name }}</th>
+                                              <th>
+                                                {% if user.company.visble_flag == True %}
+                                                  {{ obj.full_name }}
+                                                {% endif %}
+                                              </th>
                                             {% endfor %}
                                         </tr>
                                         <tbody>
