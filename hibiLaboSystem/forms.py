@@ -150,6 +150,14 @@ class WorkInfoUpdateForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form'})
     )
 
+class BonknowSheetForm(forms.Form):
+    flg_finished = forms.BooleanField(
+        initial=False,
+        label='提出する',
+        required=False,
+        help_text='提出する'
+    )
+
 class HonneForm(forms.Form):
     flg_finished = forms.BooleanField(
         initial=False,

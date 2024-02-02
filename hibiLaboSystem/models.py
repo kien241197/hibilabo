@@ -631,6 +631,7 @@ class ResponsResult(models.Model):
 	logic = models.FloatField(blank=True, null=True, default=0)
 	sense = models.FloatField(blank=True, null=True, default=0)
 	review_date = models.DateField(blank=True, null=True)
+	flg_finished = models.BooleanField(default=False)
 
 	class Meta:
 		db_table = 'respons_results'

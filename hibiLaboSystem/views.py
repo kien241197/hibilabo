@@ -51,12 +51,29 @@ class Home(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         today = datetime.date.today()
+        user_id = self.request.user.id
         if self.request.user.is_authenticated:
             company_id = self.request.user.company_id
             context["period_honne"] = HonneEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
             context["period_selfcheck"] = SelfcheckEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
             context["period_bonknow"] = BonknowEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
             context["period_watasheet"] = WatasheetEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
+            print(context["period_watasheet"].id)
+            if context["period_honne"] is not None:
+                context['honne_type_result'] = HonneTypeResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_honne"].id, evaluation_period__evaluation_start__lte=today, evaluation_period__evaluation_end__gte=today).first()
+
+            if context["period_selfcheck"] is not None:
+                context['selfcheck_type_result'] = SelfcheckTypeResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_selfcheck"].id, evaluation_period__evaluation_start__lte=today, evaluation_period__evaluation_end__gte=today).first()
+            
+            if context["period_bonknow"] is not None:
+                context['bonknow_type_result'] = ResponsResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_bonknow"].id, evaluation_period__evaluation_start__lte=today, evaluation_period__evaluation_end__gte=today).first()
+            
+            if context["period_watasheet"] is not None: 
+                context['watasheet_type_result'] = WatasheetTypeResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_watasheet"].id).first()
+
+            context["mandara"] = MandaraBase.objects.all().filter(
+            Q(user_id=user_id) & Q(company_id=company_id) & (Q(mandara_period__start_date__gt=today))
+        ).order_by('mandara_period__start_date').first()
         return context
 
 class Login(LoginView):
@@ -859,11 +876,17 @@ class SelfcheckSheet(TemplateView):
 @method_decorator(middlewares.BonknowMiddleware, name='dispatch')
 class BonknowSheet(TemplateView):
     template_name = "bonknow/bonknow_sheet.html"
+    form_class = forms.BonknowSheetForm
 
     def get_context_data(self, **kwargs):
+        key_evaluation_unit = self.kwargs['evaluationUnit']
         evaluation_unit = self.kwargs['evaluationUnit']
         company_id = self.request.user.company_id
         user_id = self.request.user.id
+        initial_values = {
+            'flg_finished': False
+        }
+
         evaluation_period = get_object_or_404(
             BonknowEvaluationPeriod,
             pk=evaluation_unit,
@@ -889,6 +912,14 @@ class BonknowSheet(TemplateView):
             ).values('answer')[:1]
         ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
 
+        obj = ResponsResult.objects.filter(
+            company_id=company_id,
+            user_id=user_id,
+            evaluation_period_id=key_evaluation_unit
+        ).first()
+
+        initial_values['flg_finished'] = obj.flg_finished
+
         think_questions = evaluation_period.think_questions.prefetch_related(
             Prefetch(
                 'think_answers',
@@ -912,6 +943,8 @@ class BonknowSheet(TemplateView):
         kwargs['think_questions'] = think_questions
         kwargs['think_list'] = list(think_questions.values_list('id', flat=True))
         kwargs['res_list'] = list(respons_questions.values_list('id', flat=True))
+        kwargs['form'] = self.form_class(initial_values)
+        kwargs['disabled'] = 'disabled' if obj.flg_finished else ''
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -945,6 +978,11 @@ class BonknowSheet(TemplateView):
                     "answer_date": datetime.date.today(),
                 }
             )
+
+        flg_finished = self.request.POST.get('flg_finished') or False
+        if flg_finished:
+            flg_finished  = True
+       
         obj = ResponsResult.objects.update_or_create(
             company_id=company_id,
             user_id=user_id,
@@ -953,6 +991,7 @@ class BonknowSheet(TemplateView):
                 "logic": logic,
                 "sense": sense,
                 "review_date": datetime.date.today(),
+                'flg_finished': flg_finished
             }
         )
 
@@ -978,6 +1017,7 @@ class BonknowSheet(TemplateView):
                     "answer_date": datetime.date.today(),
                 }
             )
+
         obj = ThinkResult.objects.update_or_create(
             company_id=company_id,
             user_id=user_id,
@@ -985,7 +1025,7 @@ class BonknowSheet(TemplateView):
             defaults={
                 "must": must,
                 "want": want,
-                "review_date": datetime.date.today(),
+                "review_date": datetime.date.today()
             }
         )
 

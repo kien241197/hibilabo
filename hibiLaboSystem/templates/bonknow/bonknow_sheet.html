@@ -65,7 +65,7 @@
                                             <td>{{ record.question }}</td>
                                             <td>
                                                 <select id=respons_result{{record.id}}
-                                                    name=respons_answer_{{record.id}} onchange='func_count_res(this, {{ res_list|safe }});'>
+                                                    name=respons_answer_{{record.id}} onchange='func_count_res(this, {{ res_list|safe }});' {{disabled}}>
                                                     <option value="">-</option>
                                                     <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
                                                     <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
@@ -118,7 +118,7 @@
                                             <td>{{ record.question }}</td>
                                             <td>
                                                 <select id=think_result{{record.id}}
-                                                    name=think_answer_{{record.id}} onchange='func_count_think(this, {{ think_list|safe }});'>
+                                                    name=think_answer_{{record.id}} onchange='func_count_think(this, {{ think_list|safe }});' {{ disabled }}>
                                                     <option value="">-</option>
                                                     <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
                                                     <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
@@ -156,6 +156,9 @@
                 </div>
                 <div class="col-md-12">
                     <div class="button-chart">
+                        <label class="checkbox">
+                            {{ form.flg_finished }}{{ form.flg_finished.label }}
+                        </label>
                         <div class="flex-chart">
                             <button class="btn-custom-button" type="submit">一時保存</button>
                             <button class="btn-custom-button" type="submit">保存</button>
@@ -164,6 +167,5 @@
                 </div>
         </section>
     </form>
-
 </main>
 {% endblock %}
