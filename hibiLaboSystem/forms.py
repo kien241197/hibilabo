@@ -173,6 +173,8 @@ class SelfcheckForm(forms.Form):
         required=False,
         help_text='提出する'
     )
+    
+
 
 ''' 一次的に評価対象月などを静的に出力するためのフォーム'''
 class HonneEvaluationUnitForm(forms.Form):
@@ -1204,136 +1206,29 @@ class WatasheetForm(forms.ModelForm):
     class Meta:
         model = models.WatasheetTypeResult
         fields = "__all__"
-   #  # Key word
-   #  keyword_1st = forms.CharField(
-   #      required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "keyword_1st",
-   #              'value': "{{watasheet_type_result.keyword_1st}}"
-   #          }
-   #      ))
-
-   #  keyword_2nd = forms.CharField(
-   #      required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name':"keyword_2nd"
-   #          }
-   #      ))
-
-   #  keyword_3rd = forms.CharField(
-   #      required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "keyword_3rd",
-   #          }
-   #      ))
-
-   # # Why i want
-   #  w_want_1st = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "w_want_1st",
-   #          }
-   #      ))
-   #  w_want_2nd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'class': "w_want_3rd",
-   #          }
-   #      ))
-   #  w_want_3rd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "w_want_3rd",
-   #          }
-   #      ))
-
-   #  #  My Rule
-   #  rule_1st = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "rule_1st",
-   #          }
-   #      ))
-
-   #  rule_2nd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "rule_2nd",
-   #          }
-   #      ))
-
-   #  rule_3rd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "rule_3rd",
-   #          }
-   #      ))
-
-   #  # MY VISION
-   #  vision_1st = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "vision_1st",
-   #          }
-   #      ))
-   #  vision_2nd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "vision_2nd",
-   #          }
-   #      ))
-   #  vision_3rd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "vision_3rd",
-   #          }
-   #      ))
-
-   #  # My mission
-   #  mission_1st = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "mission_1st",
-   #          }
-   #      ))
-   #  mission_2nd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "mission_2nd",
-   #          }
-   #      ))
-   #  mission_3rd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "mission_3rd",
-   #          }
-   #      ))
-
-   #  # My concept
-   #  concept_1st = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "concept_1st",
-   #          }
-   #      ))
-   #  concept_2nd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "concept_2nd",
-   #          }
-   #      ))
-   #  concept_3rd = forms.CharField(required=False,
-   #      widget=forms.TextInput(
-   #          attrs={
-   #              'name': "concept_3rd",
-   #          }
-   #      ))
     flg_finished = forms.BooleanField(
         initial=False,
         label='提出する',
         required=False,
         help_text='提出する'
     )
+
+class WatasheetTypeForm(forms.Form):
+
+    evaluation_unit = forms.ModelChoiceField(
+        empty_label='----',
+        label='評価対象年月',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form'}),
+        queryset=models.WatasheetEvaluationPeriod.objects.none()
+    )
+
+    def __init__(self, request, *args, **kwargs):
+        super(WatasheetTypeForm, self).__init__(*args, **kwargs)
+        queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
+        print(request.user)
+        if request.user:
+            queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
+        self.fields['evaluation_unit'].queryset = queryset_evaluation
+        
+    

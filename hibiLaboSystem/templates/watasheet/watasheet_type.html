@@ -17,17 +17,15 @@
                                 <div class="row align-items-baseline">
                                     <div class="col-lg-6">
                                         <div class="content-chart content-chart-2 content-chart-mb">
-                                            <div class="title">
+                                            <div class="title mb-3">
                                                 <div class="filter mb-3">
                                                     <form action="" method="post" enctype="multipart/form-data">
                                                         {% csrf_token %}
-                                                        <select name="evaluation_unit" class="form" required="" id="id_evaluation_unit">
-                                                            <option value="" selected="">----</option>
-                                                            <option value="1">Feb2024</option>
-                                                        </select>
+                                                        {{ form.evaluation_unit }}
                                                         <button type="submit" name="submit">表示</button>
                                                     </form>
                                                 </div>
+                                                {% if data %}
                                                 <h2 class="title-tab">
                                                     PROFESSIONAL
                                                     {% if questions|length > 0 %}
@@ -38,9 +36,11 @@
                                                 <p></p>
                                                 <h3 class="title-tab-h3 mt-2">INTEREST </h3>
                                                 <p class="desc-tab-p">リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
+                                    {% if data %}
                                     <div class="col-lg-6">
                                         <div class="content-chart content-chart-2 content-chart-page3">
                                             <div class="title">
@@ -61,11 +61,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="text-success text-center"><label>
+                           <!--  <div class="text-success text-center"><label>
                                     <h5>{{ message }}</h5>
-                                </label></div>
+                                </label></div> -->
+                            {% if data %}
                             <form action="" method="POST">
                                 {% csrf_token %}
                                 <div class="tab-content" id="nav-tabContent">
@@ -687,6 +689,7 @@
                                     </div>
                                 </div>
                             </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
