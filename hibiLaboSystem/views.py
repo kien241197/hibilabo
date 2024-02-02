@@ -1983,9 +1983,8 @@ class WatasheetType(TemplateView):
     test = None
 
     def get_context_data(self, **kwargs):
-        
         kwargs = super().get_context_data(**kwargs)
-        kwargs['data'] = False
+        kwargs['watasheet_type_result'] = None
         kwargs['form'] = self.form_class(self.request)
 
         return kwargs
@@ -1993,10 +1992,8 @@ class WatasheetType(TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         company_id = self.request.user.company_id
-        user_id = self.request.user.id
-        initial_values = {
-            "flg_finished": False,
-        }
+        user_id = self.request.POST.get('user_id')
+        evaluation_unit_id = self.request.POST.get('evaluation_unit')
 
         evaluation_period = get_object_or_404(
             WatasheetEvaluationPeriod,
@@ -2004,26 +2001,24 @@ class WatasheetType(TemplateView):
             evaluation_start__lte=datetime.date.today(),
             evaluation_end__gte=datetime.date.today()
         )
-        self.test = evaluation_period.id
+
         watasheet_questions = evaluation_period.watasheet_questions.prefetch_related(
             Prefetch(
                 'watasheet_results',
                 queryset=(
                     WatasheetResult.objects
-                        .filter(evaluation_period_id=evaluation_period.id,company_id=self.request.POST.get('evaluation_unit'))
+                        .filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, company_id=company_id)
                 )
             )
         ).all().annotate(
             answer_value=WatasheetResult.objects.filter(
                 watasheet_question=OuterRef("pk"),
-                evaluation_period_id=evaluation_period.id,
-                company_id=self.request.POST.get('evaluation_unit')
+                evaluation_period_id=evaluation_unit_id,
+                user_id=user_id
             ).values('id')[:1]
         ).order_by('sort_no')
-        watasheet_type_result = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_period.id, company_id=self.request.POST.get('evaluation_unit')).first()
-        obj_type = evaluation_period.watasheet_type_results.filter(company_id=self.request.POST.get('evaluation_unit')).first()
-        if obj_type is not None:
-            initial_values['flg_finished'] = obj_type.flg_finished
+        watasheet_type_result = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, company_id=company_id).first()
+        obj_type = evaluation_period.watasheet_type_results.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, company_id=company_id).first()
         
         kwargs = super().get_context_data(**kwargs)
         context['evaluation_period'] = evaluation_period
@@ -2036,8 +2031,7 @@ class WatasheetType(TemplateView):
         context['type_E'] = obj_type.watasheet_type_e if obj_type is not None else 0
         context['type_F'] = obj_type.watasheet_type_f if obj_type is not None else 0
         context['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
-        context['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
-        context['form'] = self.form_class(self.request)
+        context['form'] = self.form_class(request, request.POST)
         context['watasheet_type_result'] = watasheet_type_result
         context['data'] = True
 

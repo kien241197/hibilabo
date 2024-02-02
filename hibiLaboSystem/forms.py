@@ -1215,6 +1215,7 @@ class WatasheetForm(forms.ModelForm):
 
 class WatasheetTypeForm(forms.Form):
 
+    # 評価対象年月の選択
     evaluation_unit = forms.ModelChoiceField(
         empty_label='----',
         label='評価対象年月',
@@ -1223,12 +1224,23 @@ class WatasheetTypeForm(forms.Form):
         queryset=models.WatasheetEvaluationPeriod.objects.none()
     )
 
+    # 評価対象社員の選択
+    user_id = forms.ModelChoiceField(
+        empty_label='----',
+        label='対象社員',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form'}),
+        queryset=models.User.objects.none()
+    )
+
     def __init__(self, request, *args, **kwargs):
         super(WatasheetTypeForm, self).__init__(*args, **kwargs)
+        queryset = models.User.objects.all()
         queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
-        print(request.user)
         if request.user:
+            queryset = queryset.filter(company_id=request.user.company_id)
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
+        self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
         
     
