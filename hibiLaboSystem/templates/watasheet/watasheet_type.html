@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 {% block header %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/watasheet.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/watasheet-type.css' %}">
 {% endblock %}
@@ -11,8 +10,7 @@
     <section class="site-feedback pd-main">
         <div class="container-fluid">
             <div class="row">
-                {% include "component/watasheet_nav.html" %}
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="tab-content">
                         <div class="container-fluid">
                             <div class="section-title">

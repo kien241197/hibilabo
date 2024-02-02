@@ -23,23 +23,3 @@
     cursor: pointer;
     font-weight: bold;
 }
-@media (min-width: 1600px) {
-
-    .max-width {
-        width: 135px;
-    }
-}
-
-@media (min-width: 1430px) {
-
-    .max-width {
-        width: 132px;
-    }
-}
-
-@media (min-width: 110px) {
-
-    .max-width {
-        width: 98px;
-    }
-}
