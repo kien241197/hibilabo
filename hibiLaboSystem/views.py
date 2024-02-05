@@ -60,20 +60,18 @@ class Home(TemplateView):
             context["period_watasheet"] = WatasheetEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
             print(context["period_watasheet"].id)
             if context["period_honne"] is not None:
-                context['honne_type_result'] = HonneTypeResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_honne"].id, evaluation_period__evaluation_start__lte=today, evaluation_period__evaluation_end__gte=today).first()
+                context['honne_type_result'] = HonneTypeResult.objects.filter(user_id=user_id, evaluation_period_id=context["period_honne"].id).first()
 
             if context["period_selfcheck"] is not None:
-                context['selfcheck_type_result'] = SelfcheckTypeResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_selfcheck"].id, evaluation_period__evaluation_start__lte=today, evaluation_period__evaluation_end__gte=today).first()
+                context['selfcheck_type_result'] = SelfcheckTypeResult.objects.filter(user_id=user_id, evaluation_period_id=context["period_selfcheck"].id).first()
             
             if context["period_bonknow"] is not None:
-                context['bonknow_type_result'] = ResponsResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_bonknow"].id, evaluation_period__evaluation_start__lte=today, evaluation_period__evaluation_end__gte=today).first()
+                context['bonknow_type_result'] = ResponsResult.objects.filter(user_id=user_id, evaluation_period_id=context["period_bonknow"].id).first()
             
             if context["period_watasheet"] is not None: 
-                context['watasheet_type_result'] = WatasheetTypeResult.objects.filter(company_id=company_id, evaluation_period_id=context["period_watasheet"].id).first()
+                context['watasheet_type_result'] = WatasheetTypeResult.objects.filter(user_id=user_id, evaluation_period_id=context["period_watasheet"].id).first()
 
-            context["mandara"] = MandaraBase.objects.all().filter(
-            Q(user_id=user_id) & Q(company_id=company_id) & (Q(mandara_period__start_date__gt=today))
-        ).order_by('mandara_period__start_date').first()
+            context["mandara"] = MandaraBase.objects.all().filter(Q(user_id=user_id) & Q(company_id=company_id) & (Q(mandara_period__start_date__gt=today))).order_by('mandara_period__start_date').first()
         return context
 
 class Login(LoginView):
@@ -1979,7 +1977,6 @@ class Watasheet(TemplateView):
 class WatasheetType(TemplateView):
     template_name = "watasheet/watasheet_type.html"
     form_class = forms.WatasheetTypeForm
-    # form_class_1 = forms.WatasheetTypeUnitForm
     test = None
 
     def get_context_data(self, **kwargs):
@@ -1991,23 +1988,15 @@ class WatasheetType(TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        company_id = self.request.user.company_id
         user_id = self.request.POST.get('user_id')
         evaluation_unit_id = self.request.POST.get('evaluation_unit')
 
-        evaluation_period = get_object_or_404(
-            WatasheetEvaluationPeriod,
-            company_id=company_id,
-            evaluation_start__lte=datetime.date.today(),
-            evaluation_end__gte=datetime.date.today()
-        )
-
-        watasheet_questions = evaluation_period.watasheet_questions.prefetch_related(
+        watasheet_questions = WatasheetQuestion.objects.prefetch_related(
             Prefetch(
                 'watasheet_results',
                 queryset=(
                     WatasheetResult.objects
-                        .filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, company_id=company_id)
+                        .filter(evaluation_period_id=evaluation_unit_id, user_id=user_id)
                 )
             )
         ).all().annotate(
@@ -2017,11 +2006,10 @@ class WatasheetType(TemplateView):
                 user_id=user_id
             ).values('id')[:1]
         ).order_by('sort_no')
-        watasheet_type_result = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, company_id=company_id).first()
-        obj_type = evaluation_period.watasheet_type_results.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, company_id=company_id).first()
+
+        obj_type = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, flg_finished=True).first()
         
         kwargs = super().get_context_data(**kwargs)
-        context['evaluation_period'] = evaluation_period
         context['watasheet_questions'] = watasheet_questions
         context['questions'] = list(divide_chunks(watasheet_questions, 3))
         context['type_A'] = obj_type.watasheet_type_a if obj_type is not None else 0
@@ -2032,7 +2020,6 @@ class WatasheetType(TemplateView):
         context['type_F'] = obj_type.watasheet_type_f if obj_type is not None else 0
         context['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
         context['form'] = self.form_class(request, request.POST)
-        context['watasheet_type_result'] = watasheet_type_result
-        context['data'] = True
+        context['watasheet_type_result'] = obj_type
 
         return self.render_to_response(context)
