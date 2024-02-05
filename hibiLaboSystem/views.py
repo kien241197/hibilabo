@@ -1920,7 +1920,7 @@ class Watasheet(TemplateView):
 
         if self.request.POST.get("watasheet_context") is not None:
 
-            WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id).delete()
+            WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id, user_id=user_id).delete()
             bulk_list = list()
             types = {
                 "A" : 0,
