@@ -160,7 +160,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         form = forms.CsvImportForm()
         context = {"form": form, "form_title": "Upload users csv file.",
                     "description": "The file should have following headers: "
-                                    "[username,password]."
+                                    "[username,first_name,last_name,password]."
                                     " The Following rows should contain information for the same.",
                                     "endpoint": "/admin/hibiLaboSystem/user/import/"}
         return render(
