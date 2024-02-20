@@ -58,7 +58,6 @@ class Home(TemplateView):
             context["period_selfcheck"] = SelfcheckEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
             context["period_bonknow"] = BonknowEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
             context["period_watasheet"] = WatasheetEvaluationPeriod.objects.all().filter(evaluation_start__lte=today,evaluation_end__gte=today,company_id=company_id).first()
-            print(context["period_watasheet"].id)
             if context["period_honne"] is not None:
                 context['honne_type_result'] = HonneTypeResult.objects.filter(user_id=user_id, evaluation_period_id=context["period_honne"].id).first()
 
