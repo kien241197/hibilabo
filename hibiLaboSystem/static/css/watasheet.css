@@ -1,3 +1,23 @@
+.item-content {
+
+    border-bottom: 7px solid #EEEEEF;
+}
+
+
+.content-triangle {
+
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+
+.width-80 {
+
+    width: 80px;
+}
+
 h3 {
 
     font-size: 20pt;
@@ -8,6 +28,18 @@ h3 {
     font-family: var(--font-text);
     letter-spacing: 2px;
 }
+
+h4 {
+
+    font-size: 24pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #727171;
+    font-family: var(--font-text);
+    letter-spacing: 2px;
+}
+
 
 .items {
 

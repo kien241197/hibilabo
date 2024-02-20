@@ -24,15 +24,12 @@
                         <div class="content-chart content-chart-2 content-chart-mb">
                             <div class="title">
                                 <h2 class="title-tab">
-                                    PROFESSIONAL
-                                    {% if questions|length > 0 %}
-                                    TYPE {{ questions|length}}
-                                    {% endif %}
+                                    TEAM CONCEPT
                                 </h2>
-                                <p class="desc-tab">わたしが望んでいる仕事を知る</p>
+                                <p class="desc-tab">会社 ・ チームとしての方向性の共有</p>
                                 <p></p>
-                                <h3 class="title-tab-h3 mt-2">INTEREST </h3>
-                                <p class="desc-tab-p">リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。</p>
+                                <h3 class="title-tab-h3 mt-2"></h3>
+                                <p class="desc-tab-p"></p>
                             </div>
                         </div>
                     </div>
@@ -44,12 +41,13 @@
                                         <ul class="list-1 nav" id="myTab" role="tablist" style="user-select: none;">
                                             <!--  <li class="number-1">1</li>
                                             <li class="number-2">2</li> -->
-                                            <li class="active button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="true">1</li>
+                                            <li class="active button-tab" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true">0</li>
+                                            <li class="button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">1</li>
                                             <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
                                             <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
-                                            <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">4</li>
-                                            <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">5</li>
-                                            <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">6</li>
+                                            <!-- <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">4</li>
+                                            <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">5</li> -->
+                                            <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">4</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -64,8 +62,121 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="tab-content" id="nav-tabContent">
+                    <!-- tab 0 -->
+                    <div class="tab-pane fade show active" id="nav-0" role="tabpanel">
+                        <div id="page4" class="content-chart">
+                            <!-- <div class="title title-page4" style="margin-bottom:30px;">
+                                <h2>KNOW MYSELF </h2>
+                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
+                            </div> -->
+                            <div class="content-box">
+                                <div class="row">
+                                    <div class="col-md-6 row">
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items" style="height:170px">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">CONCEPT </h3>
+                                                    <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li>(1) <span><input name="" value=""></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">VISION</h3>
+                                                    <p>未来像 ： 会社が目指す未来 </p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="d-flex align-items-baseline mb-0"><span class="width-80">(１年後)</span> (&nbsp; &nbsp; &nbsp; &nbsp;　年) <span><input name="" value=""></span></li>
+                                                    <li class="d-flex align-items-baseline mb-0"><span class="width-80">(5年後)</span> (&nbsp; &nbsp; &nbsp; &nbsp;　年) <span><input name="" value=""></span></li>
+                                                    <li class="d-flex align-items-baseline mb-0"><span class="width-80">(10年後)</span> (&nbsp; &nbsp; &nbsp; &nbsp;　年) <span><input name="" value=""></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">MISSION</h3>
+                                                    <p>使命 : 社会 ・ 顧客に果たすべき使命</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="mb-0">(1)<span><input name="" value=""></span></li>
+                                                    <li class="mb-0">(2)<span><input name="" value=""></span></li>
+                                                    <li class="mb-0">(3)<span><input name="" value=""></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">VALUES</h3>
+                                                    <p>顧客に約束する価値 ・ 行動</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="mb-0">(1)<span><input name="" value=""></span></li>
+                                                    <li class="mb-0">(2)<span><input name="" value=""></span></li>
+                                                    <li class="mb-0">(3)<span><input name="" value=""></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">ACTION</h3>
+                                                    <p>行動規定 ： 日々の行動</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="d-flex align-items-baseline mb-0"><span class="width-80">(１年後)</span> (&nbsp; &nbsp; &nbsp; &nbsp;　年) <span><input name="" value=""></span></li>
+                                                    <li class="d-flex align-items-baseline mb-0"><span class="width-80">(5年後)</span> (&nbsp; &nbsp; &nbsp; &nbsp;　年) <span><input name="" value=""></span></li>
+                                                    <li class="d-flex align-items-baseline mb-0"><span class="width-80">(10年後)</span> (&nbsp; &nbsp; &nbsp; &nbsp;　年) <span><input name="" value=""></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 triangle-container ">
+                                        <div class="h-100 position-relative">
+                                            <img src="{% static 'assets/images/polygon.png'%}" class="h-100 w-100">
+                                            <div class="position-absolute content-triangle row flex-column">
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>ACTION</h4>
+                                                    <b>日々の行動</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>VALUES</h4>
+                                                    <b>価値</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>MISSION</h4>
+                                                    <b>未来像</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>VISION</h4>
+                                                    <b>使命 ・ 社是</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center">
+                                                    <h4>CONCEPT</h4>
+                                                    <b>理念 ・ 哲学 ・ 信条</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--   <div class="triangle">
+                                            <div class="content-triangle position-absolute d-flex justify-content-center">
+                                                <div class="pt-4">
+                                                    <h4>ACTION</h4>
+                                                    <p class="text-center"><b >日々の行動</b></p>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Tab 3 -->
-                    <div class="tab-pane fade show active" id="nav-3" role="tabpanel">
+                    <div class="tab-pane fade" id="nav-3" role="tabpanel">
                         <div class="section-content">
                             <div class="row">
                                 <div class="col-lg-6 col-12">
@@ -119,11 +230,11 @@
                                                     <td id="type_A">{{ type_A }}</td>
                                                     <td class="text-center">
                                                         <h3>BALANCE </h3>
-                                                        対人接触の多い仕事
+                                                        バランス
                                                     </td>
                                                     <td class="text-center" rowspan="2">
                                                         <h3>MIND </h3>
-                                                        人 と の 接 触
+                                                        心 ・ 感情 ・ 情動
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -131,7 +242,7 @@
                                                     <td id="type_B">{{ type_B }}</td>
                                                     <td class="text-center">
                                                         <h3>CAREFUL </h3>
-                                                        1人でコツコツやる仕事
+                                                        ケアフル 事
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -139,11 +250,11 @@
                                                     <td id="type_C">{{ type_C }}</td>
                                                     <td class="text-center">
                                                         <h3>COORDINATOR </h3>
-                                                        長期的安定的な仕事
+                                                        コーディネーター
                                                     </td>
                                                     <td class="text-center" rowspan="2">
                                                         <h3>MESSAGE </h3>
-                                                        仕 事 の 変 化
+                                                        伝達 ・ 知識 ・ 技術
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -151,7 +262,7 @@
                                                     <td id="type_D">{{ type_D }}</td>
                                                     <td class="text-center">
                                                         <h3>CONTROLLER </h3>
-                                                        変化に富んだ仕事
+                                                        コントーラー
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -159,11 +270,11 @@
                                                     <td id="type_E">{{ type_E }}</td>
                                                     <td class="text-center">
                                                         <h3>SUPPORTER </h3>
-                                                        じっくり頭を使う仕事
+                                                        サポーター
                                                     </td>
                                                     <td class="text-center" rowspan="2">
                                                         <h3>MOTION </h3>
-                                                        発 揮 す る 能 力
+                                                        行動 ・ 能力 ・ 思考
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -171,13 +282,13 @@
                                                     <td id="type_F">{{ type_F }}</td>
                                                     <td class="text-center">
                                                         <h3>CHALLANGER </h3>
-                                                        バリバリと行動力を活かす仕事
+                                                        チャレンジャー
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <div class="title">
-                                            <p class="m-0">わたしが求めているもの（まとめ）</p>
+                                            <p class="m-0">チェックした結果、 どんな仕事を望んでいるのかを改めて考えてください</p>
                                         </div>
                                         <div class="form-group">
                                             <textarea name="watasheet_context" class="form-control" rows="5" {{ disabled }}>{{ watasheet_type_result.watasheet_context }}</textarea>
@@ -201,7 +312,7 @@
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">KEY WORD </h3>
-                                                <p>私を作り出している要因・キーワードを３つ記入してください</p>
+                                                <p>私を作り出している要因 ・ キーワードを記入してください</p>
                                             </div>
                                             <ul class="position-relative">
                                                 <li>(1) <span><input {{ disabled }} name="keyword_1st" value={{watasheet_type_result.keyword_1st}}></span></li>
@@ -214,8 +325,10 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
-                                                <h3 class="mr-4">WHY I WANT </h3>
-                                                <p>私がそうしたい理由</p>
+                                                <h3 class="mr-4">WHY ARE YOU <br />
+                                                    <div class="text-right" style="font-size: 14px; color: #000000; text-transform: lowercase;">on that team?</div>
+                                                </h3>
+                                                <p>なぜ会社 ・ チーム ・ 団体に所属 （連携） しているのか <br /> 記入してください</p>
                                             </div>
                                             <ul class="position-relative">
                                                 <li>(1) <span><input {{ disabled }} name="w_want_1st" value="{{watasheet_type_result.w_want_1st}}"></span></li>
@@ -229,7 +342,7 @@
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">MY RULE </h3>
-                                                <p>私の役割（なぜ私がしなければならないのか）を3つ記入してください</p>
+                                                <p>私の役割 （なぜ私がしなければならないのか） を記入してください</p>
                                             </div>
                                             <ul class="position-relative">
                                                 <li>(1) <span><input {{ disabled }} name="rule_1st" value="{{watasheet_type_result.rule_1st}}"></span></li>
@@ -243,7 +356,7 @@
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">MY VISION </h3>
-                                                <p>私のビジョン</p>
+                                                <p>私のビジョンを記入してください</p>
                                             </div>
                                             <ul class="position-relative">
                                                 <li>（1年後）（歳） <span><input {{ disabled }} name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span></li>
@@ -271,7 +384,7 @@
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">MY CONCEPT</h3>
-                                                <p>私の芯</p>
+                                                <p>私の芯を記入してください</p>
                                             </div>
                                             <ul class="position-relative" style="height: 120px">
                                                 <li>（ひとつ） <span><input {{ disabled }} name="concept_1st" value="{{watasheet_type_result.concept_1st}}"></span></li>
@@ -296,7 +409,7 @@
                                         <div class="items ">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>KEY WHOM </h3>
-                                                <p class="pl-0">3Pのミッションや「こと」は誰のために？</p>
+                                                <p class="pl-0">MY MISSION は誰のために？</p>
                                             </div>
                                             <ul class="pl-0 position-relative">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="kw_1st" value={{watasheet_type_result.kw_1st}}></span></li>
@@ -309,8 +422,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>FOR WHAT JOB </h3>
-                                                <p class="pl-0">今の仕事は何のために選んだのか？</p>
+                                                <h3>MY HAPPINESS</h3>
+                                                <p class="pl-0">これがあれば幸せだと思うことを記入してください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="fw_job_1st" value={{watasheet_type_result.fw_job_1st}}></span></li>
@@ -324,7 +437,7 @@
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>FOR WHAT </h3>
-                                                <p class="pl-0">3Pのミッションや「こと」は何のために？</p>
+                                                <p class="pl-0">MY MISSION は何のために？</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="fw_1st" value={{watasheet_type_result.fw_1st}}></li>
@@ -337,8 +450,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>DON`T WANT TO GO </h3>
-                                                <p class="pl-0">向かいたくない方向性</p>
+                                                <h3>MY INPORTANT </h3>
+                                                <p class="pl-0">私の大切なことを記入してください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="dwt_go_1st" value={{watasheet_type_result.dwt_go_1st}}></span></li>
@@ -351,8 +464,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>KEY WHOM JOB </h3>
-                                                <p class="pl-0">今の仕事は誰のために選んだのか？</p>
+                                                <h3>MY WANT </h3>
+                                                <p class="pl-0">好きなことや得意なことを記入してください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="kw_job_1st" value={{watasheet_type_result.kw_job_1st}}></li>
@@ -365,8 +478,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>DON`T WANT TO THINK </h3>
-                                                <p class="pl-0">そんな考え方にはなりたくない！と思う考え方を3つ</p>
+                                                <h3>NOT MY WANT </h3>
+                                                <p class="pl-0">不得意なこと、 大切ではないこと、 不愉快を記入してください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="dwt_go_1st" value={{watasheet_type_result.dwt_go_1st}}></li>
@@ -752,9 +865,9 @@
                     </div>
                 </div>
                 <div class="button-chart">
-                    <label class="checkbox d-flex align-items-center" style="gap: 5px;">
+                    <!--   <label class="checkbox d-flex align-items-center" style="gap: 5px;">
                         {{ form.flg_finished }} {{ form.flg_finished.label }}
-                    </label>
+                    </label> -->
                     <div class="flex-chart">
                         <button class="btn-custom-button" type="submit">一時保存</button>
                         <button class="btn-custom-button" type="submit">保存</button>
@@ -780,17 +893,29 @@ $(document).ready(function() {
         $('.list-2 .button-tab').eq(index).addClass('active');
 
         //
-        if (index == 0) {
+        if (index == 1) {
 
             const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
             $('.title-tab').text(`PROFESSIONAL ${length}`);
             $('.desc-tab').text("わたしが望んでいる仕事を知る");
             $('.title-tab-h3').text("INTEREST");
-            $('.desc-tab-p').text("リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください。");
+            $('.desc-tab-p').text("リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください （複数チェック可）");
+        } else if (index === 0) {
+
+            $('.title-tab').text("TEAM CONCEPT");
+            $('.desc-tab').html("会社 ・ チームとしての方向性の共有");
+            $('.title-tab-h3').text("");
+            $('.desc-tab-p').text("");
+        } else if (index === 3) {
+
+            $('.title-tab').text("MY TIME LINE");
+            $('.desc-tab').html("わたしの過去 ・ 現在 ・ 未来の年表を作ってみましょう！");
+            $('.title-tab-h3').text("");
+            $('.desc-tab-p').text("");
         } else {
 
-            $('.title-tab').text("KNOW MYSELF");
-            $('.desc-tab').text("自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）");
+            $('.title-tab').text("KNOW MY SELF");
+            $('.desc-tab').html("私の●●を 3 つのポイントにまとめていきます。 （＊ひとつのポイントでも多くても構いません）<br/> ＊自分の人生において仕事、 私事を含め記入してください （ライフワークバランス） <br/> ＊自分の書きやすい項目から記入可能です");
             $('.title-tab-h3').text("");
             $('.desc-tab-p').text("");
         }
