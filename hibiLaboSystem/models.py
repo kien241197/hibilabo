@@ -1165,7 +1165,32 @@ class WatasheetTypeResult(models.Model):
 	years_old_40_50 = models.TextField(blank=True, null=True)
 	years_old_50_70 = models.TextField(blank=True, null=True)
 	years_old_70_100 = models.TextField(blank=True, null=True)
+	# Team concept
+	team_concept_1 = models.TextField(blank=True, null=True)
+	# Team vision
+	team_vision_1_year = models.TextField(blank=True, null=True)
+	team_vision_5_years = models.TextField(blank=True, null=True)
+	team_vision_10_years = models.TextField(blank=True, null=True)
+	team_vision_1 = models.TextField(blank=True, null=True)
+	team_vision_5 = models.TextField(blank=True, null=True)
+	team_vision_10 = models.TextField(blank=True, null=True)
+	# Team mission
+	team_mission_1 = models.TextField(blank=True, null=True)
+	team_mission_2 = models.TextField(blank=True, null=True)
+	team_mission_3 = models.TextField(blank=True, null=True)
+	team_values_1 = models.TextField(blank=True, null=True)
+	team_values_2 = models.TextField(blank=True, null=True)
+	team_values_3 = models.TextField(blank=True, null=True)
+	# Team action
+	team_action_1_year = models.TextField(blank=True, null=True)
+	team_action_5_years = models.TextField(blank=True, null=True)
+	team_action_10_years = models.TextField(blank=True, null=True)
+	team_action_1 = models.TextField(blank=True, null=True)
+	team_action_5 = models.TextField(blank=True, null=True)
+	team_action_10 = models.TextField(blank=True, null=True)
+
 	flg_finished = models.BooleanField(default=False)
+	
 
 	class Meta:
 		db_table = 'watasheet_type_results'

@@ -2006,7 +2006,7 @@ class WatasheetType(TemplateView):
             ).values('id')[:1]
         ).order_by('sort_no')
 
-        obj_type = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, flg_finished=True).first()
+        obj_type = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id).first()
         
         kwargs = super().get_context_data(**kwargs)
         context['watasheet_questions'] = watasheet_questions

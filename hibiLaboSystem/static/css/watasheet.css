@@ -3,6 +3,13 @@
     border-bottom: 7px solid #EEEEEF;
 }
 
+.input-team {
+
+    width: 30px;
+    min-width: unset !important;
+    padding-left: unset !important;
+
+}
 
 .content-triangle {
 
