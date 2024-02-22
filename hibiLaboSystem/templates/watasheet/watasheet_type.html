@@ -830,7 +830,7 @@ $(document).ready(function() {
         //
         if (index == 1) {
 
-            const length = { { questions | length } } > 0 ? "TYPE {{ questions|length }}" : "";
+            const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
             $('.title-tab').text(`PROFESSIONAL ${length}`);
             $('.desc-tab').text("わたしが望んでいる仕事を知る");
             $('.title-tab-h3').text("INTEREST");
