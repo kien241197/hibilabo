@@ -32,6 +32,30 @@ class Company(models.Model):
 	)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
+	# Team concept
+	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Concept")
+	# Team vision
+	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (VISION)", max_length=255)
+	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (VISION)", max_length=255)
+	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (VISION)", max_length=255)
+	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (VISION)")
+	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (VISION)")
+	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (VISION)")
+	# Team mission
+	team_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MISSION)")
+	team_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MISSION)")
+	team_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MISSION)")
+	# Team values
+	team_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (VALUES)")
+	team_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (VALUES)")
+	team_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (VALUES)")
+	# Team action
+	team_action_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (ACTION)", max_length=255)
+	team_action_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (ACTION)", max_length=255)
+	team_action_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (ACTION)", max_length=255)
+	team_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (ACTION)")
+	team_action_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (ACTION)")
+	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (ACTION)")
 
 	class Meta:
 			db_table = "companies"
@@ -1069,6 +1093,9 @@ class WatasheetTypeResult(models.Model):
 	vision_1st = models.TextField(blank=True, null=True)
 	vision_2nd = models.TextField(blank=True, null=True)
 	vision_3rd = models.TextField(blank=True, null=True)
+	vision_1_year = models.TextField(blank=True, null=True)
+	vision_5_years = models.TextField(blank=True, null=True)
+	vision_10_years = models.TextField(blank=True, null=True)
 	# My mission
 	mission_1st = models.TextField(blank=True, null=True)
 	mission_2nd = models.TextField(blank=True, null=True)
@@ -1165,29 +1192,7 @@ class WatasheetTypeResult(models.Model):
 	years_old_40_50 = models.TextField(blank=True, null=True)
 	years_old_50_70 = models.TextField(blank=True, null=True)
 	years_old_70_100 = models.TextField(blank=True, null=True)
-	# Team concept
-	team_concept_1 = models.TextField(blank=True, null=True)
-	# Team vision
-	team_vision_1_year = models.TextField(blank=True, null=True)
-	team_vision_5_years = models.TextField(blank=True, null=True)
-	team_vision_10_years = models.TextField(blank=True, null=True)
-	team_vision_1 = models.TextField(blank=True, null=True)
-	team_vision_5 = models.TextField(blank=True, null=True)
-	team_vision_10 = models.TextField(blank=True, null=True)
-	# Team mission
-	team_mission_1 = models.TextField(blank=True, null=True)
-	team_mission_2 = models.TextField(blank=True, null=True)
-	team_mission_3 = models.TextField(blank=True, null=True)
-	team_values_1 = models.TextField(blank=True, null=True)
-	team_values_2 = models.TextField(blank=True, null=True)
-	team_values_3 = models.TextField(blank=True, null=True)
-	# Team action
-	team_action_1_year = models.TextField(blank=True, null=True)
-	team_action_5_years = models.TextField(blank=True, null=True)
-	team_action_10_years = models.TextField(blank=True, null=True)
-	team_action_1 = models.TextField(blank=True, null=True)
-	team_action_5 = models.TextField(blank=True, null=True)
-	team_action_10 = models.TextField(blank=True, null=True)
+	
 
 	flg_finished = models.BooleanField(default=False)
 	

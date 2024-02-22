@@ -1890,6 +1890,8 @@ class Watasheet(TemplateView):
         obj_type = evaluation_period.watasheet_type_results.filter(user_id=user_id,company_id=company_id).first()
         if obj_type is not None:
             initial_values['flg_finished'] = obj_type.flg_finished
+
+        team_concept = Company.objects.filter(id=company_id).first()
         
         kwargs = super(Watasheet, self).get_context_data(**kwargs)
         kwargs['evaluation_period'] = evaluation_period
@@ -1904,7 +1906,7 @@ class Watasheet(TemplateView):
         kwargs['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
         kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         kwargs['form'] = self.form_class(initial_values)
-
+        kwargs['team_concept'] = team_concept
         kwargs['watasheet_type_result'] = watasheet_type_result
 
         return kwargs
@@ -1982,13 +1984,13 @@ class WatasheetType(TemplateView):
         kwargs = super().get_context_data(**kwargs)
         kwargs['watasheet_type_result'] = None
         kwargs['form'] = self.form_class(self.request)
-
         return kwargs
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         user_id = self.request.POST.get('user_id')
         evaluation_unit_id = self.request.POST.get('evaluation_unit')
+        company_id = self.request.user.company_id
 
         watasheet_questions = WatasheetQuestion.objects.prefetch_related(
             Prefetch(
@@ -2006,8 +2008,9 @@ class WatasheetType(TemplateView):
             ).values('id')[:1]
         ).order_by('sort_no')
 
-        obj_type = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id).first()
-        
+        obj_type = WatasheetTypeResult.objects.filter(evaluation_period_id=evaluation_unit_id, user_id=user_id, flg_finished=True).first()
+        team_concept = Company.objects.filter(id=company_id).first()
+
         kwargs = super().get_context_data(**kwargs)
         context['watasheet_questions'] = watasheet_questions
         context['questions'] = list(divide_chunks(watasheet_questions, 3))
@@ -2020,5 +2023,6 @@ class WatasheetType(TemplateView):
         context['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
         context['form'] = self.form_class(request, request.POST)
         context['watasheet_type_result'] = obj_type
+        context['team_concept'] = team_concept
 
         return self.render_to_response(context)
