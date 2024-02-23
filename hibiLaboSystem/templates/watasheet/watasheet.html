@@ -887,11 +887,11 @@
                         <label class="checkbox d-flex align-items-center 提出する" style="gap: 5px;">
                             {{ form.flg_finished }} {{ form.flg_finished.label }}
                         </label>
-                    </div>
-                    <div class="flex-chart">
-                        <button class="btn-custom-button" type="submit">一時保存</button>
-                        <button class="btn-custom-button" type="submit">保存</button>
-                    </div>
+                        <div class="flex-chart">
+                            <button class="btn-custom-button" type="submit">一時保存</button>
+                            <button class="btn-custom-button" type="submit">保存</button>
+                        </div>
+                    </div>  
                 </div>
             </form>
         </div>
@@ -911,7 +911,7 @@ $(document).ready(function() {
         var index = $(this).index();
         $('.list-1 .button-tab').eq(index).addClass('active');
         $('.list-2 .button-tab').eq(index).addClass('active');
-
+        console.log(index)
         //
         if (index == 1) {
 
@@ -927,7 +927,7 @@ $(document).ready(function() {
             $('.title-tab-h3').text("");
             $('.desc-tab-p').text("");
             $('.container-checkbox').addClass("hidden")
-        } else if (index === 3) {
+        } else if (index === 4) {
 
             $('.title-tab').text("MY TIME LINE");
             $('.desc-tab').html("わたしの過去 ・ 現在 ・ 未来の年表を作ってみましょう！");
