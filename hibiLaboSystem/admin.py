@@ -96,7 +96,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         if not request.user.is_superuser:
-            self.exclude = ("user_permissions", "is_superuser", "groups", "is_staff", "is_active",'created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
+            self.exclude = ("user_permissions", "is_superuser", "is_active",'created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
 
