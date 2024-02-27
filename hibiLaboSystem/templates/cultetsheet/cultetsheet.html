@@ -1,0 +1,630 @@
+{% extends 'layout.html'%}
+{% block header %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cultetsheet.css' %}">
+{% endblock %}
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-chart pd-main">
+        <div class="container-fluid">
+            <div class="">
+                <div class="wrapper-body-top">
+                    <div class="item-body-top">
+                        <p class="text-avatar ">社員No 001</p>
+                        <img src="{% static '/assets/images/avatart.jpg' %}" alt="dummy" class="avatar mb-3">
+                        <p class="text-avatar">氏名：中島幸一</p>
+                        <p class="name-avatar">KOUICHI NAKASHIMA</p>
+                    </div>
+                    <div class="item-body-top">
+                        <p class="title-chart">DO YOU KNOW &nbsp; <span class="gray-text">THINK</span></p>
+                        <div class="wrapper-image">
+                            <canvas id="pipChart1" width="100%" class="chart"></canvas>
+                            <span id="data-label"></span>
+                            <div class="content-pip-chart">
+                                <p class="desc-content-top">DO YOU KNOW</p>
+                                <p class="desc-content-mid">THINK</p>
+                                <P class="desc-content-bottom">どうゆう脳？</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-body-top">
+                        <p class="title-chart">DO YOU KNOW &nbsp; <span class="gray-text">RESPONS</span></p>
+                        <div class="wrapper-image">
+                            <canvas id="pipChart2" width="100%" class="chart"></canvas>
+                            <div class="content-pip-chart">
+                                <p class="desc-content-top">DO YOU KNOW</p>
+                                <p class="desc-content-mid">RESPONS</p>
+                                <P class="desc-content-bottom">どうゆう脳？</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-mid-and-bottom">
+                <div class="item-content-mid-and-bottom">
+                    <div>
+                        <p class="text-cultetsheet">DO YOU KNOW &nbsp; <span class="gray-text">THINK</span></p>
+                        <div class="item-select">
+                            <select class="select" name="" id="" style="background-image: '{% static 'assets/images/icon.png'%}';">
+                                <option value="">2023年3月</option>
+                            </select>
+                            <p class="to">～</p>
+                            <select class="select" name="" id="">
+                                <option value="">2023年9月</option>
+                            </select>
+                            <button class="button">表示</button>
+                        </div>
+                    </div>
+                    <canvas data-type="bar" width="100%" data-color-datalabels="#ffffff" id="stackedChart1" class="chart"></canvas>
+                </div>
+                <div class="item-content-mid-and-bottom">
+                    <div>
+                        <p class="text-cultetsheet">DO YOU KNOW &nbsp; <span class="gray-text">RESPONS</span></p>
+                        <div class="item-select" style="display: flex;">
+                            <select class="select" name="" id="">
+                                <option value="">2023年3月</option>
+                            </select>
+                            <p class="to">～</p>
+                            <select class="select" name="" id="">
+                                <option value="">2023年9月</option>
+                            </select>
+                            <button class="button">表示</button>
+                        </div>
+                    </div>
+                    <canvas data-type="bar" width="100%" data-color-datalabels="#ffffff" id="stackedChart2" class="chart"></canvas>
+                </div>
+            </div>
+            <div class="content-mid-and-bottom">
+                <div class="item-content-mid-and-bottom">
+                    <div>
+                        <p class="text-title-bottom">MASMAS MANDARA CHART</p>
+                        <div class="item-select">
+                            <select class="select" name="" id="">
+                                <option value="" class="aaacx">2023年3月</option>
+                            </select>
+                            <p class="to">～</p>
+                            <select class="select" name="" id="">
+                                <option value="">2023年3月</option>
+                            </select>
+                            <button class="button">表示</button>
+                        </div>
+                    </div>
+                    <canvas id="barChart1" class="chart"></canvas>
+                </div>
+                <div class="item-content-mid-and-bottom">
+                    <div>
+                        <p class="text-title-bottom">SELF CHECK</p>
+                        <div class="item-select" style="display: flex;">
+                            <select class="select" name="" id="">
+                                <option value="">2023年3月</option>
+                            </select>
+                            <p class="to">～</p>
+                            <select class="select" name="" id="">
+                                <option value="">2023年3月</option>
+                            </select>
+                            <button class="button">表示</button>
+                        </div>
+                    </div>
+                    <canvas data-type="bar" width="100%" data-color-datalabels="#ffffff" id="barChart2" class="chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script>
+Chart.register(ChartDataLabels);
+
+let size = null;
+let size1 = null;
+let size2 = null;
+if (window.innerWidth >= 3840) {
+    size1 = 50;
+    size2 = 50;
+    size = 40;
+} else if (window.innerWidth >= 2880) {
+    size1 = 35;
+    size2 = 35;
+    size = 30;
+} else if (window.innerWidth >= 2560) {
+    size1 = 30;
+    size2 = 30;
+    size = 28;
+} else if (window.innerWidth >= 2400) {
+    size1 = 30;
+    size2 = 30;
+    size = 26;
+} else if (window.innerWidth >= 2133) {
+    size1 = 30;
+    size2 = 30;
+    size = 24;
+} else if (window.innerWidth >= 1920) {
+
+    size = 20;
+    size1 = 30;
+    size2 = 30;
+
+} else if (window.innerWidth >= 1745) {
+    size1 = 28;
+    size2 = 28;
+    size = 18;
+} else if (window.innerWidth >= 1536) {
+
+    size1 = 24;
+    size2 = 24;
+    size = 16;
+} else if (window.innerWidth >= 1280) {
+    size1 = 20;
+    size2 = 20;
+    size = 12;
+} else if (window.innerWidth >= 1097) {
+
+    size = 12;
+    size1 = 20;
+    size2 = 22;
+} else if (window.innerWidth >= 960) {
+
+    size = 10;
+    size1 = 16;
+    size2 = 16;
+} else if (window.innerWidth >= 768) {
+    size = 8;
+    size1 = 14;
+    size2 = 14;
+} else if (window.innerWidth >= 350) {
+    size = 16;
+}
+
+const pipChart1 = document.getElementById('pipChart1');
+var dataLabel = document.getElementById('data-label');
+const chart1 = new Chart(pipChart1, {
+    type: 'doughnut',
+    data: {
+        datasets: [{
+            data: [50, 50],
+            backgroundColor: ['#2CAEB5', '#EAA9CA'],
+            borderWidth: 0,
+            hoverOffset: 4
+        }]
+    },
+    options: {
+        datasets: {
+            doughnut: {
+                cutout: '66%'
+            }
+        },
+        events: ["mouseout", "touchstart", "touchmove", "touchend"],
+        hover: {
+            mode: 'nearest',
+        },
+        plugins: {
+            datalabels: {
+                color: 'white',
+                display: true,
+                font: { size: size, weight: 700 },
+                offset: 0,
+                formatter: (value, context) => {
+                    if (context.dataIndex === 0) {
+                        return 'WANT\n    ' + value.toString();
+                    } else if (context.dataIndex === 1) {
+
+                        return 'MUST\n   ' + value.toString();
+                    }
+                    return value.toString();
+                },
+            },
+        },
+        legend: {
+            display: false,
+        },
+        tooltips: {
+            enabled: false,
+        },
+
+    },
+});
+
+
+const pipChart2 = document.getElementById('pipChart2');
+const chart2 = new Chart(pipChart2, {
+    type: 'doughnut',
+    data: {
+        datasets: [{
+            data: [50, 50],
+            backgroundColor: ['#2CAEB5', '#EAA9CA'],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        datasets: {
+            doughnut: {
+                cutout: '66%'
+            }
+        },
+        events: ["mouseout", "touchstart", "touchmove", "touchend"],
+        plugins: {
+            datalabels: {
+                color: 'white',
+                display: true,
+                font: { size: size, weight: 700 },
+                offset: 0,
+                formatter: (value, context) => {
+                    if (context.dataIndex === 0) {
+                        return 'SENSE\n    ' + value.toString();
+                    } else if (context.dataIndex === 1) {
+                        return ' LOGIC\n    ' + value.toString();
+                    }
+                    return value.toString();
+                },
+            },
+        },
+        legend: {
+            display: false,
+        },
+        tooltips: {
+            enabled: false,
+        },
+
+    },
+
+});
+
+
+
+// 
+
+const stackedChart1 = document.getElementById('stackedChart1').getContext('2d');
+const chart3 = new Chart(stackedChart1, {
+    type: 'bar',
+    data: {
+        labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+        datasets: [{
+                label: '',
+                data: [48, 47, 66, 78, 73, 70, 82],
+                backgroundColor: '#2CAEB5',
+                borderWidth: 0
+            },
+            {
+                label: '',
+                data: [52, 53, 34, 22, 27, 30, 18],
+                backgroundColor: '#EAA9CA',
+                borderWidth: 0
+            }
+        ]
+    },
+    options: {
+        // events: [],
+        plugins: {
+            datalabels: {
+                text: {
+                    display: true,
+                    color: '#333',
+                },
+                color: "#ffffff",
+                font: { size: size2, weight: 700 },
+
+            },
+            legend: {
+                display: false,
+            },
+        },
+
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                },
+                stacked: true,
+                ticks: {
+                    color: '#000000',
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                },
+                stacked: true,
+                ticks: {
+                    color: '#000000',
+                }
+            }
+        },
+        elements: {
+            bar: {
+                barPercentage: 1,
+                categoryPercentage: 1,
+            }
+        },
+        hover: {
+            mode: 'nearest',
+        },
+
+    },
+});
+
+
+
+const stackedChart2 = document.getElementById('stackedChart2').getContext('2d');
+const chart4 = new Chart(stackedChart2, {
+    type: 'bar',
+    data: {
+        labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+        datasets: [{
+                label: '',
+                data: [48, 47, 66, 78, 73, 70, 82],
+                backgroundColor: '#2CAEB5',
+                borderWidth: 0,
+            },
+            {
+                label: '',
+                data: [52, 53, 34, 22, 27, 30, 18],
+                backgroundColor: '#EAA9CA',
+                borderWidth: 0,
+            }
+        ]
+    },
+    options: {
+        plugins: {
+            datalabels: {
+                text: {
+                    display: true,
+                    color: '#333',
+                },
+                color: "#ffffff",
+                font: { size: size2, weight: 700 },
+                weight: 'bold'
+            },
+            legend: {
+                display: false,
+            },
+        },
+
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                },
+                stacked: true,
+                ticks: {
+                    color: '#000000',
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                },
+                stacked: true,
+                ticks: {
+                    color: '#000000',
+                }
+            }
+        },
+        elements: {
+            bar: {
+                barPercentage: 1,
+                categoryPercentage: 1,
+            }
+        }
+
+    },
+});
+
+
+
+// 
+
+const barChart1 = document.getElementById('barChart1').getContext('2d');
+const chart5 = new Chart(barChart1, {
+    type: 'bar',
+    data: {
+        labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+        datasets: [{
+            label: '',
+            data: [48, 53, 66, 78, 73, 70, 85],
+            backgroundColor: '#C8C9CA',
+        }]
+    },
+    options: {
+        plugins: {
+
+
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                offset: -5,
+                color: "#2CAEB5",
+                font: { size: size1 || 16, weight: 700 },
+                formatter: function(value, context) {
+                    return value;
+                },
+
+            },
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: '#000000',
+
+                }
+            },
+            y: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: '#000000',
+
+                }
+            }
+        }
+    },
+});
+
+
+const barChart2 = document.getElementById('barChart2').getContext('2d');
+const chart6 = new Chart(barChart2, {
+    type: 'bar',
+    data: {
+        labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+        datasets: [{
+            label: '',
+            data: [48, 53, 66, 78, 73, 70, 85],
+            backgroundColor: '#C8C9CA',
+        }]
+    },
+    options: {
+
+        plugins: {
+            hover: {
+                mode: 'nearest',
+            },
+            tooltip: {
+                titleFont: {
+                    size: 22,
+                },
+                bodyFont: {
+                    size: 22,
+                },
+            },
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                offset: -5,
+                color: "#2CAEB5",
+                font: { size: size1 || 16, weight: 700 },
+                formatter: function(value, context) {
+                    return value;
+                },
+
+            },
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#000000',
+                },
+                grid: {
+                    display: false
+                },
+
+            },
+            y: {
+                ticks: {
+                    color: '#000000',
+                },
+                grid: {
+                    display: false
+                },
+
+            }
+        }
+    },
+});
+// console.log("window.innerWidth ", window.innerWidth)
+
+window.addEventListener('resize', () => {
+
+    if (window.innerWidth <= 600) {
+        chart1.options.plugins.datalabels.font.size = 12;
+        chart2.options.plugins.datalabels.font.size = 12;
+    }
+    if (window.innerWidth >= 768) {
+
+        chart1.options.plugins.datalabels.font.size = 8;
+        chart2.options.plugins.datalabels.font.size = 8;
+        chart3.options.plugins.datalabels.font.size = 14;
+        chart4.options.plugins.datalabels.font.size = 14;
+        chart5.options.plugins.datalabels.font.size = 14;
+        chart6.options.plugins.datalabels.font.size = 14;
+    }
+    if (window.innerWidth >= 820) {
+        chart1.options.plugins.datalabels.font.size = 8;
+        chart2.options.plugins.datalabels.font.size = 8;
+    }
+    if (window.innerWidth >= 960) {
+
+        chart1.options.plugins.datalabels.font.size = 10;
+        chart2.options.plugins.datalabels.font.size = 10;
+        chart3.options.plugins.datalabels.font.size = 16;
+        chart4.options.plugins.datalabels.font.size = 16;
+        chart5.options.plugins.datalabels.font.size = 16;
+        chart6.options.plugins.datalabels.font.size = 16;
+    }
+    if (window.innerWidth >= 1097) {
+
+        chart1.options.plugins.datalabels.font.size = 12;
+        chart2.options.plugins.datalabels.font.size = 12;
+        chart3.options.plugins.datalabels.font.size = 22;
+        chart4.options.plugins.datalabels.font.size = 22;
+        chart5.options.plugins.datalabels.font.size = 20;
+        chart6.options.plugins.datalabels.font.size = 20;
+    }
+    if (window.innerWidth >= 1280) {
+        chart1.options.plugins.datalabels.font.size = 12;
+        chart2.options.plugins.datalabels.font.size = 12;
+    }
+    if (window.innerWidth >= 1536) {
+        chart1.options.plugins.datalabels.font.size = 16;
+        chart2.options.plugins.datalabels.font.size = 16;
+        chart5.options.plugins.datalabels.font.size = 24;
+        chart6.options.plugins.datalabels.font.size = 24;
+    }
+    if (window.innerWidth >= 1745) {
+        chart1.options.plugins.datalabels.font.size = 18;
+        chart2.options.plugins.datalabels.font.size = 18;
+        chart5.options.plugins.datalabels.font.size = 25;
+        chart6.options.plugins.datalabels.font.size = 25;
+    }
+
+    if (window.innerWidth >= 1920) {
+        chart1.options.plugins.datalabels.font.size = 20;
+        chart2.options.plugins.datalabels.font.size = 20;
+        chart5.options.plugins.datalabels.font.size = 30;
+        chart6.options.plugins.datalabels.font.size = 30;
+    }
+
+    if (window.innerWidth >= 2400) {
+        chart1.options.plugins.datalabels.font.size = 22;
+        chart2.options.plugins.datalabels.font.size = 22;
+    }
+    if (window.innerWidth >= 2133) {
+        chart1.options.plugins.datalabels.font.size = 24;
+        chart2.options.plugins.datalabels.font.size = 24;
+
+    }
+
+    if (window.innerWidth >= 2400) {
+        chart1.options.plugins.datalabels.font.size = 26;
+        chart2.options.plugins.datalabels.font.size = 26;
+    }
+
+    if (window.innerWidth >= 2560) {
+        chart1.options.plugins.datalabels.font.size = 28;
+        chart2.options.plugins.datalabels.font.size = 28;
+    }
+    if (window.innerWidth >= 2880) {
+        chart1.options.plugins.datalabels.font.size = 30;
+        chart2.options.plugins.datalabels.font.size = 30;
+    }
+    if (window.innerWidth >= 3840) {
+        chart1.options.plugins.datalabels.font.size = 40;
+        chart2.options.plugins.datalabels.font.size = 40;
+        chart3.options.plugins.datalabels.font.size = 50;
+        chart4.options.plugins.datalabels.font.size = 50;
+        chart5.options.plugins.datalabels.font.size = 50;
+        chart6.options.plugins.datalabels.font.size = 50;
+    }
+
+});
+</script>
+{% endblock %}
