@@ -4,6 +4,12 @@ from enum import Enum
 from django.core.exceptions import ValidationError
 import datetime
 import uuid
+import hashlib
+from django.utils import timezone
+from PIL import Image
+from django.core.files.base import ContentFile
+
+
 
 # Create your models here.
 class Partner(models.Model):
@@ -83,9 +89,15 @@ class Branch(models.Model):
 		return f"{self.name}"
 
 def unique_image_filename(instance, filename):
-    unique_id = uuid.uuid4().hex
+    current_datetime = timezone.now()
+    milliseconds = int(current_datetime.timestamp() * 1000)
+
     ext = filename.split('.')[-1]
-    new_filename = f"{filename.split('.')[0]}_{unique_id}.{ext}"
+
+    hash_object = hashlib.md5(filename.encode())
+    hashed_number = int(hash_object.hexdigest(), 16)
+
+    new_filename = f"{hashed_number}_{milliseconds}.{ext}"
     return f"static/assets/images/{new_filename}"
 
 class User(AbstractUser):
@@ -140,7 +152,7 @@ class User(AbstractUser):
 	preferred_day7 = models.BooleanField(blank=True, null=True)
 	preferred_hour7 = models.IntegerField(blank=True, null=True)
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
-	image = models.ImageField(upload_to=unique_image_filename, default='', null=True, verbose_name='アバター')
+	image = models.ImageField(upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
 	class Meta:
@@ -153,6 +165,18 @@ class User(AbstractUser):
 
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
+
+	# def save(self, *args, **kwargs):
+	# 	super().save(*args, **kwargs)
+
+	# 	if self.image:
+	# 		print("Before resizing: ", self.image.width, self.image.height)
+	# 		img = Image.open(self.image.path)
+	# 		new_size = get_new_image_dimensions(1000, 1000)
+	# 		img.thumbnail(output_size)
+	# 		return image.resize(new_size, Image.ANTIALIAS)
+
+		
 
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
