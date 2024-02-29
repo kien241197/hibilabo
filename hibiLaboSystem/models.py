@@ -166,15 +166,12 @@ class User(AbstractUser):
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
 
-	# def save(self, *args, **kwargs):
-	# 	super().save(*args, **kwargs)
-
-	# 	if self.image:
-	# 		print("Before resizing: ", self.image.width, self.image.height)
-	# 		img = Image.open(self.image.path)
-	# 		new_size = get_new_image_dimensions(1000, 1000)
-	# 		img.thumbnail(output_size)
-	# 		return image.resize(new_size, Image.ANTIALIAS)
+	def save(self, *args, **kwargs):
+		super().save()
+		img = Image.open(self.image.path)
+		new_img = (500, 500)
+		img.thumbnail(new_img)
+		img.save(self.image.path)
 
 		
 
