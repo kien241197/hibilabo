@@ -167,10 +167,9 @@ class User(AbstractUser):
 		return f"{self.last_name + self.first_name}"
 
 	def save(self, *args, **kwargs):
-		super().save()
+		super().save(*args, **kwargs)
 		img = Image.open(self.image.path)
-		new_img = (500, 500)
-		img.thumbnail(new_img)
+		img.thumbnail((459, 429))
 		img.save(self.image.path)
 
 		
