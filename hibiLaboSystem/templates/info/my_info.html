@@ -29,6 +29,14 @@
         <td>ユーザー名</td>
         <td>{{ user.username }}</td>
       </tr>
+      <tr>
+        <td>アバター</td>
+        <td>
+          {% if user.image %}
+          <img src="{{ user.image.url }}" style="width: 100px; height: 100px;">
+          {% endif %}
+        </td>
+      </tr>
     </tbody>
   </table>
 

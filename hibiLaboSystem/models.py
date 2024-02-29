@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from enum import Enum 
 from django.core.exceptions import ValidationError
 import datetime
+import uuid
 
 # Create your models here.
 class Partner(models.Model):
@@ -81,6 +82,11 @@ class Branch(models.Model):
 	def __str__(self):
 		return f"{self.name}"
 
+def unique_image_filename(instance, filename):
+    unique_id = uuid.uuid4().hex
+    ext = filename.split('.')[-1]
+    new_filename = f"{filename.split('.')[0]}_{unique_id}.{ext}"
+    return f"static/assets/images/{new_filename}"
 
 class User(AbstractUser):
 	class Roles(Enum):
@@ -134,6 +140,7 @@ class User(AbstractUser):
 	preferred_day7 = models.BooleanField(blank=True, null=True)
 	preferred_hour7 = models.IntegerField(blank=True, null=True)
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
+	image = models.ImageField(upload_to=unique_image_filename, default='', null=True, verbose_name='アバター')
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
 	class Meta:

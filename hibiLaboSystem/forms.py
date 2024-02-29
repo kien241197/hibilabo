@@ -41,14 +41,19 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('last_name', 'first_name', 'email', 'username')
+        fields = ('last_name', 'first_name', 'email', 'username', 'image')
 
     # bootstrap4対応
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-            field.widget.attrs['required'] = ""
+
+            if field.label != "アバター":
+                field.widget.attrs['required'] = ""
+            else:
+                field.widget.attrs['required'] = False
+
 
 class PasswordChangeForm(PasswordChangeForm):
 
