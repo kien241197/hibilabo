@@ -98,7 +98,7 @@ def unique_image_filename(instance, filename):
     hashed_number = int(hash_object.hexdigest(), 16)
 
     new_filename = f"{hashed_number}_{milliseconds}.{ext}"
-    return f"static/assets/images/{new_filename}"
+    return f"static/media/images/{new_filename}"
 
 class User(AbstractUser):
 	class Roles(Enum):
