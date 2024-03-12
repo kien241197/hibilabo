@@ -731,8 +731,9 @@ class SelfcheckSheet(TemplateView):
             evaluation_start__lte=datetime.date.today(),
             evaluation_end__gte=datetime.date.today()
         )
+        selfcheck_roles = Role.objects.filter(id=self.request.user.role.id).first().selfcheck_roles.all()
 
-        selfcheck_questions = evaluation_period.selfcheck_questions.prefetch_related(
+        selfcheck_questions = evaluation_period.selfcheck_questions.filter(selfcheck_roles__in=selfcheck_roles).prefetch_related(
             Prefetch(
                 'selfcheck_results',
                 queryset=(
@@ -747,7 +748,7 @@ class SelfcheckSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('selfcheck_answer')[:1]
-        ).order_by('sort_no')
+        ).order_by('sort_no').distinct()
 
         obj_index = evaluation_period.selfcheck_index_results.filter(user_id=user_id,company_id=company_id).first()
         obj_type = evaluation_period.selfcheck_type_results.filter(user_id=user_id,company_id=company_id).first()

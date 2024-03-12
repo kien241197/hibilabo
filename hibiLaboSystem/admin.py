@@ -35,7 +35,7 @@ class BonknowEvaluationPeriodInline(admin.TabularInline):
     }
 class UserInline(admin.TabularInline):
     model = User
-    fields = ['username', 'first_name', 'last_name', 'email', 'role_id']
+    fields = ['username', 'first_name', 'last_name', 'email', 'role']
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
@@ -63,7 +63,6 @@ class WatasheetInline(admin.TabularInline):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
-
 class CompanyAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline, UserInline]
@@ -77,12 +76,20 @@ class CompanyAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             return qs.filter(Q(created_by=request.user.id) | Q(id=request.user.company_id))
         return qs
-admin.site.register(Company, CompanyAdmin)
-admin.site.register(Partner)
-admin.site.register(Branch)
 
+class SelfcheckQuestionCustom(admin.ModelAdmin):
+    list_filter = ["selfcheck_roles", "selfcheck_industries"]
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
 
-# admin.site.register(Hierarchy)
+class RoleCustom(admin.ModelAdmin):
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+
+class SelfcheckIndustryCustom(admin.ModelAdmin):
+    filter_horizontal = ('Selfcheck_questions',)
 
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
@@ -171,10 +178,17 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             return qs.filter(Q(is_superuser=False) & (Q(created_by=request.user.id) | Q(company_id=request.user.company_id)))
         return qs
+
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(Partner)
+admin.site.register(Branch)
+admin.site.register(Role, RoleCustom)
 # Honne
 admin.site.register(HonneQuestion)
 # Selfcheck
-admin.site.register(SelfcheckQuestion)
+admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
+admin.site.register(SelfcheckRole)
+admin.site.register(SelfcheckIndustry, SelfcheckIndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)

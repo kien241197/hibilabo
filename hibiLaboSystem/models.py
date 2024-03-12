@@ -5,6 +5,57 @@ from django.core.exceptions import ValidationError
 import datetime
 
 # Create your models here.
+
+class SelfcheckRole(models.Model):
+	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
+
+	def __str__(self):
+		return f"{self.selfcheck_role_name}"
+
+	class Meta:
+		db_table = 'selfcheck_roles'
+		verbose_name = 'Selfcheck Roles'
+		verbose_name_plural = 'Selfcheck Roles'
+
+class SelfcheckIndustry(models.Model):
+	selfcheck_industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
+
+	def __str__(self):
+		return f"{self.selfcheck_industry_name}"
+
+	class Meta:
+		db_table = 'selfcheck_industries'
+		verbose_name = 'Selfcheck Industries'
+		verbose_name_plural = 'Selfcheck Industries'
+
+class Role(models.Model):
+	role = models.IntegerField(
+		unique=True,
+		choices=[
+			(99, '日々研'),
+			(40, 'Partner'),
+			(30, 'Company Admin'),
+			(20, 'Company Super Visor'),
+			(10, 'Company Staff')
+		],
+		verbose_name='Role'
+	)
+	role_name = models.CharField(max_length=100, verbose_name='Role名称')
+	selfcheck_roles = models.ManyToManyField(
+		SelfcheckRole,
+	    related_name='roles',
+	    blank=True,
+	    verbose_name = 'Selfcheck Roles'
+	)
+
+	def __str__(self):
+		return f"{self.role_name}"
+
+	class Meta:
+		db_table = 'roles'
+		verbose_name = 'Roles'
+		verbose_name_plural = 'Roles'
+
 class Partner(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	time_start = models.DateTimeField(blank=True, null=True)
@@ -107,18 +158,14 @@ class User(AbstractUser):
 	    verbose_name='支店'
 	)
 	birth = models.DateField(blank=True, null=True, verbose_name='誕生日')
-	role_id = models.IntegerField(
-		blank=True,
-		null=True,
-		choices=[
-			(99, '日々研'),
-			(40, 'Partner'),
-			(30, 'Company Admin'),
-			(20, 'Company Super Visor'),
-			(10, 'Company Staff'),
-		],
-		verbose_name='役割'
-    )
+	role = models.ForeignKey(
+	    Role,
+	    on_delete=models.DO_NOTHING,
+	    related_name='users',
+	    blank=True,
+	    null=True,
+	    verbose_name='役割'
+	)
 	preferred_day = models.BooleanField(blank=True, null=True)
 	preferred_hour = models.IntegerField(blank=True, null=True)
 	preferred_day2 = models.BooleanField(blank=True, null=True)
@@ -346,6 +393,19 @@ class SelfcheckQuestion(models.Model):
 				(12, '思考'), #square
 			]
 	    )
+	selfcheck_industries = models.ManyToManyField(
+		SelfcheckIndustry,
+	    related_name='Selfcheck_questions',
+	    blank=True,
+	    verbose_name = '業界名称'
+	)
+	selfcheck_roles = models.ManyToManyField(
+		SelfcheckRole,
+	    related_name='Selfcheck_questions',
+	    blank=True,
+	    verbose_name = 'Selfcheck Roles'
+	)
+
 	class Meta:
 		db_table = 'selfcheck_questions'
 
