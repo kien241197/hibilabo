@@ -35,7 +35,7 @@ class Role(models.Model):
 			(99, '日々研'),
 			(40, 'Partner'),
 			(30, 'Company Admin'),
-			(20, 'Company Super Visor'),
+			(20, 'Company SuperVisor'),
 			(10, 'Company Staff')
 		],
 		verbose_name='Role'
