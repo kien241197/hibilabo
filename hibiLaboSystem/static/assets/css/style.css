@@ -438,7 +438,7 @@ select {
   align-items: center;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
+/*  justify-content: center;*/
   text-align: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -451,7 +451,14 @@ select {
 .items_content_tab {
 
   background: var(--color-pink) !important;
-  padding: 50px 10px 20px 10px !important;
+  padding: 25px 10px 20px 10px !important;
+  justify-content: space-between;
+  height: 220px;
+}
+
+.items_content_top {
+
+  height: 220px;
 }
 .nav-pills .nav-link {
 
