@@ -459,6 +459,7 @@ select {
 .items_content_top {
 
   height: 220px;
+  justify-content: space-between;
 }
 .nav-pills .nav-link {
 
