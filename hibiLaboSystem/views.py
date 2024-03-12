@@ -731,7 +731,9 @@ class SelfcheckSheet(TemplateView):
             evaluation_start__lte=datetime.date.today(),
             evaluation_end__gte=datetime.date.today()
         )
-        selfcheck_roles = Role.objects.filter(id=self.request.user.role.id).first().selfcheck_roles.all()
+        selfcheck_roles = []
+        if self.request.user.role is not None:
+            selfcheck_roles = Role.objects.filter(id=self.request.user.role.id).first().selfcheck_roles.all()
 
         selfcheck_questions = evaluation_period.selfcheck_questions.filter(selfcheck_roles__in=selfcheck_roles).prefetch_related(
             Prefetch(
