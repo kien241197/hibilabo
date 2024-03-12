@@ -29,7 +29,7 @@
                         </div>
                         <div class="tab-content flex-fill">
                             <div class="tab-pane fade h-100" id="honne" role="tabpanel">
-                                <div class="items_content items_content_tab h-100">
+                                <div class="items_content items_content_tab">
                                     <h3><a href="#">HONNE</a></h3>
                                     <div>
                                         ５０の質問から、 会社の課題を 「ひと」
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade show active h-100" id="honne-active" role="tabpanel">
-                                <div class="items_content h-100">
+                                <div class="items_content items_content_top">
                                     <h3><a href="#">HONNE</a></h3>
                                     {% if period_honne is not None %}
                                     <span class="date mb-2">{{ period_honne.evaluation_end|date:"Y/m/d" }}</span>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="tab-content flex-fill">
                             <div class="tab-pane fade h-100" id="selfcheck" role="tabpanel">
-                                <div class="items_content items_content_tab h-100">
+                                <div class="items_content items_content_tab">
                                     <h3><a href="#">SELFCHECK</a></h3>
                                     <div>
                                         ６０の質問から、 企業が求める仕事の
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade show active h-100" id="selfcheck-active" role="tabpanel">
-                                <div class="items_content h-100">
+                                <div class="items_content items_content_top">
                                     <h3><a href="#">SELFCHECK</a></h3>
                                     {% if period_selfcheck is not None %}
                                     <span class="date mb-2">{{ period_selfcheck.evaluation_end|date:"Y/m/d" }}</span>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="tab-content flex-fill">
                             <div class="tab-pane fade h-100" id="watasheet" role="tabpanel">
-                                <div class="items_content items_content_tab h-100">
+                                <div class="items_content items_content_tab">
                                     <h3><a href="#">WATASHEET</a></h3>
                                     <div>
                                         30 個の言葉と質問から、 自分の
@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade show active h-100" id="watasheet-active" role="tabpanel">
-                                <div class="items_content h-100">
+                                <div class="items_content items_content_top">
                                     <h3><a href="#">WATASHEET</a></h3>
                                     {% if period_watasheet is not None %}
                                     <span class="date mb-2">{{ period_watasheet.evaluation_end|date:"Y/m/d" }}</span>
@@ -152,7 +152,7 @@
                         </div>
                         <div class="tab-content flex-fill">
                             <div class="tab-pane fade h-100" id="bonknow" role="tabpanel">
-                                <div class="items_content items_content_tab h-100">
+                                <div class="items_content items_content_tab">
                                     <h3><a href="#">BONKNOW</a></h3>
                                     <div>
                                         １０８つの質問を通して、 自分の脳
@@ -162,7 +162,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade show active h-100" id="bonknow-active" role="tabpanel">
-                                <div class="items_content h-100">
+                                <div class="items_content items_content_top">
                                     <h3><a href="#">BONKNOW</a></h3>
                                     {% if period_bonknow is not None %}
                                     <span class="date mb-2">{{ period_bonknow.evaluation_end|date:"Y/m/d" }}</span>
@@ -192,7 +192,7 @@
                         </div>
                         <div class="tab-content flex-fill">
                             <div class="tab-pane fade h-100" id="mandara" role="tabpanel">
-                                <div class="items_content items_content_tab h-100">
+                                <div class="items_content items_content_tab">
                                     <h3><a href="#">MANDARA</a></h3>
                                     <div>
                                         ９×９の８１マスで構成される目標
@@ -203,7 +203,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade show active h-100" id="mandara-active" role="tabpanel">
-                                <div class="items_content h-100">
+                                <div class="items_content items_content_top">
                                     <h3><a href="#">MANDARA</a></h3>
                                     <span class="date"></span>
                                     <span class="text-white mb-3">
