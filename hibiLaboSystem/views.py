@@ -918,7 +918,8 @@ class BonknowSheet(TemplateView):
             evaluation_period_id=key_evaluation_unit
         ).first()
 
-        initial_values['flg_finished'] = obj.flg_finished
+        if obj is not None:
+            initial_values['flg_finished'] = obj.flg_finished
 
         think_questions = evaluation_period.think_questions.prefetch_related(
             Prefetch(
@@ -944,7 +945,7 @@ class BonknowSheet(TemplateView):
         kwargs['think_list'] = list(think_questions.values_list('id', flat=True))
         kwargs['res_list'] = list(respons_questions.values_list('id', flat=True))
         kwargs['form'] = self.form_class(initial_values)
-        kwargs['disabled'] = 'disabled' if obj.flg_finished else ''
+        kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         return kwargs
 
     def post(self, request, *args, **kwargs):
