@@ -75,7 +75,7 @@ class Company(models.Model):
 	active_flag = models.BooleanField(blank=True, null=True, verbose_name='アクティブ')
 	partner = models.ForeignKey(
 	    Partner,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='companies',
 	    blank=True,
 	    null=True,
@@ -120,7 +120,7 @@ class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='branches',
 	    blank=True,
 	    null=True
@@ -143,7 +143,7 @@ class User(AbstractUser):
 
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='users',
 	    blank=True,
 	    null=True,
@@ -1041,7 +1041,7 @@ class WatasheetQuestion(models.Model):
 class WatasheetEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_evaluation_periods',
 	    blank=True,
 	    null=True
