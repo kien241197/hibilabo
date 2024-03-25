@@ -88,8 +88,8 @@ class RoleCustom(admin.ModelAdmin):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
-class SelfcheckIndustryCustom(admin.ModelAdmin):
-    filter_horizontal = ('Selfcheck_questions',)
+# class SelfcheckIndustryCustom(admin.ModelAdmin):
+#     filter_horizontal = ('Selfcheck_questions',)
 
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
@@ -188,7 +188,7 @@ admin.site.register(HonneQuestion)
 # Selfcheck
 admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
 admin.site.register(SelfcheckRole)
-admin.site.register(SelfcheckIndustry, SelfcheckIndustryCustom)
+# admin.site.register(SelfcheckIndustry, SelfcheckIndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)
