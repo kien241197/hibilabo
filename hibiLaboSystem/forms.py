@@ -1235,7 +1235,21 @@ class WatasheetTypeForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(WatasheetTypeForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
+
+        user_id = request.user.id;
+        user = models.User.objects.filter(id=user_id).first()
+        # Company_Supervisor 
+        if user.role.role == 20:
+            queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
+
+        # # Company_Staff
+        # if user.role.role == 10:
+        #     queryset = models.User.objects.filter(role__role=user.role.role, branch=user.branch.id)
+
+        # Company_Admin
+        if user.role.role == 30:
+            queryset = models.User.objects.filter(company_id=user.company.id)
+            
         queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
         if request.user:
             queryset = queryset.filter(company_id=request.user.company_id)
