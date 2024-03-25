@@ -1238,7 +1238,7 @@ class WatasheetTypeForm(forms.Form):
 
         user_id = request.user.id;
         user = models.User.objects.filter(id=user_id).first()
-        # Company_Supervisor 
+        #Company_Supervisor 
         if user.role.role == 20:
             queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
 
