@@ -203,11 +203,11 @@ class HonneEvaluationUnitForm(forms.Form):
         if request.user:
             #Company_Supervisor 
             if request.user.role.role == 20:
-                queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
             # Company_Admin
             if request.user.role.role == 30:
-                queryset = models.User.objects.filter(company_id=user.company.id)
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
             
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
@@ -239,11 +239,11 @@ class SelfcheckEvaluationUnitForm(forms.Form):
         if request.user:
             #Company_Supervisor 
             if request.user.role.role == 20:
-                queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
             # Company_Admin
             if request.user.role.role == 30:
-                queryset = models.User.objects.filter(company_id=user.company.id)
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
             # queryset = queryset.filter(company_id=request.user.company_id)
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
@@ -1192,11 +1192,11 @@ class MandaraChartForm(forms.Form):
         if request.user:
             #Company_Supervisor 
             if request.user.role.role == 20:
-                queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
             # Company_Admin
             if request.user.role.role == 30:
-                queryset = models.User.objects.filter(company_id=user.company.id)
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
         self.fields['user_id'].queryset = queryset
 
 class MandaraForm(forms.Form):
@@ -1216,11 +1216,11 @@ class MandaraForm(forms.Form):
         if request.user:
             #Company_Supervisor 
             if request.user.role.role == 20:
-                queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
             # Company_Admin
             if request.user.role.role == 30:
-                queryset = models.User.objects.filter(company_id=user.company.id)
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
         self.fields['user_id'].queryset = queryset
 
 class UserAdminForm(forms.ModelForm):
@@ -1266,11 +1266,11 @@ class WatasheetTypeForm(forms.Form):
         if request.user:
             #Company_Supervisor 
             if request.user.role.role == 20:
-                queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
             # Company_Admin
             if request.user.role.role == 30:
-                queryset = models.User.objects.filter(company_id=user.company.id)
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
 
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
