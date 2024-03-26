@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from enum import Enum 
+from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
 
@@ -29,6 +30,7 @@ class SelfcheckIndustry(models.Model):
 		verbose_name_plural = 'Selfcheck Industries'
 
 class Role(models.Model):
+	role1 = models.CharField(max_length=255, choices=[(tag.name, tag.value) for tag in RoleEnum], blank=True, null=True)
 	role = models.IntegerField(
 		unique=True,
 		choices=[

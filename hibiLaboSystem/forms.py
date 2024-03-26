@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, Pass
 from django.contrib.auth import get_user_model
 import datetime
 from . import models, fields
+from .enums import *
 
 User = get_user_model()
 
@@ -1259,10 +1260,11 @@ class WatasheetTypeForm(forms.Form):
         queryset=models.User.objects.none()
     )
 
+
     def __init__(self, request, *args, **kwargs):
         super(WatasheetTypeForm, self).__init__(*args, **kwargs)
-
         queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
+        print("request.user", request.user.role.role1)
         if request.user:
             #Company_Supervisor 
             if request.user.role.role == 20:
