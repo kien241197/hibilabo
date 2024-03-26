@@ -201,18 +201,12 @@ class HonneEvaluationUnitForm(forms.Form):
         super(HonneEvaluationUnitForm, self).__init__(*args, **kwargs)
         queryset_evaluation = models.HonneEvaluationPeriod.objects.all()
         if request.user:
-            user_id = request.user.id;
-            user = models.User.objects.filter(id=user_id).first()
             #Company_Supervisor 
-            if user.role.role == 20:
+            if request.user.role.role == 20:
                 queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
 
-            # # Company_Staff
-            # if user.role.role == 10:
-            #     queryset = models.User.objects.filter(role__role=user.role.role, branch=user.branch.id)
-
             # Company_Admin
-            if user.role.role == 30:
+            if request.user.role.role == 30:
                 queryset = models.User.objects.filter(company_id=user.company.id)
             
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
@@ -243,18 +237,12 @@ class SelfcheckEvaluationUnitForm(forms.Form):
 
         queryset_evaluation = models.SelfcheckEvaluationPeriod.objects.all()
         if request.user:
-            user_id = request.user.id;
-            user = models.User.objects.filter(id=user_id).first()
             #Company_Supervisor 
-            if user.role.role == 20:
+            if request.user.role.role == 20:
                 queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
 
-            # # Company_Staff
-            # if user.role.role == 10:
-            #     queryset = models.User.objects.filter(role__role=user.role.role, branch=user.branch.id)
-
             # Company_Admin
-            if user.role.role == 30:
+            if request.user.role.role == 30:
                 queryset = models.User.objects.filter(company_id=user.company.id)
             # queryset = queryset.filter(company_id=request.user.company_id)
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
@@ -1202,18 +1190,12 @@ class MandaraChartForm(forms.Form):
         super(MandaraChartForm, self).__init__(*args, **kwargs)
         # queryset = models.User.objects.all()
         if request.user:
-            user_id = request.user.id;
-            user = models.User.objects.filter(id=user_id).first()
             #Company_Supervisor 
-            if user.role.role == 20:
+            if request.user.role.role == 20:
                 queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
 
-            # # Company_Staff
-            # if user.role.role == 10:
-            #     queryset = models.User.objects.filter(role__role=user.role.role, branch=user.branch.id)
-
             # Company_Admin
-            if user.role.role == 30:
+            if request.user.role.role == 30:
                 queryset = models.User.objects.filter(company_id=user.company.id)
         self.fields['user_id'].queryset = queryset
 
@@ -1232,18 +1214,12 @@ class MandaraForm(forms.Form):
         super(MandaraForm, self).__init__(*args, **kwargs)
         # queryset = models.User.objects.all()
         if request.user:
-            user_id = request.user.id;
-            user = models.User.objects.filter(id=user_id).first()
             #Company_Supervisor 
-            if user.role.role == 20:
+            if request.user.role.role == 20:
                 queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
 
-            # # Company_Staff
-            # if user.role.role == 10:
-            #     queryset = models.User.objects.filter(role__role=user.role.role, branch=user.branch.id)
-
             # Company_Admin
-            if user.role.role == 30:
+            if request.user.role.role == 30:
                 queryset = models.User.objects.filter(company_id=user.company.id)
         self.fields['user_id'].queryset = queryset
 
@@ -1288,18 +1264,12 @@ class WatasheetTypeForm(forms.Form):
 
         queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
         if request.user:
-            user_id = request.user.id;
-            user = models.User.objects.filter(id=user_id).first()
             #Company_Supervisor 
-            if user.role.role == 20:
+            if request.user.role.role == 20:
                 queryset = models.User.objects.filter(branch=user.branch.id, company_id=user.company.id)
 
-            # # Company_Staff
-            # if user.role.role == 10:
-            #     queryset = models.User.objects.filter(role__role=user.role.role, branch=user.branch.id)
-
             # Company_Admin
-            if user.role.role == 30:
+            if request.user.role.role == 30:
                 queryset = models.User.objects.filter(company_id=user.company.id)
 
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
