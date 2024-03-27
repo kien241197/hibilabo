@@ -1857,6 +1857,7 @@ class MandaraCompletionTabDetail(TemplateView):
 class Watasheet(TemplateView):
     template_name = "watasheet/watasheet.html"
     form_class = forms.WatasheetForm
+    form_class_my_concept = forms.TeamConceptForm
     test = None
 
     def get_context_data(self, **kwargs):
@@ -1895,7 +1896,7 @@ class Watasheet(TemplateView):
         if obj_type is not None:
             initial_values['flg_finished'] = obj_type.flg_finished
 
-        team_concept = Company.objects.filter(id=company_id).first()
+        company = Company.objects.filter(id=company_id).first()
         
         kwargs = super(Watasheet, self).get_context_data(**kwargs)
         kwargs['evaluation_period'] = evaluation_period
@@ -1910,7 +1911,8 @@ class Watasheet(TemplateView):
         kwargs['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
         kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         kwargs['form'] = self.form_class(initial_values)
-        kwargs['team_concept'] = team_concept
+        kwargs['form_my_concept'] = self.form_class_my_concept(initial_values)
+        kwargs['team_concept'] = company
         kwargs['watasheet_type_result'] = watasheet_type_result
 
         return kwargs
@@ -1922,6 +1924,7 @@ class Watasheet(TemplateView):
         flg_finished = self.request.POST.get("flg_finished") or False
         questions = self.request.POST.getlist("questions")
         form = self.form_class(request.POST, instance=context_get["watasheet_type_result"])
+        form_my_concept = self.form_class_my_concept(request.POST);
 
         if self.request.POST.get("watasheet_context") is not None:
 
@@ -1965,6 +1968,21 @@ class Watasheet(TemplateView):
                 watasheet_type_result.watasheet_type_f = types['F']
                 watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
                 watasheet_type_result.save()
+
+            if form_my_concept.is_valid():
+                company = Company.objects.filter(id=company_id).first()
+                cleaned_data = form_my_concept.cleaned_data
+                fields_to_update = [
+                    'my_concept_1', 'my_vision_1_year', 'my_vision_5_years', 'my_vision_10_years',
+                    'my_vision_1', 'my_vision_5', 'my_vision_10', 'my_mission_1', 'my_mission_2',
+                    'my_mission_3', 'my_values_1', 'my_values_2', 'my_values_3', 'my_action_1',
+                    'my_action_2', 'my_action_3'
+                ]
+                for field in fields_to_update:
+                    if cleaned_data.get(field):
+                        setattr(company, field, cleaned_data.get(field, getattr(company, field)))
+                company.save()
+                
         else:
             obj = WatasheetTypeResult.objects.update_or_create(
                 company_id=company_id,

@@ -84,29 +84,51 @@ class Company(models.Model):
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
 	# Team concept
-	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Concept")
+	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
 	# Team vision
-	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (VISION)", max_length=255)
-	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (VISION)", max_length=255)
-	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (VISION)", max_length=255)
-	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (VISION)")
-	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (VISION)")
-	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (VISION)")
+	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM VISION)", max_length=255)
+	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM VISION)", max_length=255)
+	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM VISION)", max_length=255)
+	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VISION)")
+	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (TEAM VISION)")
+	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (TEAM VISION)")
 	# Team mission
-	team_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MISSION)")
-	team_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MISSION)")
-	team_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MISSION)")
+	team_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM MISSION)")
+	team_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM MISSION)")
+	team_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM MISSION)")
 	# Team values
-	team_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (VALUES)")
-	team_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (VALUES)")
-	team_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (VALUES)")
+	team_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VALUES)")
+	team_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM VALUES)")
+	team_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM VALUES)")
 	# Team action
-	team_action_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (ACTION)", max_length=255)
-	team_action_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (ACTION)", max_length=255)
-	team_action_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (ACTION)", max_length=255)
-	team_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (ACTION)")
-	team_action_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (ACTION)")
-	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (ACTION)")
+	team_action_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM ACTION)", max_length=255)
+	team_action_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM ACTION)", max_length=255)
+	team_action_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM ACTION)", max_length=255)
+	team_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM ACTION)")
+	team_action_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM ACTION)")
+	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM ACTION)")
+
+	# My concept
+	my_concept_1 = models.TextField(blank=True, null=True, verbose_name="My Concept")
+	# My vision
+	my_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (MY VISION)", max_length=255)
+	my_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (MY VISION)", max_length=255)
+	my_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (MY VISION)", max_length=255)
+	my_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY VISION)")
+	my_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (MY VISION)")
+	my_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (MY VISION)")
+	# My mission
+	my_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY MISSION)")
+	my_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY MISSION)")
+	my_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY MISSION)")
+	# My values
+	my_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY VALUES)")
+	my_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY VALUES)")
+	my_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY VALUES)")
+	# My action
+	my_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY ACTION)")
+	my_action_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY ACTION)")
+	my_action_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY ACTION)")
 
 	class Meta:
 			db_table = "companies"

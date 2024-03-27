@@ -100,13 +100,34 @@
                                                 </div>
                                                 <ul class="position-relative">
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{team_concept.team_vision_1_year|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span>
+                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{team_concept.team_vision_1_year|default_if_none:""}}</span> {% if team_concept.team_vision_1_year %} <div class="mx-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                        </div> {% endif %}年) <span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{team_concept.team_vision_5_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span>
+                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{team_concept.team_vision_5_years|default_if_none:""}}</span> {% if team_concept.team_vision_5_years %} <div class="mx-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                        </div> {% endif %} 年) <span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-0">
-                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{team_concept.team_vision_10_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span>
+                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{team_concept.team_vision_10_years|default_if_none:""}}</span> {% if team_concept.team_vision_10_years %} <div class="mx-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                        </div> {% endif %}年) <span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -197,12 +218,8 @@
                         </div>
                     </div>
                     <!-- tab my concept -->
-                    <div class="tab-pane fade show active" id="nav-my" role="tabpanel">
+                    <div class="tab-pane fade" id="nav-my" role="tabpanel">
                         <div id="page4" class="content-chart">
-                            <!-- <div class="title title-page4" style="margin-bottom:30px;">
-                                <h2>KNOW MYSELF </h2>
-                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
-                            </div> -->
                             <div class="content-box">
                                 <div class="row justify-content-between">
                                     <div class="col-md-6 col-12 row">
@@ -213,7 +230,7 @@
                                                     <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li>(1) <span>{{ team_concept.team_concept_1|default_if_none:"" }}</span></li>
+                                                    <li>(1) <span>{{ form_my_concept.my_concept_1 }}</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -225,13 +242,16 @@
                                                 </div>
                                                 <ul class="position-relative">
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{team_concept.team_vision_1_year|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span>
+                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{ form_my_concept.my_vision_1_year }}</span>年)
+                                                        <span class="ml-2">{{ form_my_concept.my_vision_1 }}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{team_concept.team_vision_5_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span>
+                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{ form_my_concept.my_vision_5_years }}</span>年)
+                                                        <span class="ml-2">{{ form_my_concept.my_vision_5 }}</span>
                                                     </li>
-                                                    <li class="d-flex align-items-baseline mb-0">
-                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{team_concept.team_vision_10_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span>
+                                                    <li class="d-flex align-items-baseline mb-3">
+                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{ form_my_concept.my_vision_10_years }}</span>年)
+                                                        <span class="ml-2">{{ form_my_concept.my_vision_10 }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -243,9 +263,9 @@
                                                     <p>使命 : 社会 ・ 顧客に果たすべき使命</p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_mission_1|default_if_none:""}}</span></li>
-                                                    <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_mission_2|default_if_none:""}}</span></li>
-                                                    <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_mission_3|default_if_none:""}}</span></li>
+                                                    <li class="mb-3">(1)<span class="ml-2">{{ form_my_concept.my_mission_1 }}</span></li>
+                                                    <li class="mb-3">(2)<span class="ml-2">{{ form_my_concept.my_mission_2 }}</span></li>
+                                                    <li class="mb-0">(3)<span class="ml-2">{{ form_my_concept.my_mission_3 }}</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -256,9 +276,9 @@
                                                     <p>顧客に約束する価値 ・ 行動</p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_values_1|default_if_none:""}}</span></li>
-                                                    <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_values_2|default_if_none:""}}</span></li>
-                                                    <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_values_3|default_if_none:""}}</span></li>
+                                                    <li class="mb-3">(1)<span class="ml-2">{{ form_my_concept.my_values_1 }}</span></li>
+                                                    <li class="mb-3">(2)<span class="ml-2">{{ form_my_concept.my_values_2 }}</span></li>
+                                                    <li class="mb-0">(3)<span class="ml-2">{{ form_my_concept.my_values_3 }}</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -270,13 +290,13 @@
                                                 </div>
                                                 <ul class="position-relative">
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(1)</span><span class="ml-2">{{team_concept.team_action_1|default_if_none:""}}</span>
+                                                        <span>(1)</span><span class="ml-2">{{ form_my_concept.my_action_1 }}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(2)</span> <span class="ml-2">{{team_concept.team_action_5|default_if_none:""}}</span>
+                                                        <span>(2)</span><span class="ml-2">{{ form_my_concept.my_action_2 }}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-0">
-                                                        <span class="width-80">(3)</span> <span class="ml-2">{{team_concept.team_action_10|default_if_none:""}}</span>
+                                                        <span>(3)</span><span class="ml-2">{{ form_my_concept.my_action_3 }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -1035,7 +1055,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
-    
+
     $('#nav-tab-0').css("color", "white")
     // Xử lý sự kiện click cho các button tab
     $('.button-tab').click(function() {
@@ -1087,7 +1107,7 @@ $(document).ready(function() {
         }
 
         $('.button-tab').css("color", "#727171")
-        $(this).css("color", "white" )
+        $(this).css("color", "white")
 
     });
 });

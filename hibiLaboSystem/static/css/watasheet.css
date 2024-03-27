@@ -1,3 +1,8 @@
+.bi-circle-fill {
+
+    fill: #727171;
+}
+
 .number ul li {
 
     color: #727171;
@@ -12,6 +17,7 @@
 
     width: 15px !important;
     min-width: unset !important;
+    color: #727171;
 }
 .item-content {
 

@@ -64,7 +64,7 @@ class WatasheetInline(admin.TabularInline):
     }
 
 class CompanyAdmin(admin.ModelAdmin):
-    exclude = ("created_by",)
+    exclude = ("created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", )
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline, UserInline]
     def save_model(self, request, obj, form, change):
         if not change:
