@@ -1240,6 +1240,8 @@ class WatasheetForm(forms.ModelForm):
         help_text='提出する'
     )
 
+
+
 class WatasheetTypeForm(forms.Form):
 
     # 評価対象年月の選択
@@ -1281,117 +1283,6 @@ class TeamConceptForm(forms.Form):
     class Meta:
         model= models.Company
         fields = "__all__"
-
-    #   Team concept
-    my_concept_1 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    # my vision
-    my_vision_1_year = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-            "class":"pl-0 ml-0"
-            }
-            )
-    )
-
-    my_vision_5_years = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-            "class":"pl-0 ml-0"
-            })
-    )
-
-    my_vision_10_years = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-            "class":"pl-0 ml-0"
-            })
-    )
-
-    my_vision_1 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_vision_5 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_vision_10 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    # Team mission
-    my_mission_1 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_mission_2 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_mission_3 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    # Team values
-    my_values_1 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_values_2 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_values_3 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    # Team action
-    my_action_1 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_action_2 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
-
-    my_action_3 = forms.CharField(
-        max_length=255,
-        required=False,
-        widget=forms.TextInput()
-    )
 
 
     
