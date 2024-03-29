@@ -665,7 +665,7 @@
                                         <div class="items ">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>FOR WHOM・WHAT </h3>
-                                                <p class="pl-0">MY MISSION は誰のために？</p>
+                                                <p class="pl-0">MY MISSION は誰のため、 何のために？果たすものか記入してください</p>
                                             </div>
                                             <ul class="pl-0 position-relative">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="kw_1st" value={{watasheet_type_result.kw_1st}}></span></li>
@@ -679,7 +679,7 @@
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY HAPPINESS・IMPORTANT</h3>
-                                                <p class="pl-0">MY MISSION は誰のため、 何のために？果たすものか記入してください</p>
+                                                <p class="pl-0">これがあれば幸せなこと、 大切なことを記入してください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="fw_job_1st" value={{watasheet_type_result.fw_job_1st}}></span></li>
@@ -1153,7 +1153,7 @@ $(document).ready(function() {
         $('.list-1 .button-tab').eq(index).addClass('active');
         if (text == 'nav-tab-3') {
             const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
-            $('.title-tab').text(`PROFESSIONAL ${length}`);
+            $('.title-tab').text(`PROFESSIONAL ${30}`);
             $('.desc-tab').text("わたしが望んでいる仕事を知る");
             $('.title-tab-h3').text("INTEREST");
             $('.desc-tab-p').text("リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください （複数チェック可）");
