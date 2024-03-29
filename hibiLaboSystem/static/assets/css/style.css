@@ -759,7 +759,7 @@ select {
 .number ul li {
   width: 30px;
   height: 30px;
-  background: #B7E0E3;
+  background: #DCDCDC;
   border-radius: 50%;
   font-size: 18px;
   color: #fff;
@@ -769,7 +769,8 @@ select {
   cursor: pointer; }
 
 .number ul li:hover {
-  background: var(--color-blue); }
+  background: var(--color-blue); 
+}
 
 .number ul .number-1 {
   background: #EBAACB; }
