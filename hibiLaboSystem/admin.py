@@ -64,6 +64,7 @@ class WatasheetInline(admin.TabularInline):
     }
 
 class CompanyAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', ]
     exclude = ("created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", )
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline, UserInline]
     def save_model(self, request, obj, form, change):
@@ -189,6 +190,8 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         return qs
 
 class BranchAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', ]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "company":
             if request.user.is_superuser:
