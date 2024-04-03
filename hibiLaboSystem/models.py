@@ -30,15 +30,16 @@ class SelfcheckIndustry(models.Model):
 		verbose_name_plural = 'Selfcheck Industries'
 
 class Role(models.Model):
-	role1 = models.CharField(max_length=255, choices=[(tag.name, tag.value) for tag in RoleEnum], blank=True, null=True)
 	role = models.IntegerField(
 		unique=True,
 		choices=[
-			(99, '日々研'),
-			(40, 'Partner'),
-			(30, 'Company Admin'),
-			(20, 'Company SuperVisor'),
-			(10, 'Company Staff')
+			 (role.value, role.name.replace('_', ' ')) for role in [
+                RoleEnum.日々研,
+                RoleEnum.Partner,
+                RoleEnum.Company_Admin,
+                RoleEnum.Company_SuperVisor,
+                RoleEnum.Company_Staff
+            ]
 		],
 		verbose_name='Role'
 	)
