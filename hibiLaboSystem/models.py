@@ -33,16 +33,27 @@ class Role(models.Model):
 	role = models.IntegerField(
 		unique=True,
 		choices=[
-			 (role.value, role.name.replace('_', ' ')) for role in [
-                RoleEnum.日々研,
-                RoleEnum.Partner,
-                RoleEnum.Company_Admin,
-                RoleEnum.Company_SuperVisor,
-                RoleEnum.Company_Staff
-            ]
+			(RoleEnum.日々研.value, '日々研'),
+			(RoleEnum.Partner.value, 'Partner'),
+			(RoleEnum.Company_Admin.value, 'Company Admin'),
+			(RoleEnum.Company_SuperVisor.value, 'Company SuperVisor'),
+			(RoleEnum.Company_Staff.value, 'Company Staff')
 		],
 		verbose_name='Role'
 	)
+	# role = models.IntegerField(
+	# 	unique=True,
+	# 	choices=[
+	# 		 (role.value, role.name.replace('_', ' ')) for role in [
+    #             RoleEnum.日々研,
+    #             RoleEnum.Partner,
+    #             RoleEnum.Company_Admin,
+    #             RoleEnum.Company_SuperVisor,
+    #             RoleEnum.Company_Staff
+    #         ]
+	# 	],
+	# 	verbose_name='Role'
+	# )
 	role_name = models.CharField(max_length=100, verbose_name='Role名称')
 	selfcheck_roles = models.ManyToManyField(
 		SelfcheckRole,
