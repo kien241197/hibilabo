@@ -95,6 +95,15 @@ class RoleCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ("id","username")
     exclude = ('created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "branch":
+            if request.user.is_superuser:
+                kwargs["queryset"] = Branch.objects.all()
+            else:
+                if request.user.company_id:
+                    kwargs["queryset"] = Branch.objects.filter(company_id=request.user.company_id)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):
         if not change:
@@ -179,9 +188,20 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             return qs.filter(Q(is_superuser=False) & (Q(created_by=request.user.id) | Q(company_id=request.user.company_id)))
         return qs
 
+class BranchAdmin(admin.ModelAdmin):
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "company":
+            if request.user.is_superuser:
+                kwargs["queryset"] = Company.objects.all()
+            else:
+                if request.user.company_id:
+                    kwargs["queryset"] = Company.objects.filter(id=request.user.company_id)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
-admin.site.register(Branch)
+admin.site.register(Branch, BranchAdmin)
 admin.site.register(Role, RoleCustom)
 # Honne
 admin.site.register(HonneQuestion)
