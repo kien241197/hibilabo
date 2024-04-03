@@ -128,7 +128,7 @@ class Company(models.Model):
 			verbose_name_plural = '会社'
 
 	def __str__(self):
-		return f"{self.name}"
+		return f"{self.id} {self.name}"
 
 class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
@@ -144,7 +144,7 @@ class Branch(models.Model):
 		db_table = "branches"
 
 	def __str__(self):
-		return f"{self.name}"
+		return f"{self.id} {self.name}"
 
 
 class User(AbstractUser):
