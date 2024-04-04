@@ -94,7 +94,8 @@ class RoleCustom(admin.ModelAdmin):
 
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
-    list_display = ("id","username")
+    list_display = ("id","username", "company")
+    list_filter = ['company']
     exclude = ('created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -190,7 +191,8 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         return qs
 
 class BranchAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', ]
+    list_display = ['id', 'name', 'company']
+    list_filter = ['company']
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "company":
