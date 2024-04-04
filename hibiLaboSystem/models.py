@@ -180,20 +180,7 @@ class User(AbstractUser):
 	    null=True,
 	    verbose_name='役割'
 	)
-	preferred_day = models.BooleanField(blank=True, null=True)
-	preferred_hour = models.IntegerField(blank=True, null=True)
-	preferred_day2 = models.BooleanField(blank=True, null=True)
-	preferred_hour2 = models.IntegerField(blank=True, null=True)
-	preferred_day3 = models.BooleanField(blank=True, null=True)
-	preferred_hour3 = models.IntegerField(blank=True, null=True)
-	preferred_day4 = models.BooleanField(blank=True, null=True)
-	preferred_hour4 = models.IntegerField(blank=True, null=True)
-	preferred_day5 = models.BooleanField(blank=True, null=True)
-	preferred_hour5 = models.IntegerField(blank=True, null=True)
-	preferred_day6 = models.BooleanField(blank=True, null=True)
-	preferred_hour6 = models.IntegerField(blank=True, null=True)
-	preferred_day7 = models.BooleanField(blank=True, null=True)
-	preferred_hour7 = models.IntegerField(blank=True, null=True)
+	
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
