@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, Pass
 from django.contrib.auth import get_user_model
 import datetime
 from . import models, fields
+from .enums import *
 
 User = get_user_model()
 
@@ -183,6 +184,7 @@ class SelfcheckForm(forms.Form):
 
 ''' 一次的に評価対象月などを静的に出力するためのフォーム'''
 class HonneEvaluationUnitForm(forms.Form):
+
     # 評価対象年月の選択
     evaluation_unit = forms.ModelChoiceField(
         empty_label='----',
@@ -203,10 +205,16 @@ class HonneEvaluationUnitForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(HonneEvaluationUnitForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
         queryset_evaluation = models.HonneEvaluationPeriod.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
+            
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
@@ -232,10 +240,17 @@ class SelfcheckEvaluationUnitForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(SelfcheckEvaluationUnitForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
+
         queryset_evaluation = models.SelfcheckEvaluationPeriod.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
+            # queryset = queryset.filter(company_id=request.user.company_id)
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
@@ -1179,9 +1194,15 @@ class MandaraChartForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(MandaraChartForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
+        # queryset = models.User.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
         self.fields['user_id'].queryset = queryset
 
 class MandaraForm(forms.Form):
@@ -1197,9 +1218,15 @@ class MandaraForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(MandaraForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
+        # queryset = models.User.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
         self.fields['user_id'].queryset = queryset
 
 class UserAdminForm(forms.ModelForm):
@@ -1211,12 +1238,15 @@ class WatasheetForm(forms.ModelForm):
     class Meta:
         model = models.WatasheetTypeResult
         fields = "__all__"
+
     flg_finished = forms.BooleanField(
         initial=False,
         label='提出する',
         required=False,
         help_text='提出する'
     )
+
+
 
 class WatasheetTypeForm(forms.Form):
 
@@ -1238,14 +1268,28 @@ class WatasheetTypeForm(forms.Form):
         queryset=models.User.objects.none()
     )
 
+
     def __init__(self, request, *args, **kwargs):
         super(WatasheetTypeForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
         queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
+        
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
+
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
         
+class TeamConceptForm(forms.Form):
+    class Meta:
+        model= models.Company
+        fields = "__all__"
+
+
     

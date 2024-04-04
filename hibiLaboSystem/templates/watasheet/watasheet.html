@@ -27,6 +27,7 @@
                                     TEAM CONCEPT
                                 </h2>
                                 <p class="desc-tab">会社 ・ チームとしての方向性の共有</p>
+                                <img src="">
                                 <p></p>
                                 <h3 class="title-tab-h3 mt-2"></h3>
                                 <p class="desc-tab-p"></p>
@@ -41,7 +42,16 @@
                                         <ul class="list-1 nav" id="myTab" role="tablist" style="user-select: none;">
                                             <!--  <li class="number-1">1</li>
                                             <li class="number-2">2</li> -->
-                                            <li class="active button-tab" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true">0</li>
+                                            <li class="active button-tab px-3" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                                <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">TEAM <br />
+                                                    <p style="font-size: 11px; ">CONCEPT</p>
+                                                </p>
+                                            </li>
+                                            <li class="button-tab px-3" id="nav-tab-my" data-bs-toggle="tab" data-bs-target="#nav-my" type="button" role="tab" aria-controls="nav-my" aria-selected="false" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                                <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">MY <br />
+                                                    <p style="font-size: 11px; ">CONCEPT</p>
+                                                </p>
+                                            </li>
                                             <li class="button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">1</li>
                                             <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
                                             <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
@@ -91,13 +101,34 @@
                                                 </div>
                                                 <ul class="position-relative">
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{team_concept.team_vision_1_year|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span>
+                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{team_concept.team_vision_1_year|default_if_none:""}}</span> {% if team_concept.team_vision_1_year %} <div class="mx-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                        </div> {% endif %}年) <span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{team_concept.team_vision_5_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span>
+                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{team_concept.team_vision_5_years|default_if_none:""}}</span> {% if team_concept.team_vision_5_years %} <div class="mx-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                        </div> {% endif %} 年) <span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-0">
-                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{team_concept.team_vision_10_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span>
+                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{team_concept.team_vision_10_years|default_if_none:""}}</span> {% if team_concept.team_vision_10_years %} <div class="mx-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                <circle cx="8" cy="8" r="8" />
+                                                            </svg>
+                                                        </div> {% endif %}年) <span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -136,13 +167,224 @@
                                                 </div>
                                                 <ul class="position-relative">
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{team_concept.team_action_1_year|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_action_1|default_if_none:""}}</span>
+                                                        <span>(1)</span><span class="ml-2">{{team_concept.team_action_1|default_if_none:""}}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-3">
-                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{team_concept.team_action_5_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_action_5|default_if_none:""}}</span>
+                                                        <span>(2)</span> <span class="ml-2">{{team_concept.team_action_5|default_if_none:""}}</span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-0">
-                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{team_concept.team_action_10_years|default_if_none:""}}</span>年) <span class="ml-2">{{team_concept.team_action_10|default_if_none:""}}</span>
+                                                        <span>(3)</span> <span class="ml-2">{{team_concept.team_action_10|default_if_none:""}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 pt-md-0 pt-3 triangle-container">
+                                        <div class="h-100 position-relative">
+                                            <img src="{% static 'assets/images/polygon.png'%}" class="h-100 w-100">
+                                            <div class="position-absolute content-triangle row flex-column">
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>ACTION</h4>
+                                                    <b>日々の行動</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>VALUES</h4>
+                                                    <b>価値</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>MISSION</h4>
+                                                    <b>未来像</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center item-content">
+                                                    <h4>VISION</h4>
+                                                    <b>使命 ・ 社是</b>
+                                                </div>
+                                                <div class="col d-flex flex-column align-items-center justify-content-center">
+                                                    <h4>CONCEPT</h4>
+                                                    <b>理念 ・ 哲学 ・ 信条</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--   <div class="triangle">
+                                            <div class="content-triangle position-absolute d-flex justify-content-center">
+                                                <div class="pt-4">
+                                                    <h4>ACTION</h4>
+                                                    <p class="text-center"><b >日々の行動</b></p>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tab my concept -->
+                    <div class="tab-pane fade" id="nav-my" role="tabpanel">
+                        <div id="page4" class="content-chart">
+                            <div class="content-box">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6 col-12 row">
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items" style="height:170px">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">MY CONCEPT </h3>
+                                                    <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li>(1) <span><input {{disabled}} type="text" name="my_concept_1" value="{{ watasheet_type_result.my_concept_1|default_if_none:'' }}"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">VISION</h3>
+                                                    <p>未来像 ： 会社が目指す未来 </p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="d-flex align-items-baseline mb-0">
+                                                        <span class="width-80">(1年後)</span>
+                                                        <div class="d-flex align-items-center">
+                                                            (<div class="width-年">
+                                                                <input {{disabled}} type="text" class="pl-0 ml-0" name="my_vision_1_year" value="{{ watasheet_type_result.my_vision_1_year|default_if_none:'' }}">
+                                                            </div>
+                                                            {% if watasheet_type_result.my_vision_1_year %}
+                                                            <div class="mx-1">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                    <circle cx="8" cy="8" r="8" />
+                                                                </svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                    <circle cx="8" cy="8" r="8" />
+                                                                </svg>
+                                                            </div>
+                                                            {% endif %}
+                                                            年)
+                                                        </div>
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_vision_1" value="{{ watasheet_type_result.my_vision_1|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="d-flex align-items-baseline mb-0">
+                                                        <span class="width-80">(5年後)</span>
+                                                        <div class="d-flex align-items-center">
+                                                            (<div class="width-年">
+                                                                <input {{disabled}} type="text" class="pl-0 ml-0" name="my_vision_5_years" value="{{ watasheet_type_result.my_vision_5_years|default_if_none:'' }}">
+                                                            </div>
+                                                            {% if watasheet_type_result.my_vision_5_years %}
+                                                            <div class="mx-1">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                    <circle cx="8" cy="8" r="8" />
+                                                                </svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                    <circle cx="8" cy="8" r="8" />
+                                                                </svg>
+                                                            </div>
+                                                            {% endif %}
+                                                            年)
+                                                        </div>
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_vision_5" value="{{ watasheet_type_result.my_vision_5|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="d-flex align-items-baseline">
+                                                        <span class="width-80">(10年後)</span>
+                                                        <div class="d-flex align-items-center">
+                                                            (<div class="width-年">
+                                                                <input {{disabled}} type="text" class="pl-0 ml-0" name="my_vision_10_years" value="{{ watasheet_type_result.my_vision_10_years|default_if_none:'' }}">
+                                                            </div>
+                                                            {% if watasheet_type_result.my_vision_10_years %}
+                                                            <div class="mx-1">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                    <circle cx="8" cy="8" r="8" />
+                                                                </svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
+                                                                    <circle cx="8" cy="8" r="8" />
+                                                                </svg>
+                                                            </div>
+                                                            {% endif %}
+                                                            年)
+                                                        </div>
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_vision_10" value="{{ watasheet_type_result.my_vision_10|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">MISSION</h3>
+                                                    <p>使命 : 社会 ・ 顧客に果たすべき使命</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="mb-0">(1)
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_mission_1" value="{{ watasheet_type_result.my_mission_1|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="mb-0">(2)
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_mission_2" value="{{ watasheet_type_result.my_mission_2|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="mb-0">(3)
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_mission_3" value="{{ watasheet_type_result.my_mission_3|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-30">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">VALUES</h3>
+                                                    <p>顧客に約束する価値 ・ 行動</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="mb-0">(1)
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_values_1" value="{{ watasheet_type_result.my_values_1|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="mb-0">(2)
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_values_2" value="{{ watasheet_type_result.my_values_2|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="mb-0">(3)
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_values_3" value="{{ watasheet_type_result.my_values_3|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="items">
+                                                <div class="title-box title-box2 d-flex mb-2">
+                                                    <h3 class="mr-4">ACTION</h3>
+                                                    <p>行動規定 ： 日々の行動</p>
+                                                </div>
+                                                <ul class="position-relative">
+                                                    <li class="d-flex align-items-baseline mb-0">
+                                                        <span>(1)</span>
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_action_1" value="{{ watasheet_type_result.my_action_1|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="d-flex align-items-baseline mb-0">
+                                                        <span>(2)</span>
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_action_2" value="{{ watasheet_type_result.my_action_2|default_if_none:'' }}">
+                                                        </span>
+                                                    </li>
+                                                    <li class="d-flex align-items-baseline mb-0">
+                                                        <span>(3)</span>
+                                                        <span class="ml-2">
+                                                            <input {{disabled}} type="text" name="my_action_3" value="{{ watasheet_type_result.my_action_3|default_if_none:'' }}">
+                                                        </span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -372,13 +614,13 @@
                                             </div>
                                             <ul class="position-relative">
                                                 <li class="d-flex align-items-center">
-                                                    <div class="width-80">（1年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_1_year" value="{{watasheet_type_result.vision_1_year|default_if_none:""}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span>
+                                                    <div class="width-80">（1年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_1_year" value="{{watasheet_type_result.vision_1_year|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span>
                                                 </li>
                                                 <li class="d-flex align-items-center">
-                                                    <div class="width-80">（5年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_5_years" value="{{watasheet_type_result.vision_5_years|default_if_none:""}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_2nd" value="{{watasheet_type_result.vision_2nd}}"></span>
+                                                    <div class="width-80">（5年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_5_years" value="{{watasheet_type_result.vision_5_years|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_2nd" value="{{watasheet_type_result.vision_2nd}}"></span>
                                                 </li>
                                                 <li class="d-flex align-items-center">
-                                                    <div class="width-80">（10年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_10_years" value="{{watasheet_type_result.vision_10_years|default_if_none:""}}" {{disabled}}>歳）<span><input {{ disabled }} name="vision_3rd" value="{{watasheet_type_result.vision_3rd}}"></span>
+                                                    <div class="width-80">（10年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_10_years" value="{{watasheet_type_result.vision_10_years|default_if_none:''}}" {{disabled}}>歳）<span><input {{ disabled }} name="vision_3rd" value="{{watasheet_type_result.vision_3rd}}"></span>
                                                 </li>
                                                 <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
                                             </ul>
@@ -417,17 +659,13 @@
                     <!-- Tab 5 -->
                     <div class="tab-pane fade" id="nav-5" role="tabpanel">
                         <div class="section-content">
-                            <!--  <div class="title title-page4">
-                                <h2>KNOW MYSELF </h2>
-                                <p>自分を3つ以内のポイントにまとめていきます。（＊ひとつのポイントでも構いません）</p>
-                            </div> -->
                             <div class="content-box">
                                 <div class="row">
                                     <div class="col-md-6 mb-30">
                                         <div class="items ">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>KEY WHOM </h3>
-                                                <p class="pl-0">MY MISSION は誰のために？</p>
+                                                <h3>FOR WHOM・WHAT </h3>
+                                                <p class="pl-0">MY MISSION は誰のため、 何のために？果たすものか記入してください</p>
                                             </div>
                                             <ul class="pl-0 position-relative">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="kw_1st" value={{watasheet_type_result.kw_1st}}></span></li>
@@ -440,8 +678,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>MY HAPPINESS</h3>
-                                                <p class="pl-0">これがあれば幸せだと思うことを記入してください</p>
+                                                <h3>MY HAPPINESS・IMPORTANT</h3>
+                                                <p class="pl-0">これがあれば幸せなこと、 大切なことを記入してください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="fw_job_1st" value={{watasheet_type_result.fw_job_1st}}></span></li>
@@ -454,8 +692,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>FOR WHAT </h3>
-                                                <p class="pl-0">MY MISSION は何のために？</p>
+                                                <h3>MY VALUE</h3>
+                                                <p class="pl-0">自分自身の価値 ・ やるべきこと ・ 行動判断基準を記入しくてください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="fw_1st" value={{watasheet_type_result.fw_1st}}></li>
@@ -468,8 +706,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>MY INPORTANT </h3>
-                                                <p class="pl-0">私の大切なことを記入してください</p>
+                                                <h3>MY WANT</h3>
+                                                <p class="pl-0">好きなことや得意なことを記入してください</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="dwt_go_1st" value={{watasheet_type_result.dwt_go_1st}}></span></li>
@@ -482,8 +720,8 @@
                                     <div class="col-md-6 mb-30">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>MY WANT </h3>
-                                                <p class="pl-0">好きなことや得意なことを記入してください</p>
+                                                <h3>MY ACTION</h3>
+                                                <p class="pl-0">コンセプトやミッションを実現させるためにはどのような行動をしていきますか？</p>
                                             </div>
                                             <ul class="position-relative pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="kw_job_1st" value={{watasheet_type_result.kw_job_1st}}></li>
@@ -891,7 +1129,7 @@
                             <button class="btn-custom-button" type="submit">一時保存</button>
                             <button class="btn-custom-button" type="submit">保存</button>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </form>
         </div>
@@ -901,6 +1139,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
+
+    $('#nav-tab-0').css("color", "white")
     // Xử lý sự kiện click cho các button tab
     $('.button-tab').click(function() {
 
@@ -909,30 +1149,35 @@ $(document).ready(function() {
 
         // Thêm class active cho button tab được click
         var index = $(this).index();
+        const text = $(this).attr('id')
         $('.list-1 .button-tab').eq(index).addClass('active');
-        $('.list-2 .button-tab').eq(index).addClass('active');
-        console.log(index)
-        //
-        if (index == 1) {
-
+        if (text == 'nav-tab-3') {
             const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
-            $('.title-tab').text(`PROFESSIONAL ${length}`);
+            $('.title-tab').text(`PROFESSIONAL TYPE ${30}`);
             $('.desc-tab').text("わたしが望んでいる仕事を知る");
             $('.title-tab-h3').text("INTEREST");
             $('.desc-tab-p').text("リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください （複数チェック可）");
-        } else if (index === 0) {
+        } else if (text === 'nav-tab-0') {
 
             $('.title-tab').text("TEAM CONCEPT");
             $('.desc-tab').html("会社 ・ チームとしての方向性の共有");
             $('.title-tab-h3').text("");
             $('.desc-tab-p').text("");
             $('.container-checkbox').addClass("hidden")
-        } else if (index === 4) {
+        } else if (text === "nav-tab-8") {
 
             $('.title-tab').text("MY TIME LINE");
             $('.desc-tab').html("わたしの過去 ・ 現在 ・ 未来の年表を作ってみましょう！");
             $('.title-tab-h3').text("");
             $('.desc-tab-p').text("");
+        } else if (text === 'nav-tab-my') {
+
+            $('.title-tab').text("MY CONCEPT");
+            $('.desc-tab').html("わたしの方向性・芯");
+            $('.title-tab-h3').text("");
+            $('.desc-tab-p').text("");
+            $('.container-checkbox').addClass("hidden")
+
         } else {
 
             $('.title-tab').text("KNOW MY SELF");
@@ -944,6 +1189,10 @@ $(document).ready(function() {
         if (index !== 0) {
             $('.container-checkbox').removeClass("hidden")
         }
+
+        $('.button-tab').css("color", "#727171")
+        $(this).css("color", "white")
+
     });
 });
 </script>

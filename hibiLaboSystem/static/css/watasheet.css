@@ -1,3 +1,14 @@
+.bi-circle-fill {
+
+    fill: #727171;
+}
+
+.number ul li {
+
+    color: #727171;
+    background: #DBDCDC;
+}
+
 .hidden {
 
     display: none;
@@ -7,6 +18,7 @@
 
     width: 15px !important;
     min-width: unset !important;
+    color: #727171;
 }
 .item-content {
 
@@ -33,6 +45,7 @@
 .width-80 {
 
     width: 80px;
+    letter-spacing: 3px;
 }
 
 h3 {

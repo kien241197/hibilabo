@@ -35,7 +35,7 @@ class BonknowEvaluationPeriodInline(admin.TabularInline):
     }
 class UserInline(admin.TabularInline):
     model = User
-    fields = ['username', 'first_name', 'last_name', 'email', 'role_id']
+    fields = ['username', 'first_name', 'last_name', 'email', 'role']
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
@@ -63,9 +63,9 @@ class WatasheetInline(admin.TabularInline):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
-
 class CompanyAdmin(admin.ModelAdmin):
-    exclude = ("created_by",)
+    list_display = ['id', 'name', ]
+    exclude = ("created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", )
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline, UserInline]
     def save_model(self, request, obj, form, change):
         if not change:
@@ -77,17 +77,35 @@ class CompanyAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             return qs.filter(Q(created_by=request.user.id) | Q(id=request.user.company_id))
         return qs
-admin.site.register(Company, CompanyAdmin)
-admin.site.register(Partner)
-admin.site.register(Branch)
 
+class SelfcheckQuestionCustom(admin.ModelAdmin):
+    list_filter = ["selfcheck_roles", "selfcheck_industries"]
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
 
-# admin.site.register(Hierarchy)
+class RoleCustom(admin.ModelAdmin):
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+
+# class SelfcheckIndustryCustom(admin.ModelAdmin):
+#     filter_horizontal = ('Selfcheck_questions',)
 
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
-    list_display = ("id","username")
+    list_display = ("id","username", "company")
+    list_filter = ['company']
     exclude = ('created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "branch":
+            if request.user.is_superuser:
+                kwargs["queryset"] = Branch.objects.all()
+            else:
+                if request.user.company_id:
+                    kwargs["queryset"] = Branch.objects.filter(company_id=request.user.company_id)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):
         if not change:
@@ -171,10 +189,31 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             return qs.filter(Q(is_superuser=False) & (Q(created_by=request.user.id) | Q(company_id=request.user.company_id)))
         return qs
+
+class BranchAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'company']
+    list_filter = ['company']
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "company":
+            if request.user.is_superuser:
+                kwargs["queryset"] = Company.objects.all()
+            else:
+                if request.user.company_id:
+                    kwargs["queryset"] = Company.objects.filter(id=request.user.company_id)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(Partner)
+admin.site.register(Branch, BranchAdmin)
+admin.site.register(Role, RoleCustom)
 # Honne
 admin.site.register(HonneQuestion)
 # Selfcheck
-admin.site.register(SelfcheckQuestion)
+admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
+admin.site.register(SelfcheckRole)
+# admin.site.register(SelfcheckIndustry, SelfcheckIndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)

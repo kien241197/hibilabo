@@ -731,8 +731,11 @@ class SelfcheckSheet(TemplateView):
             evaluation_start__lte=datetime.date.today(),
             evaluation_end__gte=datetime.date.today()
         )
+        selfcheck_roles = []
+        if self.request.user.role is not None:
+            selfcheck_roles = Role.objects.filter(id=self.request.user.role.id).first().selfcheck_roles.all()
 
-        selfcheck_questions = evaluation_period.selfcheck_questions.prefetch_related(
+        selfcheck_questions = evaluation_period.selfcheck_questions.filter(selfcheck_roles__in=selfcheck_roles).prefetch_related(
             Prefetch(
                 'selfcheck_results',
                 queryset=(
@@ -747,7 +750,7 @@ class SelfcheckSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('selfcheck_answer')[:1]
-        ).order_by('sort_no')
+        ).order_by('sort_no').distinct()
 
         obj_index = evaluation_period.selfcheck_index_results.filter(user_id=user_id,company_id=company_id).first()
         obj_type = evaluation_period.selfcheck_type_results.filter(user_id=user_id,company_id=company_id).first()
@@ -915,7 +918,8 @@ class BonknowSheet(TemplateView):
             evaluation_period_id=key_evaluation_unit
         ).first()
 
-        initial_values['flg_finished'] = obj.flg_finished
+        if obj is not None:
+            initial_values['flg_finished'] = obj.flg_finished
 
         think_questions = evaluation_period.think_questions.prefetch_related(
             Prefetch(
@@ -941,7 +945,7 @@ class BonknowSheet(TemplateView):
         kwargs['think_list'] = list(think_questions.values_list('id', flat=True))
         kwargs['res_list'] = list(respons_questions.values_list('id', flat=True))
         kwargs['form'] = self.form_class(initial_values)
-        kwargs['disabled'] = 'disabled' if obj.flg_finished else ''
+        kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1891,7 +1895,7 @@ class Watasheet(TemplateView):
         if obj_type is not None:
             initial_values['flg_finished'] = obj_type.flg_finished
 
-        team_concept = Company.objects.filter(id=company_id).first()
+        company = Company.objects.filter(id=company_id).first()
         
         kwargs = super(Watasheet, self).get_context_data(**kwargs)
         kwargs['evaluation_period'] = evaluation_period
@@ -1906,7 +1910,7 @@ class Watasheet(TemplateView):
         kwargs['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
         kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         kwargs['form'] = self.form_class(initial_values)
-        kwargs['team_concept'] = team_concept
+        kwargs['team_concept'] = company
         kwargs['watasheet_type_result'] = watasheet_type_result
 
         return kwargs
@@ -1961,6 +1965,7 @@ class Watasheet(TemplateView):
                 watasheet_type_result.watasheet_type_f = types['F']
                 watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
                 watasheet_type_result.save()
+                
         else:
             obj = WatasheetTypeResult.objects.update_or_create(
                 company_id=company_id,

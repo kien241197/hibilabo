@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from enum import Enum 
+from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
 import uuid
@@ -12,6 +13,70 @@ from django.core.files.base import ContentFile
 
 
 # Create your models here.
+
+class SelfcheckRole(models.Model):
+	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
+
+	def __str__(self):
+		return f"{self.selfcheck_role_name}"
+
+	class Meta:
+		db_table = 'selfcheck_roles'
+		verbose_name = 'Selfcheck Roles'
+		verbose_name_plural = 'Selfcheck Roles'
+
+class SelfcheckIndustry(models.Model):
+	selfcheck_industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
+
+	def __str__(self):
+		return f"{self.selfcheck_industry_name}"
+
+	class Meta:
+		db_table = 'selfcheck_industries'
+		verbose_name = 'Selfcheck Industries'
+		verbose_name_plural = 'Selfcheck Industries'
+
+class Role(models.Model):
+	role = models.IntegerField(
+		unique=True,
+		choices=[
+			(RoleEnum.日々研.value, '日々研'),
+			(RoleEnum.Partner.value, 'Partner'),
+			(RoleEnum.Company_Admin.value, 'Company Admin'),
+			(RoleEnum.Company_SuperVisor.value, 'Company SuperVisor'),
+			(RoleEnum.Company_Staff.value, 'Company Staff')
+		],
+		verbose_name='Role'
+	)
+	# role = models.IntegerField(
+	# 	unique=True,
+	# 	choices=[
+	# 		 (role.value, role.name.replace('_', ' ')) for role in [
+    #             RoleEnum.日々研,
+    #             RoleEnum.Partner,
+    #             RoleEnum.Company_Admin,
+    #             RoleEnum.Company_SuperVisor,
+    #             RoleEnum.Company_Staff
+    #         ]
+	# 	],
+	# 	verbose_name='Role'
+	# )
+	role_name = models.CharField(max_length=100, verbose_name='Role名称')
+	selfcheck_roles = models.ManyToManyField(
+		SelfcheckRole,
+	    related_name='roles',
+	    blank=True,
+	    verbose_name = 'Selfcheck Roles'
+	)
+
+	def __str__(self):
+		return f"{self.role_name}"
+
+	class Meta:
+		db_table = 'roles'
+		verbose_name = 'Roles'
+		verbose_name_plural = 'Roles'
+
 class Partner(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	time_start = models.DateTimeField(blank=True, null=True)
@@ -31,7 +96,7 @@ class Company(models.Model):
 	active_flag = models.BooleanField(blank=True, null=True, verbose_name='アクティブ')
 	partner = models.ForeignKey(
 	    Partner,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='companies',
 	    blank=True,
 	    null=True,
@@ -40,29 +105,29 @@ class Company(models.Model):
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
 	# Team concept
-	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Concept")
+	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
 	# Team vision
-	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (VISION)", max_length=255)
-	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (VISION)", max_length=255)
-	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (VISION)", max_length=255)
-	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (VISION)")
-	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (VISION)")
-	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (VISION)")
+	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM VISION)", max_length=255)
+	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM VISION)", max_length=255)
+	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM VISION)", max_length=255)
+	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VISION)")
+	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (TEAM VISION)")
+	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (TEAM VISION)")
 	# Team mission
-	team_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MISSION)")
-	team_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MISSION)")
-	team_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MISSION)")
+	team_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM MISSION)")
+	team_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM MISSION)")
+	team_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM MISSION)")
 	# Team values
-	team_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (VALUES)")
-	team_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (VALUES)")
-	team_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (VALUES)")
+	team_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VALUES)")
+	team_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM VALUES)")
+	team_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM VALUES)")
 	# Team action
-	team_action_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (ACTION)", max_length=255)
-	team_action_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (ACTION)", max_length=255)
-	team_action_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (ACTION)", max_length=255)
-	team_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (ACTION)")
-	team_action_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (ACTION)")
-	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (ACTION)")
+	team_action_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM ACTION)", max_length=255)
+	team_action_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM ACTION)", max_length=255)
+	team_action_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM ACTION)", max_length=255)
+	team_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM ACTION)")
+	team_action_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM ACTION)")
+	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM ACTION)")
 
 	class Meta:
 			db_table = "companies"
@@ -76,7 +141,7 @@ class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='branches',
 	    blank=True,
 	    null=True
@@ -110,7 +175,7 @@ class User(AbstractUser):
 
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='users',
 	    blank=True,
 	    null=True,
@@ -125,18 +190,14 @@ class User(AbstractUser):
 	    verbose_name='支店'
 	)
 	birth = models.DateField(blank=True, null=True, verbose_name='誕生日')
-	role_id = models.IntegerField(
-		blank=True,
-		null=True,
-		choices=[
-			(99, '日々研'),
-			(40, 'Partner'),
-			(30, 'Company Admin'),
-			(20, 'Company Super Visor'),
-			(10, 'Company Staff'),
-		],
-		verbose_name='役割'
-    )
+	role = models.ForeignKey(
+	    Role,
+	    on_delete=models.DO_NOTHING,
+	    related_name='users',
+	    blank=True,
+	    null=True,
+	    verbose_name='役割'
+	)
 	preferred_day = models.BooleanField(blank=True, null=True)
 	preferred_hour = models.IntegerField(blank=True, null=True)
 	preferred_day2 = models.BooleanField(blank=True, null=True)
@@ -373,6 +434,19 @@ class SelfcheckQuestion(models.Model):
 				(12, '思考'), #square
 			]
 	    )
+	selfcheck_industries = models.ManyToManyField(
+		SelfcheckIndustry,
+	    related_name='Selfcheck_questions',
+	    blank=True,
+	    verbose_name = '業界名称'
+	)
+	selfcheck_roles = models.ManyToManyField(
+		SelfcheckRole,
+	    related_name='Selfcheck_questions',
+	    blank=True,
+	    verbose_name = 'Selfcheck Roles'
+	)
+
 	class Meta:
 		db_table = 'selfcheck_questions'
 
@@ -1008,7 +1082,7 @@ class WatasheetQuestion(models.Model):
 class WatasheetEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='watasheet_evaluation_periods',
 	    blank=True,
 	    null=True
@@ -1219,6 +1293,28 @@ class WatasheetTypeResult(models.Model):
 	years_old_40_50 = models.TextField(blank=True, null=True)
 	years_old_50_70 = models.TextField(blank=True, null=True)
 	years_old_70_100 = models.TextField(blank=True, null=True)
+
+	# My concept
+	my_concept_1 = models.TextField(blank=True, null=True, verbose_name="My Concept")
+	# My vision
+	my_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (MY VISION)", max_length=255)
+	my_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (MY VISION)", max_length=255)
+	my_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (MY VISION)", max_length=255)
+	my_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY VISION)")
+	my_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (MY VISION)")
+	my_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (MY VISION)")
+	# My mission
+	my_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY MISSION)")
+	my_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY MISSION)")
+	my_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY MISSION)")
+	# My values
+	my_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY VALUES)")
+	my_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY VALUES)")
+	my_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY VALUES)")
+	# My action
+	my_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY ACTION)")
+	my_action_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY ACTION)")
+	my_action_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY ACTION)")
 	
 
 	flg_finished = models.BooleanField(default=False)
