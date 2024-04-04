@@ -42,22 +42,34 @@
                                         <ul class="list-1 nav" id="myTab" role="tablist" style="user-select: none;">
                                             <!--  <li class="number-1">1</li>
                                             <li class="number-2">2</li> -->
-                                            <li class="active button-tab px-3" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
-                                                <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">TEAM <br />
-                                                    <p style="font-size: 11px; ">CONCEPT</p>
-                                                </p>
-                                            </li>
-                                            <li class="button-tab px-3" id="nav-tab-my" data-bs-toggle="tab" data-bs-target="#nav-my" type="button" role="tab" aria-controls="nav-my" aria-selected="false" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
-                                                <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">MY <br />
-                                                    <p style="font-size: 11px; ">CONCEPT</p>
-                                                </p>
-                                            </li>
-                                            <li class="button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">1</li>
-                                            <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
-                                            <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
+                                            <a href="#team-concept">
+                                                <li class="button-tab px-3" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                                    <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">TEAM <br />
+                                                        <p style="font-size: 11px; ">CONCEPT</p>
+                                                    </p>
+                                                </li>
+                                            </a>
+                                            <a href="#my-concept">
+                                                <li class="button-tab px-3" id="nav-tab-my" data-bs-toggle="tab" data-bs-target="#nav-my" type="button" role="tab" aria-controls="nav-my" aria-selected="false" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                                    <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">MY <br />
+                                                        <p style="font-size: 11px; ">CONCEPT</p>
+                                                    </p>
+                                                </li>
+                                            </a>
+                                            <a href="#tab-1">
+                                                <li class="button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">1</li>
+                                            </a>
+                                            <a href="#tab-2">
+                                                <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
+                                            </a>
+                                            <a href="#tab-3">
+                                                <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
+                                            </a>
                                             <!-- <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">4</li>
                                             <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">5</li> -->
-                                            <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">4</li>
+                                            <a href="#tab-4">
+                                                <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">4</li>
+                                            </a>
                                         </ul>
                                     </div>
                                 </div>
@@ -73,7 +85,7 @@
                 {% csrf_token %}
                 <div class="tab-content" id="nav-tabContent">
                     <!-- tab 0 -->
-                    <div class="tab-pane fade show active" id="nav-0" role="tabpanel">
+                    <div class="tab-pane fade" id="nav-0" role="tabpanel">
                         <div id="page4" class="content-chart">
                             <!-- <div class="title title-page4" style="margin-bottom:30px;">
                                 <h2>KNOW MYSELF </h2>
@@ -227,7 +239,7 @@
                                         <div class="col-md-12 mb-30">
                                             <div class="items" style="height:170px">
                                                 <div class="title-box title-box2 d-flex mb-2">
-                                                    <h3 class="mr-4">MY CONCEPT </h3>
+                                                    <h3 class="mr-4">MY CONCEPT 1</h3>
                                                     <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
                                                 </div>
                                                 <ul class="position-relative">
@@ -246,7 +258,7 @@
                                                         <span class="width-80">(1年後)</span>
                                                         <div class="d-flex align-items-center mb-3">
                                                             (<div class="width-年">
-                                                               {{ watasheet_type_result.vision_1_year|default_if_none:'' }}
+                                                                {{ watasheet_type_result.vision_1_year|default_if_none:'' }}
                                                             </div>
                                                             {% if watasheet_type_result.vision_1_year %}
                                                             <div class="mx-1">
@@ -261,14 +273,14 @@
                                                             年)
                                                         </div>
                                                         <span class="ml-2">
-                                                           {{ watasheet_type_result.vision_1st|default_if_none:'' }}
+                                                            {{ watasheet_type_result.vision_1st|default_if_none:'' }}
                                                         </span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span class="width-80">(5年後)</span>
                                                         <div class="d-flex align-items-center">
                                                             (<div class="width-年">
-                                                               {{ watasheet_type_result.vision_5_years|default_if_none:'' }}
+                                                                {{ watasheet_type_result.vision_5_years|default_if_none:'' }}
                                                             </div>
                                                             {% if watasheet_type_result.vision_5_years %}
                                                             <div class="mx-1">
@@ -290,7 +302,7 @@
                                                         <span class="width-80">(10年後)</span>
                                                         <div class="d-flex align-items-center">
                                                             (<div class="width-年">
-                                                               {{ watasheet_type_result.vision_10_years|default_if_none:'' }}
+                                                                {{ watasheet_type_result.vision_10_years|default_if_none:'' }}
                                                             </div>
                                                             {% if watasheet_type_result.vision_10_years %}
                                                             <div class="mx-1">
@@ -320,12 +332,12 @@
                                                 <ul class="position-relative">
                                                     <li class="mb-3">(1)
                                                         <span class="ml-2">
-                                                           {{watasheet_type_result.mission_1st}}
+                                                            {{watasheet_type_result.mission_1st}}
                                                         </span>
                                                     </li>
                                                     <li class="mb-3">(2)
                                                         <span class="ml-2">
-                                                           {{watasheet_type_result.mission_2nd}}
+                                                            {{watasheet_type_result.mission_2nd}}
                                                         </span>
                                                     </li>
                                                     <li class="mb-0">(3)
@@ -345,7 +357,7 @@
                                                 <ul class="position-relative">
                                                     <li class="mb-3">(1)
                                                         <span class="ml-2">
-                                                           {{watasheet_type_result.fw_1st}}
+                                                            {{watasheet_type_result.fw_1st}}
                                                         </span>
                                                     </li>
                                                     <li class="mb-3">(2)
@@ -377,13 +389,13 @@
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(2)</span>
                                                         <span class="ml-2">
-                                                          {{watasheet_type_result.kw_job_2nd}}
+                                                            {{watasheet_type_result.kw_job_2nd}}
                                                         </span>
                                                     </li>
                                                     <li class="d-flex align-items-baseline mb-0">
                                                         <span>(3)</span>
                                                         <span class="ml-2">
-                                                           {{watasheet_type_result.kw_job_3rd}}
+                                                            {{watasheet_type_result.kw_job_3rd}}
                                                         </span>
                                                     </li>
                                                 </ul>
@@ -1140,17 +1152,72 @@
 <script>
 $(document).ready(function() {
 
-    $('#nav-tab-0').css("color", "white")
+    var hashValue = window.location.hash;
+    var cleanHashValue = hashValue.slice(1);
+
+    $('.tab-pane fade').removeClass('show active');
+    $('.button-tab').removeClass('active');
+
+    if (cleanHashValue === "team-concept" || !cleanHashValue) {
+        $('#nav-tab-0').addClass("active")
+        $('#nav-tab-0').css("color", "white")
+        $('#nav-0').addClass('show active');
+    }
+
+    if (cleanHashValue === "my-concept") {
+
+        $("#nav-tab-my").addClass("active")
+        $('#nav-tab-my').css("color", "white")
+        $("#nav-my").addClass("show active")
+    }
+
+    if (cleanHashValue === "tab-1") {
+
+        $("#nav-tab-3").addClass("active")
+        $('#nav-tab-3').css("color", "white")
+        $("#nav-3").addClass("show active")
+    }
+
+    if (cleanHashValue === "tab-2") {
+
+        $("#nav-tab-4").addClass("active")
+        $('#nav-tab-4').css("color", "white")
+        $("#nav-4").addClass("show active")
+    }
+
+     if (cleanHashValue === "tab-3") {
+
+        $("#nav-tab-5").addClass("active")
+        $('#nav-tab-5').css("color", "white")
+        $("#nav-5").addClass("show active")
+    }
+
+     if (cleanHashValue === "tab-4") {
+
+        $("#nav-tab-8").addClass("active")
+        $('#nav-tab-8').css("color", "white")
+        $("#nav-8").addClass("show active")
+    }
+
+     if (cleanHashValue !== "team-concept" && cleanHashValue !== "my-concept") {
+                console.log(cleanHashValue)
+            $('.container-checkbox').removeClass("hidden")
+        }
+
+
+
+
     // Xử lý sự kiện click cho các button tab
     $('.button-tab').click(function() {
+
 
         // Loại bỏ class active từ tất cả các button tab
         $('.button-tab').removeClass('active');
 
         // Thêm class active cho button tab được click
-        var index = $(this).index();
         const text = $(this).attr('id')
-        $('.list-1 .button-tab').eq(index).addClass('active');
+        console.log("text", text)
+        $(`#${text}`).addClass('active');
         if (text == 'nav-tab-3') {
             const length = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
             $('.title-tab').text(`PROFESSIONAL TYPE ${30}`);
@@ -1186,7 +1253,9 @@ $(document).ready(function() {
             $('.desc-tab-p').text("");
         }
 
-        if (index !== 0) {
+        
+        if (text !== "nav-tab-0" && text !== "nav-tab-my") {
+
             $('.container-checkbox').removeClass("hidden")
         }
 
