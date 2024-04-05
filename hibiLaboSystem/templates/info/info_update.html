@@ -14,12 +14,14 @@
 {% endblock %}
 <!-- コンテンツ -->
 {% block content %}
+{% load cropping %}
 <div class="container">
     <div class="col-md-6 offset-md-3">
         <div class="card mt-3 mb-3 bg-light">
             <!-- カードヘッダー -->
             <div class="card-header bg-system-default text-light">
                 <h4>{{ process_name }}</h4>
+                {% load cropping %}
             </div>
             <!-- カードボディー -->
             <div class="card-body">
@@ -33,74 +35,29 @@
                     </div>
                     {% if field.name == 'image' %}
                     {% if form.instance.image %}
-                    <img src="{{ form.instance.image.url }}" id="image-preview" alt="Current Image" style="max-width: 100px;">
+                    {% with cropping_parts=form.instance.cropping|split:"," %}
+                    <!-- <div style="overflow: hidden; width: 430px; height: 360px;">
+                        <img src="{{ form.instance.image.url }}" id="image-preview" style='margin-left: -{{ cropping_parts.0 }}px; margin-top: -{{ cropping_parts.1 }}px; margin-right: -{{ cropping_parts.2 }}px; margin-bottom: -{{ cropping_parts.3 }}px'>
+                    </div> -->
+                    <img src="{% cropped_thumbnail user 'cropping' %}">
+
+                    {% endwith %}
                     {% endif %}
                     {% endif %}
                     {% endfor %}
                     {% csrf_token %}
                     <img src="" id="image-preview-1" alt="Current Image" style="max-width: 100px; display: none;">
                     <!-- ボタン -->
-                    <div style="display: none;" id="container-canvas">
-                        <canvas id="canvas" class="mb-2" style="" width="100%">
-                            Your browser does not support the HTML5 canvas element.
-                        </canvas>
-                        <div>
-                            <input type="button" id="btnCrop" value="Crop" />
-                            <input type="button" id="btnRestore" value="Restore" />
-                        </div>
-                    </div>
                     <button type="button" class="btn btn-outline-secondary btn-lg btn-block mt-4" onclick="history.back()">キャンセル</button>
                     <button type="submit" class="btn bg-system-default btn-lg btn-block mt-2">{{ process_name }}</button>
                 </form>
             </div>
         </div>
     </div>
+    {% load cropping %}
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.3/cropper.css">
 </link>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.3/cropper.js"></script>
 <script type="module" src="{% static 'js/copper.js'%}"></script>
-<script>
-var canvas = $("#canvas"),
-    context = canvas.get(0).getContext("2d"),
-    $result = $('#result');
-
-$('#id_image').on('change', function() {
-    $("#container-canvas").css({ "display": "block" });
-    if (this.files && this.files[0]) {
-        if (this.files[0].type.match(/^image\//)) {
-            var reader = new FileReader();
-            reader.onload = function(evt) {
-                var img = new Image();
-                img.onload = function() {
-                    context.canvas.height = img.height;
-                    context.canvas.width = img.width;
-                    context.drawImage(img, 0, 0);
-                    var cropper = canvas.cropper({
-                        aspectRatio: 16 / 9
-                    });
-                    $('#btnCrop').click(function() {
-                        // Get a string base 64 data url
-                        var croppedImageDataURL = canvas.cropper('getCroppedCanvas').toDataURL("image/png");
-                        $result.append($('<img>').attr('src', croppedImageDataURL));
-                        $("#container-canvas").css({ "display": "none" });
-                         $("#image-preview-1").attr({ "src": croppedImageDataURL });
-
-                    });
-                    $('#btnRestore').click(function() {
-                        canvas.cropper('reset');
-                        $result.empty();
-                    });
-                };
-                img.src = evt.target.result;
-            };
-            reader.readAsDataURL(this.files[0]);
-        } else {
-            alert("Invalid file type! Please select an image file.");
-        }
-    } else {
-        alert('No file(s) selected.');
-    }
-});
-</script>
 {% endblock %}

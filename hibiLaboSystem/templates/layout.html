@@ -45,11 +45,9 @@
                     <li><a href="{% url 'home' %}">TOP</a></li>
                       {% if not user.is_authenticated %}
                          <li>
-                          <a href="{% url 'login' %}">Log in</a>
+                          <a class="border-0" href="{% url 'login' %}">Log in</a>
                          </li>
-                        　<li>
-                          <a href="{% url 'register' %}">Sign up</a>
-                        　</li>
+                        
                       {% else %}
                          <li>
                            <a href="{% url 'my_info' %}">My Info</a>

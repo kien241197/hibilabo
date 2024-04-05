@@ -9,6 +9,7 @@ import hashlib
 from django.utils import timezone
 from PIL import Image
 from django.core.files.base import ContentFile
+from image_cropping import ImageRatioField
 
 
 
@@ -198,22 +199,10 @@ class User(AbstractUser):
 	    null=True,
 	    verbose_name='役割'
 	)
-	preferred_day = models.BooleanField(blank=True, null=True)
-	preferred_hour = models.IntegerField(blank=True, null=True)
-	preferred_day2 = models.BooleanField(blank=True, null=True)
-	preferred_hour2 = models.IntegerField(blank=True, null=True)
-	preferred_day3 = models.BooleanField(blank=True, null=True)
-	preferred_hour3 = models.IntegerField(blank=True, null=True)
-	preferred_day4 = models.BooleanField(blank=True, null=True)
-	preferred_hour4 = models.IntegerField(blank=True, null=True)
-	preferred_day5 = models.BooleanField(blank=True, null=True)
-	preferred_hour5 = models.IntegerField(blank=True, null=True)
-	preferred_day6 = models.BooleanField(blank=True, null=True)
-	preferred_hour6 = models.IntegerField(blank=True, null=True)
-	preferred_day7 = models.BooleanField(blank=True, null=True)
-	preferred_hour7 = models.IntegerField(blank=True, null=True)
+	
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
 	image = models.ImageField(upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
+	cropping = ImageRatioField('image', '460x430', allow_fullsize=True, size_warning=True)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
 	class Meta:
@@ -227,11 +216,11 @@ class User(AbstractUser):
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
 
-	def save(self, *args, **kwargs):
-		super().save(*args, **kwargs)
-		img = Image.open(self.image.path)
-		img.thumbnail((459, 429))
-		img.save(self.image.path)
+	# def save(self, *args, **kwargs):
+	# 	super().save(*args, **kwargs)
+	# 	img = Image.open(self.image.path)
+	# 	img.thumbnail((459, 429))
+	# 	img.save(self.image.path)
 
 		
 
@@ -1293,29 +1282,6 @@ class WatasheetTypeResult(models.Model):
 	years_old_40_50 = models.TextField(blank=True, null=True)
 	years_old_50_70 = models.TextField(blank=True, null=True)
 	years_old_70_100 = models.TextField(blank=True, null=True)
-
-	# My concept
-	my_concept_1 = models.TextField(blank=True, null=True, verbose_name="My Concept")
-	# My vision
-	my_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (MY VISION)", max_length=255)
-	my_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (MY VISION)", max_length=255)
-	my_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (MY VISION)", max_length=255)
-	my_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY VISION)")
-	my_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (MY VISION)")
-	my_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (MY VISION)")
-	# My mission
-	my_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY MISSION)")
-	my_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY MISSION)")
-	my_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY MISSION)")
-	# My values
-	my_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY VALUES)")
-	my_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY VALUES)")
-	my_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY VALUES)")
-	# My action
-	my_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (MY ACTION)")
-	my_action_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (MY ACTION)")
-	my_action_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (MY ACTION)")
-	
 
 	flg_finished = models.BooleanField(default=False)
 	

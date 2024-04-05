@@ -1,4 +1,8 @@
 # HIBILABO SYSTEM
+# Install easy_thumbnails:
+	- pip install easy_thumbnails
+# Install django-image-cropping:
+	- pip install django-image-cropping
 # Install django-import-export: 
 	- pip install django-import-export
 # Install pdfkit: 

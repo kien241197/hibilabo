@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 import datetime
 from . import models, fields
 from .enums import *
+from image_cropping import ImageCropField, ImageRatioField, ImageCropWidget
 
 User = get_user_model()
 
@@ -26,6 +27,7 @@ class RegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
+        self.initial['cropping'] = '0,0,0,0'
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['required'] = ""
@@ -39,10 +41,12 @@ class RegisterForm(UserCreationForm):
                 field.widget.attrs['placeholder'] = '***@domain.com'
 
 class UserUpdateForm(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ('last_name', 'first_name', 'email', 'username', 'image')
+        widgets = {
+            'image': ImageCropWidget,
+        }
 
     # bootstrap4対応
     def __init__(self, *args, **kwargs):

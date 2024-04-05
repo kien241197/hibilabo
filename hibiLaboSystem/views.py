@@ -32,6 +32,13 @@ import os
 from django.template.loader import get_template
 import pdfkit
 from django.db.models import Q
+from django.template.defaulttags import register
+
+@register.filter(name='split')
+def split(value, key): 
+ 
+    value.split("key")
+    return value.split(key)
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
