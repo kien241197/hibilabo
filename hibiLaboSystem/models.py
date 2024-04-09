@@ -386,7 +386,7 @@ class SelfcheckQuestion(models.Model):
 				(4, '広報力'), #circle
 				(5, '連携力'), #square
 				(6, '人間関係'), #triangle
-				(7, '患者対応'), #square
+				(7, '対応'), #square
 				(8, 'チームワーク力'), #triangle
 				(9, '総合管理'), #circle
 				(10, '理念浸透'), #circle
