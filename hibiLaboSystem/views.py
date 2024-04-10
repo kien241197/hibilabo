@@ -1128,7 +1128,7 @@ class BonknowThink(TemplateView):
 class MandaraCreate(TemplateView):
     template_name = "mandara/mandara_create.html"
     form_class = forms.MandaraCreateForm
-
+    
     def get_context_data(self, **kwargs):
         today = datetime.date.today()
         company_id = self.request.user.company_id

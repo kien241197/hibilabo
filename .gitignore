@@ -138,3 +138,5 @@ GitHub.sublime-settings
 .history
 hibiLabo/__pycache__/*
 hibiLaboSystem/__pycache__/*
+meida/
+media/*

@@ -10,9 +10,7 @@ from django.utils import timezone
 from PIL import Image
 from django.core.files.base import ContentFile
 from image_cropping import ImageRatioField
-
-
-
+from django.core.files.storage import FileSystemStorage
 # Create your models here.
 
 class SelfcheckRole(models.Model):
@@ -164,9 +162,22 @@ def unique_image_filename(instance, filename):
     hashed_number = int(hash_object.hexdigest(), 16)
 
     new_filename = f"{hashed_number}_{milliseconds}.{ext}"
-    return f"static/media/images/{new_filename}"
+    return f"{new_filename}"
+
+def crop_to_460x430(image_path):
+    # Mở ảnh
+    img = Image.open(image_path)
+    # Kiểm tra kích thước ảnh
+    width, height = img.size
+    # Nếu ảnh vượt quá kích thước 460x430
+    if width > 460 or height > 430:
+        # Tính tỷ lệ khung hình
+        img = Image.open(image_path)
+        img_resized = img.resize((460, 430))
+        img_resized.save(image_path)
 
 class User(AbstractUser):
+	fs = FileSystemStorage()
 	class Roles(Enum):
 		日々研 = 99
 		Partner = 40
@@ -201,7 +212,7 @@ class User(AbstractUser):
 	)
 	
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
-	image = models.ImageField(upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
+	image = models.ImageField(storage=fs,upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
 	cropping = ImageRatioField('image', '460x430', allow_fullsize=True, size_warning=True)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
@@ -216,11 +227,10 @@ class User(AbstractUser):
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
 
-	# def save(self, *args, **kwargs):
-	# 	super().save(*args, **kwargs)
-	# 	img = Image.open(self.image.path)
-	# 	img.thumbnail((459, 429))
-	# 	img.save(self.image.path)
+	def save(self, *args, **kwargs):
+		super().save(*args, **kwargs)
+		if self.image:
+			crop_to_460x430(self.image.path)
 
 		
 

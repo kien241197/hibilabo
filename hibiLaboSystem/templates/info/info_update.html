@@ -36,10 +36,7 @@
                     {% if field.name == 'image' %}
                     {% if form.instance.image %}
                     {% with cropping_parts=form.instance.cropping|split:"," %}
-                    <!-- <div style="overflow: hidden; width: 430px; height: 360px;">
-                        <img src="{{ form.instance.image.url }}" id="image-preview" style='margin-left: -{{ cropping_parts.0 }}px; margin-top: -{{ cropping_parts.1 }}px; margin-right: -{{ cropping_parts.2 }}px; margin-bottom: -{{ cropping_parts.3 }}px'>
-                    </div> -->
-                    <img src="{% cropped_thumbnail user 'cropping' %}">
+                        <img src="{{ form.instance.image.url }}" id="image-preview" >
 
                     {% endwith %}
                     {% endif %}
