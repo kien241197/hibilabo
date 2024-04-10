@@ -910,7 +910,7 @@ class BonknowSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('answer')[:1]
-        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
+        ).filter((Q(apply_start_date__lte=datetime.date.today()) | Q(apply_start_date__isnull=True)) & ( Q(apply_end_date__isnull=True) | Q(apply_end_date__gte=datetime.date.today()))).order_by('sort_no')
 
         obj = ResponsResult.objects.filter(
             company_id=company_id,
@@ -936,7 +936,7 @@ class BonknowSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('answer')[:1]
-        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
+        ).filter((Q(apply_start_date__lte=datetime.date.today()) | Q(apply_start_date__isnull=True)) & ( Q(apply_end_date__isnull=True) | Q(apply_end_date__gte=datetime.date.today()))).order_by('sort_no')
 
         kwargs = super(BonknowSheet, self).get_context_data(**kwargs)
         kwargs['evaluation_unit'] = evaluation_unit
