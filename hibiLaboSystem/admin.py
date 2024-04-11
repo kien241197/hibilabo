@@ -12,6 +12,7 @@ from .models import *
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import Q
 import json
+from django.core.cache import cache
 
 # Register your models here.
 CustomeUser = get_user_model()
@@ -65,7 +66,7 @@ class WatasheetInline(admin.TabularInline):
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
-    exclude = ("created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", )
+    exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", ]
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline, UserInline]
     def save_model(self, request, obj, form, change):
         if not change:
@@ -79,8 +80,9 @@ class CompanyAdmin(admin.ModelAdmin):
         return qs
 
     def get_form(self, request, obj=None, **kwargs):
+        cache.clear()
         if not request.user.is_superuser:
-            self.exclude = ("created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner")
+            self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner"]
             self.inlines = []
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
         return form
@@ -101,9 +103,9 @@ class RoleCustom(admin.ModelAdmin):
 
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
-    list_display = ("id","username", "company")
+    list_display = ["id","username", "company", "branch"]
     list_filter = ['company']
-    exclude = ('created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
+    exclude = ['created_by']
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "branch":
@@ -120,8 +122,9 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         obj.save()
 
     def get_form(self, request, obj=None, **kwargs):
+        cache.clear()
         if not request.user.is_superuser:
-            self.exclude = ("user_permissions", "is_superuser", "is_active",'created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
+            self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by']
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
 
@@ -132,6 +135,12 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             )
 
         super().get_field_queryset(db, db_field, request)
+
+    def changelist_view(self, request, extra_context=None):
+        cache.clear()
+        if not request.user.is_superuser:
+            self.list_display = ["id", "username", "branch"]
+        return super(UsersAdmin, self).changelist_view(request, extra_context)
 
     def import_action(self,request):
         import_object_status = []
@@ -203,12 +212,18 @@ class BranchAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "company":
-            if request.user.is_superuser:
+            if request.user.is_superuser is True:
                 kwargs["queryset"] = Company.objects.all()
             else:
                 if request.user.company_id:
                     kwargs["queryset"] = Company.objects.filter(id=request.user.company_id)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def changelist_view(self, request, extra_context=None):
+        cache.clear()
+        if not request.user.is_superuser:
+            self.list_display = ["id", "name"]
+        return super(BranchAdmin, self).changelist_view(request, extra_context)
 
 
 admin.site.register(Company, CompanyAdmin)
