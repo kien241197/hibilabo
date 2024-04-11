@@ -78,6 +78,13 @@ class CompanyAdmin(admin.ModelAdmin):
             return qs.filter(Q(created_by=request.user.id) | Q(id=request.user.company_id))
         return qs
 
+    def get_form(self, request, obj=None, **kwargs):
+        if not request.user.is_superuser:
+            self.exclude = ("created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner")
+            self.inlines = []
+        form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
+        return form
+
 class SelfcheckQuestionCustom(admin.ModelAdmin):
     list_filter = ["selfcheck_roles", "selfcheck_industries"]
     formfield_overrides = {

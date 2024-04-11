@@ -123,9 +123,9 @@ class Company(models.Model):
 	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM ACTION)")
 
 	class Meta:
-			db_table = "companies"
-			verbose_name = '会社'
-			verbose_name_plural = '会社'
+		db_table = "companies"
+		verbose_name = '会社'
+		verbose_name_plural = '会社'
 
 	def __str__(self):
 		return f"{self.name}"
@@ -142,6 +142,8 @@ class Branch(models.Model):
 
 	class Meta:
 		db_table = "branches"
+		verbose_name = '支店'
+		verbose_name_plural = '支店'
 
 	def __str__(self):
 		return f"{self.name}"
