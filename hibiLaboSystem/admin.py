@@ -13,6 +13,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.db.models import Q
 import json
 from django.core.cache import cache
+from django.http import HttpResponseRedirect
 
 # Register your models here.
 CustomeUser = get_user_model()
@@ -105,7 +106,8 @@ class RoleCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company']
-    exclude = ['created_by']
+    exclude = ['created_by', 'password']
+    actions = []
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "branch":
@@ -124,7 +126,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
         cache.clear()
         if not request.user.is_superuser:
-            self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by']
+            self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'password']
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
 
@@ -140,6 +142,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         cache.clear()
         if not request.user.is_superuser:
             self.list_display = ["id", "username", "branch"]
+            self.actions = ['update_branch']
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
     def import_action(self,request):
@@ -205,6 +208,24 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             return qs.filter(Q(is_superuser=False) & (Q(created_by=request.user.id) | Q(company_id=request.user.company_id)))
         return qs
+
+    def update_branch(self, request, queryset):
+        if request.user.is_superuser:
+            return HttpResponseRedirect(request.get_full_path())
+            
+        branches = Branch.objects.filter(company_id=request.user.company.id)
+        if 'apply' in request.POST:
+            queryset.update(branch_id=request.POST['branch'])
+            
+            self.message_user(request,
+                              "ユーザー {} 人の支店が変更されました。".format(queryset.count()))
+            return HttpResponseRedirect(request.get_full_path())
+                        
+        return render(request,
+                      'admin/select_branch.html',
+                      context={'users':queryset, 'branches': branches})
+
+    update_branch.short_description = "新しい支店を選択"
 
 class BranchAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'company']
