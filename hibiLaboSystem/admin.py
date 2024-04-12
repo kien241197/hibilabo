@@ -103,7 +103,7 @@ class RoleCustom(admin.ModelAdmin):
 
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
-    list_display = ["id","username", "company", "branch"]
+    list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company']
     exclude = ['created_by']
     
