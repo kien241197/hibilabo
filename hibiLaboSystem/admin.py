@@ -225,6 +225,12 @@ class BranchAdmin(admin.ModelAdmin):
             self.list_display = ["id", "name"]
         return super(BranchAdmin, self).changelist_view(request, extra_context)
 
+    def get_queryset(self, request):
+        qs = super(BranchAdmin, self).get_queryset(request)
+        if not request.user.is_superuser:
+            return qs.filter(company_id=request.user.company_id)
+        return qs
+
 
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)

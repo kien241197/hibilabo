@@ -134,7 +134,7 @@ class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.CASCADE,
+	    on_delete=models.SET_NULL,
 	    related_name='branches',
 	    blank=True,
 	    null=True
@@ -167,7 +167,7 @@ class User(AbstractUser):
 	)
 	branch = models.ForeignKey(
 	    Branch,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.SET_NULL,
 	    related_name='users',
 	    blank=True,
 	    null=True,
