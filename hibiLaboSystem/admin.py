@@ -192,11 +192,19 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             return HttpResponse(json.dumps(context), content_type="application/json")
         # print(make_password('123456'));
         form = forms.CsvImportForm()
-        context = {"form": form, "form_title": "Upload users csv file.",
+        if not request.user.is_superuser:
+            context = {"form": form, "form_title": "Upload users csv file.",
                     "description": "The file should have following headers: "
-                                    "[username,first_name,last_name,password]."
+                                    "[username,first_name,last_name,password, branch]."
                                     " The Following rows should contain information for the same.",
                                     "endpoint": "/admin/hibiLaboSystem/user/import/"}
+        else: 
+            context = {"form": form, "form_title": "Upload users csv file.",
+                    "description": "The file should have following headers: "
+                                    "[username,first_name,last_name,password, company, branch]."
+                                    " The Following rows should contain information for the same.",
+                                    "endpoint": "/admin/hibiLaboSystem/user/import/"}
+
         return render(
             request, "admin/import_users.html", context
         )
