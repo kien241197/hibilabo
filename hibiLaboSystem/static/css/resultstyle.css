@@ -1,3 +1,9 @@
+
+.overflow-auto {
+
+    overflow: auto;
+}
+
 .base {
 display: flex;
 flex-direction: row;

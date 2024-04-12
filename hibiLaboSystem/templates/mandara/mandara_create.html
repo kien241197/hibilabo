@@ -36,10 +36,11 @@
                                                     <h2 class="text-title">MANDARA CHART</h2>
                                                     <button type="button" class="button-title"
                                                         id="button-title-1">一括削除</button>
-                                                    <button type="button" class="button-title"
-                                                        id="button-title-2">一時保存</button>
-                                                    <input type="submit" class="button-title" value="保存"
+                                                    <input type="submit" class="button-title" name="save_tmp" value="一時保存"
+                                                        id="button-title-2">
+                                                    <input type="submit" class="button-title" name="save" value="保存"
                                                         id="button-title-3">
+                                                    {{ form.field_stop }}
                                                 </div>
                                                 <span class="content-title">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
                                             </div>
@@ -431,9 +432,19 @@
                                     <div class="content-body-right">
                                         <p class="title-content-body-left">目標期間は 1 年</p>
                                         <div class="item-select">
-                                            {{ form.start_YYYYMM }}
+                                            <select name="start_YYYYMM" id="id_start_YYYYMM" class="select" onchange="selectEndDate()">
+                                                <option value="">----</option>
+                                                {% for time in mandara_periods %}
+                                                <option value="{{ time.id }}" {% if time.id == mandara.mandara_period_id %}selected{% endif %}>{{ time.display_time_start }}</option>
+                                                {% endfor %}
+                                            </select>
                                             <p class="to">～</p>
-                                            {{ form.end_YYYYMM }}
+                                            <select name="end_YYYYMM" id="id_end_YYYYMM" class="select" readonly="true">
+                                                <option value="">----</option>
+                                                {% for time in mandara_periods %}
+                                                <option value="{{ time.id }}" {% if time.id == mandara.mandara_period_id %}selected{% endif %}>{{ time.display_time_end }}</option>
+                                                {% endfor %}
+                                            </select>
                                             <!-- <button class="button">表示</button> -->
                                         </div>
                                     </div>
@@ -454,8 +465,7 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.A_dueto }}
@@ -473,8 +483,7 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.B_dueto }}
@@ -492,8 +501,7 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.C_dueto }}
@@ -511,8 +519,7 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.D_dueto }}
@@ -530,8 +537,7 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.E_dueto }}
@@ -549,8 +555,7 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.F_dueto }}
@@ -568,8 +573,7 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.G_dueto }}
@@ -587,78 +591,11 @@
                                                 </div>
                                                 <div class="wrapper-content-table-bottom-body-right">
                                                     <div class="content-table-body-right">
-                                                        <p>課題解決
-                                                        </p>
+                                                        <p>課<br/>題<br/>解<br/>決</p>
                                                     </div>
                                                     <div class="desc-table-body-right">
                                                         {{ form.H_dueto }}
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="wrapper-item-table-body-bottom-right-tab-2">
-                                            <div
-                                                class="item-table-body-bottom-right item-table-body-bottom-right-tab-2">
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas9" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">体づくり</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas10" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">コントール</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas11" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">キレ</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas12" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">メンタル</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab wrapper-mycanvas-tab-center">
-                                                    <p class="text-canvas-center">●●後の目標</p>
-                                                    <p class="value-vanvas-center">188</p>
-                                                    <p class="text-canvas-center">ドライチ 8 球団</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas13" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">スピード</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas14" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">人間性</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas15" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">運</p>
-                                                </div>
-                                                <div class="wrapper-mycanvas-tab">
-                                                    <div>
-                                                        <canvas id="mycanvas16" width="100%" height="100%"
-                                                            class="mycanvas-tab"></canvas>
-                                                    </div>
-                                                    <p class="text-canvas">変化球</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -672,5 +609,10 @@
         </div>
     </section>
 </main>
-<script src="{% static 'js/mandara-create.js' %}"></script>
+
+<script src="{% static 'js/mandara-create.js' %}" async></script>
+{% if mandara is None or mandara.flg_finished == False %}
+<script src="{% static 'js/mandara-rule.js' %}" async></script>
+{% endif %}
 {% endblock %}
+

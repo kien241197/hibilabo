@@ -5,7 +5,7 @@ urlpatterns = [
 	path('', views.Home.as_view(), name='home'),
     path('login', views.Login.as_view(), name='login'),
     path('logout', views.Logout.as_view(), name='logout'),
-    path('register/', views.Register.as_view(), name='register'),
+    # path('register/', views.Register.as_view(), name='register'),
     path('register-done/', views.RegisterSuccess.as_view(), name='register_done'),
     path('my-info/', views.MyInfo.as_view(), name='my_info'),
 	path('my-info/edit/', views.InfoUpdate.as_view(), name='info_update'),
@@ -45,5 +45,6 @@ urlpatterns = [
     path('mandara-completion-tab', views.MandaraCompletionTab.as_view(), name='mandara_completion_tab'),
     path('mandara-completion-tab-detail/<id>', views.MandaraCompletionTabDetail.as_view(), name='mandara_completion_tab_detail'), #Display Detail
     
-    
+	path('watasheet', views.Watasheet.as_view(), name="watasheet"),
+	path('watasheet-type', views.WatasheetType.as_view(), name="watasheet_type")
 ]

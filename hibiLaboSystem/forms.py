@@ -1,9 +1,11 @@
 from django import forms
+from .models import *
 from django.core import validators
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 import datetime
 from . import models, fields
+from .enums import *
 
 User = get_user_model()
 
@@ -149,6 +151,14 @@ class WorkInfoUpdateForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form'})
     )
 
+class BonknowSheetForm(forms.Form):
+    flg_finished = forms.BooleanField(
+        initial=False,
+        label='提出する',
+        required=False,
+        help_text='提出する'
+    )
+
 class HonneForm(forms.Form):
     flg_finished = forms.BooleanField(
         initial=False,
@@ -164,9 +174,12 @@ class SelfcheckForm(forms.Form):
         required=False,
         help_text='提出する'
     )
+    
+
 
 ''' 一次的に評価対象月などを静的に出力するためのフォーム'''
 class HonneEvaluationUnitForm(forms.Form):
+
     # 評価対象年月の選択
     evaluation_unit = forms.ModelChoiceField(
         empty_label='----',
@@ -187,10 +200,16 @@ class HonneEvaluationUnitForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(HonneEvaluationUnitForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
         queryset_evaluation = models.HonneEvaluationPeriod.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
+            
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
@@ -216,10 +235,17 @@ class SelfcheckEvaluationUnitForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(SelfcheckEvaluationUnitForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
+
         queryset_evaluation = models.SelfcheckEvaluationPeriod.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
+            # queryset = queryset.filter(company_id=request.user.company_id)
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
@@ -244,18 +270,19 @@ class MandaraCreateForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["user", "company"]
 
-    start_YYYYMM = forms.ChoiceField(
-        widget=fields.BetweenYearSelectWidgetStart(),
-        required=True
-    )
+    # start_YYYYMM = forms.ChoiceField(
+    #     widget=fields.MandaraYearSelectWidget(),
+    #     required=False
+    # )
 
-    end_YYYYMM = forms.ChoiceField(
-        widget=fields.BetweenYearSelectWidgetEnd(),
-        required=True
-    )
+    # end_YYYYMM = forms.ChoiceField(
+    #     widget=fields.MandaraYearSelectWidget(),
+    #     required=False
+    # )
 
     total_mission = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-value-score",
@@ -267,6 +294,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     A_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -276,6 +304,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -287,6 +316,7 @@ class MandaraCreateForm(forms.ModelForm):
     A_result = forms.IntegerField(required=False)
     A1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -297,6 +327,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -307,6 +338,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -317,6 +349,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -326,6 +359,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -335,6 +369,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -344,6 +379,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -353,6 +389,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     A8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -363,6 +400,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     B_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -372,6 +410,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -383,6 +422,7 @@ class MandaraCreateForm(forms.ModelForm):
     B_result = forms.IntegerField(required=False)
     B1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -393,6 +433,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -403,6 +444,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -413,6 +455,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -422,6 +465,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -431,6 +475,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -440,6 +485,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -449,6 +495,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     B8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -459,6 +506,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     C_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -468,6 +516,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -479,6 +528,7 @@ class MandaraCreateForm(forms.ModelForm):
     C_result = forms.IntegerField(required=False)
     C1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -489,6 +539,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -499,6 +550,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -509,6 +561,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -518,6 +571,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -527,6 +581,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -536,6 +591,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -545,6 +601,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     C8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -555,6 +612,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     D_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -564,6 +622,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -575,6 +634,7 @@ class MandaraCreateForm(forms.ModelForm):
     D_result = forms.IntegerField(required=False)
     D1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -585,6 +645,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -595,6 +656,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -605,6 +667,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -614,6 +677,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -623,6 +687,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -632,6 +697,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -641,6 +707,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     D8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -651,6 +718,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     E_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -660,6 +728,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -671,6 +740,7 @@ class MandaraCreateForm(forms.ModelForm):
     E_result = forms.IntegerField(required=False)
     E1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -681,6 +751,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -691,6 +762,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -701,6 +773,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -710,6 +783,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -719,6 +793,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -728,6 +803,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -737,6 +813,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     E8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -747,6 +824,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     F_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -756,6 +834,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -767,6 +846,7 @@ class MandaraCreateForm(forms.ModelForm):
     F_result = forms.IntegerField(required=False)
     F1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -777,6 +857,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -787,6 +868,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -797,6 +879,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -806,6 +889,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -815,6 +899,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -824,6 +909,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -833,6 +919,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     F8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -843,6 +930,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     G_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -852,6 +940,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -863,6 +952,7 @@ class MandaraCreateForm(forms.ModelForm):
     G_result = forms.IntegerField(required=False)
     G1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -873,6 +963,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -883,6 +974,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -893,6 +985,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -902,6 +995,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -911,6 +1005,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -920,6 +1015,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -929,6 +1025,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     G8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -939,6 +1036,7 @@ class MandaraCreateForm(forms.ModelForm):
 
     H_keyword = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': "input-value-tab",
@@ -948,6 +1046,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H_dueto = forms.CharField(
         max_length=200,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table input-table-desc",
@@ -959,6 +1058,7 @@ class MandaraCreateForm(forms.ModelForm):
     H_result = forms.IntegerField(required=False)
     H1_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -969,6 +1069,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H2_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -979,6 +1080,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H3_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -989,6 +1091,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H4_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -998,6 +1101,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H5_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -1007,6 +1111,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H6_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -1016,6 +1121,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H7_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -1025,6 +1131,7 @@ class MandaraCreateForm(forms.ModelForm):
     )
     H8_content = forms.CharField(
         max_length=20,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
@@ -1032,15 +1139,42 @@ class MandaraCreateForm(forms.ModelForm):
             }
         )
     )
+    field_stop = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': "hidden",
+            }
+        )
+    )
 
 class MandaraCompleteForm(forms.Form):
-    start = forms.ChoiceField(
-        widget=fields.MandaraMonthYearSelectWidget(),
-    )
+    def __init__(self, company_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-    end = forms.ChoiceField(
-        widget=fields.MandaraMonthYearSelectWidget(),
-    )
+        # Dynamically set the widget choices based on company_id
+        start_periods = MandaraPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('start_date')
+
+        end_periods = MandaraPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('start_date')
+
+        start_choices = [(period.start_date, period.display_time_start) for period in start_periods]
+        end_choices = [(period.start_date, period.display_time_start) for period in end_periods]
+
+        self.fields['start'] = forms.ChoiceField(
+            choices=[('', '----')] + start_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['end'] = forms.ChoiceField(
+            choices=[('', '----')] + end_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )
+
 
 class MandaraChartForm(forms.Form):
 
@@ -1055,9 +1189,15 @@ class MandaraChartForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(MandaraChartForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
+        # queryset = models.User.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
         self.fields['user_id'].queryset = queryset
 
 class MandaraForm(forms.Form):
@@ -1073,7 +1213,78 @@ class MandaraForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(MandaraForm, self).__init__(*args, **kwargs)
-        queryset = models.User.objects.all()
+        # queryset = models.User.objects.all()
         if request.user:
-            queryset = queryset.filter(company_id=request.user.company_id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
         self.fields['user_id'].queryset = queryset
+
+class UserAdminForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        exclude = ['is_superuser']
+
+class WatasheetForm(forms.ModelForm):
+    class Meta:
+        model = models.WatasheetTypeResult
+        fields = "__all__"
+
+    flg_finished = forms.BooleanField(
+        initial=False,
+        label='提出する',
+        required=False,
+        help_text='提出する'
+    )
+
+
+
+class WatasheetTypeForm(forms.Form):
+
+    # 評価対象年月の選択
+    evaluation_unit = forms.ModelChoiceField(
+        empty_label='----',
+        label='評価対象年月',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form'}),
+        queryset=models.WatasheetEvaluationPeriod.objects.none()
+    )
+
+    # 評価対象社員の選択
+    user_id = forms.ModelChoiceField(
+        empty_label='----',
+        label='対象社員',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form'}),
+        queryset=models.User.objects.none()
+    )
+
+
+    def __init__(self, request, *args, **kwargs):
+        super(WatasheetTypeForm, self).__init__(*args, **kwargs)
+        queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
+        
+        if request.user:
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            # Company_Admin
+            if request.user.role.role == RoleEnum.Company_Admin.value:
+                queryset = models.User.objects.filter(company_id=request.user.company.id)
+
+            queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
+        self.fields['user_id'].queryset = queryset
+        self.fields['evaluation_unit'].queryset = queryset_evaluation
+        
+class TeamConceptForm(forms.Form):
+    class Meta:
+        model= models.Company
+        fields = "__all__"
+
+
+    

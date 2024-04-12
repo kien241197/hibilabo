@@ -846,6 +846,13 @@ body {
     position: relative;
     border-top: 2px solid #717276;
     border-left: 2px solid #717276;
+    gap: 2px;
+    background-color: #717276;
+    padding: 2px;
+}
+
+.wrapper-item-table-body-bottom-right-tab-1 {
+    border: 2px solid #717276;
 }
 
 .wrapper-item-body-bottom-left {
@@ -1069,7 +1076,7 @@ body {
 
 .item-table-body-bottom-right {
 
-    border-top: 2px solid #717276;
+    border-top: 3px solid #717276;
     border-left: 2px solid #717276;
     border-right: 2px solid #717276;
 }
@@ -1135,13 +1142,13 @@ body {
 }
 
 .content-table-body-right p {
-    transform: rotate(90deg);
     white-space: nowrap;
     margin-block: unset !important;
     font-weight: 700;
-    padding: 30px;
+    padding: 10px;
     font-size: 75%;
     letter-spacing: 0.1rem;
+    font-family: var(--font-content);
 }
 
 .wrapper-content-table-bottom-body-right {

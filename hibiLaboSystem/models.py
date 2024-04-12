@@ -1,8 +1,75 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from enum import Enum 
+from .enums import *
+from django.core.exceptions import ValidationError
+import datetime
 
 # Create your models here.
+
+class SelfcheckRole(models.Model):
+	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
+
+	def __str__(self):
+		return f"{self.selfcheck_role_name}"
+
+	class Meta:
+		db_table = 'selfcheck_roles'
+		verbose_name = 'Selfcheck Roles'
+		verbose_name_plural = 'Selfcheck Roles'
+
+class SelfcheckIndustry(models.Model):
+	selfcheck_industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
+
+	def __str__(self):
+		return f"{self.selfcheck_industry_name}"
+
+	class Meta:
+		db_table = 'selfcheck_industries'
+		verbose_name = 'Selfcheck Industries'
+		verbose_name_plural = 'Selfcheck Industries'
+
+class Role(models.Model):
+	role = models.IntegerField(
+		unique=True,
+		choices=[
+			(RoleEnum.日々研.value, '日々研'),
+			(RoleEnum.Partner.value, 'Partner'),
+			(RoleEnum.Company_Admin.value, 'Company Admin'),
+			(RoleEnum.Company_SuperVisor.value, 'Company SuperVisor'),
+			(RoleEnum.Company_Staff.value, 'Company Staff')
+		],
+		verbose_name='Role'
+	)
+	# role = models.IntegerField(
+	# 	unique=True,
+	# 	choices=[
+	# 		 (role.value, role.name.replace('_', ' ')) for role in [
+    #             RoleEnum.日々研,
+    #             RoleEnum.Partner,
+    #             RoleEnum.Company_Admin,
+    #             RoleEnum.Company_SuperVisor,
+    #             RoleEnum.Company_Staff
+    #         ]
+	# 	],
+	# 	verbose_name='Role'
+	# )
+	role_name = models.CharField(max_length=100, verbose_name='Role名称')
+	selfcheck_roles = models.ManyToManyField(
+		SelfcheckRole,
+	    related_name='roles',
+	    blank=True,
+	    verbose_name = 'Selfcheck Roles'
+	)
+
+	def __str__(self):
+		return f"{self.role_name}"
+
+	class Meta:
+		db_table = 'roles'
+		verbose_name = 'Roles'
+		verbose_name_plural = 'Roles'
+
 class Partner(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	time_start = models.DateTimeField(blank=True, null=True)
@@ -16,20 +83,49 @@ class Partner(models.Model):
 		return f"{self.name}"
 
 class Company(models.Model):
-	name = models.CharField(blank=True, null=True, max_length=255)
-	date_start = models.DateField(blank=True, null=True)
-	date_end = models.DateField(blank=True, null=True)
-	active_flag = models.BooleanField(blank=True, null=True)
+	name = models.CharField(blank=True, null=True, max_length=255, verbose_name="会社名")
+	date_start = models.DateField(blank=True, null=True, verbose_name='開始日')
+	date_end = models.DateField(blank=True, null=True, verbose_name='終了日')
+	active_flag = models.BooleanField(blank=True, null=True, verbose_name='アクティブ')
 	partner = models.ForeignKey(
 	    Partner,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='companies',
 	    blank=True,
-	    null=True
+	    null=True,
+	    verbose_name='相棒'
 	)
+	created_by = models.IntegerField(blank=True, null=True, editable=False)
+	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
+	# Team concept
+	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
+	# Team vision
+	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM VISION)", max_length=255)
+	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM VISION)", max_length=255)
+	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM VISION)", max_length=255)
+	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VISION)")
+	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (TEAM VISION)")
+	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (TEAM VISION)")
+	# Team mission
+	team_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM MISSION)")
+	team_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM MISSION)")
+	team_mission_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM MISSION)")
+	# Team values
+	team_values_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VALUES)")
+	team_values_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM VALUES)")
+	team_values_3 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM VALUES)")
+	# Team action
+	team_action_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM ACTION)", max_length=255)
+	team_action_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM ACTION)", max_length=255)
+	team_action_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM ACTION)", max_length=255)
+	team_action_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM ACTION)")
+	team_action_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM ACTION)")
+	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM ACTION)")
 
 	class Meta:
-			db_table = "companies"
+		db_table = "companies"
+		verbose_name = '会社'
+		verbose_name_plural = '会社'
 
 	def __str__(self):
 		return f"{self.name}"
@@ -38,7 +134,7 @@ class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='branches',
 	    blank=True,
 	    null=True
@@ -46,6 +142,8 @@ class Branch(models.Model):
 
 	class Meta:
 		db_table = "branches"
+		verbose_name = '支店'
+		verbose_name_plural = '支店'
 
 	def __str__(self):
 		return f"{self.name}"
@@ -53,62 +151,57 @@ class Branch(models.Model):
 
 class User(AbstractUser):
 	class Roles(Enum):
-		日々研 = '99'
-		Partner = '40'
-		CompanyAdmin = '30'
-		CompanySuperVisor = '20'
-		CompanyStaff = '10'
+		日々研 = 99
+		Partner = 40
+		CompanyAdmin = 30
+		CompanySuperVisor = 20
+		CompanyStaff = 10
 
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='users',
 	    blank=True,
-	    null=True
+	    null=True,
+	    verbose_name='会社'
 	)
 	branch = models.ForeignKey(
 	    Branch,
 	    on_delete=models.DO_NOTHING,
 	    related_name='users',
 	    blank=True,
-	    null=True
+	    null=True,
+	    verbose_name='支店'
 	)
-	birth = models.DateField(blank=True, null=True)
-	role_id = models.IntegerField(
-		blank=True,
-		null=True,
-		choices=[
-			(99, '日々研'),
-			(40, 'Partner'),
-			(30, 'Company Admin'),
-			(20, 'Company Super Visor'),
-			(10, 'Company Staff'),
-		]
-    )
-	preferred_day = models.BooleanField(blank=True, null=True)
-	preferred_hour = models.IntegerField(blank=True, null=True)
-	preferred_day2 = models.BooleanField(blank=True, null=True)
-	preferred_hour2 = models.IntegerField(blank=True, null=True)
-	preferred_day3 = models.BooleanField(blank=True, null=True)
-	preferred_hour3 = models.IntegerField(blank=True, null=True)
-	preferred_day4 = models.BooleanField(blank=True, null=True)
-	preferred_hour4 = models.IntegerField(blank=True, null=True)
-	preferred_day5 = models.BooleanField(blank=True, null=True)
-	preferred_hour5 = models.IntegerField(blank=True, null=True)
-	preferred_day6 = models.BooleanField(blank=True, null=True)
-	preferred_hour6 = models.IntegerField(blank=True, null=True)
-	preferred_day7 = models.BooleanField(blank=True, null=True)
-	preferred_hour7 = models.IntegerField(blank=True, null=True)
+	birth = models.DateField(blank=True, null=True, verbose_name='誕生日')
+	role = models.ForeignKey(
+	    Role,
+	    on_delete=models.DO_NOTHING,
+	    related_name='users',
+	    blank=True,
+	    null=True,
+	    verbose_name='役割'
+	)
+	
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
+	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
 	class Meta:
 		db_table = 'users'
+		verbose_name = 'ユーザー'
+		verbose_name_plural = 'ユーザー'
 
 	def full_name(self):
 		return self.last_name + self.first_name
 
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
+
+	def clean(self):
+		if self.branch is not None:
+			if self.company_id != self.branch.company_id:
+				raise ValidationError("支店は会社と一致する必要があります")
+
 
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
@@ -128,7 +221,7 @@ class Hierarchy(models.Model):
 # HONNE
 class HonneQuestion(models.Model):
 	class Meta:
-		verbose_name = 'Honne question'
+		verbose_name = 'HONNE質問'
 
 	question = models.TextField()
 	sort_no = models.IntegerField(blank=True, null=True)
@@ -163,22 +256,25 @@ class HonneQuestion(models.Model):
 class HonneEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_evaluation_periods',
 	    blank=True,
 	    null=True
 	)
-	evaluation_name = models.TextField()
-	evaluation_start = models.DateField(blank=True, null=True)
-	evaluation_end = models.DateField(blank=True, null=True)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
 	honne_questions = models.ManyToManyField(
 		HonneQuestion,
 	    related_name='honne_evaluation_periods',
 	    blank=True,
+	    verbose_name = 'HONNE質問'
 	)
 
 	class Meta:
 		db_table = 'honne_evaluation_periods'
+		verbose_name = 'HONNE 評価期間'
+		verbose_name_plural = 'HONNE 評価期間'
 
 	def __str__(self):
 		return f"{self.evaluation_name}"
@@ -186,14 +282,14 @@ class HonneEvaluationPeriod(models.Model):
 class HonneAnswerResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_results',
 	    blank=True,
 	    null=True
@@ -205,7 +301,7 @@ class HonneAnswerResult(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    HonneEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_answer_results',
 	    blank=True,
 	    null=True
@@ -219,21 +315,21 @@ class HonneAnswerResult(models.Model):
 class HonneIndexResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_index_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_index_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    HonneEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_index_results',
 	    blank=True,
 	    null=True
@@ -256,21 +352,21 @@ class HonneIndexResult(models.Model):
 class HonneTypeResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_type_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_type_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    HonneEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='honne_type_results',
 	    blank=True,
 	    null=True
@@ -298,7 +394,7 @@ class SelfcheckQuestion(models.Model):
 				(4, '広報力'), #circle
 				(5, '連携力'), #square
 				(6, '人間関係'), #triangle
-				(7, '患者対応'), #square
+				(7, '対応'), #square
 				(8, 'チームワーク力'), #triangle
 				(9, '総合管理'), #circle
 				(10, '理念浸透'), #circle
@@ -306,6 +402,19 @@ class SelfcheckQuestion(models.Model):
 				(12, '思考'), #square
 			]
 	    )
+	selfcheck_industries = models.ManyToManyField(
+		SelfcheckIndustry,
+	    related_name='Selfcheck_questions',
+	    blank=True,
+	    verbose_name = '業界名称'
+	)
+	selfcheck_roles = models.ManyToManyField(
+		SelfcheckRole,
+	    related_name='Selfcheck_questions',
+	    blank=True,
+	    verbose_name = 'Selfcheck Roles'
+	)
+
 	class Meta:
 		db_table = 'selfcheck_questions'
 
@@ -315,22 +424,25 @@ class SelfcheckQuestion(models.Model):
 class SelfcheckEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_evaluation_periods',
 	    blank=True,
 	    null=True
 	)
-	evaluation_name = models.TextField()
-	evaluation_start = models.DateField(blank=True, null=True)
-	evaluation_end = models.DateField(blank=True, null=True)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
 	selfcheck_questions = models.ManyToManyField(
 		SelfcheckQuestion,
 	    related_name='selfcheck_evaluation_periods',
 	    blank=True,
+	    verbose_name = 'SELFCHECK質問'
 	)
 
 	class Meta:
 		db_table = 'selfcheck_evaluation_periods'
+		verbose_name = 'SELFCHECK 評価期間'
+		verbose_name_plural = 'SELFCHECK 評価期間'
 
 	def __str__(self):
 		return f"{self.evaluation_name}"
@@ -338,14 +450,14 @@ class SelfcheckEvaluationPeriod(models.Model):
 class SelfcheckAnswerResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_results',
 	    blank=True,
 	    null=True
@@ -357,7 +469,7 @@ class SelfcheckAnswerResult(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    SelfcheckEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_answer_results',
 	    blank=True,
 	    null=True
@@ -371,21 +483,21 @@ class SelfcheckAnswerResult(models.Model):
 class SelfcheckIndexResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_index_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_index_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    SelfcheckEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_index_results',
 	    blank=True,
 	    null=True
@@ -412,21 +524,21 @@ class SelfcheckIndexResult(models.Model):
 class SelfcheckTypeResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_type_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_type_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    SelfcheckEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='selfcheck_type_results',
 	    blank=True,
 	    null=True
@@ -492,27 +604,31 @@ class ThinkQuestion(models.Model):
 class BonknowEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='bonknow_evaluation_periods',
 	    blank=True,
 	    null=True
 	)
-	evaluation_name = models.TextField()
-	evaluation_start = models.DateField(blank=True, null=True)
-	evaluation_end = models.DateField(blank=True, null=True)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
 	respons_questions = models.ManyToManyField(
 		ResponsQuestion,
 	    related_name='bonknow_evaluation_periods',
 	    blank=True,
+	    verbose_name='RESPONS質問'
 	)
 	think_questions = models.ManyToManyField(
 		ThinkQuestion,
 	    related_name='bonknow_evaluation_periods',
 	    blank=True,
+	    verbose_name='THINK質問'
 	)
 
 	class Meta:
 		db_table = 'bonknow_evaluation_periods'
+		verbose_name = 'BONKNOW 評価期間'
+		verbose_name_plural = 'BONKNOW 評価期間'
 
 	def __str__(self):
 		return f"{self.evaluation_name}"
@@ -520,14 +636,14 @@ class BonknowEvaluationPeriod(models.Model):
 class ResponsAnswer(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_answers',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_answers',
 	    blank=True,
 	    null=True
@@ -539,7 +655,7 @@ class ResponsAnswer(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_answers',
 	    blank=True,
 	    null=True
@@ -553,14 +669,14 @@ class ResponsAnswer(models.Model):
 class ThinkAnswer(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_answers',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_answers',
 	    blank=True,
 	    null=True
@@ -572,7 +688,7 @@ class ThinkAnswer(models.Model):
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_answers',
 	    blank=True,
 	    null=True
@@ -586,21 +702,21 @@ class ThinkAnswer(models.Model):
 class ResponsResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='respons_results',
 	    blank=True,
 	    null=True
@@ -608,6 +724,7 @@ class ResponsResult(models.Model):
 	logic = models.FloatField(blank=True, null=True, default=0)
 	sense = models.FloatField(blank=True, null=True, default=0)
 	review_date = models.DateField(blank=True, null=True)
+	flg_finished = models.BooleanField(default=False)
 
 	class Meta:
 		db_table = 'respons_results'
@@ -615,21 +732,21 @@ class ResponsResult(models.Model):
 class ThinkResult(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_results',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_results',
 	    blank=True,
 	    null=True
 	)
 	evaluation_period = models.ForeignKey(
 	    BonknowEvaluationPeriod,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='think_results',
 	    blank=True,
 	    null=True
@@ -642,26 +759,64 @@ class ThinkResult(models.Model):
 		db_table = 'think_results'
 
 # MANDARA
+class MandaraPeriod(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.CASCADE,
+	    related_name='mandara_periods',
+	    blank=True,
+	    null=True
+	)
+	start_date = models.DateField(verbose_name="評価開始時間")
+	end_date = models.DateField(verbose_name="評価終了時間")
+
+	class Meta:
+		db_table = 'mandara_periods'
+		verbose_name = 'MANDARA 評価期間'
+		verbose_name_plural = 'MANDARA 評価期間'
+		
+	def __str__(self):
+		return str("")
+
+	def clean(self):
+		if self.start_date <= datetime.date.today() and self.pk is None:
+			raise ValidationError("今日より始まりは大きくなければなりません。")
+		if self.start_date > self.end_date:
+			raise ValidationError("日付が間違っています。")
+		if self.pk:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,end_date__gte=self.start_date,start_date__lte=self.end_date).exclude(pk=self.pk).exists()
+		else:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,end_date__gte=self.start_date,start_date__lte=self.end_date).exists()
+
+		if check_time is True:
+			raise ValidationError("日付が重複しています。")
+
+	def display_time_start(self):
+		return f'{self.start_date.year}年{self.start_date.month}月'
+	def display_time_end(self):
+		return f'{self.end_date.year}年{self.end_date.month}月'
+		
 class MandaraBase(models.Model):
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_base',
 	    blank=True,
 	    null=True
 	)
 	user = models.ForeignKey(
 	    User,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_base',
 	    blank=True,
 	    null=True
 	)
-	start_YYYYMM = models.CharField(
-		max_length=6
-	)
-	end_YYYYMM = models.CharField(
-		max_length=6
+	mandara_period = models.ForeignKey(
+	    MandaraPeriod,
+	    on_delete=models.CASCADE,
+	    related_name='mandara_base',
+	    blank=True,
+	    null=True
 	)
 	total_mission = models.CharField(max_length=20, blank=True, null=True)
 
@@ -760,23 +915,25 @@ class MandaraBase(models.Model):
 	H6_content = models.CharField(max_length=20, blank=True, null=True)
 	H7_content = models.CharField(max_length=20, blank=True, null=True)
 	H8_content = models.CharField(max_length=20, blank=True, null=True)
+	flg_finished = models.BooleanField(default=False)
+	field_stop = models.CharField(max_length=20, blank=True, null=True)
 
 	def total_result(self):
 			return self.A_result + self.B_result + self.C_result + self.D_result + self.E_result + self.F_result + self.G_result + self.H_result
 
-	def display_time(self):
-			return f'{self.start_YYYYMM[:4]}/{int(self.start_YYYYMM[4:])} ~ {self.end_YYYYMM[:4]}/{int(self.end_YYYYMM[4:])}'
+	# def display_time(self):
+	# 		return f'{self.start_YYYYMM[:4]}/{int(self.start_YYYYMM[4:])} ~ {self.end_YYYYMM[:4]}/{int(self.end_YYYYMM[4:])}'
 
 	class Meta:
 		db_table = 'mandara_base'
-		constraints = [
-	        models.UniqueConstraint(fields=['user_id', 'company_id', 'start_YYYYMM', 'end_YYYYMM'], name='unique_mandara')
-	    ]
+		# constraints = [
+	    #     models.UniqueConstraint(fields=['user_id', 'company_id', 'start_YYYYMM', 'end_YYYYMM'], name='unique_mandara')
+	    # ]
 
 class MandaraProgress(models.Model):
 	mandara_base = models.ForeignKey(
 	    MandaraBase,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.CASCADE,
 	    related_name='mandara_progress',
 	    blank=True,
 	    null=True
@@ -862,3 +1019,251 @@ class MandaraProgress(models.Model):
 		constraints = [
 	        models.UniqueConstraint(fields=['mandara_base_id', 'date'], name='unique_mandara_progress')
 	    ]
+
+# WATASHEET
+class WatasheetQuestion(models.Model):
+	class Meta:
+		verbose_name = 'WATASHEET質問'
+
+	question = models.TextField()
+	sort_no = models.IntegerField(blank=True, null=True)
+	group = models.CharField(
+		verbose_name="カルテット分布",
+		max_length=1,
+		null=True,
+		choices=[
+			('A', 'A'),
+			('B', 'B'),
+			('C', 'C'),
+			('D', 'D'),
+			('E', 'E'),
+			('F', 'F'),
+		]
+	)
+
+	class Meta:
+		db_table = 'watasheet_questions'
+
+	def __str__(self):
+		return str(self.question)
+
+class WatasheetEvaluationPeriod(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_evaluation_periods',
+	    blank=True,
+	    null=True
+	)
+	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
+	watasheet_questions = models.ManyToManyField(
+		WatasheetQuestion,
+	    related_name='watasheet_evaluation_periods',
+	    blank=True,
+	    verbose_name = 'WATASHEET質問'
+	)
+
+	class Meta:
+		db_table = 'watasheet_evaluation_periods'
+		verbose_name = 'WATASHEET 評価期間'
+		verbose_name_plural = 'WATASHEET 評価期間'
+
+	def __str__(self):
+		return f"{self.evaluation_name}"
+
+	def clean(self):
+		if self.evaluation_start < datetime.date.today() and self.pk is None:
+			raise ValidationError("今日より始まりは大きくなければなりません。")
+		if self.evaluation_start > self.evaluation_end:
+			raise ValidationError("日付が間違っています。")
+		if self.pk:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,evaluation_end__gte=self.evaluation_start,evaluation_start__lte=self.evaluation_end).exclude(pk=self.pk).exists()
+		else:
+			check_time = self.__class__.objects.filter(company_id=self.company_id,evaluation_end__gte=self.evaluation_start,evaluation_start__lte=self.evaluation_end).exists()
+
+		if check_time is True:
+			raise ValidationError("日付が重複しています。")
+
+class WatasheetResult(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_results',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_results',
+	    blank=True,
+	    null=True
+	)
+	watasheet_question = models.ForeignKey(
+	    WatasheetQuestion,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_results'
+	)
+	evaluation_period = models.ForeignKey(
+	    WatasheetEvaluationPeriod,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_results',
+	    blank=True,
+	    null=True
+	)
+
+	class Meta:
+		db_table = 'watasheet_answer_results'
+
+class WatasheetTypeResult(models.Model):
+	company = models.ForeignKey(
+	    Company,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_type_results',
+	    blank=True,
+	    null=True
+	)
+	user = models.ForeignKey(
+	    User,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_type_results',
+	    blank=True,
+	    null=True
+	)
+	evaluation_period = models.ForeignKey(
+	    WatasheetEvaluationPeriod,
+	    on_delete=models.CASCADE,
+	    related_name='watasheet_type_results',
+	    blank=True,
+	    null=True
+	)
+	watasheet_type_a = models.IntegerField(blank=True, null=True)
+	watasheet_type_b = models.IntegerField(blank=True, null=True)
+	watasheet_type_c = models.IntegerField(blank=True, null=True)
+	watasheet_type_d = models.IntegerField(blank=True, null=True)
+	watasheet_type_e = models.IntegerField(blank=True, null=True)
+	watasheet_type_f = models.IntegerField(blank=True, null=True)
+	watasheet_context = models.TextField(blank=True, null=True)
+	# Key word
+	keyword_1st = models.TextField(blank=True, null=True)
+	keyword_2nd = models.TextField(blank=True, null=True)
+	keyword_3rd = models.TextField(blank=True, null=True)
+	# Why i want
+	w_want_1st = models.TextField(blank=True, null=True)
+	w_want_2nd = models.TextField(blank=True, null=True)
+	w_want_3rd = models.TextField(blank=True, null=True)
+	# My rule
+	rule_1st = models.TextField(blank=True, null=True)
+	rule_2nd = models.TextField(blank=True, null=True)
+	rule_3rd = models.TextField(blank=True, null=True)
+	# My vision
+	vision_1st = models.TextField(blank=True, null=True)
+	vision_2nd = models.TextField(blank=True, null=True)
+	vision_3rd = models.TextField(blank=True, null=True)
+	vision_1_year = models.TextField(blank=True, null=True)
+	vision_5_years = models.TextField(blank=True, null=True)
+	vision_10_years = models.TextField(blank=True, null=True)
+	# My mission
+	mission_1st = models.TextField(blank=True, null=True)
+	mission_2nd = models.TextField(blank=True, null=True)
+	mission_3rd = models.TextField(blank=True, null=True)
+	# My concept
+	concept_1st = models.TextField(blank=True, null=True)
+	concept_2nd = models.TextField(blank=True, null=True)
+	concept_3rd = models.TextField(blank=True, null=True)
+	# Key whom
+	kw_1st = models.TextField(blank=True, null=True)
+	kw_2nd = models.TextField(blank=True, null=True)
+	kw_3rd = models.TextField(blank=True, null=True)
+	# For what
+	fw_1st = models.TextField(blank=True, null=True)
+	fw_2nd = models.TextField(blank=True, null=True)
+	fw_3rd = models.TextField(blank=True, null=True)
+	# Key whom job
+	kw_job_1st = models.TextField(blank=True, null=True)
+	kw_job_2nd = models.TextField(blank=True, null=True)
+	kw_job_3rd = models.TextField(blank=True, null=True)
+	# For what job
+	fw_job_1st = models.TextField(blank=True, null=True)
+	fw_job_2nd = models.TextField(blank=True, null=True)
+	fw_job_3rd = models.TextField(blank=True, null=True)
+	# Don't want to go
+	dwt_go_1st = models.TextField(blank=True, null=True)
+	dwt_go_2nd = models.TextField(blank=True, null=True)
+	dwt_go_3rd = models.TextField(blank=True, null=True)
+	# Don't want to think
+	dwt_think_1st = models.TextField(blank=True, null=True)
+	dwt_think_2nd = models.TextField(blank=True, null=True)
+	dwt_think_3rd = models.TextField(blank=True, null=True)
+	# My want
+	want_1st = models.TextField(blank=True, null=True)
+	want_2nd = models.TextField(blank=True, null=True)
+	want_3rd = models.TextField(blank=True, null=True)
+	# My happiness
+	happiness_1st = models.TextField(blank=True, null=True)
+	happiness_2nd = models.TextField(blank=True, null=True)
+	happiness_3rd = models.TextField(blank=True, null=True)
+	# My inportant
+	inportant_1st = models.TextField(blank=True, null=True)
+	inportant_2nd = models.TextField(blank=True, null=True)
+	inportant_3rd = models.TextField(blank=True, null=True)
+	# Not my want
+	n_want_1st = models.TextField(blank=True, null=True)
+	n_want_2nd = models.TextField(blank=True, null=True)
+	n_want_3rd = models.TextField(blank=True, null=True)
+	# Not happiness
+	n_happiness_1st = models.TextField(blank=True, null=True)
+	n_happiness_2nd = models.TextField(blank=True, null=True)
+	n_happiness_3rd = models.TextField(blank=True, null=True)
+	# Not inportant
+	n_inportant_1st = models.TextField(blank=True, null=True)
+	n_inportant_2nd = models.TextField(blank=True, null=True)
+	n_inportant_3rd = models.TextField(blank=True, null=True)
+	# Work
+	work_short = models.TextField(blank=True, null=True)
+	work_medium = models.TextField(blank=True, null=True)
+	work_long = models.TextField(blank=True, null=True)
+	# Development
+	development_short = models.TextField(blank=True, null=True)
+	development_medium = models.TextField(blank=True, null=True)
+	development_long = models.TextField(blank=True, null=True)
+	# Family
+	family_short = models.TextField(blank=True, null=True)
+	family_medium = models.TextField(blank=True, null=True)
+	family_long = models.TextField(blank=True, null=True)
+	# Human
+	human_short = models.TextField(blank=True, null=True)
+	human_medium = models.TextField(blank=True, null=True)
+	human_long = models.TextField(blank=True, null=True)
+	# Health
+	health_short = models.TextField(blank=True, null=True)
+	health_medium = models.TextField(blank=True, null=True)
+	health_long = models.TextField(blank=True, null=True)
+	# Hobby
+	hobby_short = models.TextField(blank=True, null=True)
+	hobby_medium = models.TextField(blank=True, null=True)
+	hobby_long = models.TextField(blank=True, null=True)
+	# Economy
+	economy_short = models.TextField(blank=True, null=True)
+	economy_medium = models.TextField(blank=True, null=True)
+	economy_long = models.TextField(blank=True, null=True)
+	# Etc
+	etc_short = models.TextField(blank=True, null=True)
+	etc_medium = models.TextField(blank=True, null=True)
+	etc_long = models.TextField(blank=True, null=True)
+	# Years old
+	years_old_0_10 = models.TextField(blank=True, null=True)
+	years_old_10_20 = models.TextField(blank=True, null=True)
+	years_old_20_30 = models.TextField(blank=True, null=True)
+	years_old_30_40 = models.TextField(blank=True, null=True)
+	years_old_40_50 = models.TextField(blank=True, null=True)
+	years_old_50_70 = models.TextField(blank=True, null=True)
+	years_old_70_100 = models.TextField(blank=True, null=True)
+
+	flg_finished = models.BooleanField(default=False)
+	
+
+	class Meta:
+		db_table = 'watasheet_type_results'

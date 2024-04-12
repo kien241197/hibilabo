@@ -42,12 +42,12 @@ src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-ada
                                     {% for q in record.q_list %}
                                     <tr>
                                         {% if forloop.counter == 1 %}
-                                            <td>{{ record.label }}</td>
+                                            <td style="white-space: nowrap;">{{ record.label }}</td>
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                         <td>{{ q.question }}</td>
-                                        <td>{{forloop.counter}}</td>
+                                        <td style="width: 8%">{{forloop.counter}}</td>
                                         <td>
                                             <select id=result-{{q.id}} name=selfcheck_answer_{{q.id}} onchange='func_count(this, {{ q_list|safe }});' {{ disabled }}>
                                                 <option value="">-</option>

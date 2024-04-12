@@ -10,7 +10,7 @@
 <!-- コンテンツ -->
 {% block content %}
 <main class="bg-main bg-gray">
-    <section class="site-feedback pd-main">
+    <section class="site-feedback pd-main overflow-auto">
         <div class="container-fluid">
             <div class="row">
                 {% include "component/selfcheck_nav.html" %}
@@ -47,6 +47,22 @@
                                             <th>理念浸透</th>
                                             <th>自己啓発</th>
                                             <th>思考</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>名前</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
                                         </tr>
                                         <tbody>
                                             {% for record in orderby_records %}

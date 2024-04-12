@@ -1,0 +1,157 @@
+.bi-circle-fill {
+
+    fill: #727171;
+}
+
+.number ul li {
+
+    color: #727171;
+    background: #DBDCDC;
+}
+
+.hidden {
+
+    display: none;
+}
+
+.width-年 {
+
+    width: 15px !important;
+    min-width: unset !important;
+    color: #727171;
+}
+.item-content {
+
+    border-bottom: 7px solid #FFFFFF;
+}
+
+.input-team {
+
+    width: 30px;
+    min-width: unset !important;
+    padding-left: unset !important;
+
+}
+
+.content-triangle {
+
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+
+.width-80 {
+
+    width: 95px;
+    letter-spacing: 3px;
+}
+
+h3 {
+
+    font-size: 20pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #727171;
+    font-family: var(--font-text);
+    letter-spacing: 2px;
+}
+
+h4 {
+
+    font-size: 24pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #727171;
+    font-family: var(--font-text);
+    letter-spacing: 2px;
+}
+
+
+.items {
+
+    margin-bottom: 0px;
+}
+
+.right-2 {
+
+    right: 2em;
+}
+
+
+.flex-fill {
+
+    flex: 1;
+}
+
+.white-space {
+
+    white-space: normal;
+}
+
+.break-word {
+
+    word-wrap: break-word;
+}
+
+.content-chart-2 table tr td label span {
+    word-break: break-word;
+}
+
+/*@media (min-width: 900px) {
+    .max-width {
+
+        width: 110px;
+    }
+}*/
+
+@media (min-width: 1200px) {
+
+    .max-width {
+
+        width: 135px;
+    }
+}
+
+@media (min-width: 1100px) {
+
+    .max-width {
+
+        width: 112px;
+    }
+}
+
+@media (min-width: 1300px) {
+
+    .max-width {
+
+        width: 150px;
+    }
+}
+
+@media (min-width: 1390px) {
+
+    .max-width {
+
+        width: 169px;
+    }
+}
+
+@media (min-width: 1430px) {
+
+    .max-width {
+
+        width: 175px;
+    }
+}
+
+@media (min-width: 1600px) {
+
+    .max-width {
+
+        width: 200px;
+    }
+}

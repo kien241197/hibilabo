@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>HIBI_LABOインナーマーケティング</title>
     <!-- ファビコン -->
-	<link rel=”icon” href="{% static 'assets/favicon1.png' %}">
+	<link rel="icon" type="image/x-icon" href="{% static 'assets/favicon1.png' %}">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
     <!-- 互換表示の解除 -->
@@ -32,7 +32,7 @@
         <div class="container">
             <div class="logo">
                 <a href="#">
-                    <img src="{% static 'assets/images/logo.svg' %}" alt="">
+                    <img src="{% static 'assets/images/logo-header-hibi-lab.svg' %}" alt="">
                 </a>
                 <h2>WATASHEET</h2>
             </div>
@@ -45,15 +45,10 @@
                     <li><a href="{% url 'home' %}">TOP</a></li>
                       {% if not user.is_authenticated %}
                          <li>
-                          <a href="{% url 'login' %}">Log in</a>
+                          <a class="border-0" href="{% url 'login' %}">Log in</a>
                          </li>
-                        　<li>
-                          <a href="{% url 'register' %}">Sign up</a>
-                        　</li>
+                        
                       {% else %}
-                         <li>
-                           <a href="#">My Menu</a>
-                         </li>
                          <li>
                            <a href="{% url 'my_info' %}">My Info</a>
                          </li>
@@ -81,9 +76,11 @@
 <footer class="footer">
     <div class="container">
         <div class="text">
-            <p></p>
+                    <img src="{% static 'assets/images/logo-footer-hibi-lab.svg' %}" alt="">
+
+            <!-- <p></p>
             <p>サービス提供：日々研究所</p>
-            <p></p>
+            <p></p> -->
         </div>
     </div>
 </footer>
