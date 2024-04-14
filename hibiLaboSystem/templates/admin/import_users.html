@@ -178,7 +178,7 @@
             `<tr class="parent" onclick="handlecollapse($(this))"><td class="checkpoint">Entries: ${offset} to ${limit}</td><td></td><td></td></tr>`
           );
           
-          const roleUser = {{ user.is_superuser }}
+          const roleUser = {% if user.is_superuser %} true {% else %} false {% endif%}
 
           data.results.forEach((obj) => {
             let style = obj.status == 'ERROR' ? 'red' : 'green';
