@@ -144,6 +144,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
 
     def import_action(self,request):
         company_id = request.user.company_id
+        role_id = Role.objects.filter(role=RoleEnum.Company_Staff.value).first().id
         import_object_status = []
         create_new_characters = []
         if request.method == "POST":
@@ -166,61 +167,39 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                 first_name = row[util_obj.get_column("first_name")]
                 last_name = row[util_obj.get_column("last_name")]
                 password = row[util_obj.get_column("password")]
+
                 if request.user.is_superuser:
                     company_id = row[util_obj.get_column("company")] 
                 else:
                     company_id = company_id
 
                 branch_id = row[util_obj.get_column("branch")] 
-                
-                # checkError = null
-
-                # if request.user.is_superuser:
-                #     checkError = import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
-                #                                 "msg": "username already exist!"})
-                # else:
-                #     checkError = import_object_status.append({"username": username, "branch": branch_id, "status": "ERROR",
-                #                                 "msg": "username already exist!"})
 
                 if User.objects.filter(username=username).exists() or username in array_user:
-                    if request.user.is_superuser:
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
-                                                    "msg": "username already exist!"})
-                    else:
-                        import_object_status.append({"username": username, "branch": branch_id, "status": "ERROR",
-                                                    "msg": "username already exist!"})
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                                "msg": "username already exist!"})
+                                                
                 elif Company.objects.filter(id=company_id).first() is None:
-                    if request.user.is_superuser:
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
-                                                "msg": "company is not already exist!"}) 
-                    else:
-                        import_object_status.append({"username": username, "branch": branch_id, "status": "ERROR",
-                                                    "msg": "company is not already exist!"})
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                            "msg": "company is not already exist!"}) 
+                   
 
                 elif Branch.objects.filter(id=branch_id).first() is None:
-                    if request.user.is_superuser:
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
-                                                "msg": "Branch is not already exist!"})
-                    else:
-                        import_object_status.append({"username": username, "branch": branch_id, "status": "ERROR",
-                                                    "msg": "Branch is not already exist!"})
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                            "msg": "Branch is not already exist!"})
+                   
                 elif Company.objects.filter(id=company_id).first().id != Branch.objects.filter(id=branch_id).first().company.id:
-                    if request.user.is_superuser:
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
-                                                "msg": "The branch must belong to the company!"})
-                    else:
-                        import_object_status.append({"username": username, "branch": branch_id, "status": "ERROR",
-                                                    "msg": "The branch must belong to the company!"})
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                            "msg": "The branch must belong to the company!"})
+                
                 else:
-                    print("Vào đây 3")
                     array_user.append(username)
                     try:
                         for validator in validators:
-                            print("vào đây 4")
                             validator().validate(password)
                         create_new_characters.append(
                             User(
-                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=branch_id
+                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=branch_id, role_id=role_id
                             )
                         )
                         if request.user.is_superuser:
@@ -230,14 +209,9 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                             import_object_status.append({"username": username,"branch": branch_id, "status": "FINISHED",
                                                         "msg": "User created successfully!"})
                     except ValidationError as e:
-                        if request.user.is_superuser:
-                            import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
-                                                    "msg": str(e.args[0])})
-                        else:
-                            import_object_status.append({"username": username, "branch": branch_id, "status": "ERROR",
-                                                    "msg": str(e.args[0])})
-
-
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                                "msg": str(e.args[0])})
+                        
             # bulk create objects
             User.objects.bulk_create(create_new_characters)
             # return the response to the AJAX call
