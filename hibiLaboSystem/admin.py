@@ -169,11 +169,11 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                 password = row[util_obj.get_column("password")]
 
                 if request.user.is_superuser:
-                    company_id = row[util_obj.get_column("company")] 
+                    company_id = row[util_obj.get_column("company_id")] 
                 else:
                     company_id = company_id
 
-                branch_id = row[util_obj.get_column("branch")] 
+                branch_id = row[util_obj.get_column("branch_id")] 
 
                 if User.objects.filter(username=username).exists() or username in array_user:
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
@@ -226,13 +226,13 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             context = {"form": form, "form_title": "Upload users csv file.",
                     "description": "The file should have following headers: "
-                                    "[username,first_name,last_name,password, branch]."
+                                    "[username,first_name,last_name,password, branch_id]."
                                     " The Following rows should contain information for the same.",
                                     "endpoint": "/admin/hibiLaboSystem/user/import/"}
         else: 
             context = {"form": form, "form_title": "Upload users csv file.",
                     "description": "The file should have following headers: "
-                                    "[username,first_name,last_name,password, company, branch]."
+                                    "[username,first_name,last_name,password, company_id, branch_id]."
                                     " The Following rows should contain information for the same.",
                                     "endpoint": "/admin/hibiLaboSystem/user/import/"}
 
