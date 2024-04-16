@@ -4,8 +4,8 @@ from enum import Enum
 from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
+from django.contrib.auth.models import User
 
-# Create your models here.
 
 class SelfcheckRole(models.Model):
 	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
@@ -201,8 +201,7 @@ class User(AbstractUser):
 		if self.branch is not None:
 			if self.company_id != self.branch.company_id:
 				raise ValidationError("支店は会社と一致する必要があります")
-
-
+			
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
 		User, 

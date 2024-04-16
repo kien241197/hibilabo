@@ -14,6 +14,9 @@ from django.db.models import Q
 import json
 from django.core.cache import cache
 from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.shortcuts import redirect
+
 
 # Register your models here.
 CustomeUser = get_user_model()
@@ -119,14 +122,17 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):
+
         if not change:
             obj.created_by = request.user.id
+
         obj.save()
 
     def get_form(self, request, obj=None, **kwargs):
         cache.clear()
+        
         if not request.user.is_superuser:
-            self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'password']
+            self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'password', 'company']
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
 
