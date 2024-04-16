@@ -228,17 +228,23 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         # print(make_password('123456'));
         form = forms.CsvImportForm()
         if not request.user.is_superuser:
-            context = {"form": form, "form_title": "Upload users csv file.",
-                    "description": "The file should have following headers: "
-                                    "[username,first_name,last_name,password, branch_id]."
-                                    " The Following rows should contain information for the same.",
-                                    "endpoint": "/admin/hibiLaboSystem/user/import/"}
+            context = {
+                "form": form, 
+                "form_title": "Upload users csv file.",
+                "description": "The file should have following headers: "
+                                "[username,first_name,last_name,password, branch_id]."
+                                " The Following rows should contain information for the same.",
+                                "endpoint": "/admin/hibiLaboSystem/user/import/",
+            }
         else: 
-            context = {"form": form, "form_title": "Upload users csv file.",
-                    "description": "The file should have following headers: "
-                                    "[username,first_name,last_name,password, company_id, branch_id]."
-                                    " The Following rows should contain information for the same.",
-                                    "endpoint": "/admin/hibiLaboSystem/user/import/"}
+            context = {
+                "form": form, 
+                "form_title": "Upload users csv file.",
+                "description": "The file should have following headers: "
+                                "[username,first_name,last_name,password, company_id, branch_id]."
+                                " The Following rows should contain information for the same.",
+                                "endpoint": "/admin/hibiLaboSystem/user/import/"
+            }
 
         return render(
             request, "admin/import_users.html", context
