@@ -57,6 +57,10 @@
     <tr>
       <th>Username</th>
       <th>Status</th>
+      {% if user.is_superuser %}
+      <th>Company_id</th>
+      {% endif %}
+      <th>Branch_id</th>
       <th>Message</th>
     </tr>
   </table>
@@ -171,11 +175,20 @@
           $("table").append(
             `<tr class="parent" onclick="handlecollapse($(this))"><td class="checkpoint">Entries: ${offset} to ${limit}</td><td></td><td></td></tr>`
           );
+          
+          const roleUser = {% if user.is_superuser %} true {% else %} false {% endif%}
+
           data.results.forEach((obj) => {
             let style = obj.status == 'ERROR' ? 'red' : 'green';
-            $("table").append(
-              `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.msg}</td></tr>`
-            );
+            if(roleUser){
+              $("table").append(
+                `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.company}</td><td>${obj.branch}</td><td>${obj.msg}</td></tr>`
+              );
+            } else {
+              $("table").append(
+                `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.branch}</td><td>${obj.msg}</td></tr>`
+              );
+            }
           });
           deferred.resolve(data);
         },

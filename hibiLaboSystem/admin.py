@@ -146,6 +146,8 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
     def import_action(self,request):
+        company_id = request.user.company_id
+        role_id = Role.objects.filter(role=RoleEnum.Company_Staff.value).first().id
         import_object_status = []
         create_new_characters = []
         if request.method == "POST":
@@ -155,19 +157,45 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             # capture payload from request
             csv_file = json.loads(request.POST.get("file_name"))
             reader = json.loads(request.POST.get("rows"))
+            
             column_headers = json.loads(request.POST.get("csv_headers"))
+            format_column_headers = [row.replace('\r', '') for row in column_headers]
+            
             # helper class for validation and other stuff
             # look into git repo
-            util_obj = utils.ImportUtils(column_headers)
+            util_obj = utils.ImportUtils(format_column_headers)
             array_user = []
             for row in reader:
+                
                 username = row[util_obj.get_column("username")]
                 first_name = row[util_obj.get_column("first_name")]
-                last_name = row[util_obj.get_column("last_name")]
-                password = row[util_obj.get_column("password")]
+                last_name = row[util_obj.get_column("last_name")] 
+                password = row[util_obj.get_column("password")] 
+
+                if request.user.is_superuser:
+                    company_id = row[util_obj.get_column("company_id")] 
+                else:
+                    company_id = company_id
+
+                branch_id = row[util_obj.get_column("branch_id")]
+
                 if User.objects.filter(username=username).exists() or username in array_user:
-                    import_object_status.append({"username": username, "status": "ERROR",
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
                                                 "msg": "username already exist!"})
+                                                
+                elif Company.objects.filter(id=company_id).first() is None:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                            "msg": "company is not already exist!"}) 
+                   
+
+                elif Branch.objects.filter(id=branch_id ).first() is None:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                            "msg": "Branch is not already exist!"})
+                   
+                elif Company.objects.filter(id=company_id).first().id != Branch.objects.filter(id=branch_id).first().company.id:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                            "msg": "The branch must belong to the company!"})
+                
                 else:
                     array_user.append(username)
                     try:
@@ -175,15 +203,19 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                             validator().validate(password)
                         create_new_characters.append(
                             User(
-                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name
+                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=branch_id, role_id=role_id
                             )
                         )
-                        import_object_status.append({"username": username, "status": "FINISHED",
-                                                    "msg": "User created successfully!"})
+                        if request.user.is_superuser:
+                            import_object_status.append({"username": username, "company": company_id, "branch": branch_id,"status": "FINISHED",
+                                                        "msg": "User created successfully!"})
+                        else:
+                            import_object_status.append({"username": username,"branch": branch_id, "status": "FINISHED",
+                                                        "msg": "User created successfully!"})
                     except ValidationError as e:
-                        import_object_status.append({"username": username, "status": "ERROR",
-                                                    "msg": str(e.args[0])})
-
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                                                "msg": str(e.args[0])})
+                        
             # bulk create objects
             User.objects.bulk_create(create_new_characters)
             # return the response to the AJAX call
@@ -195,11 +227,19 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             return HttpResponse(json.dumps(context), content_type="application/json")
         # print(make_password('123456'));
         form = forms.CsvImportForm()
-        context = {"form": form, "form_title": "Upload users csv file.",
+        if not request.user.is_superuser:
+            context = {"form": form, "form_title": "Upload users csv file.",
                     "description": "The file should have following headers: "
-                                    "[username,first_name,last_name,password]."
+                                    "[username,first_name,last_name,password, branch_id]."
                                     " The Following rows should contain information for the same.",
                                     "endpoint": "/admin/hibiLaboSystem/user/import/"}
+        else: 
+            context = {"form": form, "form_title": "Upload users csv file.",
+                    "description": "The file should have following headers: "
+                                    "[username,first_name,last_name,password, company_id, branch_id]."
+                                    " The Following rows should contain information for the same.",
+                                    "endpoint": "/admin/hibiLaboSystem/user/import/"}
+
         return render(
             request, "admin/import_users.html", context
         )
@@ -250,7 +290,7 @@ class BranchAdmin(admin.ModelAdmin):
         qs = super(BranchAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
             return qs.filter(company_id=request.user.company_id)
-        return qs
+        return qs    
 
 
 admin.site.register(Company, CompanyAdmin)
