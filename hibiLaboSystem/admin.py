@@ -17,6 +17,10 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import redirect
 
+import threading
+
+thread_local = threading.local()
+
 
 # Register your models here.
 CustomeUser = get_user_model()
@@ -111,7 +115,8 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_filter = ['company']
     exclude = ['created_by', 'password']
     actions = []
-    
+    success = True
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "branch":
             if request.user.is_superuser:
@@ -120,17 +125,21 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                 if request.user.company_id:
                     kwargs["queryset"] = Branch.objects.filter(company_id=request.user.company_id)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+   
 
     def save_model(self, request, obj, form, change):
-
         if not change:
             obj.created_by = request.user.id
-
-        obj.save()
-
-    def get_form(self, request, obj=None, **kwargs):
-        cache.clear()
         
+        if not request.user.is_superuser:
+            obj.clean(current_user=request.user)
+        
+        obj.save()
+               
+    def get_form(self, request, obj=None, **kwargs):
+
+        cache.clear()
+
         if not request.user.is_superuser:
             self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'password', 'company']
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)

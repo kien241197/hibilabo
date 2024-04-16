@@ -5,6 +5,8 @@ from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+
 
 
 class SelfcheckRole(models.Model):
@@ -197,10 +199,17 @@ class User(AbstractUser):
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
 
-	def clean(self):
+	def clean(self, current_user=None, password=None):
 		if self.branch is not None:
-			if self.company_id != self.branch.company_id:
-				raise ValidationError("支店は会社と一致する必要があります")
+			if current_user:
+				if current_user.company_id != self.branch.company_id:
+					raise ValidationError("支店は会社と一致する必要があります")
+			else:
+				if self.company_id  != self.branch.company_id:
+					raise ValidationError("支店は会社と一致する必要があります")
+				
+
+		
 			
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
