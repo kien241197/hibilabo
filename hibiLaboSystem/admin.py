@@ -113,7 +113,7 @@ class RoleCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company']
-    exclude = ['created_by', 'password', ]
+    exclude = ['created_by', ]
     actions = []
     success = True
 
@@ -130,7 +130,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not change:
             obj.created_by = request.user.id
-            # obj.password = make_password(obj.password)
+            obj.password = make_password(obj.password)
         # else:
         #     user = User.objects.filter(id=obj.id).first()
         #     if user.password != obj.password:
@@ -139,15 +139,22 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             obj.company_id = request.user.company_id
             obj.add(request.user.company_id)
-            
+
         obj.save()
                
     def get_form(self, request, obj=None, **kwargs):
 
         cache.clear()
+        obj = obj.id if obj else False
 
-        if not request.user.is_superuser:
-            self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'password', 'company']
+        if obj:
+            if not request.user.is_superuser:
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', ]
+
+        else:
+            if not request.user.is_superuser:
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', ]
+
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
 
