@@ -112,7 +112,7 @@ class RoleCustom(admin.ModelAdmin):
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
-    list_filter = ['company']
+    list_filter = ['company',]
     exclude = ['created_by', ]
     actions = []
     success = True
@@ -168,8 +168,9 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         cache.clear()
+        
         if not request.user.is_superuser:
-            self.list_display = ["id", "username", "branch"]
+            self.list_display = ["id", "username", "branch", "role", ]
             self.actions = ['update_branch']
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
