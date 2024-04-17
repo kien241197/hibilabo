@@ -199,7 +199,7 @@ class User(AbstractUser):
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
 
-	def clean(self, current_user=None, password=None):
+	def clean(self, current_user=None):
 		if self.branch is not None:
 			if current_user:
 				if current_user.company_id != self.branch.company_id:
@@ -208,9 +208,6 @@ class User(AbstractUser):
 				if self.company_id  != self.branch.company_id:
 					raise ValidationError("支店は会社と一致する必要があります")
 				
-
-		
-			
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
 		User, 
@@ -1272,6 +1269,5 @@ class WatasheetTypeResult(models.Model):
 
 	flg_finished = models.BooleanField(default=False)
 	
-
 	class Meta:
 		db_table = 'watasheet_type_results'
