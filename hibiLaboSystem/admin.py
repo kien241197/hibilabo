@@ -132,7 +132,8 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             obj.created_by = request.user.id
         
         if not request.user.is_superuser:
-            obj.clean(current_user=request.user)
+            obj.company_id = request.user.company_id
+            obj.add(request.user.company_id)
         
         obj.save()
                

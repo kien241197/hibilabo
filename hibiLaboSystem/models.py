@@ -199,14 +199,13 @@ class User(AbstractUser):
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
 
-	def clean(self, current_user=None):
-		if self.branch is not None:
-			if current_user:
-				if current_user.company_id != self.branch.company_id:
-					raise ValidationError("支店は会社と一致する必要があります")
-			else:
-				if self.company_id  != self.branch.company_id:
-					raise ValidationError("支店は会社と一致する必要があります")
+	def add(self, company_id=None):
+		self.company_id = company_id
+
+	def clean(self):
+		if self.branch and self.company_id:
+			if self.company_id != self.branch.company_id:
+				raise ValidationError("支店は会社と一致する必要があります")
 				
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
