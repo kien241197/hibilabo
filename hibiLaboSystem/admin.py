@@ -30,18 +30,75 @@ class HonneEvaluationPeriodInline(admin.TabularInline):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+
+    def has_delete_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+    
+    def has_add_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+        
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return ["evaluation_name", "honne_questions", "company"]
+        else: 
+            return []
+
+
 class SelfcheckEvaluationPeriodInline(admin.TabularInline):
     model = SelfcheckEvaluationPeriod
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+
+    def has_delete_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+    
+    def has_add_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return ["evaluation_name", "selfcheck_questions", "company"]
+        else: 
+            return []
+    
 class BonknowEvaluationPeriodInline(admin.TabularInline):
     model = BonknowEvaluationPeriod
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+
+    def has_delete_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+    
+    def has_add_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return ["evaluation_name", "respons_questions", "company", "think_questions"]
+        else: 
+            return []
 class UserInline(admin.TabularInline):
     model = User
     fields = ['username', 'first_name', 'last_name', 'email', 'role']
@@ -63,6 +120,23 @@ class MandaraPeriosInline(admin.TabularInline):
     # formfield_overrides = {
     #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     # }
+    def has_delete_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+    
+    def has_add_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+        
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return ["company"]
+        else: 
+            return []
 
 class WatasheetInline(admin.TabularInline):
     model = WatasheetEvaluationPeriod
@@ -71,6 +145,24 @@ class WatasheetInline(admin.TabularInline):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+
+    def has_delete_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+    
+    def has_add_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        else:
+            return True
+
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return ["company", "evaluation_name", "watasheet_questions"]
+        else: 
+            return []
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
@@ -91,9 +183,9 @@ class CompanyAdmin(admin.ModelAdmin):
         cache.clear()
         if not request.user.is_superuser:
             self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner"]
-            self.inlines = []
+            # self.inlines = []
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
-        return form
+        return form        
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
     list_filter = ["selfcheck_roles", "selfcheck_industries"]
