@@ -45,7 +45,7 @@ class HonneEvaluationPeriodInline(admin.TabularInline):
         
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["evaluation_name", "honne_questions", "company"]
+            return ["evaluation_name", "honne_questions"]
         else: 
             return []
         
@@ -78,7 +78,7 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["evaluation_name", "selfcheck_questions", "company"]
+            return ["evaluation_name", "selfcheck_questions"]
         else: 
             return []
     
@@ -110,7 +110,7 @@ class BonknowEvaluationPeriodInline(admin.TabularInline):
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["evaluation_name", "respons_questions", "company", "think_questions"]
+            return ["evaluation_name", "respons_questions", "think_questions"]
         else: 
             return []
         
@@ -153,12 +153,6 @@ class MandaraPeriosInline(admin.TabularInline):
             return False
         else:
             return True
-        
-    def get_readonly_fields(self, request, obj=None):
-        if not request.user.is_superuser:
-            return ["company"]
-        else: 
-            return []
     
     def get_queryset(self, request):
         qs = super(MandaraPeriosInline, self).get_queryset(request)
@@ -189,7 +183,7 @@ class WatasheetInline(admin.TabularInline):
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["company", "evaluation_name", "watasheet_questions"]
+            return ["evaluation_name", "watasheet_questions"]
         else: 
             return []
     
@@ -203,7 +197,7 @@ class WatasheetInline(admin.TabularInline):
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
     exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", ]
-    inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline, UserInline]
+    inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline]
     def save_model(self, request, obj, form, change):
         if not change:
             obj.created_by = request.user.id
