@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from import_export.admin import ImportMixin
 from django.contrib.auth.hashers import make_password, check_password
@@ -16,7 +16,7 @@ from django.core.cache import cache
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import redirect
-
+import datetime
 import threading
 
 thread_local = threading.local()
@@ -48,6 +48,13 @@ class HonneEvaluationPeriodInline(admin.TabularInline):
             return ["evaluation_name", "honne_questions", "company"]
         else: 
             return []
+        
+    def get_queryset(self, request):
+        qs = super(HonneEvaluationPeriodInline, self).get_queryset(request)
+        if not request.user.is_superuser:
+            today = datetime.date.today()
+            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+        return qs
 
 
 class SelfcheckEvaluationPeriodInline(admin.TabularInline):
@@ -75,6 +82,13 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
         else: 
             return []
     
+    def get_queryset(self, request):
+        qs = super(SelfcheckEvaluationPeriodInline, self).get_queryset(request)
+        if not request.user.is_superuser:
+            today = datetime.date.today()
+            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+        return qs
+    
 class BonknowEvaluationPeriodInline(admin.TabularInline):
     model = BonknowEvaluationPeriod
     extra = 0  # Number of empty forms to display
@@ -99,6 +113,14 @@ class BonknowEvaluationPeriodInline(admin.TabularInline):
             return ["evaluation_name", "respons_questions", "company", "think_questions"]
         else: 
             return []
+        
+    def get_queryset(self, request):
+        qs = super(BonknowEvaluationPeriodInline, self).get_queryset(request)
+        if not request.user.is_superuser:
+            today = datetime.date.today()
+            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+        return qs
+    
 class UserInline(admin.TabularInline):
     model = User
     fields = ['username', 'first_name', 'last_name', 'email', 'role']
@@ -137,6 +159,13 @@ class MandaraPeriosInline(admin.TabularInline):
             return ["company"]
         else: 
             return []
+    
+    def get_queryset(self, request):
+        qs = super(MandaraPeriosInline, self).get_queryset(request)
+        if not request.user.is_superuser:
+            today = datetime.date.today()
+            return qs.filter(start_date__lte=today, end_date__gte=today)
+        return qs
 
 class WatasheetInline(admin.TabularInline):
     model = WatasheetEvaluationPeriod
@@ -163,6 +192,13 @@ class WatasheetInline(admin.TabularInline):
             return ["company", "evaluation_name", "watasheet_questions"]
         else: 
             return []
+    
+    def get_queryset(self, request):
+        qs = super(WatasheetInline, self).get_queryset(request)
+        if not request.user.is_superuser:
+            today = datetime.date.today()
+            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+        return qs
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
