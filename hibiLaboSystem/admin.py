@@ -6,7 +6,7 @@ from import_export.admin import ImportMixin
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import ValidationError
 from . import forms, utils, validate
-from django.forms import CheckboxSelectMultiple
+from django.forms import CheckboxSelectMultiple, SelectMultiple
 from django.db import models
 from .models import *
 from django.contrib.auth.admin import UserAdmin
@@ -26,29 +26,27 @@ thread_local = threading.local()
 CustomeUser = get_user_model()
 class HonneEvaluationPeriodInline(admin.TabularInline):
     model = HonneEvaluationPeriod
+    fields = ["evaluation_name", "evaluation_start", "evaluation_end", "honne_questions"]
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+    readonly_fields = []
 
     def has_delete_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
     
     def has_add_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
         
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["evaluation_name", "honne_questions"]
-        else: 
-            return []
-        
+            self.readonly_fields = ["evaluation_name"]
+            self.formfield_overrides = {
+                models.ManyToManyField: {'widget': CheckboxSelectMultiple(attrs={'disabled':'disabled'})},
+            }       
+        return self.readonly_fields
+            
     def get_queryset(self, request):
         qs = super(HonneEvaluationPeriodInline, self).get_queryset(request)
         if not request.user.is_superuser:
@@ -59,28 +57,26 @@ class HonneEvaluationPeriodInline(admin.TabularInline):
 
 class SelfcheckEvaluationPeriodInline(admin.TabularInline):
     model = SelfcheckEvaluationPeriod
+    fields = ["evaluation_name", "evaluation_start", "evaluation_end", "selfcheck_questions"]
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+    readonly_fields = []
 
     def has_delete_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
     
     def has_add_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["evaluation_name", "selfcheck_questions"]
-        else: 
-            return []
+            self.readonly_fields = ["evaluation_name"]
+            self.formfield_overrides = {
+                models.ManyToManyField: {'widget': CheckboxSelectMultiple(attrs={'disabled':'disabled'})},
+            } 
+        return self.readonly_fields
     
     def get_queryset(self, request):
         qs = super(SelfcheckEvaluationPeriodInline, self).get_queryset(request)
@@ -91,28 +87,27 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
     
 class BonknowEvaluationPeriodInline(admin.TabularInline):
     model = BonknowEvaluationPeriod
+    fields = ["evaluation_name", "evaluation_start", "evaluation_end", "respons_questions", "think_questions"]
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+    readonly_fields = []
 
     def has_delete_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
+            
     
     def has_add_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["evaluation_name", "respons_questions", "think_questions"]
-        else: 
-            return []
+            self.readonly_fields = ["evaluation_name"]
+            self.formfield_overrides = {
+                models.ManyToManyField: {'widget': CheckboxSelectMultiple(attrs={'disabled':'disabled'})},
+            } 
+        return self.readonly_fields
         
     def get_queryset(self, request):
         qs = super(BonknowEvaluationPeriodInline, self).get_queryset(request)
@@ -143,16 +138,10 @@ class MandaraPeriosInline(admin.TabularInline):
     #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     # }
     def has_delete_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
     
     def has_add_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
     
     def get_queryset(self, request):
         qs = super(MandaraPeriosInline, self).get_queryset(request)
@@ -160,32 +149,32 @@ class MandaraPeriosInline(admin.TabularInline):
             today = datetime.date.today()
             return qs.filter(start_date__lte=today, end_date__gte=today)
         return qs
+    
+        
 
 class WatasheetInline(admin.TabularInline):
     model = WatasheetEvaluationPeriod
-    # fields = ['start_date', 'end_date', 'company_id']
+    fields = ["evaluation_name", "evaluation_start", "evaluation_end", "watasheet_questions"]
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+    readonly_fields = []
 
     def has_delete_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
     
     def has_add_permission(self, request, obj=None):
-        if not request.user.is_superuser:
-            return False
-        else:
-            return True
+        return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["evaluation_name", "watasheet_questions"]
-        else: 
-            return []
+            self.readonly_fields = ["evaluation_name"]
+            self.formfield_overrides = {
+                models.ManyToManyField: {'widget': CheckboxSelectMultiple(attrs={'disabled':'disabled'})},
+            } 
+        return self.readonly_fields
+
     
     def get_queryset(self, request):
         qs = super(WatasheetInline, self).get_queryset(request)
@@ -215,7 +204,10 @@ class CompanyAdmin(admin.ModelAdmin):
             self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner"]
             # self.inlines = []
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
-        return form        
+        return form   
+
+    # def formfield_for_manytomany(self, db_field, request, **kwargs):
+    #     print(db_field.name)     
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
     list_filter = ["selfcheck_roles", "selfcheck_industries"]
