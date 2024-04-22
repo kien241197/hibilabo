@@ -423,9 +423,17 @@ class BranchAdmin(admin.ModelAdmin):
         qs = super(BranchAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
             return qs.filter(company_id=request.user.company_id)
-        return qs    
+        return qs  
 
+class SelfcheckRoleCompanyAdmin(admin.ModelAdmin):
+    model = SelfcheckRoleCompany
+    extra = 0
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+        
 
+admin.site.register(SelfcheckRoleCompany, SelfcheckRoleCompanyAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
 admin.site.register(Branch, BranchAdmin)
@@ -441,6 +449,7 @@ admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)
 # Watasheet
 admin.site.register(WatasheetQuestion)
+
 
 
 

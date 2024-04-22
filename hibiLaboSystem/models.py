@@ -207,7 +207,39 @@ class User(AbstractUser):
 		if self.branch and self.company_id:
 			if self.company_id != self.branch.company_id:
 				raise ValidationError("支店は会社と一致する必要があります")
-				
+			
+class SelfcheckRoleCompany(models.Model):
+	company = models.OneToOneField(
+        Company,
+		related_name='companies',
+        on_delete=models.SET_NULL,
+		blank=True,
+		null=True,
+	    verbose_name='相棒'
+    )
+
+	role = models.ForeignKey(
+        Role,
+		on_delete=models.SET_NULL,
+	    related_name='roles',
+	    blank=True,
+	    null=True,
+	    verbose_name='役割'
+    )
+
+	selfcheck_roles = models.ManyToManyField(
+		SelfcheckRole,
+	    related_name='selfcheck_roles',
+	    blank=True,
+	    verbose_name = 'Selfcheck Roles'
+	)
+
+	class Meta:
+		verbose_name = 'Selfcheck Roles Company'
+	
+	def __str__(self):
+		return str(self.company)
+	
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
 		User, 
