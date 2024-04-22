@@ -1154,3 +1154,15 @@ select {
   background: #EFE9A2;
 }
 /*# sourceMappingURL=style.css.map */
+@media screen and (max-width: 1450px) {
+  .width-80 {
+
+    width: 100px;
+  }
+  
+  .content-box .items .title-box h3{
+    white-space: nowrap;
+
+    font-size: 13pt;
+  }
+}

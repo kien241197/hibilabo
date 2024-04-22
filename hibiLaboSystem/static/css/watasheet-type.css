@@ -23,3 +23,7 @@
     cursor: pointer;
     font-weight: bold;
 }
+
+.max-width {
+    width: 160px;
+}

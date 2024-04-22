@@ -668,9 +668,10 @@ select {
   vertical-align: middle;
   text-align: center; }
   @media screen and (min-width: 1200px) {
+    .honne-table table tr th {
+      white-space: unset !important; }
     .content-chart-2 table tr th {
       white-space: nowrap; } }
-
 .content-chart-2 .table2 tr td {
   font-size: 150%;
   font-weight: bold;
@@ -1151,9 +1152,11 @@ select {
     .feedback-content .content-chart table tr:nth-child(2n+2) td {
       background: transparent; }
   .feedback-content .content-chart-vetical table tr th {
-    -webkit-writing-mode: vertical-rl;
+     /* writing-mode: vertical-rl; 
+     -webkit-writing-mode: vertical-rl;
         -ms-writing-mode: tb-rl;
-            writing-mode: vertical-rl;
+        -moz-writing-mode: vertical-rl;  */
+
     text-orientation: mixed; }
   .feedback-content .images {
     margin-bottom: 30px;
@@ -1204,6 +1207,19 @@ select {
   float: left;
 }
 
+.nav-bonknow .nav-link.active {
+  color: #fff;
+  background-color: #0dc5ce;
+}
+.bg-title-custom {
+  background: #EFE9A2;
+}
+
+
+.btn-yellow-user {
+  background: var(--color-yellow) !important; }
+/*# sourceMappingURL=style.css.map */
+
 @media (min-width: 768px) {
   .col-sm-5-cols {
       width: 20%;
@@ -1218,15 +1234,5 @@ select {
   }
 }
 
-.nav-bonknow .nav-link.active {
-  color: #fff;
-  background-color: #0dc5ce;
-}
-.bg-title-custom {
-  background: #EFE9A2;
-}
 
 
-.btn-yellow-user {
-  background: var(--color-yellow) !important; }
-/*# sourceMappingURL=style.css.map */
