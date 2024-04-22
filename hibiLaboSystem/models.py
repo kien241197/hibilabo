@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.utils.html import format_html
 
 
 
@@ -255,7 +256,7 @@ class HonneQuestion(models.Model):
 		db_table = 'honne_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html('\n - '  + str(self.question))
 
 class HonneEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
@@ -423,7 +424,7 @@ class SelfcheckQuestion(models.Model):
 		db_table = 'selfcheck_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html('\n - '  + str(self.question))
 
 class SelfcheckEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
@@ -580,7 +581,7 @@ class ResponsQuestion(models.Model):
 		db_table = 'respons_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html('\n - ' + str(self.question))
 
 class ThinkQuestion(models.Model):
 	class Meta:
@@ -603,7 +604,7 @@ class ThinkQuestion(models.Model):
 		db_table = 'think_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html("\n - " + str(self.question))
 
 class BonknowEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
@@ -1049,7 +1050,7 @@ class WatasheetQuestion(models.Model):
 		db_table = 'watasheet_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html("\n - " + str(self.question))
 
 class WatasheetEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
