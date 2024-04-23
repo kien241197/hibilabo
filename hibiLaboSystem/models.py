@@ -7,6 +7,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.utils.html import format_html
+from django.core.validators import MaxValueValidator
+
 
 
 
@@ -103,9 +105,9 @@ class Company(models.Model):
 	# Team concept
 	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
 	# Team vision
-	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM VISION)", max_length=255)
-	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM VISION)", max_length=255)
-	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM VISION)", max_length=255)
+	team_vision_1_year = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください")], verbose_name="1年後 (TEAM VISION)")
+	team_vision_5_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください")], verbose_name="5年後 (TEAM VISION)")
+	team_vision_10_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください")], verbose_name="10年後 (TEAM VISION)")
 	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VISION)")
 	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (TEAM VISION)")
 	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (TEAM VISION)")
@@ -132,6 +134,7 @@ class Company(models.Model):
 
 	def __str__(self):
 		return f"{self.name}"
+
 
 class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
