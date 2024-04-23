@@ -81,7 +81,7 @@ function func_count(elem, listQ){
                 // ポイントラベル
                 pointLabels: {
                 color: 'black',
-                backdropColor: '#f5f5f5',
+                backdropColor: '#ffffff',
                 backdropPadding: 5,
                 padding: 20,
                 },
@@ -153,7 +153,7 @@ function func_count(elem, listQ){
                 // ポイントラベル
                 pointLabels: {
                 color: 'black',
-                backdropColor: '#f5f5f5',
+                backdropColor: '#ffffff',
                 backdropPadding: 5,
                 padding: 20,
                 },
