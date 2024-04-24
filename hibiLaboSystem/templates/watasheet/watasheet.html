@@ -626,9 +626,6 @@
                                             <ul class="position-relative">
                                                 <li class="d-flex align-items-center">
                                                     <div class="width-80">（1年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_1_year" type="number" onKeyPress="if(this.value.length==2) return false;" maxlength="2" value="{{watasheet_type_result.vision_1_year|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span>
-                                                    {% if error %}
-                                                        <p>không thành công</p>
-                                                    {% endif%}
                                                 </li>
                                                 <li class="d-flex align-items-center">
                                                     <div class="width-80">（5年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_5_years" type="number" onKeyPress="if(this.value.length==2) return false;" maxlength="2" value="{{watasheet_type_result.vision_5_years|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_2nd" value="{{watasheet_type_result.vision_2nd}}"></span>
