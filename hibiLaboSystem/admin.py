@@ -18,6 +18,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 import datetime
 import threading
+import jaconv
 
 thread_local = threading.local()
 
@@ -174,6 +175,7 @@ class CompanyAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not change:
             obj.created_by = request.user.id
+        
         obj.save()
 
     def get_queryset(self, request):

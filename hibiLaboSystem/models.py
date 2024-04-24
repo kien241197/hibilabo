@@ -5,12 +5,8 @@ from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 from django.utils.html import format_html
 from django.core.validators import MaxValueValidator, MinValueValidator
-
-
-
 
 class SelfcheckRole(models.Model):
 	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
@@ -1170,9 +1166,9 @@ class WatasheetTypeResult(models.Model):
 	vision_1st = models.TextField(blank=True, null=True)
 	vision_2nd = models.TextField(blank=True, null=True)
 	vision_3rd = models.TextField(blank=True, null=True)
-	vision_1_year = models.TextField(blank=True, null=True)
-	vision_5_years = models.TextField(blank=True, null=True)
-	vision_10_years = models.TextField(blank=True, null=True)
+	vision_1_year = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
+	vision_5_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
+	vision_10_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
 	# My mission
 	mission_1st = models.TextField(blank=True, null=True)
 	mission_2nd = models.TextField(blank=True, null=True)

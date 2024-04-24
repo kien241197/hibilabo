@@ -102,6 +102,23 @@ h4 {
     word-break: break-word;
 }
 
+/*@media (min-width: 900px) {
+    .max-width {
+
+        width: 110px;
+    }
+}*/
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 @media (min-width: 1200px) {
 
     .max-width {
