@@ -5,12 +5,8 @@ from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 from django.utils.html import format_html
 from django.core.validators import MaxValueValidator, MinValueValidator
-
-
-
 
 class SelfcheckRole(models.Model):
 	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
