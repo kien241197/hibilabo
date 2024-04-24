@@ -111,12 +111,13 @@ h4 {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  -webkit-appearance: none !important;
   margin: 0;
 }
 
 input[type=number] {
-    -moz-appearance: textfield;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
 }
 
 @media (min-width: 1200px) {
