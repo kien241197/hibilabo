@@ -92,7 +92,7 @@ $(document).ready(function() {
     }
 
      if (cleanHashValue !== "team-concept" && cleanHashValue !== "my-concept") {
-            $('.container-checkbox').addClass("hidden")
+            $('.container-checkbox').removeClass("hidden")
         }
 
     // Xử lý sự kiện click cho các button tab
