@@ -73,7 +73,7 @@ function drwa_chart(chatValue){
                 // ポイントラベル
                 pointLabels: {
                     color: 'black',
-                    backdropColor: '#f5f5f5',
+                    backdropColor: '#ffffff',
                     font: 10,
 
                 },

@@ -32,13 +32,7 @@ import os
 from django.template.loader import get_template
 import pdfkit
 from django.db.models import Q
-from django.template.defaulttags import register
-
-@register.filter(name='split')
-def split(value, key): 
- 
-    value.split("key")
-    return value.split(key)
+import jaconv
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
@@ -917,7 +911,7 @@ class BonknowSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('answer')[:1]
-        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
+        ).filter((Q(apply_start_date__lte=datetime.date.today()) | Q(apply_start_date__isnull=True)) & ( Q(apply_end_date__isnull=True) | Q(apply_end_date__gte=datetime.date.today()))).order_by('sort_no')
 
         obj = ResponsResult.objects.filter(
             company_id=company_id,
@@ -943,7 +937,7 @@ class BonknowSheet(TemplateView):
                 company_id=company_id,
                 user_id=user_id
             ).values('answer')[:1]
-        ).filter(apply_start_date__lte=datetime.date.today(),apply_end_date__gte=datetime.date.today()).order_by('sort_no')
+        ).filter((Q(apply_start_date__lte=datetime.date.today()) | Q(apply_start_date__isnull=True)) & ( Q(apply_end_date__isnull=True) | Q(apply_end_date__gte=datetime.date.today()))).order_by('sort_no')
 
         kwargs = super(BonknowSheet, self).get_context_data(**kwargs)
         kwargs['evaluation_unit'] = evaluation_unit
@@ -1971,6 +1965,12 @@ class Watasheet(TemplateView):
                 watasheet_type_result.watasheet_type_e = types['E']
                 watasheet_type_result.watasheet_type_f = types['F']
                 watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
+                if form.cleaned_data['vision_1_year']:
+                    watasheet_type_result.vision_1_year = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_1_year']))
+                if form.cleaned_data['vision_5_years']:
+                    watasheet_type_result.vision_5_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_5_years']))
+                if form.cleaned_data['vision_10_years']:
+                    watasheet_type_result.vision_10_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_10_years']))
                 watasheet_type_result.save()
                 
         else:

@@ -12,6 +12,9 @@ from django.core.files.base import ContentFile
 from image_cropping import ImageRatioField
 from django.core.files.storage import FileSystemStorage
 # Create your models here.
+from django.contrib.auth.models import User
+from django.utils.html import format_html
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class SelfcheckRole(models.Model):
 	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
@@ -106,9 +109,9 @@ class Company(models.Model):
 	# Team concept
 	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
 	# Team vision
-	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM VISION)", max_length=255)
-	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM VISION)", max_length=255)
-	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM VISION)", max_length=255)
+	team_vision_1_year = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="1年後 (TEAM VISION)")
+	team_vision_5_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="5年後 (TEAM VISION)")
+	team_vision_10_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="10年後 (TEAM VISION)")
 	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VISION)")
 	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (TEAM VISION)")
 	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (TEAM VISION)")
@@ -129,18 +132,19 @@ class Company(models.Model):
 	team_action_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM ACTION)")
 
 	class Meta:
-			db_table = "companies"
-			verbose_name = '会社'
-			verbose_name_plural = '会社'
+		db_table = "companies"
+		verbose_name = '会社'
+		verbose_name_plural = '会社'
 
 	def __str__(self):
 		return f"{self.name}"
+
 
 class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
 	company = models.ForeignKey(
 	    Company,
-	    on_delete=models.CASCADE,
+	    on_delete=models.SET_NULL,
 	    related_name='branches',
 	    blank=True,
 	    null=True
@@ -148,6 +152,8 @@ class Branch(models.Model):
 
 	class Meta:
 		db_table = "branches"
+		verbose_name = '支店'
+		verbose_name_plural = '支店'
 
 	def __str__(self):
 		return f"{self.name}"
@@ -195,7 +201,7 @@ class User(AbstractUser):
 	)
 	branch = models.ForeignKey(
 	    Branch,
-	    on_delete=models.DO_NOTHING,
+	    on_delete=models.SET_NULL,
 	    related_name='users',
 	    blank=True,
 	    null=True,
@@ -227,13 +233,14 @@ class User(AbstractUser):
 	def __str__(self):
 		return f"{self.last_name + self.first_name}"
 
-	def save(self, *args, **kwargs):
-		super().save(*args, **kwargs)
-		if self.image:
-			crop_to_460x430(self.image.path)
+	def add(self, company_id=None):
+		self.company_id = company_id
 
-		
-
+	def clean(self):
+		if self.branch and self.company_id:
+			if self.company_id != self.branch.company_id:
+				raise ValidationError("支店は会社と一致する必要があります")
+				
 class Hierarchy(models.Model):
 	boss = models.ForeignKey(
 		User, 
@@ -282,7 +289,7 @@ class HonneQuestion(models.Model):
 		db_table = 'honne_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html('\n - '  + str(self.question))
 
 class HonneEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
@@ -425,7 +432,7 @@ class SelfcheckQuestion(models.Model):
 				(4, '広報力'), #circle
 				(5, '連携力'), #square
 				(6, '人間関係'), #triangle
-				(7, '患者対応'), #square
+				(7, '対応'), #square
 				(8, 'チームワーク力'), #triangle
 				(9, '総合管理'), #circle
 				(10, '理念浸透'), #circle
@@ -450,7 +457,7 @@ class SelfcheckQuestion(models.Model):
 		db_table = 'selfcheck_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html('\n - '  + str(self.question))
 
 class SelfcheckEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
@@ -607,7 +614,7 @@ class ResponsQuestion(models.Model):
 		db_table = 'respons_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html('\n - ' + str(self.question))
 
 class ThinkQuestion(models.Model):
 	class Meta:
@@ -630,7 +637,7 @@ class ThinkQuestion(models.Model):
 		db_table = 'think_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html("\n - " + str(self.question))
 
 class BonknowEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
@@ -1076,7 +1083,7 @@ class WatasheetQuestion(models.Model):
 		db_table = 'watasheet_questions'
 
 	def __str__(self):
-		return str(self.question)
+		return format_html("\n - " + str(self.question))
 
 class WatasheetEvaluationPeriod(models.Model):
 	company = models.ForeignKey(
@@ -1193,9 +1200,9 @@ class WatasheetTypeResult(models.Model):
 	vision_1st = models.TextField(blank=True, null=True)
 	vision_2nd = models.TextField(blank=True, null=True)
 	vision_3rd = models.TextField(blank=True, null=True)
-	vision_1_year = models.TextField(blank=True, null=True)
-	vision_5_years = models.TextField(blank=True, null=True)
-	vision_10_years = models.TextField(blank=True, null=True)
+	vision_1_year = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
+	vision_5_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
+	vision_10_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
 	# My mission
 	mission_1st = models.TextField(blank=True, null=True)
 	mission_2nd = models.TextField(blank=True, null=True)
@@ -1295,6 +1302,5 @@ class WatasheetTypeResult(models.Model):
 
 	flg_finished = models.BooleanField(default=False)
 	
-
 	class Meta:
 		db_table = 'watasheet_type_results'

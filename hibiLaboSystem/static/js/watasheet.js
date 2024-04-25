@@ -17,11 +17,14 @@ $(document).ready(function() {
 
     const hashValue = window.location.hash;
     const cleanHashValue = hashValue.slice(1);
+    console.log("hashValue", hashValue)
+    
 
     $('.tab-pane fade').removeClass('show active');
     $('.button-tab').removeClass('active');
 
-    if (cleanHashValue === "team-concept" || !cleanHashValue) {
+    if (cleanHashValue === "team-concept" || !hashValue) {
+        $('.container-checkbox').addClass("hidden")
         $('#nav-tab-0').addClass("active")
         $('#nav-tab-0').css("color", "white")
         $('#nav-0').addClass('show active');
