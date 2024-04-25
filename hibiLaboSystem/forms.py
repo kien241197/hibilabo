@@ -7,6 +7,7 @@ import datetime
 from . import models, fields
 from .enums import *
 from image_cropping import ImageCropField, ImageRatioField, ImageCropWidget
+import PIL
 
 User = get_user_model()
 
@@ -58,6 +59,15 @@ class UserUpdateForm(forms.ModelForm):
                 field.widget.attrs['required'] = ""
             else:
                 field.widget.attrs['required'] = False
+
+    def save(self):
+        s = super(UserUpdateForm, self).save()
+        if s.image:
+            image = PIL.Image.open(s.image)
+            cropped_image = image.crop((0, 1, image.width, image.height))
+            resized_image = cropped_image.resize((460, 430), PIL.Image.Resampling.LANCZOS)
+            resized_image.save(s.image.path)
+        return s
 
 
 class PasswordChangeForm(PasswordChangeForm):

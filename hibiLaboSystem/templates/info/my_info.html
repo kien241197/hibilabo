@@ -5,6 +5,7 @@
     <h1>My page</h1>
     <hr>
     {% load cropping %}
+    <!-- {% load thumbnail %} -->
     <!-- アカウント情報 -->
     <div class="row">
         <div class="col">
@@ -34,11 +35,7 @@
                 <td>アバター</td>
                 <td>
                     {% if user.image %}
-                      {% if user.image.width < 460 %} 
-                        <img src="{% cropped_thumbnail user 'cropping' %}" width="460" height="430">
-                      {% else %}
-                          <img src="{{ user.image.url }}">
-                      {% endif %}
+                        <img src = "{{ user.image.url }}" />
                     {% endif %}
                 </td>
             </tr>

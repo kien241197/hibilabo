@@ -4,12 +4,10 @@ from enum import Enum
 from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
-import uuid
 import hashlib
 from django.utils import timezone
-from PIL import Image
 from django.core.files.base import ContentFile
-from image_cropping import ImageRatioField
+from image_cropping import ImageCropField
 from django.core.files.storage import FileSystemStorage
 # Create your models here.
 from django.contrib.auth.models import User
@@ -170,18 +168,6 @@ def unique_image_filename(instance, filename):
     new_filename = f"{hashed_number}_{milliseconds}.{ext}"
     return f"{new_filename}"
 
-def crop_to_460x430(image_path):
-    # Mở ảnh
-    img = Image.open(image_path)
-    # Kiểm tra kích thước ảnh
-    width, height = img.size
-    # Nếu ảnh vượt quá kích thước 460x430
-    if width > 460 or height > 430:
-        # Tính tỷ lệ khung hình
-        img = Image.open(image_path)
-        img_resized = img.resize((460, 430))
-        img_resized.save(image_path)
-
 class User(AbstractUser):
 	fs = FileSystemStorage()
 	class Roles(Enum):
@@ -218,8 +204,7 @@ class User(AbstractUser):
 	)
 	
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
-	image = models.ImageField(storage=fs,upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
-	cropping = ImageRatioField('image', '460x430', allow_fullsize=True, size_warning=True)
+	image = ImageCropField(storage=fs,upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 
 	class Meta:

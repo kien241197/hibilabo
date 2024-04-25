@@ -134,7 +134,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
@@ -159,6 +159,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 IMAGE_CROPPING_BACKEND = 'image_cropping.backends.easy_thumbs.EasyThumbnailsBackend'
 IMAGE_CROPPING_BACKEND_PARAMS = {}
+IMAGE_CROPPING_THUMB_SIZE = (460, 430)
 
 THUMBNAIL_DEBUG = True
 THUMBNAIL_PROCESSORS = (
@@ -166,3 +167,4 @@ THUMBNAIL_PROCESSORS = (
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+

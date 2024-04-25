@@ -35,10 +35,7 @@
                     </div>
                     {% if field.name == 'image' %}
                     {% if form.instance.image %}
-                    {% with cropping_parts=form.instance.cropping|split:"," %}
-                        <img src="{{ form.instance.image.url }}" id="image-preview" >
-
-                    {% endwith %}
+                        <img src="{{ form.instance.image.url }}" id="image-preview" width="100%">
                     {% endif %}
                     {% endif %}
                     {% endfor %}

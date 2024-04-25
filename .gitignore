@@ -6,6 +6,7 @@ __pycache__
 *.sqlite3
 media
 /static/media/
+hibiLaboSystem/static/media
 
 # Backup files # 
 *.bak 

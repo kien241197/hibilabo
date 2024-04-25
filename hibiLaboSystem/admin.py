@@ -211,7 +211,6 @@ class RoleCustom(admin.ModelAdmin):
 #     filter_horizontal = ('Selfcheck_questions',)
 
 @admin.register(User)
-    
 class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company']
