@@ -17,8 +17,6 @@ $(document).ready(function() {
 
     const hashValue = window.location.hash;
     const cleanHashValue = hashValue.slice(1);
-    console.log("hashValue", hashValue)
-    
 
     $('.tab-pane fade').removeClass('show active');
     $('.button-tab').removeClass('active');
@@ -90,10 +88,13 @@ $(document).ready(function() {
         $('.title-tab-h3').text("");
         $('.desc-tab-p').text("");
     }
+    
+    if(!cleanHashValue){
+        $('.container-checkbox').addClass("hidden")
 
-     if (cleanHashValue !== "team-concept" && cleanHashValue !== "my-concept") {
-            $('.container-checkbox').removeClass("hidden")
-        }
+    } else if ((cleanHashValue !== "team-concept" && cleanHashValue !== "my-concept")) {
+        $('.container-checkbox').removeClass("hidden")
+    }
 
     // Xử lý sự kiện click cho các button tab
     $('.button-tab').click(function() {
