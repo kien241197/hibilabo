@@ -7,6 +7,8 @@
 	- python -m pip install reportlab
 # Install Django Debug Toolbar:
 	- python -m pip install django-debug-toolbar
+# Install jaconv:
+	- pip install jaconv
 # Migrate DB
 	- python3 manage.py migrate
 # Make supper user admin

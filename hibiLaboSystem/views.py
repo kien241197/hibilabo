@@ -32,6 +32,7 @@ import os
 from django.template.loader import get_template
 import pdfkit
 from django.db.models import Q
+import jaconv
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
@@ -1964,6 +1965,12 @@ class Watasheet(TemplateView):
                 watasheet_type_result.watasheet_type_e = types['E']
                 watasheet_type_result.watasheet_type_f = types['F']
                 watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
+                if form.cleaned_data['vision_1_year']:
+                    watasheet_type_result.vision_1_year = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_1_year']))
+                if form.cleaned_data['vision_5_years']:
+                    watasheet_type_result.vision_5_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_5_years']))
+                if form.cleaned_data['vision_10_years']:
+                    watasheet_type_result.vision_10_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_10_years']))
                 watasheet_type_result.save()
                 
         else:

@@ -43,14 +43,14 @@
                                             <li class="number-2">2</li> -->
                                             <a href="#team-concept">
                                                 <li class="button-tab px-3" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
-                                                    <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">TEAM <br />
+                                                    <p class="py-1 title-tab-watasheet" style="line-height: 8px; font-size: 16px; font-weight: 700; ">TEAM <br />
                                                         <p style="font-size: 11px; ">CONCEPT</p>
                                                     </p>
                                                 </li>
                                             </a>
                                             <a href="#my-concept">
                                                 <li class="button-tab px-3" id="nav-tab-my" data-bs-toggle="tab" data-bs-target="#nav-my" type="button" role="tab" aria-controls="nav-my" aria-selected="false" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
-                                                    <p class="py-1" style="line-height: 8px; font-size: 16px; font-weight: 700; ">MY <br />
+                                                    <p class="py-1 title-tab-watasheet" style="line-height: 8px; font-size: 16px; font-weight: 700; ">MY <br />
                                                         <p style="font-size: 11px; ">CONCEPT</p>
                                                     </p>
                                                 </li>
@@ -625,13 +625,14 @@
                                             </div>
                                             <ul class="position-relative">
                                                 <li class="d-flex align-items-center">
-                                                    <div class="width-80">（1年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_1_year" value="{{watasheet_type_result.vision_1_year|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span>
+                                                    <div class="width-80">（1年後）</div>（<input class="width-年 ml-0 pl-0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" name="vision_1_year" type="number"  onKeyPress="if(this.value.length==2) return false;" maxlength="2" value="{{watasheet_type_result.vision_1_year|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span>
+
                                                 </li>
                                                 <li class="d-flex align-items-center">
-                                                    <div class="width-80">（5年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_5_years" value="{{watasheet_type_result.vision_5_years|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_2nd" value="{{watasheet_type_result.vision_2nd}}"></span>
+                                                    <div class="width-80">（5年後）</div>（<input class="width-年 ml-0 pl-0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" name="vision_5_years" type="number" onKeyPress="if(this.value.length==2) return false;" maxlength="2" value="{{watasheet_type_result.vision_5_years|default_if_none:''}}" {{disabled}}>歳） <span><input {{ disabled }} name="vision_2nd" value="{{watasheet_type_result.vision_2nd}}"></span>
                                                 </li>
                                                 <li class="d-flex align-items-center">
-                                                    <div class="width-80">（10年後）</div>（<input class="width-年 ml-0 pl-0" name="vision_10_years" value="{{watasheet_type_result.vision_10_years|default_if_none:''}}" {{disabled}}>歳）<span><input {{ disabled }} name="vision_3rd" value="{{watasheet_type_result.vision_3rd}}"></span>
+                                                    <div class="width-80">（10年後）</div>（<input class="width-年 ml-0 pl-0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" name="vision_10_years" type="number" onKeyPress="if(this.value.length==2) return false;" maxlength="2" value="{{watasheet_type_result.vision_10_years|default_if_none:''}}" {{disabled}}>歳）<span><input {{ disabled }} name="vision_3rd" value="{{watasheet_type_result.vision_3rd}}"></span>
                                                 </li>
                                                 <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
                                             </ul>
@@ -1150,6 +1151,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 const professionalType = {{ questions|length }} > 0 ? "TYPE {{ questions|length }}" : "";
+
 </script>
 <script src="{% static 'js/watasheet.js' %}"></script>
 {% endblock%}

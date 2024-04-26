@@ -5,10 +5,8 @@ from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 from django.utils.html import format_html
-
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class SelfcheckRole(models.Model):
 	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
@@ -103,9 +101,9 @@ class Company(models.Model):
 	# Team concept
 	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
 	# Team vision
-	team_vision_1_year = models.CharField(blank=True, null=True, verbose_name="1年後 (TEAM VISION)", max_length=255)
-	team_vision_5_years = models.CharField(blank=True, null=True, verbose_name="5年後 (TEAM VISION)", max_length=255)
-	team_vision_10_years = models.CharField(blank=True, null=True, verbose_name="10年後 (TEAM VISION)", max_length=255)
+	team_vision_1_year = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="1年後 (TEAM VISION)")
+	team_vision_5_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="5年後 (TEAM VISION)")
+	team_vision_10_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="10年後 (TEAM VISION)")
 	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VISION)")
 	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (TEAM VISION)")
 	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (TEAM VISION)")
@@ -132,6 +130,7 @@ class Company(models.Model):
 
 	def __str__(self):
 		return f"{self.name}"
+
 
 class Branch(models.Model):
 	name = models.CharField(blank=True, null=True, max_length=255)
@@ -1199,9 +1198,9 @@ class WatasheetTypeResult(models.Model):
 	vision_1st = models.TextField(blank=True, null=True)
 	vision_2nd = models.TextField(blank=True, null=True)
 	vision_3rd = models.TextField(blank=True, null=True)
-	vision_1_year = models.TextField(blank=True, null=True)
-	vision_5_years = models.TextField(blank=True, null=True)
-	vision_10_years = models.TextField(blank=True, null=True)
+	vision_1_year = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
+	vision_5_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
+	vision_10_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999), MinValueValidator(1)])
 	# My mission
 	mission_1st = models.TextField(blank=True, null=True)
 	mission_2nd = models.TextField(blank=True, null=True)

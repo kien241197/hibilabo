@@ -21,7 +21,8 @@ $(document).ready(function() {
     $('.tab-pane fade').removeClass('show active');
     $('.button-tab').removeClass('active');
 
-    if (cleanHashValue === "team-concept" || !cleanHashValue) {
+    if (cleanHashValue === "team-concept" || !hashValue) {
+        $('.container-checkbox').addClass("hidden")
         $('#nav-tab-0').addClass("active")
         $('#nav-tab-0').css("color", "white")
         $('#nav-0').addClass('show active');
@@ -87,10 +88,13 @@ $(document).ready(function() {
         $('.title-tab-h3').text("");
         $('.desc-tab-p').text("");
     }
+    
+    if(!cleanHashValue){
+        $('.container-checkbox').addClass("hidden")
 
-     if (cleanHashValue !== "team-concept" && cleanHashValue !== "my-concept") {
-            $('.container-checkbox').removeClass("hidden")
-        }
+    } else if ((cleanHashValue !== "team-concept" && cleanHashValue !== "my-concept")) {
+        $('.container-checkbox').removeClass("hidden")
+    }
 
     // Xử lý sự kiện click cho các button tab
     $('.button-tab').click(function() {
