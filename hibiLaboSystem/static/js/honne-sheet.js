@@ -1,4 +1,5 @@
-    //〇の数をカウントして、合計行を修正
+  
+  //〇の数をカウントして、合計行を修正
     function func_count(element, listQ){
         counter_group = [0,0,0,0,0,0,0,0];
         listQ.forEach(key => {
@@ -80,6 +81,5 @@ function drwa_chart(chatValue){
             },
             },
         },
-        plugins: [ChartDataLabels],
     });
 }

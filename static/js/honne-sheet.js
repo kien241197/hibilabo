@@ -1,3 +1,4 @@
+// Chart.register(ChartDataLabels);
     //〇の数をカウントして、合計行を修正
     function func_count(element, listQ){
         counter_group = [0,0,0,0,0,0,0,0];
@@ -80,6 +81,5 @@ function drwa_chart(chatValue){
             },
             },
         },
-        plugins: [ChartDataLabels],
     });
 }
