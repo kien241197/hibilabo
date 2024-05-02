@@ -433,6 +433,10 @@ class SelfcheckRoleCompanyAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+    # exclude = ['selfcheck_roles']
+
+    class Media:
+        js=('admin/js/filter_selfcheck_role.js',)
         
 
 admin.site.register(SelfcheckRoleCompany, SelfcheckRoleCompanyAdmin)

@@ -2038,3 +2038,25 @@ class WatasheetType(TemplateView):
         context['team_concept'] = team_concept
 
         return self.render_to_response(context)
+
+@login_required
+def FilterSelfcheckRole(request, id, company):
+    # is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if id and company:
+        role = Role.objects.filter(id=id).first().selfcheck_roles.values("selfcheck_role_name", 'id')
+        selfcheckRoleCompany = SelfcheckRoleCompany.objects.filter(company_id=company, role_id=id).first()
+        list_selfcheckRoleCompany = None
+        role_list = None
+
+        if selfcheckRoleCompany:
+            list_selfcheckRoleCompany = list(selfcheckRoleCompany.selfcheck_roles.values())
+
+        if role:
+            role_list = list(role)
+
+        return JsonResponse({'status': "200", 'data': role_list, 'selfcheckRoleCompany': list_selfcheckRoleCompany})
+    return JsonResponse({'status' : '400'})
+    
+    
+
+

@@ -46,5 +46,7 @@ urlpatterns = [
     path('mandara-completion-tab-detail/<id>', views.MandaraCompletionTabDetail.as_view(), name='mandara_completion_tab_detail'), #Display Detail
     
 	path('watasheet', views.Watasheet.as_view(), name="watasheet"),
-	path('watasheet-type', views.WatasheetType.as_view(), name="watasheet_type")
+	path('watasheet-type', views.WatasheetType.as_view(), name="watasheet_type"),
+    
+	path("ajax/filter-selfcheck-role/<id>/<company>", views.FilterSelfcheckRole, name="filter_selfcheck_role")
 ]
