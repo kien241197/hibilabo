@@ -19,6 +19,7 @@ from django.shortcuts import redirect
 import datetime
 import threading
 import jaconv
+from django.utils.html import format_html
 
 thread_local = threading.local()
 
@@ -403,8 +404,13 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     update_branch.short_description = "新しい支店を選択"
 
 class BranchAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'company']
     list_filter = ['company']
+    list_display = ['get_id_with_name', 'name', 'company']
+
+    def get_id_with_name(self, obj):
+        return f"{obj.company_id}_{obj.code}"
+    get_id_with_name.allow_tags = True
+    get_id_with_name.short_description = 'ID'
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "company":
@@ -413,12 +419,14 @@ class BranchAdmin(admin.ModelAdmin):
             else:
                 if request.user.company_id:
                     kwargs["queryset"] = Company.objects.filter(id=request.user.company_id)
+                    kwargs["initial"] = request.user.company_id
+                    kwargs["disabled"] = True
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def changelist_view(self, request, extra_context=None):
         cache.clear()
         if not request.user.is_superuser:
-            self.list_display = ["id", "name"]
+            self.list_display = ["get_id_with_name", "name"]
         return super(BranchAdmin, self).changelist_view(request, extra_context)
 
     def get_queryset(self, request):

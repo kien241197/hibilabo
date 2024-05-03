@@ -133,6 +133,7 @@ class Company(models.Model):
 
 
 class Branch(models.Model):
+	code = models.IntegerField(blank=True, null=True, verbose_name="Branch code")
 	name = models.CharField(blank=True, null=True, max_length=255)
 	company = models.ForeignKey(
 	    Company,
@@ -146,11 +147,14 @@ class Branch(models.Model):
 		db_table = "branches"
 		verbose_name = '支店'
 		verbose_name_plural = '支店'
+		constraints = [
+	        models.UniqueConstraint(fields=['code', 'company_id'], name='unique_branch_code')
+	    ]
 
 	def __str__(self):
 		return f"{self.name}"
-
-
+		
+	
 class User(AbstractUser):
 	class Roles(Enum):
 		日々研 = 99
