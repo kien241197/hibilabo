@@ -20,6 +20,8 @@ import datetime
 import threading
 import jaconv
 from django.utils.html import format_html
+from django.contrib.auth.models import Group
+
 
 thread_local = threading.local()
 
@@ -214,9 +216,18 @@ class RoleCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
-    exclude = ['created_by', ]
+    exclude = ['created_by', 'groups']
     actions = []
     success = True
+
+    def add_view(self, request, form_url='', extra_context=None):
+        response  = super().add_view(request, form_url, extra_context)
+        if response.status_code == 302:
+            user = User.objects.latest('id')
+            groups = Group.objects.all()
+            user.groups.set(groups)
+            user.save()
+        return response
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "branch":
@@ -250,11 +261,11 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
 
         if obj:
             if not request.user.is_superuser:
-                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', ]
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', 'groups']
 
         else:
             if not request.user.is_superuser:
-                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', ]
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'groups' ]
 
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
@@ -271,7 +282,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         cache.clear()
         
         if not request.user.is_superuser:
-            self.list_display = ["id", "username", "branch", "role", ]
+            self.list_display = ["id", "username", "branch", "role"]
             self.actions = ['update_branch']
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
@@ -345,9 +356,12 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                     except ValidationError as e:
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": str(e.args[0])})
-                        
+            groups = Group.objects.all()             
             # bulk create objects
-            User.objects.bulk_create(create_new_characters)
+            user = User.objects.bulk_create(create_new_characters)
+            for item in user:
+                item.save()  # Save user first to get an ID
+                item.groups.set(groups)
             # return the response to the AJAX call
             context = {
                 "file": csv_file,
