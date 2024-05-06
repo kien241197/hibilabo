@@ -356,12 +356,17 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                     except ValidationError as e:
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": str(e.args[0])})
-            groups = Group.objects.all()             
-            # bulk create objects
-            user = User.objects.bulk_create(create_new_characters)
-            if groups:
-                for item in user:
-                    item.groups.set(groups)
+            users = User.objects.bulk_create(create_new_characters)
+    
+            group_list = []
+            groups = Group.objects.all()
+            
+            for user in users:
+                for group in groups:
+                    data = User.groups.through(user_id = user.id, group_id=group.id)
+                    group_list.append(data)
+
+            User.groups.through.objects.bulk_create(group_list)
             # return the response to the AJAX call
             context = {
                 "file": csv_file,
