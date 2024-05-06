@@ -359,9 +359,9 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             groups = Group.objects.all()             
             # bulk create objects
             user = User.objects.bulk_create(create_new_characters)
-            for item in user:
-                item.save()  # Save user first to get an ID
-                item.groups.set(groups)
+            if groups:
+                for item in user:
+                    item.groups.set(groups)
             # return the response to the AJAX call
             context = {
                 "file": csv_file,
