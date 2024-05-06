@@ -358,15 +358,12 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                                                 "msg": str(e.args[0])})
             users = User.objects.bulk_create(create_new_characters)
     
-            group_list = []
             groups = Group.objects.all()
             
-            for user in users:
-                for group in groups:
-                    data = User.groups.through(user_id = user.id, group_id=group.id)
-                    group_list.append(data)
-
-            User.groups.through.objects.bulk_create(group_list)
+            for user_instance in users:
+                for group_instance in groups:
+                    User.groups.through.objects.create(user=user_instance, group=group_instance)
+                    
             # return the response to the AJAX call
             context = {
                 "file": csv_file,
