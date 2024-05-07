@@ -200,7 +200,7 @@ class CompanyAdmin(admin.ModelAdmin):
     #     print(db_field.name)     
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
-    list_filter = ["selfcheck_roles", "industries"]
+    list_filter = ["selfcheck_roles", "selfcheck_industries"]
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }

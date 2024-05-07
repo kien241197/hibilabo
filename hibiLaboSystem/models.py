@@ -20,7 +20,7 @@ class SelfcheckRole(models.Model):
 		verbose_name_plural = 'Selfcheck Roles'
 
 class Industry(models.Model):
-	selfcheck_industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
+	industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
 
 	def __str__(self):
 		return f"{self.selfcheck_industry_name}"
@@ -419,7 +419,7 @@ class SelfcheckQuestion(models.Model):
 				(12, '思考'), #square
 			]
 	    )
-	industries = models.ManyToManyField(
+	selfcheck_industries = models.ManyToManyField(
 		Industry,
 	    related_name='Selfcheck_questions',
 	    blank=True,
