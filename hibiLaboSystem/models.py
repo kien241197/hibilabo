@@ -419,7 +419,7 @@ class SelfcheckQuestion(models.Model):
 				(12, '思考'), #square
 			]
 	    )
-	selfcheck_industries = models.ManyToManyField(
+	industries = models.ManyToManyField(
 		Industry,
 	    related_name='Selfcheck_questions',
 	    blank=True,
