@@ -216,7 +216,7 @@ class RoleCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
-    exclude = ['created_by', 'groups']
+    exclude = ['created_by', "groups"]
     actions = []
     success = True
 
@@ -224,9 +224,20 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         response  = super().add_view(request, form_url, extra_context)
         if response.status_code == 302:
             user = User.objects.latest('id')
-            groups = Group.objects.all()
-            user.groups.set(groups)
+            if user.is_staff or user.role.role == RoleEnum.Company_Staff.value:
+                groups = Group.objects.all()
+                user.groups.set(groups)
             user.save()
+        return response
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        response = super().change_view(request, object_id, form_url, extra_context)
+        if response.status_code == 302:
+            user = User.objects.get(id=object_id)
+            if user.is_staff or user.role.role == RoleEnum.Company_Staff.value:
+                groups = Group.objects.all()
+                user.groups.set(groups)
+                user.save()
         return response
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -247,7 +258,11 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         #     user = User.objects.filter(id=obj.id).first()
         #     if user.password != obj.password:
         #         obj.password = make_password(obj.password)
-        
+
+        if obj.role.role == RoleEnum.Company_Staff.value:
+            obj.is_staff = True
+                
+
         if not request.user.is_superuser:
             obj.company_id = request.user.company_id
             obj.add(request.user.company_id)
@@ -356,13 +371,13 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                     except ValidationError as e:
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": str(e.args[0])})
-            users = User.objects.bulk_create(create_new_characters)
+            User.objects.bulk_create(create_new_characters)
     
-            groups = Group.objects.all()
+            # groups = Group.objects.all()
             
-            for user_instance in users:
-                for group_instance in groups:
-                    User.groups.through.objects.create(user=user_instance, group=group_instance)
+            # for user_instance in users:
+            #     for group_instance in groups:
+            #         User.groups.through.objects.create(user=user_instance, group=group_instance)
                     
             # return the response to the AJAX call
             context = {
