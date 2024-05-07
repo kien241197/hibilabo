@@ -29,14 +29,6 @@ thread_local = threading.local()
 # Register your models here.
 CustomeUser = get_user_model()
 
-class SelfcheckIndustryInline(admin.TabularInline):
-    model = SelfcheckIndustry
-    extra = 0
-    formfield_overrides = {
-        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
-    }
-
-
 class HonneEvaluationPeriodInline(admin.TabularInline):
     model = HonneEvaluationPeriod
     fields = ["evaluation_name", "evaluation_start", "evaluation_end", "honne_questions"]
@@ -463,10 +455,6 @@ class BranchAdmin(admin.ModelAdmin):
             return qs.filter(company_id=request.user.company_id)
         return qs 
 
-class CareerAdmin(admin.ModelAdmin):
-    inlines = [SelfcheckIndustryInline]   
-
-
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
 admin.site.register(Branch, BranchAdmin)
@@ -476,14 +464,13 @@ admin.site.register(HonneQuestion)
 # Selfcheck
 admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
 admin.site.register(SelfcheckRole)
-# admin.site.register(SelfcheckIndustry, SelfcheckIndustryCustom)
+# admin.site.register(Industry, SelfcheckIndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)
 # Watasheet
 admin.site.register(WatasheetQuestion)
-# Career
-admin.site.register(Career, CareerAdmin)
+
 
 
 
