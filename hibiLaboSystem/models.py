@@ -8,6 +8,15 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+class Career(models.Model):
+	name = models.CharField(max_length=255, blank=True, null=True)
+	class Meta:
+		verbose_name = 'キャリア'
+		verbose_name_plural = 'キャリア'
+	
+	def __str__(self) -> str:
+		return f"{self.name}"
+
 class SelfcheckRole(models.Model):
 	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
 
@@ -21,6 +30,14 @@ class SelfcheckRole(models.Model):
 
 class SelfcheckIndustry(models.Model):
 	selfcheck_industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
+	career = models.ForeignKey(
+	    Career,
+	    on_delete=models.SET_NULL,
+	    related_name='career_industry',
+	    blank=True,
+	    null=True,
+	    verbose_name='キャリア'
+	)
 
 	def __str__(self):
 		return f"{self.selfcheck_industry_name}"
@@ -95,6 +112,14 @@ class Company(models.Model):
 	    blank=True,
 	    null=True,
 	    verbose_name='相棒'
+	)
+	career = models.ForeignKey(
+	    Career,
+	    on_delete=models.SET_NULL,
+	    related_name='career_company',
+	    blank=True,
+	    null=True,
+	    verbose_name='キャリア'
 	)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
