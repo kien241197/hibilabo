@@ -23,12 +23,12 @@ class Industry(models.Model):
 	industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
 
 	def __str__(self):
-		return f"{self.selfcheck_industry_name}"
+		return f"{self.industry_name}"
 
 	class Meta:
-		db_table = 'selfcheck_industries'
-		verbose_name = 'Selfcheck Industries'
-		verbose_name_plural = 'Selfcheck Industries'
+		db_table = 'industries'
+		verbose_name = 'Industries'
+		verbose_name_plural = 'Industries'
 
 class Role(models.Model):
 	role = models.IntegerField(
@@ -419,7 +419,7 @@ class SelfcheckQuestion(models.Model):
 				(12, '思考'), #square
 			]
 	    )
-	selfcheck_industries = models.ManyToManyField(
+	industries = models.ManyToManyField(
 		Industry,
 	    related_name='Selfcheck_questions',
 	    blank=True,

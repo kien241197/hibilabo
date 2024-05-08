@@ -200,7 +200,7 @@ class CompanyAdmin(admin.ModelAdmin):
     #     print(db_field.name)     
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
-    list_filter = ["selfcheck_roles", "selfcheck_industries"]
+    list_filter = ["selfcheck_roles", "industries"]
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
@@ -210,8 +210,8 @@ class RoleCustom(admin.ModelAdmin):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
-# class SelfcheckIndustryCustom(admin.ModelAdmin):
-#     filter_horizontal = ('Selfcheck_questions',)
+class IndustryCustom(admin.ModelAdmin):
+    filter_horizontal = ('Selfcheck_questions',)
 
 @admin.register(User)
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
@@ -464,7 +464,7 @@ admin.site.register(HonneQuestion)
 # Selfcheck
 admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
 admin.site.register(SelfcheckRole)
-# admin.site.register(Industry, SelfcheckIndustryCustom)
+admin.site.register(Industry, IndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)
