@@ -307,48 +307,44 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                 else:
                     company_id = company_id
 
-                branch_id = row[util_obj.get_column("branch_id")]
-
+                branch_code = row[util_obj.get_column("branch_code")]
+                
                 if User.objects.filter(username=username).exists() or username in array_user:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": "username already exist!"})
                                                 
                 elif Company.objects.filter(id=company_id).first() is None:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "company is not already exist!"}) 
                    
-
-                elif Branch.objects.filter(id=branch_id ).first() is None:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                elif Branch.objects.filter(code=branch_code, company_id=company_id).first() is None:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "Branch is not already exist!"})
                    
-                elif Company.objects.filter(id=company_id).first().id != Branch.objects.filter(id=branch_id).first().company.id:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                elif Company.objects.filter(id=company_id).first().id != Branch.objects.filter(code=branch_code, company_id=company_id).first().company.id:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "The branch must belong to the company!"})
                 
                 else:
+                    brach_id = Branch.objects.filter(code=branch_code, company_id=company_id).first().id
                     array_user.append(username)
                     try:
                         for validator in validators:
                             validator().validate(password)
                         create_new_characters.append(
                             User(
-                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=branch_id, role_id=role_id
+                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=brach_id, role_id=role_id
                             )
                         )
-                        if request.user.is_superuser:
-                            import_object_status.append({"username": username, "company": company_id, "branch": branch_id,"status": "FINISHED",
-                                                        "msg": "User created successfully!"})
-                        else:
-                            import_object_status.append({"username": username,"branch": branch_id, "status": "FINISHED",
-                                                        "msg": "User created successfully!"})
-                    except ValidationError as e:
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
-                                                "msg": str(e.args[0])})
                         
-            # bulk create objects
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code,"status": "FINISHED",
+                                                "msg": "User created successfully!"})
+                        
+                    except ValidationError as e:
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                "msg": str(e.args[0])})
             User.objects.bulk_create(create_new_characters)
-            # return the response to the AJAX call
+    
             context = {
                 "file": csv_file,
                 "entries": len(import_object_status),
@@ -357,24 +353,12 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             return HttpResponse(json.dumps(context), content_type="application/json")
         # print(make_password('123456'));
         form = forms.CsvImportForm()
-        if not request.user.is_superuser:
-            context = {
-                "form": form, 
-                "form_title": "Upload users csv file.",
+   
+        context = {"form": form, "form_title": "Upload users csv file.",
                 "description": "The file should have following headers: "
-                                "[username,first_name,last_name,password, branch_id]."
+                                "[username,first_name,last_name,password, company_id, branch_code]."
                                 " The Following rows should contain information for the same.",
-                                "endpoint": "/admin/hibiLaboSystem/user/import/",
-            }
-        else: 
-            context = {
-                "form": form, 
-                "form_title": "Upload users csv file.",
-                "description": "The file should have following headers: "
-                                "[username,first_name,last_name,password, company_id, branch_id]."
-                                " The Following rows should contain information for the same.",
-                                "endpoint": "/admin/hibiLaboSystem/user/import/"
-            }
+                                "endpoint": "/admin/hibiLaboSystem/user/import/"}
 
         return render(
             request, "admin/import_users.html", context
