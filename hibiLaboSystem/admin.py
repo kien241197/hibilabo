@@ -296,37 +296,31 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             util_obj = utils.ImportUtils(format_column_headers)
             array_user = []
             for row in reader:
-                
                 username = row[util_obj.get_column("username")]
                 first_name = row[util_obj.get_column("first_name")]
                 last_name = row[util_obj.get_column("last_name")] 
                 password = row[util_obj.get_column("password")] 
+                branch_code = row[util_obj.get_column("branch_code")]
 
                 if request.user.is_superuser:
-                    company_id = row[util_obj.get_column("company_id")] 
-                else:
-                    company_id = company_id
+                    company_id = row[util_obj.get_column("company_id")]
 
-                branch_code = row[util_obj.get_column("branch_code")]
+                branch = Branch.objects.filter(code=branch_code, company_id=company_id).first()
                 
                 if User.objects.filter(username=username).exists() or username in array_user:
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                                "msg": "username already exist!"})
-                                                
-                elif Company.objects.filter(id=company_id).first() is None:
+                                                "msg": "username already exist!"}) 
+                    
+                elif request.user.is_superuser and not Company.objects.filter(id=company_id).exists():
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                            "msg": "company is not already exist!"}) 
-                   
-                elif Branch.objects.filter(code=branch_code, company_id=company_id).first() is None:
+                                            "msg": "Company is not already exist!"})
+
+                elif branch is None:
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "Branch is not already exist!"})
-                   
-                elif Company.objects.filter(id=company_id).first().id != Branch.objects.filter(code=branch_code, company_id=company_id).first().company.id:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                            "msg": "The branch must belong to the company!"})
-                
+                    
                 else:
-                    brach_id = Branch.objects.filter(code=branch_code, company_id=company_id).first().id
+                    brach_id = branch.id
                     array_user.append(username)
                     try:
                         for validator in validators:
