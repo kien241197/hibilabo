@@ -4,6 +4,10 @@ from enum import Enum
 from .enums import *
 from django.core.exceptions import ValidationError
 import datetime
+import hashlib
+from django.utils import timezone
+from image_cropping import ImageCropField
+from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -42,19 +46,7 @@ class Role(models.Model):
 		],
 		verbose_name='Role'
 	)
-	# role = models.IntegerField(
-	# 	unique=True,
-	# 	choices=[
-	# 		 (role.value, role.name.replace('_', ' ')) for role in [
-    #             RoleEnum.日々研,
-    #             RoleEnum.Partner,
-    #             RoleEnum.Company_Admin,
-    #             RoleEnum.Company_SuperVisor,
-    #             RoleEnum.Company_Staff
-    #         ]
-	# 	],
-	# 	verbose_name='Role'
-	# )
+
 	role_name = models.CharField(max_length=100, verbose_name='Role名称')
 	selfcheck_roles = models.ManyToManyField(
 		SelfcheckRole,
@@ -162,9 +154,21 @@ class Branch(models.Model):
 
 	def __str__(self):
 		return f"{self.name}"
-		
+	
+def unique_image_filename(instance, filename):
+    current_datetime = timezone.now()
+    milliseconds = int(current_datetime.timestamp() * 1000)
+
+    ext = filename.split('.')[-1]
+
+    hash_object = hashlib.md5(filename.encode())
+    hashed_number = int(hash_object.hexdigest(), 16)
+
+    new_filename = f"{hashed_number}_{milliseconds}.{ext}"
+    return f"{new_filename}"		
 	
 class User(AbstractUser):
+	fs = FileSystemStorage()
 	class Roles(Enum):
 		日々研 = 99
 		Partner = 40
@@ -189,6 +193,7 @@ class User(AbstractUser):
 	    verbose_name='支店'
 	)
 	birth = models.DateField(blank=True, null=True, verbose_name='誕生日')
+	image = ImageCropField(storage=fs,upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
 	role = models.ForeignKey(
 	    Role,
 	    on_delete=models.DO_NOTHING,
@@ -938,14 +943,8 @@ class MandaraBase(models.Model):
 	def total_result(self):
 			return self.A_result + self.B_result + self.C_result + self.D_result + self.E_result + self.F_result + self.G_result + self.H_result
 
-	# def display_time(self):
-	# 		return f'{self.start_YYYYMM[:4]}/{int(self.start_YYYYMM[4:])} ~ {self.end_YYYYMM[:4]}/{int(self.end_YYYYMM[4:])}'
-
 	class Meta:
 		db_table = 'mandara_base'
-		# constraints = [
-	    #     models.UniqueConstraint(fields=['user_id', 'company_id', 'start_YYYYMM', 'end_YYYYMM'], name='unique_mandara')
-	    # ]
 
 class MandaraProgress(models.Model):
 	mandara_base = models.ForeignKey(

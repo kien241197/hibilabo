@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 import datetime
 from . import models, fields
 from .enums import *
+import PIL
 
 User = get_user_model()
 
@@ -42,14 +43,27 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('last_name', 'first_name', 'email', 'username')
+        fields = ('last_name', 'first_name', 'email', 'username', 'image')
 
     # bootstrap4対応
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-            field.widget.attrs['required'] = ""
+
+            if field.label != "アバター":
+                field.widget.attrs['required'] = ""
+            else:
+                field.widget.attrs['required'] = False
+
+    def save(self):
+        s = super(UserUpdateForm, self).save()
+        if s.image:
+            image = PIL.Image.open(s.image)
+            cropped_image = image.crop((0, 1, image.width, image.height))
+            resized_image = cropped_image.resize((460, 430), PIL.Image.Resampling.LANCZOS)
+            resized_image.save(s.image.path)
+        return s
 
 class PasswordChangeForm(PasswordChangeForm):
 

@@ -127,11 +127,8 @@ class UserInline(admin.TabularInline):
 
 class MandaraPeriosInline(admin.TabularInline):
     model = MandaraPeriod
-    # fields = ['start_date', 'end_date', 'company_id']
     extra = 0  # Number of empty forms to display
-    # formfield_overrides = {
-    #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
-    # }
+
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
     
@@ -259,10 +256,6 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not change:
             obj.created_by = request.user.id
             obj.password = make_password(obj.password)
-        # else:
-        #     user = User.objects.filter(id=obj.id).first()
-        #     if user.password != obj.password:
-        #         obj.password = make_password(obj.password)
 
         if not request.user.is_superuser:
             obj.company_id = request.user.company_id
@@ -373,12 +366,6 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": str(e.args[0])})
             User.objects.bulk_create(create_new_characters)
-    
-            # groups = Group.objects.all()
-            
-            # for user_instance in users:
-            #     for group_instance in groups:
-            #         User.groups.through.objects.create(user=user_instance, group=group_instance)
                     
             # return the response to the AJAX call
             context = {
