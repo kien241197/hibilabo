@@ -25,16 +25,16 @@ class SelfcheckRole(models.Model):
 		verbose_name = 'Selfcheck Roles'
 		verbose_name_plural = 'Selfcheck Roles'
 
-class SelfcheckIndustry(models.Model):
-	selfcheck_industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
+class Industry(models.Model):
+	industry_name = models.CharField(max_length=255, verbose_name='セルフチェック用の業界名称')
 
 	def __str__(self):
-		return f"{self.selfcheck_industry_name}"
+		return f"{self.industry_name}"
 
 	class Meta:
-		db_table = 'selfcheck_industries'
-		verbose_name = 'Selfcheck Industries'
-		verbose_name_plural = 'Selfcheck Industries'
+		db_table = 'industries'
+		verbose_name = 'Industries'
+		verbose_name_plural = 'Industries'
 
 class Role(models.Model):
 	role = models.IntegerField(
@@ -102,6 +102,15 @@ class Company(models.Model):
 	    null=True,
 	    verbose_name='相棒'
 	)
+
+	industry = models.ForeignKey(
+	    Industry,
+	    on_delete=models.SET_NULL,
+	    related_name='industry_company',
+	    blank=True,
+	    null=True,
+	    verbose_name='業界'
+	)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
 	# Team concept
@@ -139,6 +148,7 @@ class Company(models.Model):
 
 
 class Branch(models.Model):
+	code = models.IntegerField(blank=True, null=True, verbose_name="Branch code")
 	name = models.CharField(blank=True, null=True, max_length=255)
 	company = models.ForeignKey(
 	    Company,
@@ -152,9 +162,13 @@ class Branch(models.Model):
 		db_table = "branches"
 		verbose_name = '支店'
 		verbose_name_plural = '支店'
+		constraints = [
+	        models.UniqueConstraint(fields=['code', 'company_id'], name='unique_branch_code')
+	    ]
 
 	def __str__(self):
 		return f"{self.name}"
+
 
 def unique_image_filename(instance, filename):
     current_datetime = timezone.now()
@@ -167,6 +181,7 @@ def unique_image_filename(instance, filename):
 
     new_filename = f"{hashed_number}_{milliseconds}.{ext}"
     return f"{new_filename}"
+
 
 class User(AbstractUser):
 	fs = FileSystemStorage()
@@ -425,8 +440,8 @@ class SelfcheckQuestion(models.Model):
 				(12, '思考'), #square
 			]
 	    )
-	selfcheck_industries = models.ManyToManyField(
-		SelfcheckIndustry,
+	industries = models.ManyToManyField(
+		Industry,
 	    related_name='Selfcheck_questions',
 	    blank=True,
 	    verbose_name = '業界名称'

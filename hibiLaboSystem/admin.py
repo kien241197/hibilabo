@@ -20,12 +20,16 @@ from django.shortcuts import redirect
 import datetime
 import threading
 import jaconv
+from django.utils.html import format_html
+from django.contrib.auth.models import Group
+
 
 thread_local = threading.local()
 
 
 # Register your models here.
 CustomeUser = get_user_model()
+
 class HonneEvaluationPeriodInline(admin.TabularInline):
     model = HonneEvaluationPeriod
     fields = ["evaluation_name", "evaluation_start", "evaluation_end", "honne_questions"]
@@ -197,7 +201,7 @@ class CompanyAdmin(admin.ModelAdmin):
     #     print(db_field.name)     
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
-    list_filter = ["selfcheck_roles", "selfcheck_industries"]
+    list_filter = ["selfcheck_roles", "industries"]
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
@@ -207,8 +211,8 @@ class RoleCustom(admin.ModelAdmin):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
-# class SelfcheckIndustryCustom(admin.ModelAdmin):
-#     filter_horizontal = ('Selfcheck_questions',)
+class IndustryCustom(admin.ModelAdmin):
+    filter_horizontal = ('Selfcheck_questions',)
 
 @admin.register(User)
 class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
@@ -217,6 +221,30 @@ class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
     exclude = ('created_by','preferred_day','preferred_hour','preferred_day2','preferred_hour2','preferred_day3','preferred_hour3','preferred_day4','preferred_hour4','preferred_day5','preferred_hour5','preferred_day6','preferred_hour6','preferred_day7','preferred_hour7',)
     actions = []
     success = True
+
+    def add_view(self, request, form_url='', extra_context=None):
+        response  = super().add_view(request, form_url, extra_context)
+        if response.status_code == 302:
+            user = User.objects.latest('id')
+            if user.is_staff:
+                groups = Group.objects.all()
+                user.groups.set(groups)
+            else:
+                user.groups.set([])
+            user.save()
+        return response
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        response = super().change_view(request, object_id, form_url, extra_context)
+        if response.status_code == 302:
+            user = User.objects.get(id=object_id)
+            if user.is_staff:
+                groups = Group.objects.all()
+                user.groups.set(groups)
+                user.save()
+            else:
+                user.groups.set([])
+        return response
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "branch":
@@ -236,7 +264,7 @@ class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
         #     user = User.objects.filter(id=obj.id).first()
         #     if user.password != obj.password:
         #         obj.password = make_password(obj.password)
-        
+
         if not request.user.is_superuser:
             obj.company_id = request.user.company_id
             obj.add(request.user.company_id)
@@ -250,11 +278,11 @@ class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
 
         if obj:
             if not request.user.is_superuser:
-                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', ]
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', 'groups']
 
         else:
             if not request.user.is_superuser:
-                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', ]
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'groups' ]
 
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
@@ -271,7 +299,7 @@ class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
         cache.clear()
         
         if not request.user.is_superuser:
-            self.list_display = ["id", "username", "branch", "role", ]
+            self.list_display = ["id", "username", "branch", "role"]
             self.actions = ['update_branch']
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
@@ -307,47 +335,52 @@ class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
                 else:
                     company_id = company_id
 
-                branch_id = row[util_obj.get_column("branch_id")]
-
+                branch_code = row[util_obj.get_column("branch_code")]
+                
                 if User.objects.filter(username=username).exists() or username in array_user:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": "username already exist!"})
                                                 
                 elif Company.objects.filter(id=company_id).first() is None:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "company is not already exist!"}) 
                    
-
-                elif Branch.objects.filter(id=branch_id ).first() is None:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                elif Branch.objects.filter(code=branch_code, company_id=company_id).first() is None:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "Branch is not already exist!"})
                    
-                elif Company.objects.filter(id=company_id).first().id != Branch.objects.filter(id=branch_id).first().company.id:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                elif Company.objects.filter(id=company_id).first().id != Branch.objects.filter(code=branch_code, company_id=company_id).first().company.id:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "The branch must belong to the company!"})
                 
                 else:
+                    brach_id = Branch.objects.filter(code=branch_code, company_id=company_id).first().id
                     array_user.append(username)
                     try:
                         for validator in validators:
                             validator().validate(password)
                         create_new_characters.append(
                             User(
-                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=branch_id, role_id=role_id
+                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=brach_id, role_id=role_id
                             )
                         )
                         if request.user.is_superuser:
-                            import_object_status.append({"username": username, "company": company_id, "branch": branch_id,"status": "FINISHED",
+                            import_object_status.append({"username": username, "company": company_id, "branch": branch_code,"status": "FINISHED",
                                                         "msg": "User created successfully!"})
                         else:
-                            import_object_status.append({"username": username,"branch": branch_id, "status": "FINISHED",
+                            import_object_status.append({"username": username,"branch": branch_code, "status": "FINISHED",
                                                         "msg": "User created successfully!"})
                     except ValidationError as e:
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_id, "status": "ERROR",
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": str(e.args[0])})
-                        
-            # bulk create objects
             User.objects.bulk_create(create_new_characters)
+    
+            # groups = Group.objects.all()
+            
+            # for user_instance in users:
+            #     for group_instance in groups:
+            #         User.groups.through.objects.create(user=user_instance, group=group_instance)
+                    
             # return the response to the AJAX call
             context = {
                 "file": csv_file,
@@ -357,24 +390,12 @@ class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
             return HttpResponse(json.dumps(context), content_type="application/json")
         # print(make_password('123456'));
         form = forms.CsvImportForm()
-        if not request.user.is_superuser:
-            context = {
-                "form": form, 
-                "form_title": "Upload users csv file.",
+   
+        context = {"form": form, "form_title": "Upload users csv file.",
                 "description": "The file should have following headers: "
-                                "[username,first_name,last_name,password, branch_id]."
+                                "[username,first_name,last_name,password, company_id, branch_code]."
                                 " The Following rows should contain information for the same.",
-                                "endpoint": "/admin/hibiLaboSystem/user/import/",
-            }
-        else: 
-            context = {
-                "form": form, 
-                "form_title": "Upload users csv file.",
-                "description": "The file should have following headers: "
-                                "[username,first_name,last_name,password, company_id, branch_id]."
-                                " The Following rows should contain information for the same.",
-                                "endpoint": "/admin/hibiLaboSystem/user/import/"
-            }
+                                "endpoint": "/admin/hibiLaboSystem/user/import/"}
 
         return render(
             request, "admin/import_users.html", context
@@ -404,8 +425,13 @@ class UsersAdmin(ImageCroppingMixin, ImportMixin,admin.ModelAdmin):
     update_branch.short_description = "新しい支店を選択"
 
 class BranchAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'company']
     list_filter = ['company']
+    list_display = ['get_id_with_name', 'name', 'company']
+
+    def get_id_with_name(self, obj):
+        return f"{obj.company_id}_{obj.code}"
+    get_id_with_name.allow_tags = True
+    get_id_with_name.short_description = 'ID'
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "company":
@@ -414,20 +440,21 @@ class BranchAdmin(admin.ModelAdmin):
             else:
                 if request.user.company_id:
                     kwargs["queryset"] = Company.objects.filter(id=request.user.company_id)
+                    kwargs["initial"] = request.user.company_id
+                    kwargs["disabled"] = True
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def changelist_view(self, request, extra_context=None):
         cache.clear()
         if not request.user.is_superuser:
-            self.list_display = ["id", "name"]
+            self.list_display = ["get_id_with_name", "name"]
         return super(BranchAdmin, self).changelist_view(request, extra_context)
 
     def get_queryset(self, request):
         qs = super(BranchAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
             return qs.filter(company_id=request.user.company_id)
-        return qs    
-
+        return qs 
 
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
@@ -438,12 +465,14 @@ admin.site.register(HonneQuestion)
 # Selfcheck
 admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
 admin.site.register(SelfcheckRole)
-# admin.site.register(SelfcheckIndustry, SelfcheckIndustryCustom)
+admin.site.register(Industry, IndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)
 # Watasheet
 admin.site.register(WatasheetQuestion)
+
+
 
 
 
