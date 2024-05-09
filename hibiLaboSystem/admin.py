@@ -33,11 +33,11 @@ class HonneEvaluationPeriodInline(admin.TabularInline):
     }
     readonly_fields=[]
     
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_delete_permission(self, request, obj=None):
+    #     return request.user.is_superuser
     
-    def has_add_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_add_permission(self, request, obj=None):
+    #     return request.user.is_superuser
         
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:   
@@ -61,11 +61,11 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
     }
     readonly_fields = []
 
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_delete_permission(self, request, obj=None):
+    #     return request.user.is_superuser
     
-    def has_add_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_add_permission(self, request, obj=None):
+    #     return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
@@ -88,11 +88,11 @@ class BonknowEvaluationPeriodInline(admin.TabularInline):
     }
     readonly_fields = []
 
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_delete_permission(self, request, obj=None):
+    #     return request.user.is_superuser
             
-    def has_add_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_add_permission(self, request, obj=None):
+    #     return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
@@ -127,11 +127,11 @@ class MandaraPeriosInline(admin.TabularInline):
     # formfield_overrides = {
     #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     # }
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_delete_permission(self, request, obj=None):
+    #     return request.user.is_superuser
     
-    def has_add_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_add_permission(self, request, obj=None):
+    #     return request.user.is_superuser
     
     def get_queryset(self, request):
         qs = super(MandaraPeriosInline, self).get_queryset(request)
@@ -149,11 +149,11 @@ class WatasheetInline(admin.TabularInline):
     }
     readonly_fields = []
 
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_delete_permission(self, request, obj=None):
+    #     return request.user.is_superuser
     
-    def has_add_permission(self, request, obj=None):
-        return request.user.is_superuser
+    # def has_add_permission(self, request, obj=None):
+    #     return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
