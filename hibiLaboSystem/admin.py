@@ -129,11 +129,8 @@ class UserInline(admin.TabularInline):
 
 class MandaraPeriosInline(admin.TabularInline):
     model = MandaraPeriod
-    # fields = ['start_date', 'end_date', 'company_id']
     extra = 0  # Number of empty forms to display
-    # formfield_overrides = {
-    #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
-    # }
+
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
     
@@ -363,7 +360,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": str(e.args[0])})
             User.objects.bulk_create(create_new_characters)
-    
+
             context = {
                 "file": csv_file,
                 "entries": len(import_object_status),
