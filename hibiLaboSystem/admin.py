@@ -219,7 +219,7 @@ class IndustryCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
-    exclude = ['created_by', ]
+    exclude = ['created_by', 'image']
     actions = []
     success = True
 
@@ -275,11 +275,11 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
 
         if obj:
             if not request.user.is_superuser:
-                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', 'groups']
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', 'groups', 'image']
 
         else:
             if not request.user.is_superuser:
-                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'groups' ]
+                self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'groups', 'image' ]
 
         form = super(UsersAdmin,self).get_form(request, obj, **kwargs)
         return form
