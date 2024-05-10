@@ -6,11 +6,14 @@ from django.core.exceptions import ValidationError
 import datetime
 import hashlib
 from django.utils import timezone
-from image_cropping import ImageCropField
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.dispatch.dispatcher import receiver
+from django.db.models.signals import pre_delete
+import os
+
 
 class SelfcheckRole(models.Model):
 	selfcheck_role_name = models.CharField(max_length=100, verbose_name='Selfcheck Role名称')
@@ -158,7 +161,7 @@ class Branch(models.Model):
 def unique_image_filename(instance, filename):
     current_datetime = timezone.now()
     milliseconds = int(current_datetime.timestamp() * 1000)
-
+	
     ext = filename.split('.')[-1]
 
     hash_object = hashlib.md5(filename.encode())
@@ -193,7 +196,7 @@ class User(AbstractUser):
 	    verbose_name='支店'
 	)
 	birth = models.DateField(blank=True, null=True, verbose_name='誕生日')
-	image = ImageCropField(storage=fs,upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
+	image = models.ImageField(storage=fs, upload_to=unique_image_filename, default='', null=True, blank=True, verbose_name='アバター')
 	role = models.ForeignKey(
 	    Role,
 	    on_delete=models.DO_NOTHING,
@@ -210,6 +213,7 @@ class User(AbstractUser):
 		db_table = 'users'
 		verbose_name = 'ユーザー'
 		verbose_name_plural = 'ユーザー'
+
 
 	def full_name(self):
 		return self.last_name + self.first_name
@@ -1282,3 +1286,11 @@ class WatasheetTypeResult(models.Model):
 	
 	class Meta:
 		db_table = 'watasheet_type_results'
+
+@receiver(pre_delete, sender=User)
+def delete_image_on_user_delete(sender, instance, **kwargs):
+    # Kiểm tra xem instance có avatar không
+    if instance.image:
+        # Xóa file avatar từ hệ thống file
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
