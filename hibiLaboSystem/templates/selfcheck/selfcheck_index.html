@@ -31,56 +31,63 @@
                                     </form>
                                 </div>
                                 <div class="content-chart content-chart-2">
-                                    <table class="table table2" id="td1">
+                                    <table class="table table2" id="td1" style="width:100%">
                                         <tr>
                                             <th></th>
-                                            <th>指数</th>
-                                            <th>決断力</th>
-                                            <th>専門性</th>
-                                            <th>自己管理</th>
-                                            <th>広報力</th>
-                                            <th>連携力</th>
-                                            <th>人間関係</th>
-                                            <th>患者対応</th>
-                                            <th>チームワーク</th>
-                                            <th>総合管理</th>
-                                            <th>理念浸透</th>
-                                            <th>自己啓発</th>
-                                            <th>思考</th>
+                                            <th><div>指</br>数</div></th>
+                                            <th><div class="title-selfcheck-table-index">合</br>計</br>列</br>を</div></th>
+                                            <th><div class="title-selfcheck-table-index">決<br/>断<br/>力</div></th>
+                                            <th><div class="title-selfcheck-table-index">専<br/>門<br/>性</div></th>
+                                            <th><div class="title-selfcheck-table-index">自<br/>己<br/>管<br/>理</div></th>
+                                            <th><div class="title-selfcheck-table-index">広<br/>報<br/>力</div></th>
+                                            <th><div class="title-selfcheck-table-index">連<br/>携<br/>力</div></th>
+                                            <th><div class="title-selfcheck-table-index">人<br/>間<br/>関<br/>係</div></th>
+                                            <th><div class="title-selfcheck-table-index">患<br/>者<br/>対<br/>応</div></th>
+                                            <th><div class="title-selfcheck-table-index">チ<br/>ー<br/>ム<br/>ワ<br/>ー<br/>ク</div></th>
+                                            <th><div class="title-selfcheck-table-index">総<br/>合<br/>管<br/>理</div></th>
+                                            <th><div class="title-selfcheck-table-index">理<br/>念<br/>浸<br/>透</div></th>
+                                            <th><div class="title-selfcheck-table-index">自<br/>己<br/>啓<br/>発</div></th>
+                                            <th><div class="title-selfcheck-table-index">思<br/>考</div></th>
                                         </tr>
                                         <tr>
                                             <th></th>
-                                            <th>名前</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
-                                            <th>10満点</th>
+                                            <th class="text-center">名前</th>
+                                            <th class="text-center">120名前</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
+                                            <th class="text-center">10満点</th>
                                         </tr>
                                         <tbody>
                                             {% for record in orderby_records %}
                                               <tr>
                                                   <td>{{ forloop.counter }}</td>
-                                                  <td >{{ record.user.full_name }}</td>
-                                                  <td >{{ record.selfcheck_index1 }}</td>
-                                                  <td >{{ record.selfcheck_index2 }}</td>
-                                                  <td >{{ record.selfcheck_index3 }}</td>
-                                                  <td >{{ record.selfcheck_index4 }}</td>
-                                                  <td >{{ record.selfcheck_index5 }}</td>
-                                                  <td >{{ record.selfcheck_index6 }}</td>
-                                                  <td >{{ record.selfcheck_index7 }}</td>
-                                                  <td >{{ record.selfcheck_index8 }}</td>
-                                                  <td >{{ record.selfcheck_index9 }}</td>
-                                                  <td >{{ record.selfcheck_index10 }}</td>
-                                                  <td >{{ record.selfcheck_index11 }}</td>
-                                                  <td >{{ record.selfcheck_index12 }}</td>
+                                                  <td class="text-nowrap text-center">
+                                                        {% if user.company.selfcheck_visble_flag == True %}
+                                                            {{ record.user.full_name }}
+                                                        {% endif %}
+                                                  </td>
+                                                  <td class="text-center">120</td>
+                                                  <td class="text-center">{{ record.selfcheck_index1 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index2 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index3 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index4 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index5 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index6 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index7 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index8 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index9 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index10 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index11 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index12 }}</td>
                                               </tr>
                                             {% endfor %}
                                         </tbody>

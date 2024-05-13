@@ -29,7 +29,7 @@
                                     <h2>SELF CHECK INDEX</h2>
                                     <p>タイプ別分析</p>
                                 </div>
-                                <div class="filter">
+                                <div class="filter mb-0">
                                     <form action="" method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         {{ form.evaluation_unit }}
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="content-chart content-chart-2 content-chart-2-gray">
                                     <div>
-                                      <table class="table_statics" id="td1" hidden>
+                                      <table class="table_statics" id="td1" hidden >
                                         <tr><th></th><th>タイプ</th><th>人に合わせるタイプ</th><th>バランスタイプ</th><th>自分の感情を大事にするタイプ</th></tr>
                                         <tbody>
                                             {% for record in orderby_records %}
@@ -57,12 +57,18 @@
                                     <div class="content-chart">
                                         <div class="row">
                                             {% for record in orderby_records %}
-                                            <div class="col-md-4">
+                                            <div style="width: 450px; height: 450px;">
+                                                <canvas id="mycanvas1-{{ record.user.id }}"></canvas>
+                                            </div>
+                                            <div class="col-md-4 mx-5 pt-5">
                                                 <div class="images">
-                                                    <p>{{ record.user.full_name }}</p>
+                                                    {% if user.company.selfcheck_visble_flag == True %}
+                                                        <p>{{ record.user.full_name }}</p>
+                                                    {% endif %}
                                                     <canvas id="mycanvas-{{ record.user.id }}"></canvas>
                                                 </div>
                                             </div>
+                                           
                                             <script>window.onload=create_chart({{ record.user.id }}, {{ record.type_list|safe }})</script>
                                             {% endfor %}
                                         </div>

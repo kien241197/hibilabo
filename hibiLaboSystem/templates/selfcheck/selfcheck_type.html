@@ -30,13 +30,13 @@
                                         <button type="submit" name="submit">表示</button>
                                     </form>
                                 </div>
-                                <div class="content-chart content-chart-2 content-chart-2-gray">
-                                    <table class="table table2" id="td1">
+                                <div class="content-chart content-chart-2 content-chart-2-gray" style="max-width: 100%;">
+                                    <table class="table table2" id="td1" >
                                         <tr>
                                             <th colspan="2" rowspan="2">TYPE</th>
-                                            <th><img src="{% static 'assets/circle.png' %}"></th>
-                                            <th><img src="{% static 'assets/squer.png' %}"></th>
-                                            <th><img src="{% static 'assets/triangle.png' %}"></th>
+                                            <th ><div style="width: 400px; overflow: hidden;"><img src="{% static 'assets/circle.png' %}"></div></th>
+                                            <th ><div style="width: 400px; overflow: hidden;"><img src="{% static 'assets/squer.png' %}"></div></th>
+                                            <th ><div style="width: 400px; overflow: hidden;"><img src="{% static 'assets/triangle.png' %}"></div></th>
                                         </tr>
                                         <tr>
                                             <th>人に合わせるタイプ</th>
@@ -47,7 +47,11 @@
                                             {% for record in orderby_records %}
                                             <tr>
                                               <td>{{ forloop.counter }}</td>
-	                                          <td >{{ record.user.full_name }}</td>
+	                                          <td style="text-wrap: nowrap;">
+                                                {% if user.company.selfcheck_visble_flag == True %} 
+                                                    {{ record.user.full_name }}
+                                                {% endif %}
+                                            </td>
                                               <td >{{ record.selfcheck_circl }}</td>
                                               <td >{{ record.selfcheck_square }}</td>
                                               <td >{{ record.selfcheck_traiangle }}</td>

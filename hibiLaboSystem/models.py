@@ -105,8 +105,11 @@ class Company(models.Model):
 	    null=True,
 	    verbose_name='業界'
 	)
+
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
 	visble_flag = models.BooleanField(blank=True, default=False, verbose_name='HONNE社員名表示')
+	selfcheck_visble_flag = models.BooleanField(blank=True, default=False, verbose_name='SELFCHECK社員名表示')
+
 	# Team concept
 	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
 	# Team vision
