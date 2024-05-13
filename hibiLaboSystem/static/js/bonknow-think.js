@@ -21,6 +21,7 @@ const chart = new Chart(mycanvas, {
         ]
     },
     options: {
+        barThickness: 100,
         // events: [],
         plugins: {
             datalabels: {
@@ -55,8 +56,11 @@ const chart = new Chart(mycanvas, {
                 stacked: true,
                 ticks: {
                     color: '#000000',
-                    font: { size: window.innerWidth <= 500 ? 12 : 20 }
-                }
+                    font: { size: window.innerWidth <= 500 ? 12 : 20 },
+                    barThickness: 100
+                },
+                min: 0,
+                max: 100,
             }
         },
         elements: {
