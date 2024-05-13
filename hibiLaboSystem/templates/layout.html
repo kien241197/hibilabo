@@ -34,7 +34,7 @@
                 <a href="#">
                     <img src="{% static 'assets/images/logo-header-hibi-lab.svg' %}" alt="">
                 </a>
-                <h2>WATASHEET</h2>
+                <h2 class="d-flex items-center">WATASHEET {% if title_header  %} <p class="pb-0 mb-0 title-header">{{ title_header }}</p> {% endif %} </h2>
             </div>
         </div>
     </div>

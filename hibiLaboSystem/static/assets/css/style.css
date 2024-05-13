@@ -1222,6 +1222,13 @@ select {
   background: var(--color-yellow) !important; }
 /*# sourceMappingURL=style.css.map */
 
+.title-header {
+
+  padding-left: 15px;
+  border-left: 2px solid #fff;
+  margin-left: 15px;
+}
+
 @media (min-width: 768px) {
   .col-sm-5-cols {
       width: 20%;
