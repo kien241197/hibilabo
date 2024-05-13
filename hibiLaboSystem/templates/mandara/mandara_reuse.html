@@ -13,8 +13,11 @@
 {% load static %}
 <link rel="stylesheet" href="{% static '/css/mandara_reuse.css' %}">
 
-
 {% endblock %}
+
+{% block title_header %}
+<p class="pb-0 mb-0 title-header">{{ title_header }}</p>
+{% endblock title_header %}
 
 <!-- コンテンツ -->
 {% block content %}

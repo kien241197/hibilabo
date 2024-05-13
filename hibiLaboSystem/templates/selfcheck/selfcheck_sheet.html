@@ -22,6 +22,10 @@ src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-ada
 <link rel="stylesheet" href="{% static 'css/selfchecksheet.css' %}">
 {% endblock %}
 
+{% block title_header %}
+<p class="pb-0 mb-0 title-header">{{ title_header }}</p>
+{% endblock title_header %}
+
 <!-- コンテンツ -->
 {% block content %}
 <main class="bg-main bg-gray">
