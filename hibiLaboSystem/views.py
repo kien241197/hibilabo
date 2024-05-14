@@ -209,6 +209,8 @@ class HonneSheet(TemplateView):
         kwargs['evaluation_unit'] = evaluation_unit
         kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         kwargs['form'] = self.form_class(initial_values)
+        kwargs['title_header'] = "HONNE"
+
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -342,6 +344,7 @@ class HonneTotal(TemplateView):
             "D": 0,
         }
         kwargs['result'] = list_result
+        kwargs['title_header'] = "HONNE"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -376,6 +379,7 @@ class HonneTypeStaticks(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(HonneTypeStaticks, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "HONNE"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -400,6 +404,7 @@ class HonneTypePersonalGraph(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(HonneTypePersonalGraph, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "HONNE"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -424,6 +429,7 @@ class HonneIndexStaticks(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(HonneIndexStaticks, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "HONNE"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -448,6 +454,7 @@ class HonneChart(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(HonneChart, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "HONNE"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -472,6 +479,7 @@ class HonneQrStaticks(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(HonneQrStaticks, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "HONNE"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -523,6 +531,7 @@ class SelfcheckIndex(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(SelfcheckIndex, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "SELFCHECK"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -547,6 +556,7 @@ class SelfcheckIndexChart(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(SelfcheckIndexChart, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "SELFCHECK"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -571,6 +581,7 @@ class SelfcheckQuestions(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(SelfcheckQuestions, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "SELFCHECK"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -621,6 +632,7 @@ class SelfcheckType(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(SelfcheckType, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "SELFCHECK"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -645,6 +657,7 @@ class SelfcheckTypeChart(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super(SelfcheckTypeChart, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "SELFCHECK"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -778,6 +791,7 @@ class SelfcheckSheet(TemplateView):
         kwargs['evaluation_unit'] = evaluation_unit
         kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         kwargs['form'] = self.form_class(initial_values)
+        kwargs['title_header'] = "SELFCHECK"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -947,6 +961,7 @@ class BonknowSheet(TemplateView):
         kwargs['res_list'] = list(respons_questions.values_list('id', flat=True))
         kwargs['form'] = self.form_class(initial_values)
         kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
+        kwargs['title_header'] = "BONKNOW"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1048,6 +1063,7 @@ class BonknowRespons(TemplateView):
 
         kwargs = super(BonknowRespons, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request.GET or None)
+        kwargs['title_header'] = 'BONKNOW'
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1088,6 +1104,7 @@ class BonknowThink(TemplateView):
 
         kwargs = super(BonknowThink, self).get_context_data(**kwargs)
         kwargs['form'] = self.form_class(self.request.GET or None)
+        kwargs['title_header'] = 'BONKNOW'
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1138,7 +1155,7 @@ class MandaraCreate(TemplateView):
             kwargs['form'] = self.form_class(instance=mandara)
         kwargs['mandara'] = mandara
         kwargs['mandara_periods'] = mandara_periods
-
+        kwargs['title_header'] = "MASMASMANDARA"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1191,9 +1208,8 @@ class MandaraSheet(TemplateView):
     template_name = "mandara/mandara_sheet.html"
 
     def get_context_data(self, **kwargs):
-        company_id = self.request.user.company_id
-        user_id = self.request.user.id
-
+        kwargs = super().get_context_data(**kwargs)
+        kwargs["title_header"] = "MANDARA" 
         return kwargs
     
 @method_decorator(login_required, name='dispatch')
@@ -1302,6 +1318,8 @@ class MandaraReuse(TemplateView):
             kwargs['start'] = mandara.mandara_period.display_time_start
             kwargs['end'] = mandara.mandara_period.display_time_end
 
+        kwargs['title_header'] = "MASMASMANDARA"
+
         return kwargs
 
 @method_decorator(login_required, name='dispatch')
@@ -1320,6 +1338,7 @@ class MandaraCompletion(TemplateView):
         kwargs['mandara_get'] = mandara_get
         kwargs['mandara_get'] = mandara_get
         kwargs['form'] = self.form_class(company_id)
+        kwargs['title_header'] = "MASMASMANDARA"
         return kwargs
     
     def post(self, request, *args, **kwargs):
@@ -1425,6 +1444,7 @@ class MandaraCompletionDetail(TemplateView):
         kwargs['format_end_date'] = get_mandara_detail.mandara_period.display_time_end
         kwargs['format_start_date'] = get_mandara_detail.mandara_period.display_time_start
         kwargs['month'] = month
+        kwargs['title_header'] = "MASMASMANDARA"
         
         return kwargs
 
@@ -1603,7 +1623,7 @@ class MandaraPersonal(TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs['form'] = self.form_class(self.request)
-
+        kwargs['title_header'] = "MASMASMANDARA"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1724,6 +1744,7 @@ class MandaraMasMasChart(TemplateView):
             kwargs['start'] = start
             kwargs['end'] = end
 
+        kwargs['title_header'] = "MASMASMANDARA"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1753,7 +1774,7 @@ class MandaraCompletionTab(TemplateView):
             kwargs['end'] = max_time.mandara_period.display_time_end
         if user_id is not None and user_id != '':
             kwargs['mandaras'] = mandaras.filter(user_id=user_id)
-
+        kwargs['title_header'] = "MASMASMANDARA"
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1851,7 +1872,7 @@ class MandaraCompletionTabDetail(TemplateView):
         kwargs['format_end_date'] = get_mandara_detail.mandara_period.display_time_end
         kwargs['format_start_date'] = get_mandara_detail.mandara_period.display_time_start
         kwargs['month'] = month
-        
+        kwargs['title_header'] = "MASMASMANDARA"
         return kwargs
 
 @method_decorator(login_required, name='dispatch')            
@@ -1913,6 +1934,7 @@ class Watasheet(TemplateView):
         kwargs['form'] = self.form_class(initial_values)
         kwargs['team_concept'] = company
         kwargs['watasheet_type_result'] = watasheet_type_result
+        kwargs['title_header'] = "WATASHEET"
 
         return kwargs
 
