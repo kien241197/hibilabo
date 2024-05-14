@@ -56,10 +56,10 @@
                                     </div>
                                     <div class="content-chart">
                                         <div class="row">
-                                            {% for record in orderby_records %}
                                             <div style="width: 450px; height: 450px;">
-                                                <canvas id="mycanvas1-{{ record.user.id }}"></canvas>
+                                                <canvas id="mycanvas-sample"></canvas>
                                             </div>
+                                            {% for record in orderby_records %}
                                             <div class="col-md-4 mx-5 pt-5">
                                                 <div class="images">
                                                     {% if user.company.visble_flag == True %}
@@ -71,6 +71,8 @@
                                            
                                             <script>window.onload=create_chart({{ record.user.id }}, {{ record.type_list|safe }})</script>
                                             {% endfor %}
+                                            <script>window.onload=createChartSample()</script>
+
                                         </div>
                                     </div>
                                 </div>

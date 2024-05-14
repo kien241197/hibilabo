@@ -58,15 +58,19 @@ function chart(ctx, data, labels){
 }
 
 function create_chart(id, data) {
+  
     var strname = "mycanvas-" + id;
-    var strname1 = "mycanvas1-" + id;
 
     //図を動的に生成
     var ctx = document.getElementById(strname);
-    var ctx1 = document.getElementById(strname1);
 
     chart(ctx, data, false)
-    chart(ctx1, data, true)
+}
 
+function createChartSample(){
 
+  var strname = "mycanvas-spamle";
+  var ctx = document.getElementById(strname);
+
+  chart(ctx, [2, 4, 4, 7, 2, 1, 4, 7, 3, 2, 1, 5], true)
 }
