@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% load static %}
 <link rel="stylesheet" href="{% static '/css/bonknow.css' %}">
 <script>
@@ -63,7 +64,7 @@
                                         <tr>
                                             <td>{{forloop.counter}}</td>
                                             <td>{{ record.question }}</td>
-                                            <td>
+                                            <td id="select_response">
                                                 <select id=respons_result{{record.id}}
                                                     name=respons_answer_{{record.id}} onchange='func_count_res(this, {{ res_list|safe }});' {{disabled}}>
                                                     <option value="">-</option>
@@ -116,7 +117,7 @@
                                         <tr>
                                             <td>{{forloop.counter}}</td>
                                             <td>{{ record.question }}</td>
-                                            <td>
+                                            <td id="select_think">
                                                 <select id=think_result{{record.id}}
                                                     name=think_answer_{{record.id}} onchange='func_count_think(this, {{ think_list|safe }});' {{ disabled }}>
                                                     <option value="">-</option>
