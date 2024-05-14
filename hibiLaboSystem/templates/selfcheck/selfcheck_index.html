@@ -72,7 +72,7 @@
                                                   <td>{{ forloop.counter }}</td>
                                                   <td class="text-nowrap text-center">
                                                         {% if user.company.visble_flag == True %}
-                                                            {{ record.user.full_name }}
+                                                            {{ record.user.full_name|truncatechars:25 }}
                                                         {% endif %}
                                                   </td>
                                                   <td class="text-center">{{ record.sum_selfcheck_index }}</td>
