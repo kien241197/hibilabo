@@ -33,7 +33,7 @@
                                 <div class="content-chart content-chart-2">
                                     <table class="table table2" id="td1" style="width:100%">
                                         <tr>
-                                            <th></th>
+                                            <th><div class="px-3"></div></th>
                                             <th><div>指</br>数</div></th>
                                             <th><div class="title-selfcheck-table-index">合</br>計</br>列</br>を</div></th>
                                             <th><div class="title-selfcheck-table-index">決<br/>断<br/>力</div></th>
@@ -52,7 +52,7 @@
                                         <tr>
                                             <th></th>
                                             <th class="text-center">名前</th>
-                                            <th class="text-center">120名前</th>
+                                            <th class="text-center">120満点</th>
                                             <th class="text-center">10満点</th>
                                             <th class="text-center">10満点</th>
                                             <th class="text-center">10満点</th>
@@ -75,7 +75,7 @@
                                                             {{ record.user.full_name }}
                                                         {% endif %}
                                                   </td>
-                                                  <td class="text-center">120</td>
+                                                  <td class="text-center">{{ record.sum_selfcheck_index }}</td>
                                                   <td class="text-center">{{ record.selfcheck_index1 }}</td>
                                                   <td class="text-center">{{ record.selfcheck_index2 }}</td>
                                                   <td class="text-center">{{ record.selfcheck_index3 }}</td>

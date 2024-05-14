@@ -33,7 +33,7 @@
                                 <div class="content-chart content-chart-2 content-chart-vetical">
                                     <table class="table table2" >
                                         <tr>
-                                            <th></th>
+                                            <th><div class="px-3"></div></th>
                                             <th><div style="min-width: 80px;">社<br/>員<br/>名</div></th>
                                             <th><div class="title-honne-table">合</br>計</br>列</br>を</div></th>
 
@@ -48,6 +48,19 @@
                                             <th><div class="title-honne-table">評<br/>価<br/>制<br/>度<br/>指<br/>数</div></th>
                                             <th><div class="title-honne-table"><span class="d-flex align-items-center m-0 justify-content-center"><p class="m-0">自<br/>己<br/>分<br/>析<br/>指<br/>数</p><p class="m-0">個<br/>人<br/>チ<br/>ャ<br/>ー<br/>ト</p></span></div></th>
                                         </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>120名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                        </tr>
                                         {% for record in orderby_records %}
 
                                           <td>{{ forloop.counter }}</td>
@@ -56,8 +69,7 @@
                                               {{ record.user.full_name }}
                                             {% endif %}
                                           </td>
-                                          <td >120</td>
-
+                                          <td>{{ record.sum_kartet }}</td>
                                           <td >{{ record.kartet_index1 }}</td>
                                           <td >{{ record.kartet_index2 }}</td>
                                           <td >{{ record.kartet_index3 }}</td>
