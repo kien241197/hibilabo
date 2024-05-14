@@ -64,6 +64,11 @@ for (let i = 0; i < key_array.length; i++) {
 	$(`input[name="${key_array[i]}_keyword"]`).change(function () {
 		$(`input[name="${key_array[i]}_keyword"]`).removeClass('box-required');
 		console.log(i, key_array.length - 1);
+		console.log($("#id_A_keyword").val());
+		if( $("#id_A_keyword").val() && $("#id_B_keyword").val() && $("#id_C_keyword").val() && $("#id_D_keyword").val() && $("#id_E_keyword").val() && $("#id_F_keyword").val() && $("#id_G_keyword").val() && $("#id_H_keyword").val()){
+
+			$(".wrapper-top-block").css("display", "none")
+		}
 		if (i < key_array.length - 1) {
 			if (!$(`input[name="${key_array[i + 1]}_keyword"]`).attr("disabled")) return;
 			$('#id_field_stop').val(`${key_array[i + 1]}_keyword`);
@@ -94,4 +99,5 @@ for (let i = 0; i < key_array.length; i++) {
 			}
 		});
 	}
+
 }
