@@ -48,7 +48,7 @@
                                             <tr>
                                               <td>{{ forloop.counter }}</td>
 	                                          <td style="text-wrap: nowrap;">
-                                                {% if user.company.selfcheck_visble_flag == True %} 
+                                                {% if user.company.visble_flag == True %} 
                                                     {{ record.user.full_name }}
                                                 {% endif %}
                                             </td>

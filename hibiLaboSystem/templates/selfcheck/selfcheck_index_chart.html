@@ -47,7 +47,7 @@
                                             </div>
                                             <div class="col-md-4 mx-5 pt-4">
                                                 <div class="images"  style="width: 320px; height: 320px;">
-                                                    {% if user.company.selfcheck_visble_flag == True %}
+                                                    {% if user.company.visble_flag == True %}
                                                         <p>{{ record.user.full_name }}</p>
                                                     {% endif %}
                                                     <canvas id="mycanvas-{{ record.user.id }}"></canvas>
