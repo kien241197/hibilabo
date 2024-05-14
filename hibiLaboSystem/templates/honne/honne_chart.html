@@ -29,7 +29,7 @@
                                     <h2>HONNE INDEX</h2>
                                     <p>タイプ別分析</p>
                                 </div>
-                                <div class="filter">
+                                <div class="filter mb-0">
                                     <form action=""  method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         {{ form.evaluation_unit }}
@@ -41,7 +41,10 @@
                                 <div class="content-chart">
                                     <div class="row">
                                         {% for record in orderby_records %}
-                                        <div class="col-md-4">
+                                        <div style="width: 550px; height: 550px;">
+                                            <canvas id="mycanvas1-{{ record.user.id }}" ></canvas>
+                                        </div>
+                                        <div class="col-md-4 mt-5 mx-3 pt-3">
                                             <div class="images">
                                                 <p>
                                                     {% if user.company.visble_flag == True %}
@@ -51,6 +54,7 @@
                                                 <canvas id="mycanvas-{{ record.user.id }}"></canvas>
                                             </div>
                                         </div>
+                                      
                                         <script>window.onload=create_graph({{ record.user.id }}, {{ record.index_list|safe }})</script>
                                         {% endfor %}
                                     </div>

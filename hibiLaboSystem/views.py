@@ -31,7 +31,7 @@ from django.conf import settings
 import os
 from django.template.loader import get_template
 import pdfkit
-from django.db.models import Q
+from django.db.models import Q, F
 import jaconv
 
 User = get_user_model()
@@ -442,6 +442,8 @@ class HonneIndexStaticks(TemplateView):
             result_queryset = HonneIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
             if key_user_id != '':
                 result_queryset = result_queryset.filter(user_id=key_user_id)
+
+            result_queryset = result_queryset.annotate(sum_kartet=F('kartet_index1') + F('kartet_index2') + F('kartet_index3') + F('kartet_index4') + F('kartet_index5') + F('kartet_index6') + F('kartet_index7') + F('kartet_index8'))
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
@@ -544,6 +546,7 @@ class SelfcheckIndex(TemplateView):
             result_queryset = SelfcheckIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
             if key_user_id != '':
                 result_queryset = result_queryset.filter(user_id=key_user_id)
+            result_queryset = result_queryset.annotate(sum_selfcheck_index=F('selfcheck_index1') + F('selfcheck_index2') + F('selfcheck_index3') + F('selfcheck_index4') + F('selfcheck_index5') + F('selfcheck_index6') + F('selfcheck_index7') + F('selfcheck_index8') + F('selfcheck_index9') + F('selfcheck_index10') + F('selfcheck_index11') + F('selfcheck_index12'))
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 

@@ -42,9 +42,9 @@
                                         </tr>
                                        {% for record in orderby_records %}
                                           <td>{{ forloop.counter }}</td>
-                                          <td >
+                                          <td class="text-nowrap">
                                             {% if user.company.visble_flag == True %}
-                                              {{ record.user.full_name }}
+                                              {{ record.user.full_name|truncatechars:25 }}
                                             {% endif %}
                                           </td>
                                           <td >{{ record.kartet_type_a }}</td>

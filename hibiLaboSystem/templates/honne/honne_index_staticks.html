@@ -10,7 +10,7 @@
 <!-- コンテンツ -->
 {% block content %}
 <main class="bg-main bg-gray">
-    <section class="site-feedback pd-main">
+    <section class="site-feedback pd-main overflow-auto">
         <div class="container-fluid">
             <div class="row">
                 {% include "component/honne_nav.html" %}
@@ -31,27 +31,45 @@
                                     </form>
                                 </div>
                                 <div class="content-chart content-chart-2 content-chart-vetical">
-                                    <table class="table table2">
+                                    <table class="table table2" >
+                                        <tr>
+                                            <th><div class="px-3"></div></th>
+                                            <th><div style="min-width: 80px;">社<br/>員<br/>名</div></th>
+                                            <th><div class="title-honne-table">合</br>計</br>列</br>を</div></th>
+
+                                            <th>
+                                                <div class="title-honne-table">HP<br/>の<br/>見<br/>え<br/>る<br/>化</div>
+                                             </th>
+                                            <th><div class="title-honne-table"><span class="d-flex m-0 justify-content-center"><p class="m-0">コ<br/>ン<br/>セ<br/>プ<br/>ト</p><p class="m-0">ヴ<br/>ィ<br/>ジ<br/>ョ<br/>ン</p></span></div></th>
+                                            <th><span class="d-flex align-items-center m-0 justify-content-center title-honne-table"><p class="m-0"><p class="m-0">リ<br/>ー<br/>ダ<br/>ー<br/>育<br/>成</p>幹<br/>部<br/>育<br/>成</p></span></th>
+                                            <th><div class="title-honne-table">面<br/>接<br/>・<br/>人<br/>生<br/>設<br/>計</div></th>
+                                            <th><div class="title-honne-table">社<br/>内<br/>共<br/>有<br/>指<br/>数</div></th>
+                                            <th><div class="title-honne-table">組<br/>織<br/>力<br/>指<br/>数</div></th>
+                                            <th><div class="title-honne-table">評<br/>価<br/>制<br/>度<br/>指<br/>数</div></th>
+                                            <th><div class="title-honne-table"><span class="d-flex align-items-center m-0 justify-content-center"><p class="m-0">自<br/>己<br/>分<br/>析<br/>指<br/>数</p><p class="m-0">個<br/>人<br/>チ<br/>ャ<br/>ー<br/>ト</p></span></div></th>
+                                        </tr>
                                         <tr>
                                             <th></th>
-                                            <th>社<br/>員<br/>名</th>
-                                            <th>HP<br/>の<br/>見<br/>え<br/>る<br/>化</th>
-                                            <th><span class="d-flex m-0 justify-content-center"><p class="m-0">コ<br/>ン<br/>セ<br/>プ<br/>ト</p><p class="m-0">ヴ<br/>ィ<br/>ジ<br/>ョ<br/>ン</p></span></th>
-                                            <th><span class="d-flex align-items-center m-0 justify-content-center"><p class="m-0"><p class="m-0">リ<br/>ー<br/>ダ<br/>ー<br/>育<br/>成</p>幹<br/>部<br/>育<br/>成</p></span></th>
-                                            <th>面<br/>接<br/>・<br/>人<br/>生<br/>設<br/>計</th>
-                                            <th>社<br/>内<br/>共<br/>有<br/>指<br/>数</th>
-                                            <th>組<br/>織<br/>力<br/>指<br/>数</th>
-                                            <th>評<br/>価<br/>制<br/>度<br/>指<br/>数</th>
-                                            <th><span class="d-flex align-items-center m-0 justify-content-center"><p class="m-0">自<br/>己<br/>分<br/>析<br/>指<br/>数</p><p class="m-0">個<br/>人<br/>チ<br/>ャ<br/>ー<br/>ト</p></span></th>
+                                            <th></th>
+                                            <th>80名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
+                                            <th>10名前</th>
                                         </tr>
                                         {% for record in orderby_records %}
 
                                           <td>{{ forloop.counter }}</td>
-                                          <td >
+                                          <td class="text-center text-nowrap">
                                             {% if user.company.visble_flag == True %}
-                                              {{ record.user.full_name }}
+                                              {{ record.user.full_name|truncatechars:25 }}
                                             {% endif %}
                                           </td>
+                                          <td>{{ record.sum_kartet }}</td>
                                           <td >{{ record.kartet_index1 }}</td>
                                           <td >{{ record.kartet_index2 }}</td>
                                           <td >{{ record.kartet_index3 }}</td>
