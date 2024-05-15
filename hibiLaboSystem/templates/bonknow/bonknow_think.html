@@ -30,14 +30,11 @@
                                     <h2 class="text-dark">DO YOU KNOW <span class="text-muted">&nbsp;THINK</span></h2>
                                 </div>
                                 <div class="filter">
-                                    <form action="" method="post" enctype="multipart/form-data">
-                                        <div class="item-select d-flex align-items-center gap-2" style="display: flex;">
-                                            {{ form.start }}
-                                            <p class="to m-0 px-3">～</p>
-                                            {{ form.end }}
-                                            {% csrf_token %}
-                                            <button class="mx-3" type="submit" name="submit">表示</button>
-                                        </div>
+                                    <form action=""  method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
                                     </form>
                                 </div>
                                 <div>

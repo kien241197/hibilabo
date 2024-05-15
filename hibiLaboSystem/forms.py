@@ -265,15 +265,19 @@ class SelfcheckEvaluationUnitForm(forms.Form):
         self.fields['evaluation_unit'].queryset = queryset_evaluation
 
 class BonknowForm(forms.Form):
-    start = forms.ChoiceField(
-        widget=fields.MonthYearSelectWidget(),
-        required=True
+
+    evaluation_unit = forms.ModelChoiceField(
+        empty_label='----',
+        label='評価対象年月',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form'}),
+        queryset=models.BonknowEvaluationPeriod.objects.none()
     )
 
-    end = forms.ChoiceField(
-        widget=fields.MonthYearSelectWidget(),
-        required=True
-    )
+    def __init__(self, request, *args, **kwargs):
+        super(BonknowForm, self).__init__(*args, **kwargs)
+        queryset_evaluation = models.BonknowEvaluationPeriod.objects.all()
+        self.fields['evaluation_unit'].queryset = queryset_evaluation
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()

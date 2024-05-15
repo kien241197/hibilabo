@@ -4,7 +4,7 @@ const mycanvas = document.getElementById('mycanvas').getContext('2d');
 const chart = new Chart(mycanvas, {
     type: 'bar',
     data: {
-        labels: time_list,
+        labels: [...time_list, "", ""],
         datasets: [
             {
                 label: 'Want',

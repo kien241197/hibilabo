@@ -1073,23 +1073,13 @@ class BonknowRespons(TemplateView):
         context = self.get_context_data(**kwargs)
         form = self.form_class(request.POST)
         context["form"] = form
-        start_time = request.POST['start']
-        end_time = request.POST['end']
-        results = ResponsResult.objects.all().filter(company_id=request.user.company_id,user_id=request.user.id).order_by('review_date')
-        if start_time != '':
-            start_format = datetime.datetime.strptime(start_time + '-01', "%Y-%m-%d").date()
-            results = results.filter(review_date__gte=start_format)
-        if end_time != '':
-            convert = list(end_time.split("-"))
-            days = calendar.monthrange(int(convert[0]), int(convert[1]))
-            end_format = datetime.datetime.strptime(end_time + '-' + str(days[1]), "%Y-%m-%d").date()
-            results = results.filter(review_date__lte=end_format)
+        key_evaluation_unit = request.POST['evaluation_unit']
+        results = ResponsResult.objects.all().filter(id=key_evaluation_unit,user_id=request.user.id).order_by('review_date')
         context['times'] = [];
         context['logic'] = [];
         context['sense'] = [];
         for result in results:
-            str_time = result.review_date.strftime('%Y/%m')
-            context['times'].append(str_time)
+            context['times'].append(result.evaluation_period.evaluation_name)
             context['logic'].append(result.logic)
             context['sense'].append(result.sense)
 
@@ -1114,23 +1104,14 @@ class BonknowThink(TemplateView):
         context = self.get_context_data(**kwargs)
         form = self.form_class(request.POST)
         context["form"] = form
-        start_time = request.POST['start']
-        end_time = request.POST['end']
-        results = ThinkResult.objects.all().filter(company_id=request.user.company_id,user_id=request.user.id).order_by('review_date')
-        if start_time != '':
-            start_format = datetime.datetime.strptime(start_time + '-01', "%Y-%m-%d").date()
-            results = results.filter(review_date__gte=start_format)
-        if end_time != '':
-            convert = list(end_time.split("-"))
-            days = calendar.monthrange(int(convert[0]), int(convert[1]))
-            end_format = datetime.datetime.strptime(end_time + '-' + str(days[1]), "%Y-%m-%d").date()
-            results = results.filter(review_date__lte=end_format)
+        key_evaluation_unit = request.POST['evaluation_unit']
+        results = ThinkResult.objects.all().filter(id=key_evaluation_unit,user_id=request.user.id).order_by('review_date')
         context['times'] = [];
         context['must'] = [];
         context['want'] = [];
         for result in results:
-            str_time = result.review_date.strftime('%Y/%m')
-            context['times'].append(str_time)
+            # str_time = result.review_date.strftime('%Y/%m')
+            context['times'].append(result.evaluation_period.evaluation_name)
             context['must'].append(result.must)
             context['want'].append(result.want)
 
