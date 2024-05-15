@@ -107,12 +107,9 @@ class Company(models.Model):
 	# Team concept
 	team_concept_1 = models.TextField(blank=True, null=True, verbose_name="Team Concept")
 	# Team vision
-	team_vision_1_year = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="1年後 (TEAM VISION)")
-	team_vision_5_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="5年後 (TEAM VISION)")
-	team_vision_10_years = models.IntegerField(blank=True, null=True, validators=[MaxValueValidator(999, message="最大 3 つの数字のみを入力してください"), MinValueValidator(1)], verbose_name="10年後 (TEAM VISION)")
 	team_vision_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM VISION)")
-	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 5 (TEAM VISION)")
-	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 10 (TEAM VISION)")
+	team_vision_5 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM VISION)")
+	team_vision_10 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 3 (TEAM VISION)")
 	# Team mission
 	team_mission_1 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 1 (TEAM MISSION)")
 	team_mission_2 = models.TextField(blank=True, null=True, verbose_name="コンテンツ 2 (TEAM MISSION)")
