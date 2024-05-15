@@ -61,13 +61,19 @@ function createChart(ctx, data, labels) {
 
 }
 function create_chart(id, data) {
+
   var strname = "mycanvas-" + id;
-  var strname1 = "mycanvas1-" + id;
 
   //図を動的に生成
   var ctx = document.getElementById(strname);
-  var ctx1 = document.getElementById(strname1);
 
   createChart(ctx, data, false)
-  createChart(ctx1, data, true)
+}
+
+function createChartSample() {
+
+  var strname = "mycanvas-sample"
+  var ctx = document.getElementById(strname);
+  
+  createChart(ctx, [6, 3, 7], true)
 }

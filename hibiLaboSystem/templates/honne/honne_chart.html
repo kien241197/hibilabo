@@ -40,10 +40,10 @@
 
                                 <div class="content-chart">
                                     <div class="row">
-                                        {% for record in orderby_records %}
                                         <div style="width: 550px; height: 550px;">
-                                            <canvas id="mycanvas1-{{ record.user.id }}" ></canvas>
+                                            <canvas id="mycanvas-sample"></canvas>
                                         </div>
+                                        {% for record in orderby_records %}
                                         <div class="col-md-4 mt-5 mx-3 pt-3">
                                             <div class="images">
                                                 <p>
@@ -57,6 +57,7 @@
                                       
                                         <script>window.onload=create_graph({{ record.user.id }}, {{ record.index_list|safe }})</script>
                                         {% endfor %}
+                                        <script>window.onload=createGraphSample()</script>
                                     </div>
                                 </div>
                             </div>

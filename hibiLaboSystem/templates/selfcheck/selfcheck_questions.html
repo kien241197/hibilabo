@@ -37,7 +37,11 @@
                                             <th>質問</th>
                                             <!--取得した人員数の値分列ヘッダーを追加する-->
                                             {% for obj in staff_list %}
-                                              <th>{{ obj.full_name }}</th>
+                                              <th>
+                                                {% if user.company.visble_flag == True %}
+                                                 {{ obj.full_name|truncatechars:25 }}
+                                                {% endif %}
+                                            </th>
                                             {% endfor %}
                                         </tr>
                                         <tbody>

@@ -1,4 +1,5 @@
 function createChart(ctx, data, label) {
+ 
   new Chart(ctx, {
     type: 'radar',
     data: {
@@ -57,12 +58,17 @@ function createChart(ctx, data, label) {
   });
 }
 function create_graph(id, data) {
+
   var strname = "mycanvas-" + id;
   var ctx = document.getElementById(strname);
 
-  var strname1 = "mycanvas1-" + id
-  var ctx1 = document.getElementById(strname1);
-
   createChart(ctx, data, false)
-  createChart(ctx1, data, true)
+}
+
+function createGraphSample(){
+
+  var strname = "mycanvas-sample"
+  var ctx1 = document.getElementById(strname);
+
+  createChart(ctx1, [6, 3, 7, 5, 1, 2, 4, 6], true)
 }
