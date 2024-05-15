@@ -103,36 +103,9 @@
                                                                     <p>未来像 ： 会社が目指す未来 </p>
                                                                 </div>
                                                                 <ul class="position-relative">
-                                                                    <li class="d-flex align-items-baseline mb-3">
-                                                                        <span class="width-80">(1年後)</span> (<span class="width-年">{{team_concept.team_vision_1_year|default_if_none:""}}</span> {% if team_concept.team_vision_1_year %} <div class="mx-1">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                <circle cx="8" cy="8" r="8" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                <circle cx="8" cy="8" r="8" />
-                                                                            </svg>
-                                                                        </div> {% endif %}年) <span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span>
-                                                                    </li>
-                                                                    <li class="d-flex align-items-baseline mb-3">
-                                                                        <span class="width-80">(5年後)</span> (<span class="width-年">{{team_concept.team_vision_5_years|default_if_none:""}}</span> {% if team_concept.team_vision_5_years %} <div class="mx-1">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                <circle cx="8" cy="8" r="8" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                <circle cx="8" cy="8" r="8" />
-                                                                            </svg>
-                                                                        </div> {% endif %} 年) <span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span>
-                                                                    </li>
-                                                                    <li class="d-flex align-items-baseline mb-0">
-                                                                        <span class="width-80">(10年後)</span> (<span class="width-年">{{team_concept.team_vision_10_years|default_if_none:""}}</span> {% if team_concept.team_vision_10_years %} <div class="mx-1">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                <circle cx="8" cy="8" r="8" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                <circle cx="8" cy="8" r="8" />
-                                                                            </svg>
-                                                                        </div> {% endif %}年) <span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span>
-                                                                    </li>
+                                                                    <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span></li>
+                                                                    <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span></li>
+                                                                    <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
