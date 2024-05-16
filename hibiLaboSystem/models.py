@@ -45,7 +45,8 @@ class Role(models.Model):
 			(RoleEnum.Partner.value, 'Partner'),
 			(RoleEnum.Company_Admin.value, 'Company Admin'),
 			(RoleEnum.Company_SuperVisor.value, 'Company SuperVisor'),
-			(RoleEnum.Company_Staff.value, 'Company Staff')
+			(RoleEnum.Company_Staff.value, 'Company Staff'),
+			(RoleEnum.Company_Director.value, 'Company Director')
 		],
 		verbose_name='Role'
 	)
