@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
 from import_export.admin import ImportMixin
 from django.contrib.auth.hashers import make_password, check_password
@@ -20,7 +20,7 @@ import datetime
 import threading
 import jaconv
 from django.utils.html import format_html
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 
 
 thread_local = threading.local()
@@ -47,7 +47,7 @@ class HonneEvaluationPeriodInline(admin.TabularInline):
     #     return request.user.is_superuser
         
     def get_readonly_fields(self, request, obj=None):
-        if not request.user.is_superuser:   
+        if not request.user.is_superuser and request.user.role.role not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:   
             self.readonly_fields = ["evaluation_name", "honne_questions"]
         return  self.readonly_fields
             
@@ -75,7 +75,7 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
     #     return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
-        if not request.user.is_superuser:
+        if not request.user.is_superuser and request.user.role.role not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:
             self.readonly_fields = ["evaluation_name", "selfcheck_questions"]
         return self.readonly_fields
     
@@ -102,7 +102,7 @@ class BonknowEvaluationPeriodInline(admin.TabularInline):
     #     return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
-        if not request.user.is_superuser:
+        if not request.user.is_superuser and int(request.user.role.role) not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:
             self.readonly_fields = ["evaluation_name", "respons_questions", "think_questions"]
         return self.readonly_fields
         
@@ -163,7 +163,7 @@ class WatasheetInline(admin.TabularInline):
     #     return request.user.is_superuser
 
     def get_readonly_fields(self, request, obj=None):
-        if not request.user.is_superuser:
+        if not request.user.is_superuser and request.user.role.role not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:
             self.readonly_fields = ["evaluation_name", "watasheet_questions"]
         return self.readonly_fields
 
@@ -176,7 +176,7 @@ class WatasheetInline(admin.TabularInline):
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
-    exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", ]
+    exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years"]
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline]
     def save_model(self, request, obj, form, change):
         if not change:
@@ -196,10 +196,7 @@ class CompanyAdmin(admin.ModelAdmin):
             self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner"]
             # self.inlines = []
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
-        return form   
-
-    # def formfield_for_manytomany(self, db_field, request, **kwargs):
-    #     print(db_field.name)     
+        return form    
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
     list_filter = ["selfcheck_roles", "industries"]
@@ -219,7 +216,7 @@ class IndustryCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
-    exclude = ['created_by', 'image']
+    exclude = ['created_by', 'image', 'groups', "user_permissions", "is_superuser"]
     actions = []
     success = True
 
@@ -239,12 +236,23 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         response = super().change_view(request, object_id, form_url, extra_context)
         if response.status_code == 302:
             user = User.objects.get(id=object_id)
-            if user.is_staff:
-                groups = Group.objects.all()
-                user.groups.set(groups)
-                user.save()
-            else:
-                user.groups.set([])
+            user.groups.set([])
+            user.user_permissions.set([])
+            if user.role is not None:
+                permissions_list = []
+                if user.role.role == RoleEnum.日々研.value:
+                    user.is_superuser = True
+                elif user.role.role == RoleEnum.Partner.value:
+                    permissions_list = RolePermission.Partner.value
+                elif user.role.role == RoleEnum.Company_Admin.value:
+                    permissions_list = RolePermission.Company_Admin.value
+                elif user.role.role == RoleEnum.Company_Director.value:
+                    permissions_list = RolePermission.Company_Director.value
+                elif user.role.role == RoleEnum.Company_SuperVisor.value:
+                    permissions_list = RolePermission.Company_SuperVisor.value
+                permissions = Permission.objects.filter(codename__in=permissions_list)
+                user.user_permissions.add(*permissions)
+            user.save()
         return response
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -301,6 +309,8 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
     def import_action(self,request):
+        if not request.user.is_superuser and request.user.role.role not in [RoleEnum.日々研.value, RoleEnum.Partner.value, RoleEnum.Company_SuperVisor.value]:
+            return HttpResponseForbidden()
         company_id = request.user.company_id
         role_id = Role.objects.filter(role=RoleEnum.Company_Staff.value).first().id
         import_object_status = []
@@ -453,6 +463,8 @@ admin.site.register(ResponsQuestion)
 admin.site.register(ThinkQuestion)
 # Watasheet
 admin.site.register(WatasheetQuestion)
+#Remove Group Permission
+admin.site.unregister(Group)
 
 
 
