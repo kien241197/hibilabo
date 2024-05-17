@@ -297,6 +297,12 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             return db_field.remote_field.model._default_manager.filter(
                               Q(created_by=request.user.id) | Q(id=request.user.company_id)
             )
+        
+        if db_field.name == 'role':
+            if  not request.user.is_superuser:
+                return db_field.remote_field.model._default_manager.exclude(
+                                Q(role=RoleEnum.日々研.value) and Q(role=RoleEnum.Partner.value)
+                )
 
         super().get_field_queryset(db, db_field, request)
 
