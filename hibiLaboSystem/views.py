@@ -1918,7 +1918,7 @@ class Watasheet(TemplateView):
         kwargs['form'] = self.form_class(initial_values)
         kwargs['team_concept'] = company
         kwargs['watasheet_type_result'] = watasheet_type_result
-        kwargs['title_header'] = "WATASHEET"
+        kwargs['title_header'] = "KNOW MY SELF"
 
         return kwargs
 
@@ -2002,6 +2002,7 @@ class WatasheetType(TemplateView):
         kwargs = super().get_context_data(**kwargs)
         kwargs['watasheet_type_result'] = None
         kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "KNOW MY SELF"
         return kwargs
 
     def post(self, request, *args, **kwargs):
