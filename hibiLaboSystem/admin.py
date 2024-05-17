@@ -301,7 +301,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if db_field.name == 'role':
             if  not request.user.is_superuser:
                 return db_field.remote_field.model._default_manager.exclude(
-                                Q(role=RoleEnum.日々研.value) and Q(role=RoleEnum.Partner.value)
+                                Q(role=90) | Q(role=40)
                 )
 
         super().get_field_queryset(db, db_field, request)
