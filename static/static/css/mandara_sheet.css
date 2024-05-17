@@ -1,0 +1,19 @@
+
+.items_content .date {
+    margin: unset !important;
+}
+
+.wrapper-content-top {
+
+    min-height: 110px;
+}
+
+@media screen and (min-width: 992px) {
+    
+    .col-md-5-cols {
+
+        width: 33% !important;
+    }
+
+
+}

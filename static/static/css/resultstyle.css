@@ -1,0 +1,311 @@
+.base {
+display: flex;
+flex-direction: row;
+width: 100vw;
+height: 100vh;
+}
+.class1 {
+width: 25%;
+
+}
+
+.class2 {
+display: flex;
+flex-direction: column;
+width: 75%;
+
+}
+
+.upper_frame{
+width: 100%;
+height: 15%;
+}
+
+.lower_frame{
+width: 100%;
+height: 100%;
+}
+
+.table_condition{
+    border: none;
+}
+
+.same-width-list{
+    width: 150px
+}
+
+.form{
+    width:150px;
+}
+
+.table_statics th{
+    text-align: center;
+    position: sticky;
+    top:0;
+}
+
+.table_statics td{
+    text-align: center;
+}
+
+.table_statics td:nth-child(1){
+    width: 5%;
+}
+
+
+.table_statics td:nth-child(2){
+    text-align: left;
+    width: 30%;
+}
+
+
+.table_statics2 {
+    border: 1px solid;
+}
+
+.table_statics2 th{
+    border: 1px solid;
+    text-align: center;
+    position: sticky;
+    top:0;
+}
+
+.table_statics2 td{
+    border: 1px solid;
+    text-align: center;
+}
+
+.table_statics2 td:nth-child(1){
+    width: 5%;
+}
+
+.table_statics2 td:nth-child(2){
+    text-align: left;
+    width: 15%;
+}
+
+.table_comment{
+    text-align: left;
+}
+
+
+.tatefixed{
+    position: sticky;
+    left: 0;
+}
+
+.table_even{
+    background-color: rgb(192, 192, 192);
+}
+
+.statics_menu{
+    font-size: small;
+}
+
+.statics_menu a{
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.statics_menu a:hover{
+    background-color: rgb(192, 192, 192);
+}
+
+.chartlist{
+    overflow:  hidden;
+}
+
+.chartitem{
+    float: left;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+.table_total{
+    border: 1px black solid;
+    width: 100px;
+    height: 100px;
+}
+
+/* 総合評価ページ用 */
+.total_type{
+    color: silver;
+    font-weight: bold;    
+    font-size: x-large;   
+}
+.table_totalresult{
+    border: 0px black solid;
+}
+
+.table_totalresult td{
+    border: none;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+}
+
+/*　総合結果の行ごとの修飾 */
+/* ヘッダーセル */
+.table_totalresult tr:nth-child(1) td:nth-child(1){
+    border-right:  2px black solid;;
+    writing-mode:vertical-lr;
+    text-align:center;
+}
+.table_totalresult tr:nth-child(11) td:nth-child(2){
+    border-top:  2px black solid;;    
+    text-align: center;
+}
+
+
+/*　タイプA */
+.table_totalresult tr:nth-child(1) td:nth-child(2),
+.table_totalresult tr:nth-child(1) td:nth-child(3),
+.table_totalresult tr:nth-child(1) td:nth-child(4),
+.table_totalresult tr:nth-child(1) td:nth-child(5){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(2) td:nth-child(1){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(2) td:nth-child(2){
+    font-size: xx-large;
+    font-weight: bold;
+    color: black;
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(2) td:nth-child(3){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(3) td:nth-child(1),
+.table_totalresult tr:nth-child(3) td:nth-child(2){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(4) td:nth-child(1){
+    color: silver;
+    font-weight: bold;    
+    font-size: x-large;    
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(4) td:nth-child(2),
+.table_totalresult tr:nth-child(4) td:nth-child(3),
+.table_totalresult tr:nth-child(4) td:nth-child(4){
+    background-color: khaki;
+}
+
+/*　タイプB */
+.table_totalresult tr:nth-child(1) td:nth-child(7),
+.table_totalresult tr:nth-child(1) td:nth-child(8),
+.table_totalresult tr:nth-child(1) td:nth-child(9),
+.table_totalresult tr:nth-child(1) td:nth-child(10){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(2) td:nth-child(5){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(2) td:nth-child(6){
+    font-size: xx-large;
+    font-weight: bold;
+    color: black;
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(2) td:nth-child(7){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(3) td:nth-child(4),
+.table_totalresult tr:nth-child(3) td:nth-child(5){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(4) td:nth-child(6){
+    color: silver;
+    font-weight: bold;
+    font-size: x-large;
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(4) td:nth-child(7),
+.table_totalresult tr:nth-child(4) td:nth-child(8),
+.table_totalresult tr:nth-child(4) td:nth-child(9){
+    background-color: khaki;
+}
+
+
+/*　タイプc */
+.table_totalresult tr:nth-child(6) td:nth-child(1),
+.table_totalresult tr:nth-child(6) td:nth-child(2),
+.table_totalresult tr:nth-child(6) td:nth-child(3),
+.table_totalresult tr:nth-child(6) td:nth-child(4){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(7) td:nth-child(1){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(7) td:nth-child(2){
+    font-size: xx-large;
+    font-weight: bold;
+    color: black;
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(7) td:nth-child(3){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(8) td:nth-child(1),
+.table_totalresult tr:nth-child(8) td:nth-child(2){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(9) td:nth-child(1){
+    color: silver;
+    font-weight: bold;
+    font-size: x-large;
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(9) td:nth-child(2),
+.table_totalresult tr:nth-child(9) td:nth-child(3),
+.table_totalresult tr:nth-child(9) td:nth-child(4){
+    background-color: khaki;
+}
+
+
+
+/*　タイプd */
+.table_totalresult tr:nth-child(6) td:nth-child(6),
+.table_totalresult tr:nth-child(6) td:nth-child(7),
+.table_totalresult tr:nth-child(6) td:nth-child(8),
+.table_totalresult tr:nth-child(6) td:nth-child(9)
+{    
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(7) td:nth-child(5){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(7) td:nth-child(6){
+    font-size: xx-large;
+    font-weight: bold;
+    color: black;
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(7) td:nth-child(7){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(8) td:nth-child(4){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(8) td:nth-child(5){
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(9) td:nth-child(6){
+    color: silver;
+    font-weight: bold;
+    font-size: x-large;
+    background-color: khaki;
+}
+.table_totalresult tr:nth-child(9) td:nth-child(7),
+.table_totalresult tr:nth-child(9) td:nth-child(8),
+.table_totalresult tr:nth-child(9) td:nth-child(9){
+    background-color: khaki;
+}
+
+
+.table_totalresult tr:nth-child(3) td:nth-child(1){
+    background-color: khaki;
+}
+
+
