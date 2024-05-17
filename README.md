@@ -1,4 +1,6 @@
 # HIBILABO SYSTEM
+# Install django-image-cropping:
+	- pip install django-image-cropping
 # Install django-import-export: 
 	- pip install django-import-export
 # Install pdfkit: 
