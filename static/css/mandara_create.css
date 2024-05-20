@@ -20,6 +20,11 @@ textarea:focus {
     outline: none !important;
 }
 
+.wrapper-item-table-body-bottom-right-tab-1 {
+
+    border: 2px solid #717276;
+}
+
 .tab2 {
 
     background-color: #8f9195;
@@ -516,6 +521,9 @@ body {
     position: relative;
     border-top: 2px solid #717276;
     border-left: 2px solid #717276;
+    gap: 2px;
+    background-color: #717276;
+    padding: 2px;
 }
 
 .wrapper-item-body-bottom-left {
@@ -636,6 +644,7 @@ body {
     color: #000;
     font-weight: bold;
     width: 100%;
+    padding-left: 10px;
 }
 
 .value-table-score p {
@@ -730,7 +739,7 @@ body {
 
 .SCORE-MAIN {
 
-    background-color: #e2db9d;
+    background-color: #CB99C4;
     position: relative;
 }
 
@@ -766,7 +775,7 @@ body {
 
 .item-table-body-bottom-right {
 
-    border-top: 2px solid #717276;
+    border-top: 3px solid #717276;
     border-left: 2px solid #717276;
     border-right: 2px solid #717276;
 }
@@ -780,7 +789,7 @@ body {
 
     display: flex;
     border-bottom: 2px solid #a0a1a4;
-    gap: 5px;
+    /* gap: 5px; */
     font-family: var(--font-text);
     text-align: center;
     min-height: 15px;
@@ -804,6 +813,7 @@ body {
 .title-order {
     border-right: 2px solid #a0a1a4;
     padding-right: 10px;
+    padding-left: 10px;
     font-family: var(--font-text);
     font-weight: 700;
     font-size: 75%;
@@ -855,13 +865,13 @@ body {
     font-family: var(--font-content);
     letter-spacing: 0.3rem;
     font-weight: 700;
-    padding-top: 1rem;
     width: 90%;
-    padding-left: 10px;
     z-index: 10;
-    padding: 10px;
 }
 
+.desc-table-body-right textarea {
+    padding: 10px;
+}
 
 
 .value-score {
@@ -1016,6 +1026,10 @@ body {
     gap: 2px;
 }
 
+.box-required {
+/*    border: 2px solid red;*/
+    background-color: #CB99C4;
+}
 
 @media screen and (max-width: 1746px) {
 
