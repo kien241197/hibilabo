@@ -211,3 +211,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     drwa_chart_think(think_first);
 });
+
+$(document).ready(function(){
+
+    $("#select_response select").attr('required', true)
+    
+    $("#nav-respons-tab").click(function(){
+
+       $("#select_response select").attr('required', true)
+       $("#select_think select").attr('required', false)
+
+    })
+
+    $("#nav-think-tab").click(function(){
+
+        $("#select_think select").attr('required', true)
+       $("#select_response select").attr('required', false)
+
+    })
+})

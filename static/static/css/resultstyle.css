@@ -1,3 +1,9 @@
+
+.overflow-auto {
+
+    overflow: auto;
+}
+
 .base {
 display: flex;
 flex-direction: row;
@@ -306,6 +312,16 @@ height: 100%;
 
 .table_totalresult tr:nth-child(3) td:nth-child(1){
     background-color: khaki;
+}
+
+.title-selfcheck-table-index {
+
+    width: 100px !important;
+}
+
+.title-honne-table {
+
+    width: 90px !important;
 }
 
 
