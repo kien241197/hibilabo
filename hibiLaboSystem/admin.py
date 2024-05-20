@@ -85,6 +85,13 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
             today = datetime.date.today()
             return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
         return qs
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "selfcheck_questions" and len(request.resolver_match.kwargs.keys()) > 0:
+            parent_obj_id = request.resolver_match.kwargs['object_id']
+            company = Company.objects.get(pk=parent_obj_id)
+            kwargs["queryset"] = SelfcheckQuestion.objects.filter(industries__in=[company.industry]).distinct()
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
     
 class BonknowEvaluationPeriodInline(admin.TabularInline):
     model = BonknowEvaluationPeriod
@@ -195,8 +202,9 @@ class CompanyAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner"]
             # self.inlines = []
+            self.readonly_fields = ["industry"]
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
-        return form    
+        return form
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
     list_filter = ["selfcheck_roles", "industries"]

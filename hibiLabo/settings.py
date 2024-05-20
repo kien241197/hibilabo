@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-pb_&0+#nj#^#&7*hk+t#tlx-okgx9g&(zfyl6l#2=1-+j23sih
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'runserver' in sys.argv
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '162.43.30.80', 'kenitdev97.pythonanywhere.com', 'tiahvn.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
