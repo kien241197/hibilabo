@@ -65,14 +65,16 @@
                                             <td>{{forloop.counter}}</td>
                                             <td>{{ record.question }}</td>
                                             <td id="select_response">
+                                               <div class="d-flex align-items-center justify-content-center">
                                                 <select id=respons_result{{record.id}}
-                                                    name=respons_answer_{{record.id}} onchange='func_count_res(this, {{ res_list|safe }});' {{disabled}}>
-                                                    <option value="">-</option>
-                                                    <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
-                                                    <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
-                                                </select>
-                                                <input type="hidden" id="respons-type-{{record.id}}"
-                                                    value="{{record.question_type}}">
+                                                name=respons_answer_{{record.id}} onchange='func_count_res(this, {{ res_list|safe }});' {{disabled}}>
+                                                <option value="">-</option>
+                                                <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
+                                                <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
+                                            </select>
+                                            <input type="hidden" id="respons-type-{{record.id}}"
+                                                value="{{record.question_type}}">
+                                               </div>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -118,14 +120,16 @@
                                             <td>{{forloop.counter}}</td>
                                             <td>{{ record.question }}</td>
                                             <td id="select_think">
+                                               <div class="d-flex align-items-center justify-content-center">
                                                 <select id=think_result{{record.id}}
-                                                    name=think_answer_{{record.id}} onchange='func_count_think(this, {{ think_list|safe }});' {{ disabled }}>
-                                                    <option value="">-</option>
-                                                    <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
-                                                    <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
-                                                </select>
-                                                <input type="hidden" id="think-type-{{record.id}}"
-                                                    value="{{record.question_type}}">
+                                                name=think_answer_{{record.id}} onchange='func_count_think(this, {{ think_list|safe }});' {{ disabled }}>
+                                                <option value="">-</option>
+                                                <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
+                                                <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
+                                            </select>
+                                            <input type="hidden" id="think-type-{{record.id}}"
+                                                value="{{record.question_type}}">
+                                               </div>
                                             </td>
                                         </tr>
                                         {% endfor %}

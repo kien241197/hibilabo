@@ -3,19 +3,18 @@
 {% block header %}
 
 {% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
 <script
-src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
-integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
-crossorigin="anonymous"></script>
-<script
-src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <script>
- var myChart;
- var myChart2;
- const circl = {{ circl_list|safe }};
- const square = {{ square_list|safe }};
- const traiangle = {{ traiangle_list|safe }};
+    var myChart;
+    var myChart2;
+    const circl = {{ circl_list| safe }};
+    const square = {{ square_list| safe }};
+    const traiangle = {{ traiangle_list| safe }};
 </script>
 <script src="{% static 'js/selfcheck-sheet.js' %}"></script>
 
@@ -25,11 +24,13 @@ src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-ada
 <!-- コンテンツ -->
 {% block content %}
 <main class="bg-main bg-gray">
-  <div class="text-danger text-center"><label><h5>{{ message }}</h5></label></div>
-    <form  class="" action="{% url 'selfcheck_sheet' evaluation_unit %}" method="post" enctype="multipart/form-data">
-     {% csrf_token %}
-     <!-- 左側 -->
-        <section class="site-chart pd-main" >
+    <div class="text-danger text-center"><label>
+            <h5>{{ message }}</h5>
+        </label></div>
+    <form class="" action="{% url 'selfcheck_sheet' evaluation_unit %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- 左側 -->
+        <section class="site-chart pd-main">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -39,26 +40,30 @@ src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-ada
                                     <th colspan="4">A：良く出来ている　B:普通にできる　C:出来ない</th>
                                 </tr>
                                 {% for record in questions %}
-                                    {% for q in record.q_list %}
-                                    <tr>
-                                        {% if forloop.counter == 1 %}
-                                            <td style="white-space: nowrap;">{{ record.label }}</td>
-                                        {% else %}
-                                            <td></td>
-                                        {% endif %}
-                                        <td>{{ q.question }}</td>
-                                        <td style="width: 8%">{{forloop.counter}}</td>
-                                        <td>
-                                            <select id=result-{{q.id}} name=selfcheck_answer_{{q.id}} onchange='func_count(this, {{ q_list|safe }});' {{ disabled }}>
-                                                <option value="">-</option>
-                                                {% for choice in answer_choices %}
-                                                    <option value="{{ choice.0 }}" {% if q.answer_value|floatformat:"0" == choice.0|floatformat:"0" %}selected{% endif %}>{{ choice.1 }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <input type="hidden" id="index-{{q.id}}" value="{{q.category_id}}">
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
+                                {% for q in record.q_list %}
+                                <tr>
+                                    <td style="width: 8%" class="stt"></td>
+                                    {% if forloop.counter == 1 %}
+                                    <td style="white-space: nowrap;">{{ record.label }}</td>
+                                    {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                    <td>{{ q.question }}</td>
+
+                                    <td style="width: 15%;">
+                                        <select id=result-{{q.id}} name=selfcheck_answer_{{q.id}}
+                                            onchange='func_count(this, {{ q_list|safe }});' {{ disabled }}>
+                                            <option value="">-</option>
+                                            {% for choice in answer_choices %}
+                                            <option value="{{ choice.0 }}" {% if
+                                                q.answer_value|floatformat:"0"==choice.0|floatformat:"0" %}selected{%
+                                                endif %}>{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <input type="hidden" id="index-{{q.id}}" value="{{q.category_id}}">
+                                    </td>
+                                </tr>
+                                {% endfor %}
                                 {% endfor %}
                             </table>
                         </div>
@@ -95,6 +100,14 @@ src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-ada
     </form>
 </main>
 
-<script>window.onload=drwa_chart({{ index_list|safe }})</script>
-<script>window.onload=drwa_chart2({{ type_list|safe }})</script>
+<script>window.onload = drwa_chart({{ index_list| safe }})</script>
+<script>window.onload = drwa_chart2({{ type_list| safe }})</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+     $(document).ready(function() {
+            $(".stt").each(function(index, item) {
+                $(item).text(index + 1); // Cập nhật nội dung của thẻ td
+            });
+        });
+</script>
 {% endblock %}
