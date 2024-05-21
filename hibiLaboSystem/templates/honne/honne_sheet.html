@@ -41,12 +41,14 @@
                                 <td>{{forloop.counter}}</td>
                                 <td>{{ record.question }}</td>
                                 <td>
+                                  <div class="d-flex align-items-center justify-content-center">
                                     <select id=result{{record.id}} name=kartet_answer_{{record.id}} onchange='func_count(this, {{ q_list|safe }});' {{ disabled }}>
                                         <option>-</option>
                                         <option value="1" {% if record.answer_value == True %}selected{% endif %}>〇</option>
                                         <option value="0" {% if record.answer_value == False %}selected{% endif %}>×</option>
                                     </select>
                                     <input type="hidden" id="index-{{record.id}}" value="{{record.acc1}},{{record.acc2}},{{record.acc3}},{{record.acc4}},{{record.acc5}},{{record.acc6}},{{record.acc7}},{{record.acc8}}">
+                                  </div>
                                 </td>
                             </tr>
                             {% endfor %}
