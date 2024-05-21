@@ -10,7 +10,7 @@ if (field_stop == 'total_mission') {
 	if (field_stop.includes('_YYYYMM')) $(`select[name="${field_stop}"]`).addClass('box-required');
 	if (field_stop.includes('_keyword')) $(`input[name="${field_stop}"]`).addClass('box-required');
 
-	sort_fields.some(item => {
+	sort_fields.map(item => {
 		$(`#id_${item}`).attr("disabled", false);
 		if (item == field_stop) return true;
 	})
@@ -132,7 +132,6 @@ $(document).ready(function () {
 
 		if (!$(this).val()) {
 			$('#id_field_stop').val(textareaName);
-
 		}
 	});
 
