@@ -7,6 +7,7 @@ import datetime
 from . import models, fields
 from .enums import *
 import PIL
+from django.utils.safestring import mark_safe
 
 User = get_user_model()
 
@@ -1305,4 +1306,6 @@ class TeamConceptForm(forms.Form):
         fields = "__all__"
 
 
-    
+class CheckboxSelectMultipleWithSelectAll(forms.CheckboxSelectMultiple):
+    class Media:
+        js = ('js/select_all.js',)  

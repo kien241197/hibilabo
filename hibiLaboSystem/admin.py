@@ -21,6 +21,7 @@ import threading
 import jaconv
 from django.utils.html import format_html
 from django.contrib.auth.models import Group, Permission
+from . import forms
 
 
 thread_local = threading.local()
@@ -64,7 +65,7 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
     fields = ["evaluation_name", "evaluation_start", "evaluation_end", "selfcheck_questions"]
     extra = 0  # Number of empty forms to display
     formfield_overrides = {
-        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+        models.ManyToManyField: {'widget': forms.CheckboxSelectMultipleWithSelectAll},
     }
     readonly_fields = []
 
