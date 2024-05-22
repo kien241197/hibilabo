@@ -161,6 +161,7 @@ choose[0].classList.add('color-print')
 choose.forEach((element, index) => {
     element.addEventListener("click", function () {
 
+        console.log("index", index);
         const listChoose = document.querySelectorAll(".choose");
 
         listChoose.forEach((item, count) => {
@@ -172,7 +173,6 @@ choose.forEach((element, index) => {
         })
         element.classList.add('background-choose-active')
         element.classList.add('color-print')
-
         if (index === 1) {
             document.querySelector(".masmas-mandara").style.display = "block";
             document.querySelector(".body-bottom-left").style.display = "none";
@@ -180,6 +180,8 @@ choose.forEach((element, index) => {
             document.querySelector(".content-title").style.display = "none";
             document.querySelector(".text-title").textContent = "MASMAS MANDARA CHART";
             document.querySelector(".wrapper-body-left").style.gridColumn = "span 12"
+            document.querySelector(".link").style.display = "none"
+
         } else {
             document.querySelector(".masmas-mandara").style.display = "none";
             document.querySelector(".body-bottom-left").style.display = "grid";
@@ -187,6 +189,7 @@ choose.forEach((element, index) => {
             document.querySelector(".content-title").style.display = "block";
             document.querySelector(".text-title").textContent = "MANDARA CHART";
             document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
+            document.querySelector(".link").style.display = "block"
         }
     })
 })
