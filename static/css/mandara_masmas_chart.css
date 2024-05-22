@@ -479,7 +479,7 @@ body {
     overflow: hidden;
     grid-column: span 1;
     width: 100%;
-    background-color: #e7e7e8;
+    background-color: #FFF;
     display: flex;
     flex-direction: column;
     align-items: center;
