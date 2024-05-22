@@ -2,11 +2,11 @@
 
 
 :root {
-    --color-blue: #0DC5CE;
+    --color-blue: #27B8C0;
     --color-blue2: #1D2087;
     --color-red: #F7827F;
-    --color-yellow: #EFE9A2;
-    --color-pink: #F4AED3;
+    --color-yellow: #F0EE80;
+    --color-pink: #EAAACB;
     --color-gray: #222;
     --font-content: 'Zen Kaku Gothic New';
     --font-text: 'Source Sans Pro';
@@ -314,7 +314,7 @@ textarea:focus {
 
 .background-choose {
 
-    background-color: #0DC5CE;
+    background-color: #27B8C0;
 }
 
 .background-tab-active {
@@ -326,7 +326,7 @@ textarea:focus {
 
 .background-choose-active {
 
-    background-color: #0DC5CE !important;
+    background-color: #27B8C0 !important;
 
 }
 
@@ -440,7 +440,7 @@ body {
 
 .choose:hover {
 
-    background-color: #0DC5CE;
+    background-color: #27B8C0;
 
 }
 
@@ -708,13 +708,13 @@ body {
 
 .SCORE {
 
-    background-color: #0DC5CE;
+    background-color: #27B8C0;
     position: relative;
 }
 
 .SCORE-text {
 
-    background-color: #0DC5CE;
+    background-color: #27B8C0;
     position: relative;
 }
 

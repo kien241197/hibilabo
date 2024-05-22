@@ -13,11 +13,11 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap");
 
 :root {
-    --color-blue: #0DC5CE;
+    --color-blue: #27B8C0;
     --color-blue2: #1D2087;
     --color-red: #F7827F;
-    --color-yellow: #EFE9A2;
-    --color-pink: #F4AED3;
+    --color-yellow: #F0EE80;
+    --color-pink: #EAAACB;
     --color-gray: #222;
     --font-content: 'Zen Kaku Gothic New', sans-serif;
     --font-text: 'Source Sans Pro', sans-serif;
@@ -615,7 +615,7 @@ select {
     text-transform: uppercase;
     font-family: var(--font-text);
     font-weight: 600;
-    background: #EFE9A2;
+    background: #F0EE80;
             padding: 5px 20px;
 }
 .content-chart .title h3 {
