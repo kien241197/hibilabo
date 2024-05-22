@@ -1,13 +1,13 @@
 
 const OPTION_LIST = [
-    [6,48,55],
-    [3,24,31],
-    [1,8,15],
-    [4,32,39],
-    [5,40,47],
-    [0,0,7],
-    [2,16,23],
-    [7,56,64],
+    [6, 48, 55],
+    [3, 24, 31],
+    [1, 8, 15],
+    [4, 32, 39],
+    [5, 40, 47],
+    [0, 0, 7],
+    [2, 16, 23],
+    [7, 56, 64],
 ];
 const sort_fields = ['start_YYYYMM', 'end_YYYYMM', 'A_keyword', 'A_dueto', 'B_keyword', 'B_dueto', 'C_keyword', 'C_dueto',
     'D_keyword', 'D_dueto', 'E_keyword', 'E_dueto', 'F_keyword', 'F_dueto', 'G_keyword', 'G_dueto', 'H_keyword', 'H_dueto',
@@ -61,50 +61,53 @@ choose.forEach((element, index) => {
 
 // 
 const buttonTitle = document.getElementById('button-title-1');
-buttonTitle.addEventListener("click", function () {
-    document.getElementById('id_total_mission').value = '';
-    const valueInput = document.querySelectorAll(".input-table");
-    const inputValueTab = document.querySelectorAll(".input-value-tab");
-    const titleValueTableScore = document.querySelectorAll(".title-value-table-score");
-    const titleMainScore = document.querySelectorAll(".title-main-score");
-    const timeSelects = document.querySelectorAll(".select");
-    valueInput.forEach(element => {
-        if (element.value) {
+if (buttonTitle) {
+
+    buttonTitle.addEventListener("click", function () {
+        document.getElementById('id_total_mission').value = '';
+        const valueInput = document.querySelectorAll(".input-table");
+        const inputValueTab = document.querySelectorAll(".input-value-tab");
+        const titleValueTableScore = document.querySelectorAll(".title-value-table-score");
+        const titleMainScore = document.querySelectorAll(".title-main-score");
+        const timeSelects = document.querySelectorAll(".select");
+        valueInput.forEach(element => {
+            if (element.value) {
+                element.value = "";
+            }
+        });
+
+        inputValueTab.forEach(element => {
+            if (element.value) {
+                element.value = "";
+            }
+        })
+
+        titleValueTableScore.forEach(element => {
+            if (element.textContent) {
+                element.textContent = "";
+            }
+        })
+
+        titleMainScore.forEach(element => {
+
+            if (element.textContent) {
+
+                element.textContent = ""
+            }
+        })
+
+        timeSelects.forEach(element => {
             element.value = "";
-        }
-    });
-
-    inputValueTab.forEach(element => {
-        if (element.value) {
-            element.value = "";
-        }
+        })
     })
-
-    titleValueTableScore.forEach(element => {
-        if (element.textContent) {
-            element.textContent = "";
-        }
-    })
-
-    titleMainScore.forEach(element => {
-
-        if (element.textContent) {
-
-            element.textContent = ""
-        }
-    })
-
-    timeSelects.forEach(element => {
-        element.value = "";
-    })
-})
+}
 
 // 
 const inputValue = document.querySelectorAll('.input-table');
 
 const inputValueTab = document.querySelectorAll(".input-value-tab");
 inputValueTab.forEach((element, index) => {
-    
+
     render_keyword(index, element.value);
     element.addEventListener('change', function () {
         render_keyword(index, element.value);
@@ -122,24 +125,30 @@ function selectEndDate() {
     document.getElementById("id_end_YYYYMM").value = document.getElementById("id_start_YYYYMM").value
 }
 
-$(document).ready(function() {
-  $('body').keydown(function(e) {
-    if (e.which === 9) { // Tab key code is 9
-        let index = sort_fields.indexOf($(e.target).attr('name'));
-        if(sort_fields[index]) {
-            if($(e.target).val()) {
-                $(`#id_${sort_fields[index]}`).removeClass('box-required');
-                if ($(`#id_${sort_fields[index+1]}`).attr("disabled")){
-                    $(`#id_${sort_fields[index+1]}`).removeAttr("disabled");
-                    $(`#id_${sort_fields[index+1]}`).addClass('box-required');
-                    $('#id_field_stop').val(sort_fields[index+1]);                   
-                }
-                $(`#id_${sort_fields[index+1]}`).select(); // Select the text inside the input
-            } else {
-                $(`#id_${sort_fields[index]}`).select(); // Select the text inside the input
-            }
-            e.preventDefault(); // Prevent default tab behavior       
-        }
+$(document).ready(function () {
+
+    if ($("#id_A_keyword").val() && $("#id_B_keyword").val() && $("#id_C_keyword").val() && $("#id_D_keyword").val() && $("#id_E_keyword").val() && $("#id_F_keyword").val() && $("#id_G_keyword").val() && $("#id_H_keyword").val()) {
+        $(".wrapper-top-block").css("display", "none")
+        $(".title-main-score-top").css("display", "none")
     }
-  });
+
+    $('body').keydown(function (e) {
+        if (e.which === 9) { // Tab key code is 9
+            let index = sort_fields.indexOf($(e.target).attr('name'));
+            if (sort_fields[index]) {
+                if ($(e.target).val()) {
+                    $(`#id_${sort_fields[index]}`).removeClass('box-required');
+                    if ($(`#id_${sort_fields[index + 1]}`).attr("disabled")) {
+                        $(`#id_${sort_fields[index + 1]}`).removeAttr("disabled");
+                        $(`#id_${sort_fields[index + 1]}`).addClass('box-required');
+                        $('#id_field_stop').val(sort_fields[index + 1]);
+                    }
+                    $(`#id_${sort_fields[index + 1]}`).select(); // Select the text inside the input
+                } else {
+                    $(`#id_${sort_fields[index]}`).select(); // Select the text inside the input
+                }
+                e.preventDefault(); // Prevent default tab behavior       
+            }
+        }
+    });
 });

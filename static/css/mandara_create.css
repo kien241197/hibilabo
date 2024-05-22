@@ -681,6 +681,19 @@ body {
     bottom: 0;
 }
 
+.button-fix {
+
+    width: 60px;
+    color: white;
+    font-weight: bold;
+    font-family: var(--font-text);
+    background-color: #172A88;
+    border-radius: 15px;
+    border: none;
+    font-size: 170%;
+}
+
+
 .table-body-bottom-right {
 
     height: 100%;

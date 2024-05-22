@@ -61,11 +61,6 @@ for (let i = 0; i < key_array.length; i++) {
 		}
 	});
 
-	if( $("#id_A_keyword").val() && $("#id_B_keyword").val() && $("#id_C_keyword").val() && $("#id_D_keyword").val() && $("#id_E_keyword").val() && $("#id_F_keyword").val() && $("#id_G_keyword").val() && $("#id_H_keyword").val()){
-		$(".wrapper-top-block").css("display", "none")
-		$(".title-main-score-top").css("display", "none")
-	}
-
 	$(`input[name="${key_array[i]}_keyword"]`).change(function () {
 		$(`input[name="${key_array[i]}_keyword"]`).removeClass('box-required');
 		console.log(i, key_array.length - 1);
