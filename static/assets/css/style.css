@@ -907,7 +907,7 @@ select {
         font-size: 16px;
         font-weight: 600;
         color: #000;
-        min-width: 50%; }
+        min-width: 90%; }
         .content-box .items ul li input::-webkit-input-placeholder {
           color: #000; }
         .content-box .items ul li input:-ms-input-placeholder {
