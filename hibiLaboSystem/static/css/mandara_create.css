@@ -2,11 +2,11 @@
 
 
 :root {
-    --color-blue: #27B8C0;
+    --color-blue: #0DC5CE;
     --color-blue2: #1D2087;
     --color-red: #F7827F;
-    --color-yellow: #F0EE80;
-    --color-pink: #EAAACB;
+    --color-yellow: #EFE9A2;
+    --color-pink: #F4AED3;
     --color-gray: #222;
     --font-content: 'Zen Kaku Gothic New';
     --font-text: 'Source Sans Pro';
@@ -314,7 +314,7 @@ textarea:focus {
 
 .background-choose {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
 }
 
 .background-tab-active {
@@ -326,7 +326,7 @@ textarea:focus {
 
 .background-choose-active {
 
-    background-color: #27B8C0 !important;
+    background-color: #0DC5CE !important;
 
 }
 
@@ -440,7 +440,7 @@ body {
 
 .choose:hover {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
 
 }
 
@@ -660,9 +660,25 @@ body {
     /* color: #85878b; */
     top: 0 !important;
     bottom: 0;
-    /* display: flex; */
+    display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.title-main-score-top {
+
+    position: absolute;
+    font-size: 70% !important;
+    font-weight: 700;
+    font-family: var(--font-content);
+    margin-block: unset !important;
+    word-wrap: break-word;
+    text-align: center;
+    letter-spacing: 0.1rem;
+    z-index: 11;
+    color: #85878b !important;
+    top: 0 !important;
+    bottom: 0;
 }
 
 .table-body-bottom-right {
@@ -708,13 +724,13 @@ body {
 
 .SCORE {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
     position: relative;
 }
 
 .SCORE-text {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
     position: relative;
 }
 

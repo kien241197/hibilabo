@@ -665,6 +665,22 @@ body {
     justify-content: center;
 }
 
+.title-main-score-top {
+
+    position: absolute;
+    font-size: 70% !important;
+    font-weight: 700;
+    font-family: var(--font-content);
+    margin-block: unset !important;
+    word-wrap: break-word;
+    text-align: center;
+    letter-spacing: 0.1rem;
+    z-index: 11;
+    color: #85878b !important;
+    top: 0 !important;
+    bottom: 0;
+}
+
 .table-body-bottom-right {
 
     height: 100%;
