@@ -1884,7 +1884,7 @@ body {
         /* white-space: normal; */
         /* -webkit-line-clamp: 1; */
         /* font-size: 30%; */
-    } */
+    /* } */ */
 
     /* .value-table span {
         font-size: 30% !important;
@@ -1945,6 +1945,7 @@ body {
         font-weight: 700;
     }
 }
+
 
 @media screen and (max-width: 385px) {
 
