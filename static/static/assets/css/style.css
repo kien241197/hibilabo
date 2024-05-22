@@ -599,7 +599,10 @@ select {
   font-family: var(--font-text);
   font-weight: 600;
   background: #F0EE80;
-  padding: 5px 20px; }
+  padding: 5px 20px; 
+  letter-spacing: 3px;
+
+}
 
 .content-chart .title h3 {
   font-size: 230%;
