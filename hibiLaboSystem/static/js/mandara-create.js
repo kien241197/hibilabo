@@ -122,21 +122,27 @@ function selectEndDate() {
     document.getElementById("id_end_YYYYMM").value = document.getElementById("id_start_YYYYMM").value
 }
 
+function findFieldStop() {
+    let flg = false;
+    sort_fields.forEach(element => {
+        $(`#id_${element}`).removeClass('box-required');
+    });
+    if($('#id_field_stop').val()) $(`#id_${$('#id_field_stop').val()}`).addClass('box-required');
+}
+
 $(document).ready(function() {
   $('body').keydown(function(e) {
     if (e.which === 9) { // Tab key code is 9
         let index = sort_fields.indexOf($(e.target).attr('name'));
         if(sort_fields[index]) {
-            if($(e.target).val()) {
-                $(`#id_${sort_fields[index]}`).removeClass('box-required');
-                if ($(`#id_${sort_fields[index+1]}`).attr("disabled")){
-                    $(`#id_${sort_fields[index+1]}`).removeAttr("disabled");
-                    $(`#id_${sort_fields[index+1]}`).addClass('box-required');
-                    $('#id_field_stop').val(sort_fields[index+1]);                   
-                }
-                $(`#id_${sort_fields[index+1]}`).select(); // Select the text inside the input
+            if($(e.target).val()) 
+            {
+                $('#id_field_stop').val(sort_fields[index+1]);
+                findFieldStop();
+                $(`#id_${sort_fields[index+1]}`).removeAttr("disabled");
+                $(`#id_${sort_fields[index+1]}`).focus().select(); // Select the text inside the input
             } else {
-                $(`#id_${sort_fields[index]}`).select(); // Select the text inside the input
+                $(`#id_${sort_fields[index]}`).focus().select(); // Select the text inside the input
             }
             e.preventDefault(); // Prevent default tab behavior       
         }
