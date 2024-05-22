@@ -35,7 +35,7 @@
                                                 <div class="wrapper-text-title">
                                                     <h2 class="text-title">MANDARA CHART</h2>
                                                     {% if mandara.flg_finished %}
-                                                    <button type="submit" class="button-fix">FIX</button>
+                                                    <button type="submit" class="button-fix button-title" name="save" id="button-title-3">FIX</button>
                                                     {% else %}
                                                     <button type="button" class="button-title"
                                                         id="button-title-1">一括削除</button>
@@ -435,7 +435,7 @@
                                             </div>
                                         </div>  
                                     </div>
-                                    <p class="font-weight-bold">「マンダラチャート」は一般社団法人マンダラチャート協会のです。 <a href="https://mandalachart.jp/" style="color: #212529;">https://mandalachart.jp/</a></p>
+                                    <p tabindex="-1" class="font-weight-bold">「マンダラチャート」は一般社団法人マンダラチャート協会のです。 <a href="https://mandalachart.jp/" style="color: #212529;" tabindex="-1" >https://mandalachart.jp/</a></p>
                                 </div>
                                 <div class="body-bottom-right">
                                     <div class="wrapper-title-body-bottom-right">
@@ -629,9 +629,18 @@
     </section>
 </main>
 
+<script>
+    {% if mandara.flg_finished %} 
+        const flg_finished = true
+    {% else %}
+        const flg_finished = false
+    {% endif %}
+</script>
 <script src="{% static 'js/mandara-create.js' %}" async></script>
+
 {% if mandara is None or mandara.flg_finished == False %}
 <script src="{% static 'js/mandara-rule.js' %}" async></script>
+
 {% endif %}
 {% endblock %}
 

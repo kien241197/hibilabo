@@ -20,6 +20,13 @@ const sort_fields = ['start_YYYYMM', 'end_YYYYMM', 'A_keyword', 'A_dueto', 'B_ke
     'G1_content', 'G2_content', 'G3_content', 'G4_content', 'G5_content', 'G6_content', 'G7_content', 'G8_content',
     'H1_content', 'H2_content', 'H3_content', 'H4_content', 'H5_content', 'H6_content', 'H7_content', 'H8_content',
 ];
+if(flg_finished === true){
+
+    console.log("vaof dday")
+    sort_fields.some(item => {
+		$(`#id_${item}`).attr("required", true);
+	})
+}
 const choose = document.querySelectorAll(".choose");
 choose[0].classList.add('background-choose-active')
 choose[0].classList.add('color-print')
@@ -58,7 +65,7 @@ choose.forEach((element, index) => {
 //     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
 // });
 
-
+console.log({flg_finished});
 // 
 const buttonTitle = document.getElementById('button-title-1');
 if (buttonTitle) {
