@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 {% if get_mandara_detail is not None %}
-                                <div class="body-bottom-left" id="value-body-bottom-left">
+                                <div class="body-bottom-left mb-2" id="value-body-bottom-left">
                                     {% load custom_filters %}
                                     {% with 'F C G B' as list %}
                                     {% for key in list.split %}
@@ -238,6 +238,7 @@
                                     {% endfor %}
                                     {% endwith %}
                                 </div>
+                                <p class="font-weight-bold">「マンダラチャート」は一般社団法人マンダラチャート協会のです。 <a href="https://mandalachart.jp/" style="color: #212529;">https://mandalachart.jp/</a></p>
                                 {% else%}
                                 <div class="text-center">
                                     <h2>404 NOT FOUND</h2>
