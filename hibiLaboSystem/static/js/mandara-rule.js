@@ -1,20 +1,24 @@
-let field_stop = $('#id_field_stop').val();
+let field_stop = '';
 $('.input-table').attr('disabled', true);
 $('.input-value-tab').attr('disabled', true);
 
-if (field_stop == 'total_mission') {
-	$('textarea[name="total_mission"]').closest('.value-table-score').addClass('box-required');
-} else {
-	if (field_stop.includes('_content')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
-	if (field_stop.includes('_dueto')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
-	if (field_stop.includes('_YYYYMM')) $(`select[name="${field_stop}"]`).addClass('box-required');
-	if (field_stop.includes('_keyword')) $(`input[name="${field_stop}"]`).addClass('box-required');
+function check() {
 
-	sort_fields.map(item => {
-		$(`#id_${item}`).attr("disabled", false);
-		if (item == field_stop) return true;
-	})
+	if (field_stop == 'total_mission') {
+		$('textarea[name="total_mission"]').closest('.value-table-score').addClass('box-required');
+	} else {
+		if (field_stop.includes('_content')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
+		if (field_stop.includes('_dueto')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
+		if (field_stop.includes('_YYYYMM')) $(`select[name="${field_stop}"]`).addClass('box-required');
+		if (field_stop.includes('_keyword')) $(`input[name="${field_stop}"]`).addClass('box-required');
+
+		sort_fields.map(item => {
+			$(`#id_${item}`).attr("disabled", false);
+			if (item == field_stop) return true;
+		})
+	}
 }
+check()
 $('input[name="save"').click(function () {
 	$('textarea[name="total_mission"]').attr('required', true);
 	$('.input-table').attr('required', true);
@@ -102,20 +106,25 @@ for (let i = 0; i < key_array.length; i++) {
 
 $(document).ready(function () {
 
-	// let flag = false;
+	let flag = false;
 
-	// sort_fields.map(item => {
-	// 	if (!flag) {
-	// 		const valName = $(`[name="${item}"]`).val()
+	sort_fields.map(item => {
+		if (!flag) {
+			const valueTotal = $("#id_total_mission").val()
+			if (valueTotal) {
+				const valName = $(`[name="${item}"]`).val()
 
-	// 		if (!valName) {
-	// 			console.log("Vào đây", item)
-	// 			field_stop = $('#id_field_stop').val(item)
-				
-	// 			flag = true;
-	// 		}
-	// 	}
-	// })
+				if (!valName) {
+					console.log("Vào đây", item)
+					// field_stop = $('#id_field_stop').val(item)
+					field_stop = item
+					flag = true;
+					check()
+				}
+			}
+
+		}
+	})
 
 	$('#id_total_mission').on('keyup', function () {
 		if ($("#id_total_mission").val()) {
@@ -139,7 +148,7 @@ $(document).ready(function () {
 		const inputName = $(this).attr('name');
 
 		if (!$(this).val()) {
-			$('#id_field_stop').val(inputName);
+			// $('#id_field_stop').val(inputName);
 		}
 	});
 
