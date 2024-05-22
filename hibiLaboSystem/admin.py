@@ -40,24 +40,18 @@ class HonneEvaluationPeriodInline(admin.TabularInline):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
     readonly_fields=[]
-    
-    # def has_delete_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-    
-    # def has_add_permission(self, request, obj=None):
-    #     return request.user.is_superuser
         
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser and request.user.role.role not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:   
             self.readonly_fields = ["evaluation_name", "honne_questions"]
         return  self.readonly_fields
             
-    def get_queryset(self, request):
-        qs = super(HonneEvaluationPeriodInline, self).get_queryset(request)
-        if not request.user.is_superuser:
-            today = datetime.date.today()
-            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
-        return qs
+    # def get_queryset(self, request):
+    #     qs = super(HonneEvaluationPeriodInline, self).get_queryset(request)
+    #     if not request.user.is_superuser:
+    #         today = datetime.date.today()
+    #         return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+    #     return qs
 
 
 class SelfcheckEvaluationPeriodInline(admin.TabularInline):
@@ -69,23 +63,17 @@ class SelfcheckEvaluationPeriodInline(admin.TabularInline):
     }
     readonly_fields = []
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-    
-    # def has_add_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser and request.user.role.role not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:
             self.readonly_fields = ["evaluation_name", "selfcheck_questions"]
         return self.readonly_fields
     
-    def get_queryset(self, request):
-        qs = super(SelfcheckEvaluationPeriodInline, self).get_queryset(request)
-        if not request.user.is_superuser:
-            today = datetime.date.today()
-            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
-        return qs
+    # def get_queryset(self, request):
+    #     qs = super(SelfcheckEvaluationPeriodInline, self).get_queryset(request)
+    #     if not request.user.is_superuser:
+    #         today = datetime.date.today()
+    #         return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+    #     return qs
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "selfcheck_questions" and len(request.resolver_match.kwargs.keys()) > 0:
@@ -103,23 +91,17 @@ class BonknowEvaluationPeriodInline(admin.TabularInline):
     }
     readonly_fields = []
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-            
-    # def has_add_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser and int(request.user.role.role) not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:
             self.readonly_fields = ["evaluation_name", "respons_questions", "think_questions"]
         return self.readonly_fields
         
-    def get_queryset(self, request):
-        qs = super(BonknowEvaluationPeriodInline, self).get_queryset(request)
-        if not request.user.is_superuser:
-            today = datetime.date.today()
-            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
-        return qs
+    # def get_queryset(self, request):
+    #     qs = super(BonknowEvaluationPeriodInline, self).get_queryset(request)
+    #     if not request.user.is_superuser:
+    #         today = datetime.date.today()
+    #         return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+    #     return qs
     
 class UserInline(admin.TabularInline):
     model = User
@@ -138,22 +120,13 @@ class UserInline(admin.TabularInline):
 class MandaraPeriosInline(admin.TabularInline):
     model = MandaraPeriod
     extra = 0  # Number of empty forms to display
-
-    # formfield_overrides = {
-    #     models.ManyToManyField: {'widget': CheckboxSelectMultiple},
-    # }
-    # def has_delete_permission(self, request, obj=None):
-    #     return request.user.is_superuser
     
-    # def has_add_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-    
-    def get_queryset(self, request):
-        qs = super(MandaraPeriosInline, self).get_queryset(request)
-        if not request.user.is_superuser:
-            today = datetime.date.today()
-            return qs.filter(start_date__lte=today, end_date__gte=today)
-        return qs 
+    # def get_queryset(self, request):
+    #     qs = super(MandaraPeriosInline, self).get_queryset(request)
+    #     if not request.user.is_superuser:
+    #         today = datetime.date.today()
+    #         return qs.filter(start_date__lte=today, end_date__gte=today)
+    #     return qs 
 
 class WatasheetInline(admin.TabularInline):
     model = WatasheetEvaluationPeriod
@@ -164,23 +137,17 @@ class WatasheetInline(admin.TabularInline):
     }
     readonly_fields = []
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-    
-    # def has_add_permission(self, request, obj=None):
-    #     return request.user.is_superuser
-
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser and request.user.role.role not in [RoleEnum.Company_Admin.value, RoleEnum.Partner.value, RoleEnum.Company_Director.value]:
             self.readonly_fields = ["evaluation_name", "watasheet_questions"]
         return self.readonly_fields
 
-    def get_queryset(self, request):
-        qs = super(WatasheetInline, self).get_queryset(request)
-        if not request.user.is_superuser:
-            today = datetime.date.today()
-            return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
-        return qs
+    # def get_queryset(self, request):
+    #     qs = super(WatasheetInline, self).get_queryset(request)
+    #     if not request.user.is_superuser:
+    #         today = datetime.date.today()
+    #         return qs.filter(evaluation_start__lte=today, evaluation_end__gte=today)
+    #     return qs
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
