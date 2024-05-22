@@ -84,8 +84,8 @@
                                         <div id="page4" class="content-chart">
                                             <div class="content-box">
                                                 <div class="row justify-content-between">
-                                                    <div class="col-md-6 col-12 row">
-                                                        <div class="col-md-12 mb-30">
+                                                    <div class="col-md-6 col-12 row pr-0">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items" style="height:170px">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">CONCEPT </h3>
@@ -96,7 +96,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-30">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">VISION</h3>
@@ -109,7 +109,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-30">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">MISSION</h3>
@@ -122,7 +122,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-30">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">VALUES</h3>
@@ -135,7 +135,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">ACTION</h3>
@@ -199,8 +199,8 @@
                                         <div id="page4" class="content-chart">
                                             <div class="content-box">
                                                 <div class="row justify-content-between">
-                                                    <div class="col-md-6 col-12 row">
-                                                        <div class="col-md-12 mb-30">
+                                                    <div class="col-md-6 col-12 row pr-0">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items" style="height:170px">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">MY CONCEPT </h3>
@@ -211,71 +211,29 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-30">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">VISION</h3>
-                                                                    <p>未来像 ： 会社が目指す未来 </p>
+                                                                    <p>未来像 ： 会社が目指す未来</p>
                                                                 </div>
                                                                 <ul class="position-relative">
-                                                                    <li class="d-flex align-items-baseline">
-                                                                        <span class="width-80">(1年後)</span>
-                                                                        <div class="d-flex align-items-center">
-                                                                            (<div class="width-年">{{ watasheet_type_result.vision_1_year|default_if_none:'' }}</div>
-                                                                            {% if watasheet_type_result.vision_1_year %}
-                                                                            <div class="mx-1">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                    <circle cx="8" cy="8" r="8" />
-                                                                                </svg>
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                    <circle cx="8" cy="8" r="8" />
-                                                                                </svg>
-                                                                            </div>
-                                                                            {% endif %}
-                                                                            年)
-                                                                        </div>
+                                                                    <li class="d-flex align-items-baseline mb-3">
+                                                                        <span >(1)</span>
                                                                         <span class="ml-2">{{ watasheet_type_result.vision_1st|default_if_none:'' }}</span>
                                                                     </li>
-                                                                    <li class="d-flex align-items-baseline">
-                                                                        <span class="width-80">(5年後)</span>
-                                                                        <div class="d-flex align-items-center">
-                                                                            (<div class="width-年">{{ watasheet_type_result.vision_5_years|default_if_none:'' }}</div>
-                                                                            {% if watasheet_type_result.vision_5_years %}
-                                                                            <div class="mx-1">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                    <circle cx="8" cy="8" r="8" />
-                                                                                </svg>
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                    <circle cx="8" cy="8" r="8" />
-                                                                                </svg>
-                                                                            </div>
-                                                                            {% endif %}
-                                                                            年)
-                                                                        </div>
+                                                                    <li class="d-flex align-items-baseline mb-3">
+                                                                        <span >(2)</span>
                                                                         <span class="ml-2">{{ watasheet_type_result.vision_2nd|default_if_none:'' }}</span>
                                                                     </li>
                                                                     <li class="d-flex align-items-baseline">
-                                                                        <span class="width-80">(10年後)</span>
-                                                                        <div class="d-flex align-items-center">
-                                                                            (<div class="width-年">{{ watasheet_type_result.vision_10_years|default_if_none:'' }}</div>
-                                                                            {% if watasheet_type_result.vision_10_years %}
-                                                                            <div class="mx-1">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                    <circle cx="8" cy="8" r="8" />
-                                                                                </svg>
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" fill="#727171" viewBox="0 0 16 16">
-                                                                                    <circle cx="8" cy="8" r="8" />
-                                                                                </svg>
-                                                                            </div>
-                                                                            {% endif %}
-                                                                            年)
-                                                                        </div>
+                                                                        <span>(3)</span>
                                                                         <span class="ml-2">{{ watasheet_type_result.vision_3rd|default_if_none:'' }}</span>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-30">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">MISSION</h3>
@@ -294,7 +252,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-30">
+                                                        <div class="col-md-12 mb-30 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">VALUES</h3>
@@ -313,7 +271,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12 pr-0">
                                                             <div class="items">
                                                                 <div class="title-box title-box2 d-flex mb-2">
                                                                     <h3 class="mr-4">ACTION</h3>
