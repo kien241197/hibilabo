@@ -13,11 +13,12 @@ function check() {
 		if (field_stop.includes('_YYYYMM')) $(`select[name="${field_stop}"]`).addClass('box-required');
 		if (field_stop.includes('_keyword')) $(`input[name="${field_stop}"]`).addClass('box-required');
 
-		sort_fields.map(item => {
-			if(item != "end_YYYYMM") $(`#id_${item}`).attr("disabled", false);
-			if (item == field_stop) return true;
-		})
-	}
+		if(field_stop){
+			sort_fields.map(item => {
+				if(item != "end_YYYYMM") $(`#id_${item}`).attr("disabled", false);
+				if (item == field_stop) return true;
+			})
+		}
 }
 check()
 $('input[name="save"').click(function () {
