@@ -305,7 +305,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-value-score",
-                'placeholder': 'ドラ 18 球団 ',
+                'placeholder': 'ドラ１\n8 球団',
                 'rows':0,
                 'tabindex':"1"
             }
@@ -343,7 +343,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例体のケア',
+                'placeholder': 'あいさつ',
                 'rows':0,
                 'tabindex': '19'
             }
@@ -355,7 +355,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'ゴミ拾い',
                 'rows':0,
                 'tabindex': '20'
             }
@@ -367,7 +367,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '部屋掃除',
                 'rows':0,
                 'tabindex': '21'
             }
@@ -380,7 +380,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '12'
+                'tabindex': '12',
+                'placeholder': '審判さんへの\n態度'
             }
         )
     )
@@ -391,7 +392,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '23'
+                'tabindex': '23',
+                'placeholder': '本を読む'
             }
         )
     )
@@ -402,7 +404,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '24'
+                'tabindex': '24',
+                'placeholder': '応援される\n人間になる'
             }
         )
     )
@@ -413,7 +416,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '25'
+                'tabindex': '25',
+                'placeholder': 'プラス思考'
             }
         )
     )
@@ -424,7 +428,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '26'
+                'tabindex': '26',
+                'placeholder': '道具を\n大切に使う'
             }
         )
     )
@@ -459,7 +464,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'はっきりと\nした目標\n目的を持つ',
                 'rows':0,
                 'tabindex': '27'
             }
@@ -471,7 +476,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '一喜一憂\nしない',
                 'rows':0,
                 'tabindex': '28'
             }
@@ -483,7 +488,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '頭は冷静に\n心は熱く',
                 'rows':0,
                 'tabindex': '29'
             }
@@ -496,7 +501,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '30'
+                'tabindex': '30',
+                'placeholder': '雰囲気に\n流されない'
             }
         )
     )
@@ -507,7 +513,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '31'
+                'tabindex': '31',
+                'placeholder': '仲間を\n思いやる心'
             }
         )
     )
@@ -518,7 +525,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '32'
+                'tabindex': '32',
+                'placeholder' : '勝利への\n執念'
             }
         )
     )
@@ -529,7 +537,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '33'
+                'tabindex': '33',
+                'placeholder': '波を\nつくらない'
             }
         )
     )
@@ -540,7 +549,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '34'
+                'tabindex': '34',
+                'placeholder': 'ピンチに\n強い'
             }
         )
     )
@@ -575,7 +585,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'インステップ\n改善',
                 'rows':0,
                 'tabindex': '35'
             }
@@ -587,7 +597,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '体幹強化',
                 'rows':0,
                 'tabindex': '36'
             }
@@ -599,7 +609,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '軸を\nぶらさない',
                 'rows':0,
                 'tabindex': '37'
             }
@@ -612,7 +622,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '38'
+                'tabindex': '38',
+                'placeholder': '不安を\nなくす'
             }
         )
     )
@@ -623,7 +634,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '39'
+                'tabindex': '39',
+                'placeholder': 'メンタ\nコントロール\nをする'
             }
         )
     )
@@ -634,7 +646,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '40'
+                'tabindex': '40',
+                'placeholder': '体を開かない'
             }
         )
     )
@@ -645,7 +658,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '41'
+                'tabindex': '41',
+                'placeholder': '下肢の\n強化'
             }
         )
     )
@@ -656,7 +670,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '42'
+                'tabindex': '42',
+                'placeholder': 'リリース\nポイントの\n安定'
             }
         )
     )
@@ -691,7 +706,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '軸でまわる',
                 'rows':0,
                 'tabindex': '43'
             }
@@ -703,7 +718,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '下肢の強化',
                 'rows':0,
                 'tabindex': '44'
             }
@@ -715,7 +730,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '体重增加',
                 'rows':0,
                 'tabindex': '45'
             }
@@ -728,7 +743,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '46'
+                'tabindex': '46',
+                'placeholder': '肩周りの\n強化'
             }
         )
     )
@@ -739,7 +755,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '47'
+                'tabindex': '47',
+                'placeholder': 'ピッチングを\n増やす'
             }
         )
     )
@@ -750,7 +767,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '48'
+                'tabindex': '48',
+                'placeholder': 'ライナー\nキャッチボール'
             }
         )
     )
@@ -761,7 +779,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '49'
+                'tabindex': '49',
+                'placeholder': '可動域'
             }
         )
     )
@@ -772,7 +791,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '50'
+                'tabindex': '50',
+                'placeholder': '体幹強化'
             }
         )
     )
@@ -807,7 +827,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '感性',
                 'rows':0,
                 'tabindex': '51'
             }
@@ -819,7 +839,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '愛される\n人間',
                 'rows':0,
                 'tabindex': '52'
             }
@@ -831,7 +851,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '計画性',
                 'rows':0,
                 'tabindex': '53'
             }
@@ -844,7 +864,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '54'
+                'tabindex': '54',
+                'placeholder': '感謝'
             }
         )
     )
@@ -855,7 +876,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '55'
+                'tabindex': '55',
+                'placeholder': '継続力'
             }
         )
     )
@@ -866,7 +888,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '56'
+                'tabindex': '56',
+                'placeholder': '信頼される\n人間'
             }
         )
     )
@@ -877,7 +900,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '57'
+                'tabindex': '57',
+                'placeholder': '礼儀'
             }
         )
     )
@@ -888,7 +912,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '58'
+                'tabindex': '58',
+                'placeholder': '思いやり'
             }
         )
     )
@@ -923,7 +948,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '体のケア',
                 'rows':0,
                 'tabindex': '59'
             }
@@ -935,7 +960,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'サプリメント\nを飲む',
                 'rows':0,
                 'tabindex': '60'
             }
@@ -947,7 +972,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'FSQ\n90kg',
                 'rows':0,
                 'tabindex': '61'
             }
@@ -959,6 +984,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
+                'placeholder': 'RSQ\n130kg',
                 'rows':0,
                 'tabindex': '62'
             }
@@ -971,7 +997,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '63'
+                'tabindex': '63',
+                'placeholder': '食事\n夜7杯 朝3杯'
             }
         )
     )
@@ -982,7 +1009,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '64'
+                'tabindex': '64',
+                'placeholder': '可動性'
             }
         )
     )
@@ -993,7 +1021,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '65'
+                'tabindex': '65',
+                'placeholder': 'スタミナ'
             }
         )
     )
@@ -1004,7 +1033,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '66'
+                'tabindex': '66',   
+                'placeholder' : '柔軟性'
             }
         )
     )
@@ -1039,7 +1069,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '角度を\nつける',
                 'rows':0,
                 'tabindex': '67'
             }
@@ -1051,7 +1081,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': '上から\nボールを\nたたく',
                 'rows':0,
                 'tabindex': '68'
             }
@@ -1063,7 +1093,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'リストの\n強化',
                 'rows':0,
                 'tabindex': '69'
             }
@@ -1076,7 +1106,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '70'
+                'tabindex': '70',
+                'placeholder': '下半身\n主導'
             }
         )
     )
@@ -1087,7 +1118,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '71'
+                'tabindex': '71',
+                'placeholder': '可動域'
             }
         )
     )
@@ -1098,7 +1130,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '72'
+                'tabindex': '72',
+                'placeholder': '回転数\nアップ'
             }
         )
     )
@@ -1109,7 +1142,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '73'
+                'tabindex': '73',
+                'placeholder': 'ボールを\n軸で\nリリース'
             }
         )
     )
@@ -1120,7 +1154,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '74'
+                'tabindex': '74',
+                'placeholder': '力まない'
             }
         )
     )
@@ -1155,7 +1190,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'カウントボールを増やす',
                 'rows':0,
                 'tabindex': '75'
             }
@@ -1167,7 +1202,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'フォーク完成',
                 'rows':0,
                 'tabindex': '76'
             }
@@ -1179,7 +1214,7 @@ class MandaraCreateForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': "input-table",
-                'placeholder': '記入例',
+                'placeholder': 'スライダーの\nキレ',
                 'rows':0,
                 'tabindex': '77'
             }
@@ -1192,7 +1227,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '78'
+                'tabindex': '78',
+                'placeholder': '左打者\nへの決め球'
             }
         )
     )
@@ -1203,7 +1239,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '79'
+                'tabindex': '79',
+                'placeholder': '奥行き\nのイメージ'
             }
         )
     )
@@ -1214,7 +1251,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '80'
+                'tabindex': '80',
+                'placeholder': 'ストライクから\nボールに投げる\nコントロール'
             }
         )
     )
@@ -1225,7 +1263,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '81'
+                'tabindex': '81',
+                'placeholder': 'ストレートと\n同じフォームで\n投げる'
             }
         )
     )
@@ -1236,7 +1275,8 @@ class MandaraCreateForm(forms.ModelForm):
             attrs={
                 'class': "input-table",
                 'rows':0,
-                'tabindex': '82'
+                'tabindex': '82',
+                'placeholder': '遅く落差\nのあるカーブ'
             }
         )
     )

@@ -2,11 +2,11 @@
 
 
 :root {
-    --color-blue: #27B8C0;
+    --color-blue: #0DC5CE;
     --color-blue2: #1D2087;
     --color-red: #F7827F;
-    --color-yellow: #F0EE80;
-    --color-pink: #EAAACB;
+    --color-yellow: #EFE9A2;
+    --color-pink: #F4AED3;
     --color-gray: #222;
     --font-content: 'Zen Kaku Gothic New';
     --font-text: 'Source Sans Pro';
@@ -314,7 +314,7 @@ textarea:focus {
 
 .background-choose {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
 }
 
 .background-tab-active {
@@ -326,7 +326,7 @@ textarea:focus {
 
 .background-choose-active {
 
-    background-color: #27B8C0 !important;
+    background-color: #0DC5CE !important;
 
 }
 
@@ -440,7 +440,7 @@ body {
 
 .choose:hover {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
 
 }
 
@@ -599,7 +599,7 @@ body {
 
 .title-value-table-score {
 
-    color: #000 !important;
+    color: #85878b;
 }
 
 .value-table:hover {
@@ -649,7 +649,7 @@ body {
 
 .value-table-score p {
 
-    font-size: 75%;
+    font-size: 70%;
     font-weight: 700;
     font-family: var(--font-content);
     margin-block: unset !important;
@@ -657,7 +657,7 @@ body {
     text-align: center;
     letter-spacing: 0.1rem;
     z-index: 11;
-    /* color: #85878b; */
+    color: #85878b;
     top: 0 !important;
     bottom: 0;
     display: flex;
@@ -737,13 +737,13 @@ body {
 
 .SCORE {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
     position: relative;
 }
 
 .SCORE-text {
 
-    background-color: #27B8C0;
+    background-color: #0DC5CE;
     position: relative;
 }
 
@@ -934,7 +934,7 @@ body {
     background-color: none;
     position: absolute;
     top: 0;
-    color: unset !important;
+    /* color: unset !important; */
 }
 
 .title-main-score-next {
@@ -1058,6 +1058,28 @@ body {
 .box-required {
 /*    border: 2px solid red;*/
     background-color: #CB99C4;
+}
+.value-table-score textarea::placeholder {
+    margin: auto;
+    position: absolute;
+    top: 45%;
+    left: 0;
+    right: 0;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+    line-height: 0.9rem;
+}
+.value-table textarea::placeholder {
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+    line-height: 0.9rem;
 }
 
 @media screen and (max-width: 1746px) {
