@@ -1,6 +1,7 @@
 let field_stop = '';
 $('.input-table').attr('disabled', true);
 $('.input-value-tab').attr('disabled', true);
+$('.select').attr('disabled', true);
 
 function check() {
 
@@ -13,7 +14,7 @@ function check() {
 		if (field_stop.includes('_keyword')) $(`input[name="${field_stop}"]`).addClass('box-required');
 
 		sort_fields.map(item => {
-			$(`#id_${item}`).attr("disabled", false);
+			if(item != "end_YYYYMM") $(`#id_${item}`).attr("disabled", false);
 			if (item == field_stop) return true;
 		})
 	}

@@ -21,8 +21,6 @@ const sort_fields = ['start_YYYYMM', 'end_YYYYMM', 'A_keyword', 'A_dueto', 'B_ke
     'H1_content', 'H2_content', 'H3_content', 'H4_content', 'H5_content', 'H6_content', 'H7_content', 'H8_content',
 ];
 if(flg_finished === true){
-
-    console.log("vaof dday")
     sort_fields.some(item => {
 		$(`#id_${item}`).attr("required", true);
 	})
@@ -47,26 +45,6 @@ choose.forEach((element, index) => {
     })
 })
 
-// const valueTab1 = document.querySelector(".tab1");
-// document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.add("hidden-tab");
-// document.querySelector(".tab1").classList.add("background-tab-active")
-// valueTab1.addEventListener('click', () => {
-//     valueTab1.classList.add('background-tab-active');
-//     document.querySelector(".tab2").classList.remove("background-tab-active")
-//     document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.remove("hidden-tab");
-//     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.add("hidden-tab");
-// });
-
-// const valueTab2 = document.querySelector(".tab2");
-// valueTab2.addEventListener('click', () => {
-//     valueTab2.classList.add('background-tab-active');
-//     document.querySelector(".tab1").classList.remove("background-tab-active")
-//     document.querySelector(".wrapper-item-table-body-bottom-right-tab-1").classList.add("hidden-tab");
-//     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
-// });
-
-console.log({flg_finished});
-// 
 const buttonTitle = document.getElementById('button-title-1');
 if (buttonTitle) {
     buttonTitle.addEventListener("click", function () {
