@@ -20,6 +20,13 @@ const sort_fields = ['start_YYYYMM', 'end_YYYYMM', 'A_keyword', 'A_dueto', 'B_ke
     'G1_content', 'G2_content', 'G3_content', 'G4_content', 'G5_content', 'G6_content', 'G7_content', 'G8_content',
     'H1_content', 'H2_content', 'H3_content', 'H4_content', 'H5_content', 'H6_content', 'H7_content', 'H8_content',
 ];
+if(flg_finished === true){
+
+    console.log("vaof dday")
+    sort_fields.some(item => {
+        $(`#id_${item}`).attr("required", true);
+    })
+}
 const choose = document.querySelectorAll(".choose");
 choose[0].classList.add('background-choose-active')
 choose[0].classList.add('color-print')
@@ -58,11 +65,10 @@ choose.forEach((element, index) => {
 //     document.querySelector(".wrapper-item-table-body-bottom-right-tab-2").classList.remove("hidden-tab");
 // });
 
-
+console.log({flg_finished});
 // 
 const buttonTitle = document.getElementById('button-title-1');
 if (buttonTitle) {
-
     buttonTitle.addEventListener("click", function () {
         document.getElementById('id_total_mission').value = '';
         const valueInput = document.querySelectorAll(".input-table");
@@ -125,27 +131,32 @@ function selectEndDate() {
     document.getElementById("id_end_YYYYMM").value = document.getElementById("id_start_YYYYMM").value
 }
 
-$(document).ready(function () {
+function findFieldStop() {
+    let flg = false;
+    sort_fields.forEach(element => {
+        $(`#id_${element}`).removeClass('box-required');
+    });
+    if($('#id_field_stop').val()) $(`#id_${$('#id_field_stop').val()}`).addClass('box-required');
+}
 
+$(document).ready(function() {
     if ($("#id_A_keyword").val() && $("#id_B_keyword").val() && $("#id_C_keyword").val() && $("#id_D_keyword").val() && $("#id_E_keyword").val() && $("#id_F_keyword").val() && $("#id_G_keyword").val() && $("#id_H_keyword").val()) {
         $(".wrapper-top-block").css("display", "none")
         $(".title-main-score-top").css("display", "none")
     }
 
-    $('body').keydown(function (e) {
+    $('body').keydown(function(e) {
         if (e.which === 9) { // Tab key code is 9
             let index = sort_fields.indexOf($(e.target).attr('name'));
-            if (sort_fields[index]) {
-                if ($(e.target).val()) {
-                    $(`#id_${sort_fields[index]}`).removeClass('box-required');
-                    if ($(`#id_${sort_fields[index + 1]}`).attr("disabled")) {
-                        $(`#id_${sort_fields[index + 1]}`).removeAttr("disabled");
-                        $(`#id_${sort_fields[index + 1]}`).addClass('box-required');
-                        $('#id_field_stop').val(sort_fields[index + 1]);
-                    }
-                    $(`#id_${sort_fields[index + 1]}`).select(); // Select the text inside the input
+            if(sort_fields[index]) {
+                if($(e.target).val()) 
+                {
+                    $('#id_field_stop').val(sort_fields[index+1]);
+                    findFieldStop();
+                    $(`#id_${sort_fields[index+1]}`).removeAttr("disabled");
+                    $(`#id_${sort_fields[index+1]}`).focus().select(); // Select the text inside the input
                 } else {
-                    $(`#id_${sort_fields[index]}`).select(); // Select the text inside the input
+                    $(`#id_${sort_fields[index]}`).focus().select(); // Select the text inside the input
                 }
                 e.preventDefault(); // Prevent default tab behavior       
             }
