@@ -105,6 +105,7 @@ $(document).ready(function () {
 
 	let flag = false;
 
+	$(`#id_total_mission`).focus().select();
 	sort_fields.map(item => {
 		if (!flag) {
 			const valueTotal = $("#id_total_mission").val()
@@ -118,8 +119,6 @@ $(document).ready(function () {
 					flag = true;
 					check()
 				}
-			} else {
-				$(`#id_total_mission`).focus().select();
 			}
 
 		}
