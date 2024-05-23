@@ -120,7 +120,6 @@ function selectEndDate() {
 }
 
 function findFieldStop() {
-    let flg = false;
     sort_fields.forEach(element => {
         $(`#id_${element}`).removeClass('box-required');
     });
@@ -136,6 +135,12 @@ $(document).ready(function() {
     $('body').keydown(function(e) {
         if (e.which === 9) { // Tab key code is 9
             let index = sort_fields.indexOf($(e.target).attr('name'));
+            if($(e.target).attr('name') == 'total_mission') {
+                $(`#id_start_YYYYMM`).focus().select();
+                $('#id_field_stop').val('start_YYYYMM');
+                findFieldStop();
+                e.preventDefault();
+            }
             if(sort_fields[index]) {
                 if(sort_fields[index+1] !== undefined) 
                 {
@@ -149,5 +154,13 @@ $(document).ready(function() {
                 e.preventDefault(); // Prevent default tab behavior       
             }
         }
+    });
+    $('body').click(function(e) {
+        let index = sort_fields.indexOf($(e.target).attr('name'));
+        $('#id_field_stop').val('');
+        if (sort_fields.includes($(e.target).attr('name'))) {
+            $('#id_field_stop').val($(e.target).attr('name'));
+        }
+        findFieldStop();
     });
 });
