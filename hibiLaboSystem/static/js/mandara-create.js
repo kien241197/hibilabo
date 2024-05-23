@@ -137,11 +137,11 @@ $(document).ready(function() {
         if (e.which === 9) { // Tab key code is 9
             let index = sort_fields.indexOf($(e.target).attr('name'));
             if(sort_fields[index]) {
-                if($(e.target).val()) 
+                if(sort_fields[index+1] !== undefined) 
                 {
                     $('#id_field_stop').val(sort_fields[index+1]);
                     findFieldStop();
-                    $(`#id_${sort_fields[index+1]}`).removeAttr("disabled");
+                    // $(`#id_${sort_fields[index+1]}`).removeAttr("disabled");
                     $(`#id_${sort_fields[index+1]}`).focus().select(); // Select the text inside the input
                 } else {
                     $(`#id_${sort_fields[index]}`).focus().select(); // Select the text inside the input
