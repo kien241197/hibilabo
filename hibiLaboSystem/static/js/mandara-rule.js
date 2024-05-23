@@ -118,6 +118,8 @@ $(document).ready(function () {
 					flag = true;
 					check()
 				}
+			} else {
+				$(`#id_total_mission`).focus().select();
 			}
 
 		}
@@ -132,17 +134,6 @@ $(document).ready(function () {
 			$('select[name="end_YYYYMM"]').attr("disabled", true);
 		}
 	});
-
-	
-	for (let i = sort_fields.length; i > 0; i--) {
-		console.log($(`#id_${sort_fields[i - 1]}`));
-
-		if ($(`#id_${sort_fields[i - 1]}`).val()) return false; 
-	
-		$(`#id_${sort_fields[i]}`).attr('disabled', true)
-	
-	}
-
 
 });
 
