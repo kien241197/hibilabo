@@ -1,26 +1,17 @@
 let field_stop = '';
-$('.input-table').attr('disabled', true);
-$('.input-value-tab').attr('disabled', true);
-$('.select').attr('disabled', true);
+
+// $('.input-table').attr('disabled', true);
+// $('.input-value-tab').attr('disabled', true);
+// $('.select').attr('disabled', true);
 
 function check() {
 
-	if (field_stop == 'total_mission') {
-		$('textarea[name="total_mission"]').closest('.value-table-score').addClass('box-required');
-	} else {
 		if (field_stop.includes('_content')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
 		if (field_stop.includes('_dueto')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
 		if (field_stop.includes('_YYYYMM')) $(`select[name="${field_stop}"]`).addClass('box-required');
 		if (field_stop.includes('_keyword')) $(`input[name="${field_stop}"]`).addClass('box-required');
-
-		if(field_stop){
-			sort_fields.map(item => {
-				if(item != "end_YYYYMM") $(`#id_${item}`).attr("disabled", false);
-				if (item == field_stop) return true;
-			})
-		}
 }
-check()
+
 $('input[name="save"').click(function () {
 	$('textarea[name="total_mission"]').attr('required', true);
 	$('.input-table').attr('required', true);
@@ -118,10 +109,11 @@ $(document).ready(function () {
 		if (!flag) {
 			const valueTotal = $("#id_total_mission").val()
 			if (valueTotal) {
-				const valName = $(`[name="${item}"]`).val()
-
+				const valName = $(`#id_${item}`).val()
 				if (!valName) {
+
 					field_stop = item
+
 					$(`#id_${item}`).focus().select();
 					flag = true;
 					check()
@@ -134,12 +126,23 @@ $(document).ready(function () {
 	$('#id_total_mission').on('keyup', function () {
 		if ($("#id_total_mission").val()) {
 			$('select[name="start_YYYYMM"]').attr("disabled", false);
-			$('select[name="end_YYYYMM"]').attr("disabled", false);
+			// $('select[name="end_YYYYMM"]').attr("disabled", false);
 		} else {
 			$('select[name="start_YYYYMM"]').attr("disabled", true);
 			$('select[name="end_YYYYMM"]').attr("disabled", true);
 		}
 	});
+
+	
+	for (let i = sort_fields.length; i > 0; i--) {
+		console.log($(`#id_${sort_fields[i - 1]}`));
+
+		if ($(`#id_${sort_fields[i - 1]}`).val()) return false; 
+	
+		$(`#id_${sort_fields[i]}`).attr('disabled', true)
+	
+	}
+
 
 });
 

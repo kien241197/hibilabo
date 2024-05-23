@@ -20,11 +20,15 @@ const sort_fields = ['start_YYYYMM', 'end_YYYYMM', 'A_keyword', 'A_dueto', 'B_ke
     'G1_content', 'G2_content', 'G3_content', 'G4_content', 'G5_content', 'G6_content', 'G7_content', 'G8_content',
     'H1_content', 'H2_content', 'H3_content', 'H4_content', 'H5_content', 'H6_content', 'H7_content', 'H8_content',
 ];
+
 if(flg_finished === true){
-    sort_fields.some(item => {
+
+    $("#id_total_mission").attr("required", true)
+    sort_fields.map(item => {
 		$(`#id_${item}`).attr("required", true);
 	})
 }
+
 const choose = document.querySelectorAll(".choose");
 choose[0].classList.add('background-choose-active')
 choose[0].classList.add('color-print')
@@ -101,8 +105,14 @@ inputValueTab.forEach((element, index) => {
 
 const inputValueSocre = document.querySelector('.input-value-score')
 function render_keyword(numb, value) {
-    document.querySelectorAll(".title-main-score")[OPTION_LIST[numb][0]].textContent = value;
-    document.querySelectorAll(".title-value-table-score")[OPTION_LIST[numb][0]].textContent = value;
+
+    if(value){
+        document.querySelectorAll(".title-main-score")[OPTION_LIST[numb][0]].textContent = value;
+        document.querySelectorAll(".title-main-score")[OPTION_LIST[numb][0]].style.color = "black";
+
+        document.querySelectorAll(".title-value-table-score")[OPTION_LIST[numb][0]].textContent = value;
+        document.querySelectorAll(".title-value-table-score")[OPTION_LIST[numb][0]].style.color = "black";
+    }
 }
 
 function selectEndDate() {

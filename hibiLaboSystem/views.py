@@ -1140,6 +1140,7 @@ class MandaraCreate(TemplateView):
         kwargs['mandara'] = mandara
         kwargs['mandara_periods'] = mandara_periods
         kwargs['title_header'] = "MASMASMANDARA"
+        print(mandara)
         return kwargs
 
     def post(self, request, *args, **kwargs):

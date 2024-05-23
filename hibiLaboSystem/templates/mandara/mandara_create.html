@@ -467,14 +467,14 @@
                                     <div class="content-body-right">
                                         <p class="title-content-body-left">目標期間は 1 年</p>
                                         <div class="item-select">
-                                            <select name="start_YYYYMM" id="id_start_YYYYMM" class="select" onchange="selectEndDate()" tabindex="2" disabled>
+                                            <select name="start_YYYYMM" id="id_start_YYYYMM" class="select" onchange="selectEndDate()" tabindex="2">
                                                 <option value="">----</option>
                                                 {% for time in mandara_periods %}
                                                 <option value="{{ time.id }}" {% if time.id == mandara.mandara_period_id %}selected{% endif %}>{{ time.display_time_start }}</option>
                                                 {% endfor %}
                                             </select>
                                             <p class="to">～</p>
-                                            <select name="end_YYYYMM" id="id_end_YYYYMM" class="select" disabled>
+                                            <select name="end_YYYYMM" id="id_end_YYYYMM" class="select" disabled tabindex="-1">
                                                 <option value="">----</option>
                                                 {% for time in mandara_periods %}
                                                 <option value="{{ time.id }}" {% if time.id == mandara.mandara_period_id %}selected{% endif %}>{{ time.display_time_end }}</option>
@@ -645,9 +645,10 @@
     </section>
 </main>
 
-<script>
+<script async>
     let flg_finished = true
-    {% if not mandara.flg_finished %} 
+
+    {% if not mandara.flg_finished  %} 
         flg_finished = false 
     {% endif %}
 </script>
