@@ -646,10 +646,9 @@
 </main>
 
 <script>
-    {% if mandara.flg_finished %} 
-        const flg_finished = true
-    {% else %}
-        const flg_finished = false
+    let flg_finished = true
+    {% if not mandara.flg_finished %} 
+        flg_finished = false 
     {% endif %}
 </script>
 <script src="{% static 'js/mandara-create.js' %}" async></script>
