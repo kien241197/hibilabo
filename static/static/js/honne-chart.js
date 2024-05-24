@@ -1,5 +1,5 @@
 function createChart(ctx, data, label) {
- 
+
   new Chart(ctx, {
     type: 'radar',
     data: {
@@ -13,23 +13,27 @@ function createChart(ctx, data, label) {
       }],
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       //タイトル消
       plugins: {
-　　                legend: {
-         display: false
-         },
-         //https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring
-         datalabels: {
-              font: {
-              size: 20
-              },
+        legend: {
+          display: false
+        },
+        //https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring
+        datalabels: {
+          font: {
+            size: 20
           },
+        },
       },
       scales: {
-      r: {
+        r: {
+          with: 500,
+          height: 500,
           //メモリ線
-          ticks:{
-              display: false
+          ticks: {
+            display: false
           },
           // 最小値・最大値
           min: 0,
@@ -38,23 +42,23 @@ function createChart(ctx, data, label) {
           backgroundColor: 'darkgray',
           // グリッドライン
           grid: {
-          color: 'gainsboro',
-          borderWidth: 4,
+            color: 'gainsboro',
+            borderWidth: 4,
           },
           // アングルライン
           angleLines: {
-          color: 'darkgray',
+            color: 'darkgray',
           },
           // ポイントラベル
           pointLabels: {
-              color: 'black',
-              backdropColor: '#ffffff',
-              font: 10,
+            color: 'black',
+            backdropColor: '#ffffff',
+            font: 10,
 
           },
+        },
       },
-      },
-  },
+    },
   });
 }
 function create_graph(id, data) {
@@ -65,7 +69,7 @@ function create_graph(id, data) {
   createChart(ctx, data, false)
 }
 
-function createGraphSample(){
+function createGraphSample() {
 
   var strname = "mycanvas-sample"
   var ctx1 = document.getElementById(strname);
