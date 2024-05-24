@@ -1472,6 +1472,9 @@ def post_detail_day(request):
                 mandara_get = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gt=today_str).order_by('mandara_period__start_date').first()
                 if mandara_get is not None:
                     today_progress = MandaraProgress.objects.filter(mandara_base_id=mandara_get.id,date=datetime.date.today())
+                    if not today_progress:
+                        MandaraProgress.objects.create(mandara_base_id=mandara_get.id, date=datetime.date.today())
+                        today_progress = today_progress
                     check = today_progress.values(todo+'_result').first()
                     if check[field] == 0:
                         today_progress.update(**{field: 1})
