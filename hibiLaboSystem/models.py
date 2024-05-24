@@ -805,7 +805,7 @@ class MandaraPeriod(models.Model):
 		return str("")
 
 	def clean(self):
-		if self.start_date <= datetime.date.today() and self.pk is None:
+		if self.start_date < datetime.date.today() and self.pk is None:
 			raise ValidationError("今日より始まりは大きくなければなりません。")
 		if self.start_date > self.end_date:
 			raise ValidationError("日付が間違っています。")
