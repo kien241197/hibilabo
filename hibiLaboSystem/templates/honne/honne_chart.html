@@ -38,20 +38,22 @@
                                     </form>
                                 </div>
 
-                                <div class="content-chart">
-                                    <div class="row">
-                                        <div style="width: 550px; height: 550px;">
-                                            <canvas id="mycanvas-sample"></canvas>
-                                        </div>
+                                <div class="content-chart mt-5">
+                                    <div class="row justify-content-between">
+                                            <div style="width: 590px; height: 400px;" class="mt-5" >
+                                                <canvas id="mycanvas-sample" width="300" height="300"></canvas>
+                                            </div>
                                         {% for record in orderby_records %}
-                                        <div class="col-md-4 mt-5 mx-3 pt-3">
+                                        <div class="col-md-4 mx-3">
                                             <div class="images">
                                                 <p>
                                                     {% if user.company.visble_flag == True %}
                                                     {{ record.user.full_name }}
                                                     {% endif %}
                                                 </p>
-                                                <canvas id="mycanvas-{{ record.user.id }}"></canvas>
+                                                <div>
+                                                    <canvas id="mycanvas-{{ record.user.id }}" width="400" height="400"></canvas>
+                                                </div>
                                             </div>
                                         </div>
                                       
