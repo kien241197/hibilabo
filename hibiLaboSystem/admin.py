@@ -196,6 +196,11 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     actions = []
     success = True
 
+    def has_import_permission(self, request):
+        if not request.user.is_superuser and request.user.role.role not in [RoleEnum.日々研.value, RoleEnum.Partner.value, RoleEnum.Company_SuperVisor.value]:
+            return False
+        return True
+
     def add_view(self, request, form_url='', extra_context=None):
         response  = super().add_view(request, form_url, extra_context)
         if response.status_code == 302:
@@ -365,11 +370,18 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         # print(make_password('123456'));
         form = forms.CsvImportForm()
    
-        context = {"form": form, "form_title": "Upload users csv file.",
-                "description": "The file should have following headers: "
-                                "[username,first_name,last_name,password, company_id, branch_code]."
-                                " The Following rows should contain information for the same.",
-                                "endpoint": "/admin/hibiLaboSystem/user/import/"}
+        context = {
+            "title": "インポート",
+            "form": form, 
+            "form_title": "Upload users csv file.",
+            "description": "The file should have following headers: "
+                            "[username,first_name,last_name,password, company_id, branch_code]."
+                            " The Following rows should contain information for the same.",
+            "endpoint": "/admin/hibiLaboSystem/user/import/",
+            "is_nav_sidebar_enabled": self.admin_site.each_context(request).get("is_nav_sidebar_enabled"),
+            "has_permission": self.admin_site.each_context(request).get("has_permission"),
+            'available_apps': self.admin_site.each_context(request).get("available_apps")
+        }
 
         return render(
             request, "admin/import_users.html", context
