@@ -333,7 +333,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                 if request.user.is_superuser:
                     company_id = row[util_obj.get_column("company_id")] 
 
-                branch_detail = branch.filter(code=branch_code).first()
+                branch_detail = branch.filter(code=branch_code, company_id=company_id).first()
 
                 if user.filter(username=username).exists():
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
