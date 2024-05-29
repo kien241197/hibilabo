@@ -393,7 +393,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             "form": form, 
             "form_title": "Upload users csv file.",
             "description": "The file should have following headers: "
-                            "[username,first_name,last_name,password, company_id, branch_code]."
+                            "[username,first_name,last_name,password,company_id,branch_code]."
                             " The Following rows should contain information for the same.",
             "endpoint": "/admin/hibiLaboSystem/user/import/",
             "is_nav_sidebar_enabled": self.admin_site.each_context(request).get("is_nav_sidebar_enabled"),
