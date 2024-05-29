@@ -27,6 +27,7 @@
   <br />
   <br />
   <form method="POST" id="csv-form" enctype="multipart/form-data">
+    <p class="errornote hidden"></p>
     {% csrf_token %}
     <label for="csv_file">Select a CSV file:</label>
     {{ form.csv_file }}
@@ -182,6 +183,9 @@
           });
           deferred.resolve(data);
         },
+        error: function(data){
+          deferred.resolve(data);
+        },
         complete: () => {
           $("#spinner").hide();
         },
@@ -193,6 +197,8 @@
 
     let looper = $.Deferred().resolve();
     $("#submit").click((e) => {
+      $(".errornote").addClass("hidden");
+      $(".errornote").text('');
       e.preventDefault();
       // $.when.apply is the way to call multiple AJAX calls
       // apply functions accepts two arguments => (this,array of requests)
@@ -214,6 +220,10 @@
           // $("#downloadReport").show();
         })
         .catch((err) => {
+          if (err.status == 500) {
+            $(".errornote").removeClass("hidden");
+            $(".errornote").text(err.responseText);
+          }
           console.log(err);
         });
     });
