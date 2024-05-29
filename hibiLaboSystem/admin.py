@@ -424,7 +424,14 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                         
         return render(request,
                       'admin/select_branch.html',
-                      context={'users':queryset, 'branches': branches})
+                      context={
+                        'users':queryset, 
+                        'branches': branches,
+                        "title": "新しい支店を選択",
+                        "is_nav_sidebar_enabled": self.admin_site.each_context(request).get("is_nav_sidebar_enabled"),
+                        "has_permission": self.admin_site.each_context(request).get("has_permission"),
+                        'available_apps': self.admin_site.each_context(request).get("available_apps")
+                        })
 
     update_branch.short_description = "新しい支店を選択"
 
