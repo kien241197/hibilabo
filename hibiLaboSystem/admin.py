@@ -318,10 +318,13 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             util_obj = utils.ImportUtils(format_column_headers)
             array_user = []
 
-            user = User.objects.all()
-            company = Company.objects.all()
-            branch = Branch.objects.all()
-
+            users = list(User.objects.values_list('username', flat=True))
+            if request.user.is_superuser:
+                companies = list(Company.objects.values_list('id', flat=True))
+                branches = list(Branch.objects.values_list('id', 'company_id', 'code'))
+            else:
+                branches = list(Branch.objects.filter(company_id=company_id).values_list('id', 'company_id', 'code'))
+            
             for row in reader:
                 username = row[util_obj.get_column("username")]
                 first_name = row[util_obj.get_column("first_name")]
@@ -331,25 +334,32 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                 branch_code = row[util_obj.get_column("branch_code")]
 
                 if request.user.is_superuser:
-                    company_id = row[util_obj.get_column("company_id")] 
-
-                branch_detail = branch.filter(code=branch_code, company_id=company_id).first()
-
-                if user.filter(username=username).exists():
+                    company_id = row[util_obj.get_column("company_id")]
+                branch_detail = []
+                if branch_code != '' and company_id != '':
+                    branch_detail = [item for item in branches if str(item[1]) == company_id and str(item[2]) == branch_code]
+                if username == '':
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                                "msg": "username already exist!"}) 
+                                                "msg": "Username is required!"})
+                elif company_id == '':
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                "msg": "Company_id is required!"})
+                elif username in users:
+                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                "msg": "Username already exist!"}) 
                     
-                elif not company.filter(id=company_id).exists():
+                elif int(company_id) not in companies:
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "Company is not already exist!"})
 
-                elif branch_detail is None or int(branch_detail.company.id) != int(company_id):
+                elif branch_code != '' and len(branch_detail) == 0:
                     import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                             "msg": "Branch is not already exist!"})
                     
                 else:
-                    brach_id = branch_detail.id
-                    array_user.append(username)
+                    brach_id = None
+                    if len(branch_detail) > 0:
+                        brach_id = branch_detail[0][0]
 
                     try:
                         for validator in validators:
@@ -362,6 +372,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                         
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code,"status": "FINISHED",
                                                 "msg": "User created successfully!"})
+                        users.append(username)
                         
                     except ValidationError as e:
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",

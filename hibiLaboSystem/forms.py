@@ -281,7 +281,7 @@ class BonknowForm(forms.Form):
         self.fields['evaluation_unit'].queryset = queryset_evaluation
 
 class CsvImportForm(forms.Form):
-    csv_file = forms.FileField()
+    csv_file = forms.FileField(widget=forms.FileInput(attrs={'accept':'.csv, text/csv'}))
 
 class MandaraCreateForm(forms.ModelForm):
     class Meta:
