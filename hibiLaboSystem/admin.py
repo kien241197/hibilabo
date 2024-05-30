@@ -331,14 +331,14 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                     first_name = row[util_obj.get_column("first_name")]
                     last_name = row[util_obj.get_column("last_name")] 
                     password = row[util_obj.get_column("password")] 
-
-                    branch_code = row[util_obj.get_column("branch_code")]
+                    branch_code = row[util_obj.get_column("branch_code")].replace('\r', '')
 
                     if request.user.is_superuser:
                         company_id = row[util_obj.get_column("company_id")]
+
                     branch_detail = []
                     if branch_code != '' and company_id != '':
-                        branch_detail = [item for item in branches if str(item[1]) == company_id and str(item[2]) == branch_code]
+                        branch_detail = [item for item in branches if int(item[1]) == int(company_id) and int(item[2]) == int(branch_code)]
                     if username == '':
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                     "msg": "Username is required!"})
@@ -349,7 +349,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                     "msg": "Username already exist!"}) 
                         
-                    elif int(company_id) not in companies:
+                    elif request.user.is_superuser and int(company_id) not in companies:
                         import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
                                                 "msg": "Company is not already exist!"})
 
