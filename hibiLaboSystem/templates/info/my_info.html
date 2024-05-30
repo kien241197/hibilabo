@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 <!-- コンテンツ -->
+{% load static %}
 {% block content %}
 <div class="container">
     <h1>My page</h1>
@@ -33,7 +34,13 @@
                 <td>アバター</td>
                 <td>
                     {% if user.image %}
-                        <img src = "{{ user.image.url }}" />
+                        <div class="d-flex justify-content-center">
+                            <img src = "{{ user.image.url }}" />
+                        </div>
+                        {% else %}
+                        <div class="d-flex justify-content-center">
+                            <img src = "{% static '/assets/images/avatar_default.jpg' %}" width="300" height="300" />
+                        </div>
                     {% endif %}
                 </td>
             </tr>
