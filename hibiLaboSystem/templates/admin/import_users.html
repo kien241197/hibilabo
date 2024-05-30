@@ -1,5 +1,5 @@
-{% extends 'admin/base_site.html' %} 
-{% load static %} 
+{% extends 'admin/base_site.html' %}
+{% load static %}
 {% block content %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -20,6 +20,39 @@
     });
   }
 </script>
+<style>
+  .loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid gray;
+    width: 30px;
+    height: 30px;
+    -webkit-animation: spin 2s linear infinite;
+    /* Safari */
+    animation: spin 2s linear infinite;
+  }
+
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
 
 <div>
   <h1>{{form_title}}</h1>
@@ -32,23 +65,15 @@
     <input type="file" id="csvfile" name="csvfile" />
     <br /><br />
     <button class="uploadBtn" id="submit" disabled>Upload CSV</button>
-    <button
-      class="cancelBtn"
-      type="button"
-      onclick="javascript:history.back();"
-    >
+    <button class="cancelBtn" type="button" onclick="javascript:history.back();">
       Cancel
     </button>
   </form>
   <br />
   <br />
   <h1>Upload results for file <span id="file_name"></span></h1>
-  <div
-    style="display: flex; justify-content: space-between; margin-bottom: 10px"
-  >
-    <span style="font-weight: bold; font-size: 18px"
-      >Total entries: <span id="entries"></span
-    ></span>    
+  <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+    <span style="font-weight: bold; font-size: 18px">Total entries: <span id="entries"></span></span>
     <!-- <button class="downloadBtn" id="downloadReport" style="display: none">
       Download Report
     </button> -->
@@ -62,7 +87,9 @@
       <th>Message</th>
     </tr>
   </table>
-  <div id="spinner" class="loader" style="display: none"></div>
+  <div style="margin-top: 20px; width: 370px; display: none;" id="loader" >
+    <div class="loader" style="margin: auto;"></div>
+  </div>
 </div>
 <br />
 {{endpoint|json_script:"endpoint"}}
@@ -163,7 +190,7 @@
           action: "post",
         },
         beforeSend: () => {
-          $("#spinner").show();
+          $("#loader").show();
         },
         success: function (data) {
           // here we will update our DOM to show the object status
@@ -173,15 +200,15 @@
           $("table").append(
             `<tr class="parent" onclick="handlecollapse($(this))"><td class="checkpoint">Entries: ${offset} to ${limit}</td><td></td><td></td></tr>`
           );
-          
+
           // const roleUser = {% if user.is_superuser %} true {% else %} false {% endif%}
 
           data.results.forEach((obj) => {
             let style = obj.status == 'ERROR' ? 'red' : 'green';
             // if(roleUser){
-              $("table").append(
-                `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.company}</td><td>${obj.branch}</td><td>${obj.msg}</td></tr>`
-              );
+            $("table").append(
+              `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.company}</td><td>${obj.branch}</td><td>${obj.msg}</td></tr>`
+            );
             // } else {
             //   $("table").append(
             //     `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.branch}</td><td>${obj.msg}</td></tr>`
@@ -191,7 +218,7 @@
           deferred.resolve(data);
         },
         complete: () => {
-          $("#spinner").hide();
+          $("#loader").hide();
         },
       });
       return deferred.promise();
