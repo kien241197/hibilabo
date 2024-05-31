@@ -16,18 +16,28 @@ $(document).ready(function () {
     }
 
     $('#id_image').change(function () {
-        readURL(this);
+        if($(this).val()){
+
+            readURL(this);
+
+        } else {
+            deleteImage()
+        }
     });
 
     $('#delete-image').click(function () {
-        
-        $('#image-preview').attr('src', image)
-        $(this).css('display', 'none')
-        $("#id_image").val("")
 
-        if(!image){
-            $('#image-preview-1').attr('src', image).css('display', 'none')
-        }
+        deleteImage()
     })
 
+    function deleteImage() {
+
+        $('#image-preview').attr('src', image)
+        $('#delete-image').css('display', 'none')
+        $("#id_image").val("")
+
+        if (!image) {
+            $('#image-preview-1').attr('src', image).css('display', 'none')
+        }
+    }
 })
