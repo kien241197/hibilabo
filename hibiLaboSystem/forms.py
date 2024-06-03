@@ -1338,7 +1338,7 @@ class MandaraChartForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(MandaraChartForm, self).__init__(*args, **kwargs)
-        # queryset = models.User.objects.all()
+        
         if request.user:
             queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor 
