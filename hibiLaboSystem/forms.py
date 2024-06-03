@@ -220,7 +220,7 @@ class HonneEvaluationUnitForm(forms.Form):
         if request.user:
             queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
                 if request.user.branch:
                     queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
             
@@ -250,11 +250,11 @@ class SelfcheckEvaluationUnitForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         super(SelfcheckEvaluationUnitForm, self).__init__(*args, **kwargs)
         queryset_evaluation = models.SelfcheckEvaluationPeriod.objects.all()
-        
+
         if request.user:
             queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
                 if request.user.branch:
                     queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
               
@@ -1331,7 +1331,7 @@ class MandaraChartForm(forms.Form):
         if request.user:
             queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
                 if request.user.branch:
                     queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
@@ -1354,7 +1354,7 @@ class MandaraForm(forms.Form):
         if request.user:
             queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
                 if request.user.branch:
                     queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
@@ -1407,7 +1407,7 @@ class WatasheetTypeForm(forms.Form):
         if request.user:
             queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
                 if request.user.branch:
                     queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
