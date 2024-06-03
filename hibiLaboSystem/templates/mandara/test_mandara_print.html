@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <!-- Required meta tags -->
+    <META charset="UTF-8">
+    <title>HIBI_LABOインナーマーケティング</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="HandheldFriendly" content="True" />
+
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/style.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/css/custom-style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js" integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+        <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+     
+    <link rel="stylesheet" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/css/mandara_print.css">
+    <style type="text/css">
+        @page {
+            size: letter landscape;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="bg-main" id="element-to-print">
+        <section class="site-feedback pd-main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="container">
+                        <div class="wrapper-body row">
+                            <div class="body-bottom row col-8">
+                                <div class="wrapper-body-left col-12">
+                                    <div>
+                                        <div class="body-top">
+                                            <div class="body-top-left" style="padding-left: 15px !important;">
+                                                <h2 class="text-title" style="font-size: 32px !important; margin-bottom: 25px !important;">MANDARA CHART</h2>
+                                                <br/>
+                                                <span class="content-title" style="font-size: 25px !important; padding-top: 25px !important;">真ん中の1年後の目標に対する8つの目標からの72個の問い</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="body-bottom-left col-12" id="value-body-bottom-left">
+                                        <div class="row" style="padding-left: 0px !important; margin-left: 0px !important;">
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasF" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-left: 2px solid #717276; border-top: 2px solid #717276;" data-box-type="F1">
+                                                        <p>1</p>
+                                                        <span class="value-group-7">2</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-top: 2px solid #717276;" data-box-type="F2">
+                                                        <p>3</p>
+                                                        <span class="value-group-7">4</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-top: 2px solid #717276;" data-box-type="F3">
+                                                        <p>10</p>
+                                                        <span class="value-group-7">5</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="F8">
+                                                        <p>6</p>
+                                                        <span class="value-group-7">7</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">8</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px;" data-box-type="F4">
+                                                        <p>10</p>
+                                                        <span class="value-group-7">9</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group7 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="F7">
+                                                        <p>5</p>
+                                                        <span class="value-group-7">14</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px;" data-box-type="F6">
+                                                        <p>3</p>
+                                                        <span class="value-group-7">15</span>
+                                                    </div>
+                                                    <div class="value-table group7 true col-4" style=" height: 90px;" data-box-type="F5">
+                                                        <p>5</p>
+                                                        <span class="value-group-7">14</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasC" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group3 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="C1">
+                                                        <p>69</p>
+                                                        <span class="value-group-3">10</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="C2">
+                                                        <p>44</p>
+                                                        <span class="value-group-3">36</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="C3">
+                                                        <p>10</p>
+                                                        <span class="value-group-3">42</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C8">
+                                                        <p>10</p>
+                                                        <span class="value-group-3">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">55</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C4">
+                                                        <p>10</p>
+                                                        <span class="value-group-3">10</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C7">
+                                                        <p>10</p>
+                                                        <span class="value-group-3">10</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C6">
+                                                        <p>10</p>
+                                                        <span class="value-group-3">10</span>
+                                                    </div>
+                                                    <div class="value-table group3 true col-4" style=" height: 90px;"
+                                                        data-box-type="C5">
+                                                        <p>10</p>
+                                                        <span class="value-group-3">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasG" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group6 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="G1">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="G2">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px; border-top: 2px solid #717276;"
+                                                        data-box-type="G3">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G8">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">25</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G4">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G7">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G6">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                    <div class="value-table group6 true col-4" style=" height: 90px;"
+                                                        data-box-type="G5">
+                                                        <p>10</p>
+                                                        <span class="value-group-6">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="padding-left: 0px !important; margin-left: 0px !important;">
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasB" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group2 true col-4" style=" height: 90px; border-left: 2px solid #717276;"
+                                                        data-box-type="B1">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B2">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B3">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group2 true col-4" style="height: 90px; border-left: 2px solid #717276;"
+                                                        data-box-type="B8">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">40</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B4">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group2 true col-4" style=" height: 90px; border-left: 2px solid #717276;"
+                                                        data-box-type="B7">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B6">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                    <div class="value-table group2 true col-4" style=" height: 90px;"
+                                                        data-box-type="B5">
+                                                        <p>10</p>
+                                                        <span class="value-group-2">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div class="row">
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;"> 
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                  
+                                                    <div class="value-table-score SCORE-MAIN col-4" style=" height: 90px; position: relative;">
+                                                        <p class="title-main-score title-main-score-center" style="position: absolute; top: 0; left: 0; right: 0; color: #000; background-color: white !important;">1年後の目標</p>
+                                                        <span class="value-score value-score-center" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE-text col-4" style=" height: 90px; position: relative;">
+                                                        <div style="position: absolute; top: 0; left: 0; right: 0; background: white; width: 100%; z-index: 99; height: 15px;">
+                                                            <p class="title-main-score" >10</p>
+                                                        </div>
+                                                        <span class="value-score" style="font-size: 32px !important; position: absolute; bottom: 20px; left: 0; right: 0;">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasD" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D1">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D2">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D3">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D8">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">87</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D4">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D7">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D6">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+                                                    <div class="value-table group5 true col-4" style=" height: 90px;"
+                                                        data-box-type="D5">
+                                                        <p>10</p>
+                                                        <span class="value-group-5">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="padding-left: 0px !important; margin-left: 0px !important;">
+                                           
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasE" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group8 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="E1">
+                                                        <p>10</p>
+                                                        <span class="value-group-8">10</span>
+                                                    </div>
+                                                    <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E2">
+                                                        <p>10</p>
+                                                        <span class="value-group-8">10</span>
+                                                    </div>
+                                                    <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E3">
+                                                        <p>10</p>
+                                                        <span class="value-group-8">10</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="value-table group8 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="E8">
+                                                        <p>10</p>
+                                                        <span class="value-group-8">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">77</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E4">
+                                                        <p>10</p>
+                                                        <span class="value-group-8">10</span>
+                                                    </div>
+                                                </div>
+                                              
+                                              <div class="row">
+                                                <div class="value-table group8 true col-4" style=" height: 90px; border-left: 2px solid #717276;" data-box-type="E7">
+                                                    <p>10</p>
+                                                    <span class="value-group-8">10</span>
+                                                </div>
+                                                <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E6">
+                                                    <p>10</p>
+                                                    <span class="value-group-8">10</span>
+                                                </div>
+                                                <div class="value-table group8 true col-4" style=" height: 90px;" data-box-type="E5">
+                                                    <p>10</p>
+                                                    <span class="value-group-8">10</span>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4" style="position: relative; padding: unset !important;">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasA" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group1 true col-4" style="height: 90px;"
+                                                        data-box-type="A1">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A2">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A3">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A8">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative !important;">
+                                                       <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                        <p>SCORE</p>
+                                                        <span class="value-score" style="font-size: 30px !important;">34</span>
+                                                       </div>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A4">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A7">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A6">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                    <div class="value-table group1 true col-4" style=" height: 90px;"
+                                                        data-box-type="A5">
+                                                        <p style="font-size: 14px;">10</p>
+                                                        <span class="value-group-1">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-item-body-bottom-left col-4">
+                                                <div style="position: absolute;  width: 250px; height: 250px; top: 4px; left: 35px; z-index: 10;">
+                                                    <canvas id="mycanvasH" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H1">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">10</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H2">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">10</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H3">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">10</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group4 true col-4" style="height: 90px;"
+                                                        data-box-type="H8">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">10</span>
+                                                    </div>
+                                                    <div class="value-table-score SCORE col-4" style="height: 90px; position: relative;">
+                                                        <div style="position: absolute;  top: 8px; left: 0; right: 0; bottom: 0; z-index: 11;">
+                                                            <p>SCORE</p>
+                                                            <span class="value-score">10</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H4">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">87</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H7">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">10</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H6">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">10</span>
+                                                    </div>
+                                                    <div class="value-table group4 true col-4" style=" height: 90px;"
+                                                        data-box-type="H5">
+                                                        <p>10</p>
+                                                        <span class="value-group-4">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="body-bottom-right col-4" style="padding-top: 0px !important; margin: unset !important;">
+                                <div class="wrapper-title-body-bottom-right">
+                                    <h2 class="title-body-bottom-right">キーワードの課題解決</h2>
+                                </div>
+                                <div class="table-body-bottom-right" style="padding: unset !important; margin: unset !important;">
+                                    <div class="wrapper-item-table-body-bottom-right-tab-1" style="padding: unset !important; margin: unset !important;">
+                                        <div class="item-table-body-bottom-right" style="padding: unset !important; margin: unset !important;">
+                                            <div class="wrapper-content-table-body-right" style="padding: unset !important; margin: unset !important;">
+                                               <div class="row">
+                                                <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center; display: flex; justify-content: center;">A</div>
+                                                <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                <div class="title-order-right">title A</div>
+                                               </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row" style="padding: unset !important; margin: unset !important;">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                   34534 3retdfg
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right" style="padding: unset !important; margin: unset !important;">
+                                            <div class="wrapper-content-table-body-right" style="padding: unset !important; margin: unset !important;">
+                                               <div class="row" style="padding: unset !important; margin: unset !important;">
+                                                <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">B</div>
+                                                <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                <div class="title-order-right">title B</div>
+                                               </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                  sdf sdfdsf
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">C</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">title C</div>
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                  vbnvbnd dfg df
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">D</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">title D</div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                   21sad ádsad
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">E</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">title E</div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    10
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">F</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">title F</div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    20
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">G</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">title G</div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    30
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="item-table-body-bottom-right">
+                                            <div class="wrapper-content-table-body-right">
+                                                <div class="row">
+                                                    <div class="order" style="padding-left: 14px;padding-right: unset !important; margin-right: 10px; text-align: center;">H</div>
+                                                    <div class="title-order" style="margin-right: 10px;">キーワード</div>
+                                                    <div class="title-order-right">title H</div>
+                                                </div>
+                                            </div>
+                                            <div class="wrapper-content-table-bottom-body-right row">
+                                                <div class="content-table-body-right">
+                                                    <p>課<br/>題<br/>解<br/>決</p>
+                                                </div>
+                                                <p class="desc-table-body-right">
+                                                    40
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script type="text/javascript">
+        var arrayChartGroupA = [10, 20, 30, 40, 50, 60, 70, 80];
+        var arrayChartGroupB = [10, 10, 10, 10, 10, 10, 10,10];
+        var arrayChartGroupC = [10, 10, 10, 10, 10, 10, 10,10];
+        var arrayChartGroupH = [10, 10, 10, 10, 10, 10, 10,10];
+        var arrayChartGroupD = [10, 10, 10, 10, 10, 10, 10,10];
+        var arrayChartGroupG = [10, 10, 10, 10, 10, 10, 10,10];
+        var arrayChartGroupF = [10, 10, 10, 10, 10, 10, 10,10];
+        var arrayChartGroupE = [10, 10, 10, 10, 10, 10, 10,10];
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+
+        function setCanvas(id, value) {
+            new Chart(document.getElementById(id), {
+                type: 'radar',
+                data: {
+                    labels: ['', '', '', '', '', '', '', ''],
+                    datasets: [{
+                        label: '',
+                        data: value,
+                        fill: true,
+                        borderColor: "#e9e2a0",
+                        pointBackgroundColor: '#e2db9d',
+                    }]
+                },
+                options: {
+                    tooltips: false,
+                    legend: {
+                        display: false
+                    },
+                    scale: {
+                        gridLines: {
+                            circular: false,
+                            color: "gray"
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                },
+            
+            });
+        }
+        
+        setTimeout(setCanvas("mycanvasA", arrayChartGroupA), 100)
+        setTimeout(setCanvas("mycanvasB", arrayChartGroupB), 100)
+        setTimeout(setCanvas("mycanvasC", arrayChartGroupC), 100)
+        setTimeout(setCanvas("mycanvasH", arrayChartGroupH), 100)
+        setTimeout(setCanvas("mycanvasD", arrayChartGroupD), 100)
+        setTimeout(setCanvas("mycanvasE", arrayChartGroupE), 100)
+        setTimeout(setCanvas("mycanvasF", arrayChartGroupF), 100)
+        setTimeout(setCanvas("mycanvasG", arrayChartGroupG), 100)
+    </script>
+</body>
+
+</html>
