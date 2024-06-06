@@ -120,6 +120,17 @@ input[type=number] {
     -webkit-appearance: none !important;
 }
 
+.sample {
+
+    color: #727171;
+    display: inline-block;
+    padding: 10px 0px;
+    top: 0;
+    left: 0;
+    background: var(--color-blue);
+    color: white;
+}
+
 @media (min-width: 1200px) {
 
     .max-width {
