@@ -27,10 +27,12 @@ $(document).ready(function () {
 
         if (cleanHashValue === "tab-2") {
 
-            $('#image-modal').attr('src', '/static/assets/images/modal.png')
+            $('#tab2').css('display', 'block')
+            $('#tab3').css('display', 'none')
         } else {
 
-            $('#image-modal').attr('src', '/static/assets/images/modal-1.png')
+            $('#tab2').css('display', 'none')
+            $('#tab3').css('display', 'block')
         }
     } else {
 
@@ -170,10 +172,12 @@ $(document).ready(function () {
 
             if (text === 'nav-tab-4') {
 
-                $('#image-modal').attr('src', '/static/assets/images/modal.png')
+                $('#tab2').css('display', 'block')
+                $('#tab3').css('display', 'none')
             } else {
 
-                $('#image-modal').attr('src', '/static/assets/images/modal-1.png')
+                $('#tab2').css('display', 'none')
+                $('#tab3').css('display', 'block')
             }
         } else {
 

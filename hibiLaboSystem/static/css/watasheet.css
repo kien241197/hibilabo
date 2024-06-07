@@ -131,6 +131,11 @@ input[type=number] {
     color: white;
 }
 
+.color-5658a0 {
+
+    color: blue !important;
+}
+
 @media (min-width: 1200px) {
 
     .max-width {
