@@ -2050,6 +2050,5 @@ class WatasheetType(TemplateView):
 
         return self.render_to_response(context)
 
-@method_decorator(login_required, name='dispatch')            
 class WatasheetImage(TemplateView):
     template_name = "watasheet/watasheet_image.html"
