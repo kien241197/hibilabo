@@ -2049,6 +2049,3 @@ class WatasheetType(TemplateView):
         context['team_concept'] = team_concept
 
         return self.render_to_response(context)
-
-class WatasheetImage(TemplateView):
-    template_name = "watasheet/watasheet_image.html"
