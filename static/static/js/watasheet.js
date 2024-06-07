@@ -1,25 +1,41 @@
-function func_count_type(element){
+function func_count_type(element) {
     let group = $(element).data('group');
     if ($(element).is(":checked")) {
-    	typeList[group] += 1;
+        typeList[group] += 1;
     } else {
-    	typeList[group] -= 1;
+        typeList[group] -= 1;
     }
     for (var type in typeList) {
         if (typeList.hasOwnProperty(type)) {
-           $(`#type_${type}`).text(typeList[type]);
+            $(`#type_${type}`).text(typeList[type]);
         }
     }
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     const hashValue = window.location.hash;
     const cleanHashValue = hashValue.slice(1);
 
     $('.tab-pane fade').removeClass('show active');
     $('.button-tab').removeClass('active');
+
+    if (cleanHashValue === "tab-2" || cleanHashValue === "tab-3") {
+
+        $('#modal').css("display", 'block')
+
+        if (cleanHashValue === "tab-2") {
+
+            $('#image-modal').attr('src', '/static/assets/images/modal-watasheet-tab-2.png')
+        } else {
+
+            $('#image-modal').attr('src', '/static/assets/images/modal-watasheet-tab-3.png')
+        }
+    } else {
+
+        $('#modal').css("display", 'none')
+    }
 
     if (cleanHashValue === "team-concept" || !hashValue) {
         $('.container-checkbox').addClass("hidden")
@@ -66,7 +82,7 @@ $(document).ready(function() {
 
     }
 
-     if (cleanHashValue === "tab-3") {
+    if (cleanHashValue === "tab-3") {
 
         $("#nav-tab-5").addClass("active")
         $('#nav-tab-5').css("color", "white")
@@ -75,10 +91,9 @@ $(document).ready(function() {
         $('.desc-tab').html("私の●●を 3 つのポイントにまとめていきます。<br/> （＊ひとつのポイントでも多くても構いません）<br/> ＊自分の人生において仕事、 私事を含め記入してください <br/> （ライフワークバランス） <br/> ＊自分の書きやすい項目から記入可能です");
         $('.title-tab-h3').text("");
         $('.desc-tab-p').text("");
-
     }
 
-     if (cleanHashValue === "tab-4") {
+    if (cleanHashValue === "tab-4") {
 
         $("#nav-tab-8").addClass("active")
         $('#nav-tab-8').css("color", "white")
@@ -88,8 +103,8 @@ $(document).ready(function() {
         $('.title-tab-h3').text("");
         $('.desc-tab-p').text("");
     }
-    
-    if(!cleanHashValue){
+
+    if (!cleanHashValue) {
         $('.container-checkbox').addClass("hidden")
 
     } else if ((cleanHashValue !== "team-concept" && cleanHashValue !== "my-concept")) {
@@ -97,17 +112,17 @@ $(document).ready(function() {
     }
 
     // Xử lý sự kiện click cho các button tab
-    $('.button-tab').click(function() {
+    $('.button-tab').click(function () {
 
         // Loại bỏ class active từ tất cả các button tab
         $('.button-tab').removeClass('active');
 
         // Thêm class active cho button tab được click
         const text = $(this).attr('id')
-        console.log("text", text)
+
         $(`#${text}`).addClass('active');
         if (text == 'nav-tab-3') {
-            
+
             $('.title-tab').text(`PROFESSIONAL TYPE ${30}`);
             $('.desc-tab').text("わたしが望んでいる仕事を知る");
             $('.title-tab-h3').text("INTEREST");
@@ -140,7 +155,7 @@ $(document).ready(function() {
             $('.title-tab-h3').text("");
             $('.desc-tab-p').text("");
         }
-        
+
         if (text !== "nav-tab-0" && text !== "nav-tab-my") {
 
             $('.container-checkbox').removeClass("hidden")
@@ -149,6 +164,21 @@ $(document).ready(function() {
         $('.button-tab').css("color", "#727171")
         $(this).css("color", "white")
 
+        if (text === 'nav-tab-4' || text === 'nav-tab-5') {
+
+            $('#modal').css("display", 'block')
+
+            if (text === 'nav-tab-4') {
+
+                $('#image-modal').attr('src', '/static/assets/images/modal-watasheet-tab-2.png')
+            } else {
+
+                $('#image-modal').attr('src', '/static/assets/images/modal-watasheet-tab-3.png')
+            }
+        } else {
+
+            $('#modal').css("display", 'none')
+        }
     });
 });
 

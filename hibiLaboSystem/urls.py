@@ -49,4 +49,5 @@ urlpatterns = [
     
 	path('watasheet', views.Watasheet.as_view(), name="watasheet"),
 	path('watasheet-type', views.WatasheetType.as_view(), name="watasheet_type")
+    
 ]
