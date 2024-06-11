@@ -21,7 +21,7 @@ const sort_fields = ['start_YYYYMM', 'A_keyword', 'A_dueto', 'B_keyword', 'B_due
     'H1_content', 'H2_content', 'H3_content', 'H4_content', 'H5_content', 'H6_content', 'H7_content', 'H8_content',
 ];
 
-if(flg_finished === true){
+if (flg_finished === true) {
 
     $("#id_total_mission").attr("required", true)
     sort_fields.map(item => {
@@ -106,7 +106,7 @@ inputValueTab.forEach((element, index) => {
 const inputValueSocre = document.querySelector('.input-value-score')
 function render_keyword(numb, value) {
 
-    if(value){
+    if (value) {
         document.querySelectorAll(".title-main-score")[OPTION_LIST[numb][0]].textContent = value;
         document.querySelectorAll(".title-main-score")[OPTION_LIST[numb][0]].style.color = "black";
 
@@ -123,31 +123,30 @@ function findFieldStop() {
     sort_fields.forEach(element => {
         $(`#id_${element}`).removeClass('box-required');
     });
-    if($('#id_field_stop').val()) $(`#id_${$('#id_field_stop').val()}`).addClass('box-required');
+    if ($('#id_field_stop').val()) $(`#id_${$('#id_field_stop').val()}`).addClass('box-required');
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     if ($("#id_A_keyword").val() && $("#id_B_keyword").val() && $("#id_C_keyword").val() && $("#id_D_keyword").val() && $("#id_E_keyword").val() && $("#id_F_keyword").val() && $("#id_G_keyword").val() && $("#id_H_keyword").val()) {
         $(".wrapper-top-block").css("display", "none")
         $(".title-main-score-top").css("display", "none")
     }
 
-    $('body').keydown(function(e) {
+    $('body').keydown(function (e) {
         if (e.which === 9) { // Tab key code is 9
             let index = sort_fields.indexOf($(e.target).attr('name'));
-            if($(e.target).attr('name') == 'total_mission') {
+            if ($(e.target).attr('name') == 'total_mission') {
                 $(`#id_start_YYYYMM`).focus().select();
                 $('#id_field_stop').val('start_YYYYMM');
                 findFieldStop();
                 e.preventDefault();
             }
-            if(sort_fields[index]) {
-                if(sort_fields[index+1] !== undefined) 
-                {
-                    $('#id_field_stop').val(sort_fields[index+1]);
+            if (sort_fields[index]) {
+                if (sort_fields[index + 1] !== undefined) {
+                    $('#id_field_stop').val(sort_fields[index + 1]);
                     findFieldStop();
                     // $(`#id_${sort_fields[index+1]}`).removeAttr("disabled");
-                    $(`#id_${sort_fields[index+1]}`).focus().select(); // Select the text inside the input
+                    $(`#id_${sort_fields[index + 1]}`).focus().select(); // Select the text inside the input
                 } else {
                     $(`#id_${sort_fields[index]}`).focus().select(); // Select the text inside the input
                 }
@@ -155,7 +154,7 @@ $(document).ready(function() {
             }
         }
     });
-    $('body').click(function(e) {
+    $('body').click(function (e) {
         let index = sort_fields.indexOf($(e.target).attr('name'));
         $('#id_field_stop').val('');
         if (sort_fields.includes($(e.target).attr('name'))) {
@@ -163,4 +162,36 @@ $(document).ready(function() {
         }
         findFieldStop();
     });
+
+    $('.input-table')
+        .on('input', function () {
+            var h = this.offsetHeight;
+            $(this).css({
+                paddingTop: 0,
+                height: 0
+            });
+
+            $(this).css({
+                paddingTop: Math.max(0, h / 2 - this.scrollHeight / 2),
+                height: h
+            });
+        })
+        .trigger('input')
+        .focus();
+
+    $('.input-value-score')
+        .on('input', function () {
+            var h = this.offsetHeight;
+            $(this).css({
+                paddingTop: 0,
+                height: 0
+            });
+
+            $(this).css({
+                paddingTop: Math.max(0, h / 2 - this.scrollHeight / 2),
+                height: h
+            });
+        })
+        .trigger('input')
+        .focus();
 });
