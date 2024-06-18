@@ -421,11 +421,19 @@ openPopup.forEach((element, index) => {
 
 // 
 function createBarChart(arr_label, arr_value) {
+
+    let array = arr_label
+
+    while (array.length < 7) {
+        array.push("");
+    }
+
     const barChart1 = document.getElementById('barChart1').getContext('2d');
+
     return new Chart(barChart1, {
         type: 'bar',
         data: {
-            labels: arr_label,
+            labels: array,
             datasets: [{
                 label: '',
                 data: arr_value,

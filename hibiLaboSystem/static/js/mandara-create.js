@@ -29,26 +29,6 @@ if (flg_finished === true) {
     })
 }
 
-const choose = document.querySelectorAll(".choose");
-choose[0].classList.add('background-choose-active')
-choose[0].classList.add('color-print')
-choose.forEach((element, index) => {
-    element.addEventListener("click", function () {
-
-        const listChoose = document.querySelectorAll(".choose");
-
-        listChoose.forEach((item, count) => {
-            if (index !== count) {
-
-                item.classList.remove('background-choose-active')
-                item.classList.remove('color-print')
-            }
-        })
-        element.classList.add('background-choose-active')
-        element.classList.add('color-print')
-    })
-})
-
 const buttonTitle = document.getElementById('button-title-1');
 if (buttonTitle) {
     buttonTitle.addEventListener("click", function () {

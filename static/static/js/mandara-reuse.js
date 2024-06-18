@@ -161,6 +161,7 @@ choose[0].classList.add('color-print')
 choose.forEach((element, index) => {
     element.addEventListener("click", function () {
 
+        console.log("index", index);
         const listChoose = document.querySelectorAll(".choose");
 
         listChoose.forEach((item, count) => {
@@ -172,7 +173,6 @@ choose.forEach((element, index) => {
         })
         element.classList.add('background-choose-active')
         element.classList.add('color-print')
-
         if (index === 1) {
             document.querySelector(".masmas-mandara").style.display = "block";
             document.querySelector(".body-bottom-left").style.display = "none";
@@ -190,7 +190,7 @@ choose.forEach((element, index) => {
             document.querySelector(".text-title").textContent = "MANDARA CHART";
             document.querySelector(".wrapper-body-left").style.gridColumn = "span 8"
             document.querySelector(".link").style.display = "block"
-        }   
+        }
     })
 })
 
@@ -421,11 +421,19 @@ openPopup.forEach((element, index) => {
 
 // 
 function createBarChart(arr_label, arr_value) {
+
+    let array = arr_label
+
+    while (array.length < 7) {
+        array.push("");
+    }
+
     const barChart1 = document.getElementById('barChart1').getContext('2d');
+
     return new Chart(barChart1, {
         type: 'bar',
         data: {
-            labels: arr_label,
+            labels: array,
             datasets: [{
                 label: '',
                 data: arr_value,
