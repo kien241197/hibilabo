@@ -51,8 +51,8 @@ class UserUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-
-            if field.label != "アバター":
+            
+            if field.label != "アバター" and field.label != "メールアドレス":
                 field.widget.attrs['required'] = ""
             else:
                 field.widget.attrs['required'] = False
