@@ -1255,6 +1255,8 @@ select {
 
 @media (max-width: 600px) {
 
+
+
   .h-220 {
 
       height: 220px;
@@ -1263,6 +1265,14 @@ select {
   .col-md-5-cols {
       width: 50%;
       float: left;
+  }
+}
+
+@media (max-width: 351px){
+
+  .items .btn-cus {
+
+    letter-spacing: 3px;
   }
 }
 

@@ -1266,6 +1266,15 @@ select {
   }
 }
 
+@media (max-width: 351px){
+
+  .items .btn-cus {
+
+    letter-spacing: 3px;
+  }
+}
+
+
 
 
 
