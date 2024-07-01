@@ -411,8 +411,8 @@ select {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   margin-right: 20px;
-  letter-spacing: 7px;
-  text-indent: 1em;
+  letter-spacing: 4px;
+  /* text-indent: 1em; */
   font-size: 12px; 
   cursor: pointer;
 }
@@ -669,6 +669,17 @@ select {
   background: var(--color-yellow);
   vertical-align: middle;
   text-align: center; }
+
+  .button-tab-left {
+    width: 50px !important;
+    height: 26px !important;
+  }
+
+  .button-tab-right {
+    width: 101px !important;
+    height: 26px !important;
+  }
+  
   @media screen and (min-width: 1200px) {
     .honne-table table tr th {
       white-space: unset !important; }
@@ -1266,13 +1277,6 @@ select {
   }
 }
 
-@media (max-width: 351px){
-
-  .items .btn-cus {
-
-    letter-spacing: 4px;
-  }
-}
 
 
 
