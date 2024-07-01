@@ -120,6 +120,30 @@ input[type=number] {
     -webkit-appearance: none !important;
 }
 
+.textarea-watasheet {
+
+    resize: none;
+    overflow: hidden;
+    min-width: 90%;
+    padding-left: 10px;
+    margin-left: 10px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.textarea-watasheet:focus {
+    border: none; /* Màu border khi focus */
+    outline: none; /* Bỏ viền xung quanh */
+}
+
+.min-h-30 {
+
+    min-height: 30px;
+}
+
 @media (min-width: 1200px) {
 
     .max-width {

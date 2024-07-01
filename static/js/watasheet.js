@@ -12,6 +12,10 @@ function func_count_type(element){
     }
 }
 
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight) + "px";
+}
 
 $(document).ready(function() {
 
@@ -149,6 +153,16 @@ $(document).ready(function() {
         $('.button-tab').css("color", "#727171")
         $(this).css("color", "white")
 
+    });
+
+    $('.textarea-watasheet').each(function() {
+        
+        const textarea = $(this);
+        const text = textarea.val();
+        
+        const lineCount = (text.match(/\n/g) || []).length + 1;
+
+        textarea.attr('rows', lineCount || 1);
     });
 });
 
