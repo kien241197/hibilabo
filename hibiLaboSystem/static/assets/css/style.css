@@ -195,6 +195,12 @@ select {
   background-image: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(rgba(255, 255, 255, 0.5)), to(transparent));
   background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent); }
 
+.btn-custom-complete {
+
+  background: #1D2088 !important;
+  color: white !important;
+}
+
 @media screen and (device-aspect-ratio: 2 / 3) {
   select,
   textarea,
@@ -669,6 +675,8 @@ select {
   background: var(--color-yellow);
   vertical-align: middle;
   text-align: center; }
+
+
   @media screen and (min-width: 1200px) {
     .honne-table table tr th {
       white-space: unset !important; }
