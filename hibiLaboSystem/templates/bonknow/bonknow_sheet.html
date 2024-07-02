@@ -165,8 +165,13 @@
                             {{ form.flg_finished }}{{ form.flg_finished.label }}
                         </label>
                         <div class="flex-chart">
-                            <button class="btn-custom-button" type="submit">一時保存</button>
-                            <button class="btn-custom-button" type="submit">保存</button>
+                            {% if disabled  %}
+                                <div class="btn-custom-button">一時保存</div>
+                                <div class="btn-custom-button">保存</div>
+                            {% else %}
+                                <button class="btn-custom-button" type="submit">一時保存</button>
+                                <button class="btn-custom-button" type="submit">保存</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

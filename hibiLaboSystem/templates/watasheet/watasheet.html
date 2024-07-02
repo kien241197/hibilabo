@@ -1054,10 +1054,15 @@
                     <div class="hidden container-checkbox">
                         <label class="checkbox d-flex align-items-center 提出する" style="gap: 5px;">
                             {{ form.flg_finished }} {{ form.flg_finished.label }}
-                        </label>
+                        </label>    
                         <div class="flex-chart">
+                            {% if disabled %}
+                            <div class="btn-custom-button">一時保存</div>
+                            <div class="btn-custom-button">保存</div>
+                            {% else %}
                             <button class="btn-custom-button" type="submit">一時保存</button>
                             <button class="btn-custom-button" type="submit">保存</button>
+                            {% endif %} 
                         </div>
                     </div>
                 </div>
