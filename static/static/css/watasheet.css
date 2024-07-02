@@ -144,6 +144,10 @@ input[type=number] {
     min-height: 30px;
 }
 
+.numerical {
+    padding-top: 2px;
+}
+
 @media (min-width: 1200px) {
 
     .max-width {
