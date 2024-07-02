@@ -96,71 +96,105 @@
                                 <div class="row justify-content-between">
                                     <div class="col-md-6 col-12 row pr-0">
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items" style="height:170px">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">CONCEPT </h3>
                                                     <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li>(1) <span>{{ team_concept.team_concept_1|default_if_none:"" }}</span></li>
+                                                    {% if team_concept.team_concept_1 %}
+                                                        <li>(1) <span>{{ team_concept.team_concept_1|default_if_none:"" }}</span></li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">VISION</h3>
                                                     <p>未来像 ： 会社が目指す未来 </p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span></li>
-                                                    <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span></li>
-                                                    <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span></li>
+                                                    {% if team_concept.team_vision_1 %}
+                                                        <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span></li>
+                                                    {% endif %}
+                                                    
+                                                    {% if team_concept.team_vision_5 %}
+                                                        <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_vision_5|default_if_none:""}}</span></li>
+                                                    {% endif %}
+
+                                                    {% if team_concept.team_vision_10 %}
+                                                        <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_vision_10|default_if_none:""}}</span></li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">MISSION</h3>
                                                     <p>使命 : 社会 ・ 顧客に果たすべき使命</p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_mission_1|default_if_none:""}}</span></li>
-                                                    <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_mission_2|default_if_none:""}}</span></li>
-                                                    <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_mission_3|default_if_none:""}}</span></li>
+                                                    {% if team_concept.team_mission_1 %}
+                                                        <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_mission_1|default_if_none:""}}</span></li>
+                                                    {% endif %}
+
+                                                    {% if team_concept.team_mission_2 %}
+                                                        <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_mission_2|default_if_none:""}}</span></li>
+                                                    {% endif %}
+
+                                                    {% if team_concept.team_mission_3 %}
+                                                        <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_mission_3|default_if_none:""}}</span></li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">VALUES</h3>
-                                                    <p>顧客に約束する価値 ・ 行動</p>
+                                                    <p>約束する価値 ・ 行動</p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_values_1|default_if_none:""}}</span></li>
-                                                    <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_values_2|default_if_none:""}}</span></li>
-                                                    <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_values_3|default_if_none:""}}</span></li>
+                                                    {% if team_concept.team_values_1 %}
+                                                        <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_values_1|default_if_none:""}}</span></li>
+                                                    {% endif %}
+
+                                                    {% if team_concept.team_values_2 %}
+                                                        <li class="mb-3">(2)<span class="ml-2">{{team_concept.team_values_2|default_if_none:""}}</span></li>
+                                                    {% endif %}
+
+                                                    {% if team_concept.team_values_3 %}
+                                                        <li class="mb-0">(3)<span class="ml-2">{{team_concept.team_values_3|default_if_none:""}}</span></li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">ACTION</h3>
                                                     <p>行動規定 ： 日々の行動</p>
                                                 </div>
                                                 <ul class="position-relative">
+                                                    {% if team_concept.team_action_1 %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(1)</span><span class="ml-2">{{team_concept.team_action_1|default_if_none:""}}</span>
                                                     </li>
+                                                    {% endif %}
+
+                                                    {% if team_concept.team_action_5 %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(2)</span> <span class="ml-2">{{team_concept.team_action_5|default_if_none:""}}</span>
                                                     </li>
+                                                    {% endif %}
+
+                                                    {% if team_concept.team_action_10 %}
                                                     <li class="d-flex align-items-baseline mb-0">
                                                         <span>(3)</span> <span class="ml-2">{{team_concept.team_action_10|default_if_none:""}}</span>
                                                     </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
@@ -211,119 +245,154 @@
                                 <div class="row justify-content-between">
                                     <div class="col-md-6 col-12 row pr-0">
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items" style="height:170px">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">CONCEPT</h3>
                                                     <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
                                                 </div>
                                                 <ul class="position-relative">
-                                                    <li>(1) <span>{{ watasheet_type_result.concept_1st|default_if_none:'' }}</span></li>
+                                                    {% if watasheet_type_result.concept_1st %}
+                                                        <li>(1) <span>{{ watasheet_type_result.concept_1st|default_if_none:'' }}</span></li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">VISION</h3>
                                                     <p>未来像 ： 会社が目指す未来 </p>
                                                 </div>
                                                 <ul class="position-relative">
+                                                    {% if watasheet_type_result.vision_1st %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(1)</span>
                                                         <span class="ml-2">
                                                             {{ watasheet_type_result.vision_1st|default_if_none:'' }}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+                        
+                                                    {% if watasheet_type_result.vision_2nd %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(2)</span>
                                                         <span class="ml-2">
                                                             {{ watasheet_type_result.vision_2nd|default_if_none:'' }}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+                                                   
+                                                    {% if watasheet_type_result.vision_3rd %}
                                                     <li class="d-flex align-items-baseline">
                                                         <span>(3)</span>
                                                         <span class="ml-2">
                                                             {{ watasheet_type_result.vision_3rd|default_if_none:'' }}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">MISSION</h3>
                                                     <p>使命 : 社会 ・ 顧客に果たすべき使命</p>
                                                 </div>
                                                 <ul class="position-relative">
+                                                    {% if watasheet_type_result.mission_1st %}
                                                     <li class="mb-3">(1)
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.mission_1st}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+                                                    
+                                                    {% if watasheet_type_result.mission_2nd %}
                                                     <li class="mb-3">(2)
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.mission_2nd}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+                                                    
+                                                    {% if watasheet_type_result.mission_3rd %}
                                                     <li class="mb-0">(3)
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.mission_3rd}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-30 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">VALUES</h3>
-                                                    <p>顧客に約束する価値 ・ 行動</p>
+                                                    <p>約束する価値 ・ 行動</p>
                                                 </div>
                                                 <ul class="position-relative">
+                                                    {% if watasheet_type_result.fw_1st %}
                                                     <li class="mb-3">(1)
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.fw_1st}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+
+                                                    {% if watasheet_type_result.fw_2nd %}
                                                     <li class="mb-3">(2)
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.fw_2nd}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+
+                                                    {% if watasheet_type_result.fw_3rd %}
                                                     <li class="mb-0">(3)
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.fw_3rd}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-12 pr-0">
-                                            <div class="items">
+                                            <div class="items box-my-concept">
                                                 <div class="title-box title-box2 d-flex mb-2">
                                                     <h3 class="mr-4">ACTION</h3>
                                                     <p>行動規定 ： 日々の行動</p>
                                                 </div>
                                                 <ul class="position-relative">
+                                                    {% if watasheet_type_result.kw_job_1st %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(1)</span>
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.kw_job_1st}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+
+                                                    {% if watasheet_type_result.kw_job_2nd %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(2)</span>
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.kw_job_2nd}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+                                                   
+                                                    {% if watasheet_type_result.kw_job_3rd %}
                                                     <li class="d-flex align-items-baseline mb-0">
                                                         <span>(3)</span>
                                                         <span class="ml-2">
                                                             {{watasheet_type_result.kw_job_3rd}}
                                                         </span>
                                                     </li>
+                                                    {% endif %}
+                                                   
                                                 </ul>
                                             </div>
                                         </div>

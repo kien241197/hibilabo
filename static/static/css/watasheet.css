@@ -136,6 +136,10 @@ input[type=number] {
     color: blue !important;
 }
 
+.box-my-concept {
+
+    min-height: 170px;
+}
 
 @media (min-width: 1200px) {
 
