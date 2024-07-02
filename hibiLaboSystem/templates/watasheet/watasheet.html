@@ -101,7 +101,7 @@
                                                     <h3 class="mr-4">CONCEPT </h3>
                                                     <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if team_concept.team_concept_1 %}
                                                         <li>(1) <span>{{ team_concept.team_concept_1|default_if_none:"" }}</span></li>
                                                     {% endif %}
@@ -114,7 +114,7 @@
                                                     <h3 class="mr-4">VISION</h3>
                                                     <p>未来像 ： 会社が目指す未来 </p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if team_concept.team_vision_1 %}
                                                         <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_vision_1|default_if_none:""}}</span></li>
                                                     {% endif %}
@@ -135,7 +135,7 @@
                                                     <h3 class="mr-4">MISSION</h3>
                                                     <p>使命 : 社会 ・ 顧客に果たすべき使命</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if team_concept.team_mission_1 %}
                                                         <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_mission_1|default_if_none:""}}</span></li>
                                                     {% endif %}
@@ -156,7 +156,7 @@
                                                     <h3 class="mr-4">VALUES</h3>
                                                     <p>約束する価値 ・ 行動</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if team_concept.team_values_1 %}
                                                         <li class="mb-3">(1)<span class="ml-2">{{team_concept.team_values_1|default_if_none:""}}</span></li>
                                                     {% endif %}
@@ -177,7 +177,7 @@
                                                     <h3 class="mr-4">ACTION</h3>
                                                     <p>行動規定 ： 日々の行動</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if team_concept.team_action_1 %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(1)</span><span class="ml-2">{{team_concept.team_action_1|default_if_none:""}}</span>
@@ -250,7 +250,7 @@
                                                     <h3 class="mr-4">CONCEPT</h3>
                                                     <p>理念 ： 価値観 ・ 哲学 ・ 信条</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if watasheet_type_result.concept_1st %}
                                                         <li>(1) <span>{{ watasheet_type_result.concept_1st|default_if_none:'' }}</span></li>
                                                     {% endif %}
@@ -263,7 +263,7 @@
                                                     <h3 class="mr-4">VISION</h3>
                                                     <p>未来像 ： 会社が目指す未来 </p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if watasheet_type_result.vision_1st %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(1)</span>
@@ -299,7 +299,7 @@
                                                     <h3 class="mr-4">MISSION</h3>
                                                     <p>使命 : 社会 ・ 顧客に果たすべき使命</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if watasheet_type_result.mission_1st %}
                                                     <li class="mb-3">(1)
                                                         <span class="ml-2">
@@ -332,7 +332,7 @@
                                                     <h3 class="mr-4">VALUES</h3>
                                                     <p>約束する価値 ・ 行動</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if watasheet_type_result.fw_1st %}
                                                     <li class="mb-3">(1)
                                                         <span class="ml-2">
@@ -365,7 +365,7 @@
                                                     <h3 class="mr-4">ACTION</h3>
                                                     <p>行動規定 ： 日々の行動</p>
                                                 </div>
-                                                <ul class="position-relative">
+                                                <ul class="">
                                                     {% if watasheet_type_result.kw_job_1st %}
                                                     <li class="d-flex align-items-baseline mb-3">
                                                         <span>(1)</span>
@@ -569,21 +569,21 @@
                             </div> -->
                             <div class="content-box">
                                 <div class="row">
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">KEY WORD </h3>
                                                 <p>私を作り出している要因 ・ キーワードを記入してください</p>
                                             </div>
-                                            <ul class="position-relative">
-                                                <li>(1) <span><input {{ disabled }} name="keyword_1st" value={{watasheet_type_result.keyword_1st}}></span></li>
-                                                <li>(2) <span><input {{ disabled }} name="keyword_2nd" value={{watasheet_type_result.keyword_2nd}}></span></li>
-                                                <li>(3) <span><input {{ disabled }} name="keyword_3rd" value={{watasheet_type_result.keyword_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
+                                            <ul class="">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="keyword_1st" oninput="auto_grow(this)">{{watasheet_type_result.keyword_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="keyword_2nd" oninput="auto_grow(this)">{{watasheet_type_result.keyword_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="keyword_3rd" oninput="auto_grow(this)">{{watasheet_type_result.keyword_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">1 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">WHY ARE YOU <br />
@@ -591,65 +591,65 @@
                                                 </h3>
                                                 <p>なぜ会社 ・ チーム ・ 団体に所属 （連携） しているのか <br /> 記入してください</p>
                                             </div>
-                                            <ul class="position-relative">
-                                                <li>(1) <span><input {{ disabled }} name="w_want_1st" value="{{watasheet_type_result.w_want_1st}}"></span></li>
-                                                <li>(2) <span><input {{ disabled }} name="w_want_2nd" value="{{watasheet_type_result.w_want_2nd}}"></span></li>
-                                                <li>(3) <span><input {{ disabled }} name="w_want_3rd" value="{{watasheet_type_result.w_want_3rd}}"></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
+                                            <ul class="">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="w_want_1st" oninput="auto_grow(this)">{{watasheet_type_result.w_want_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="w_want_2nd" oninput="auto_grow(this)">{{watasheet_type_result.w_want_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="w_want_3rd" oninput="auto_grow(this)">{{watasheet_type_result.w_want_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">4 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">MY RULE </h3>
                                                 <p>私の役割 （なぜ私がしなければならないのか） を記入してください</p>
                                             </div>
-                                            <ul class="position-relative">
-                                                <li>(1) <span><input {{ disabled }} name="rule_1st" value="{{watasheet_type_result.rule_1st}}"></span></li>
-                                                <li>(2) <span><input {{ disabled }} name="rule_2nd" value="{{watasheet_type_result.rule_2nd}}"></span></li>
-                                                <li>(3) <span><input {{ disabled }} name="rule_3rd" value="{{watasheet_type_result.rule_3rd}}"></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
+                                            <ul class="">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="rule_1st" oninput="auto_grow(this)">{{watasheet_type_result.rule_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="rule_2nd" oninput="auto_grow(this)">{{watasheet_type_result.rule_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="rule_3rd" oninput="auto_grow(this)">{{watasheet_type_result.rule_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">2 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">MY VISION </h3>
                                                 <p>私のビジョンを記入してください</p>
                                             </div>
-                                            <ul class="position-relative">
-                                                <li>(1) <span><input {{ disabled }} name="vision_1st" value="{{watasheet_type_result.vision_1st}}"></span></li>
-                                                <li>(2) <span><input {{ disabled }} name="vision_2nd" value="{{watasheet_type_result.vision_2nd}}"></span></li>
-                                                <li>(3) <span><input {{ disabled }} name="vision_3rd" value="{{watasheet_type_result.vision_3rd}}"></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
+                                            <ul class="">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="vision_1st" oninput="auto_grow(this)">{{watasheet_type_result.vision_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="vision_2nd" oninput="auto_grow(this)">{{watasheet_type_result.vision_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="vision_3rd" oninput="auto_grow(this)">{{watasheet_type_result.vision_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">5 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">MY MISSION </h3>
                                                 <p>私のミッションを記入してください</p>
                                             </div>
-                                            <ul class="position-relative">
-                                                <li>(1) <span><input {{ disabled }} name="mission_1st" value="{{watasheet_type_result.mission_1st}}"></span></li>
-                                                <li>(2) <span><input {{ disabled }} name="mission_2nd" value="{{watasheet_type_result.mission_2nd}}"></span></li>
-                                                <li>(3) <span><input {{ disabled }} name="mission_3rd" value="{{watasheet_type_result.mission_3rd}}"></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
+                                            <ul class="">
+                                                <li  class="d-flex align-items-center w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="mission_1st" oninput="auto_grow(this)">{{watasheet_type_result.mission_1st}}</textarea></li>
+                                                <li  class="d-flex align-items-center w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="mission_2nd" oninput="auto_grow(this)">{{watasheet_type_result.mission_2nd}}</textarea></li>
+                                                <li  class="d-flex align-items-center w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} name="mission_3rd" oninput="auto_grow(this)">{{watasheet_type_result.mission_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">3 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box title-box2 d-flex mb-2">
                                                 <h3 class="mr-4">MY CONCEPT</h3>
                                                 <p>私の芯を記入してください</p>
                                             </div>
-                                            <ul class="position-relative" style="height: 120px">
-                                                <li>（ひとつ） <span><input {{ disabled }} name="concept_1st" value="{{watasheet_type_result.concept_1st}}"></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
+                                            <ul class="" style="height: 120px">
+                                                <li>（ひとつ） <textarea rows="1" class="textarea-watasheet mt-2" {{ disabled }} name="concept_1st" oninput="auto_grow(this)">{{watasheet_type_result.concept_1st}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">6 </h3>
                                             </ul>
                                         </div>
                                     </div>
@@ -662,87 +662,87 @@
                         <div class="section-content">
                             <div class="content-box">
                                 <div class="row">
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items ">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>FOR WHOM・WHAT</h3>
                                                 <p class="pl-0">MY MISSION は誰のため、 何のために？果たすものか記入してください</p>
                                             </div>
                                             <ul class="pl-0 position-relative">
-                                                <li>(1) <span><input {{ disabled }} type="text" name="kw_1st" value={{watasheet_type_result.kw_1st}}></span></li>
-                                                <li>(2) <span><input {{ disabled }} type="text" name="kw_2nd" value={{watasheet_type_result.kw_2nd}}></li>
-                                                <li>(3) <span><input {{ disabled }} type="text" name="kw_3rd" value={{watasheet_type_result.kw_3rd}}></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1"  class="textarea-watasheet" {{ disabled }} type="text" name="kw_1st" oninput="auto_grow(this)">{{watasheet_type_result.kw_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="kw_2nd" oninput="auto_grow(this)">{{watasheet_type_result.kw_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="kw_3rd" oninput="auto_grow(this)">{{watasheet_type_result.kw_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">1 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY HAPPINESS・IMPORTANT</h3>
                                                 <p class="pl-0">これがあれば幸せなこと、 大切なことを記入してください</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
-                                                <li>(1) <span><input {{ disabled }} type="text" name="fw_job_1st" value={{watasheet_type_result.fw_job_1st}}></span></li>
-                                                <li>(2) <span><input {{ disabled }} type="text" name="fw_job_2nd" value={{watasheet_type_result.fw_job_2nd}}></span></li>
-                                                <li>(3) <span><input {{ disabled }} type="text" name="fw_job_3rd" value={{watasheet_type_result.fw_job_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
+                                            <ul class=" pl-0">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="fw_job_1st" oninput="auto_grow(this)">{{watasheet_type_result.fw_job_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="fw_job_2nd" oninput="auto_grow(this)">{{watasheet_type_result.fw_job_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="fw_job_3rd" oninput="auto_grow(this)">{{watasheet_type_result.fw_job_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">4 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY VALUE</h3>
                                                 <p class="pl-0">自分自身の価値 ・ やるべきこと ・ 行動判断基準を記入しくてください</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
-                                                <li>(1) <span><input {{ disabled }} type="text" name="fw_1st" value={{watasheet_type_result.fw_1st}}></li>
-                                                <li>(2) <span><input {{ disabled }} type="text" name="fw_2nd" value={{watasheet_type_result.fw_2nd}}></li>
-                                                <li>(3) <span><input {{ disabled }} type="text" name="fw_3rd" value={{watasheet_type_result.fw_3rd}}></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
+                                            <ul class=" pl-0">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="fw_1st" oninput="auto_grow(this)">{{watasheet_type_result.fw_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="fw_2nd" oninput="auto_grow(this)">{{watasheet_type_result.fw_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="fw_3rd" oninput="auto_grow(this)">{{watasheet_type_result.fw_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">2 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY WANT</h3>
                                                 <p class="pl-0">好きなことや得意なことを記入してください</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
-                                                <li>(1) <span><input {{ disabled }} type="text" name="dwt_go_1st" value={{watasheet_type_result.dwt_go_1st}}></span></li>
-                                                <li>(2) <span><input {{ disabled }} type="text" name="dwt_go_2nd" value={{watasheet_type_result.dwt_go_2nd}}></span></li>
-                                                <li>(3) <span><input {{ disabled }} type="text" name="dwt_go_3rd" value={{watasheet_type_result.dwt_go_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
+                                            <ul class=" pl-0">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_1st" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_2nd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_3rd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">5 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY ACTION</h3>
                                                 <p class="pl-0">コンセプトやミッションを実現させるためにはどのような行動をしていきますか？</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
-                                                <li>(1) <span><input {{ disabled }} type="text" name="kw_job_1st" value={{watasheet_type_result.kw_job_1st}}></li>
-                                                <li>(2) <span><input {{ disabled }} type="text" name="kw_job_2nd" value={{watasheet_type_result.kw_job_2nd}}></li>
-                                                <li>(3) <span><input {{ disabled }} type="text" name="kw_job_3rd" value={{watasheet_type_result.kw_job_3rd}}></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
+                                            <ul class=" pl-0">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="kw_job_1st" oninput="auto_grow(this)">{{watasheet_type_result.kw_job_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="kw_job_2nd" oninput="auto_grow(this)">{{watasheet_type_result.kw_job_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="kw_job_3rd" oninput="auto_grow(this)">{{watasheet_type_result.kw_job_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">3</h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>NOT MY WANT </h3>
                                                 <p class="pl-0">不得意なこと、 大切ではないこと、 不愉快を記入してください</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
-                                                <li>(1) <span><input {{ disabled }} type="text" name="dwt_go_1st" value={{watasheet_type_result.dwt_go_1st}}></li>
-                                                <li>(2) <span><input {{ disabled }} type="text" name="dwt_go_2nd" value={{watasheet_type_result.dwt_go_2nd}}></li>
-                                                <li>(3) <span><input {{ disabled }} type="text" name="dwt_go_3rd" value={{watasheet_type_result.dwt_go_3rd}}></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
+                                            <ul class=" pl-0">
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_1st" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_1st}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_2nd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_2nd}}</textarea></li>
+                                                <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_3rd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_3rd}}</textarea></li>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">6 </h3>
                                             </ul>
                                         </div>
                                     </div>
@@ -759,87 +759,87 @@
                             </div> -->
                             <div class="content-box">
                                 <div class="row">
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
-                                                <h3>MY WANT </h3>
+                                                <h3>MY WANT</h3>
                                                 <p class="pl-0">3Pのミッションや「こと」は誰のために？</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
+                                            <ul class=" pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="want_1st" value={{watasheet_type_result.want_1st}}></span></li>
                                                 <li>(2) <span><input {{ disabled }} type="text" name="want_2nd" value={{watasheet_type_result.want_2nd}}></span></li>
                                                 <li>(3) <span><input {{ disabled }} type="text" name="want_3rd" value={{watasheet_type_result.want_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">1 </h3>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">1 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>Not MY want </h3>
                                                 <p class="pl-0">今の仕事は何のために選んだのか？</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
+                                            <ul class=" pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="n_want_1st" value={{watasheet_type_result.n_want_1st}}></span></li>
                                                 <li>(2) <span><input {{ disabled }} type="text" name="n_want_2nd" value={{watasheet_type_result.n_want_2nd}}></span></li>
                                                 <li>(3) <span><input {{ disabled }} type="text" name="n_want_3rd" value={{watasheet_type_result.n_want_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">4 </h3>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">4 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY HAPPINESS </h3>
                                                 <p class="pl-0">3Pのミッションや「こと」は何のために？</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
+                                            <ul class=" pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="happiness_1st" value={{watasheet_type_result.happiness_1st}}></span></li>
                                                 <li>(2) <span><input {{ disabled }} type="text" name="happiness_2nd" value={{watasheet_type_result.happiness_2nd}}></span></li>
                                                 <li>(3) <span><input {{ disabled }} type="text" name="happiness_3rd" value={{watasheet_type_result.happiness_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">2 </h3>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">2 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>Not HAPPINESS </h3>
                                                 <p class="pl-0">向かいたくない方向性</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
+                                            <ul class=" pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="n_happiness_1st" value={{watasheet_type_result.n_happiness_1st}}></span></li>
                                                 <li>(2) <span><input {{ disabled }} type="text" name="n_happiness_2nd" value={{watasheet_type_result.n_happiness_2nd}}></span></li>
                                                 <li>(3) <span><input {{ disabled }} type="text" name="n_happiness_3rd" value={{watasheet_type_result.n_happiness_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">5 </h3>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">5 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>MY INPORTANT </h3>
                                                 <p class="pl-0">今の仕事は誰のために選んだのか？</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
+                                            <ul class=" pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="inportant_1st" value={{watasheet_type_result.inportant_1st}}></span></li>
                                                 <li>(2) <span><input {{ disabled }} type="text" name="inportant_2nd" value={{watasheet_type_result.inportant_2nd}}></span></li>
                                                 <li>(3) <span><input {{ disabled }} type="text" name="inportant_3rd" value={{watasheet_type_result.inportant_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">3 </h3>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">3 </h3>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box flex-column align-items-start mb-2">
                                                 <h3>NOT INPORTANT </h3>
                                                 <p class="pl-0">そんな考え方にはなりたくない！と思う考え方を3つ</p>
                                             </div>
-                                            <ul class="position-relative pl-0">
+                                            <ul class=" pl-0">
                                                 <li>(1) <span><input {{ disabled }} type="text" name="n_inportant_1st" value={{watasheet_type_result.n_inportant_1st}}></span></li>
                                                 <li>(2) <span><input {{ disabled }} type="text" name="n_inportant_2nd" value={{watasheet_type_result.n_inportant_2nd}}></span></li>
                                                 <li>(3) <span><input {{ disabled }} type="text" name="n_inportant_3rd" value={{watasheet_type_result.n_inportant_3rd}}></span></li>
-                                                <h3 class="position-absolute" style="bottom: 0px; right: 0px;">6 </h3>
+                                                <h3 class="position-absolute" style="bottom: 15px; right: 15px;">6 </h3>
                                             </ul>
                                         </div>
                                     </div>
@@ -856,7 +856,7 @@
                             </div> -->
                             <div class="content-box content-box-page7">
                                 <div class="row">
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>WORK</h3>
@@ -869,7 +869,7 @@
                                             <span class="te">能力開発</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>HEALTH </h3>
@@ -882,7 +882,7 @@
                                             <span class="te">能力開発</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>DEVELOPMENT </h3>
@@ -895,7 +895,7 @@
                                             <span class="te">能力開発</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>HOBBY </h3>
@@ -908,7 +908,7 @@
                                             <span class="te">能力開発</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>FAMILY </h3>
@@ -921,7 +921,7 @@
                                             <span class="te">能力開発</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>ECONOMY </h3>
@@ -934,7 +934,7 @@
                                             <span class="te">能力開発</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>HUMAN </h3>
@@ -947,7 +947,7 @@
                                             <span class="te">能力開発</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box position-absolute right-2">
                                                 <h3>ETC </h3>
@@ -1050,7 +1050,7 @@
                             </div>
                             <!--    <div class="content-box content-box-page7 display-mobile">
                                 <div class="row">
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box">
                                                 <h3>YEARS OLD </h3>
@@ -1061,7 +1061,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box">
                                                 <h3>YEARS OLD </h3>
@@ -1072,7 +1072,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box">
                                                 <h3>YEARS OLD </h3>
@@ -1083,7 +1083,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box">
                                                 <h3>YEARS OLD </h3>
@@ -1094,7 +1094,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box">
                                                 <h3>YEARS OLD </h3>
@@ -1105,7 +1105,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-30">
+                                    <div class="col-md-6 mb-30 position-relative">
                                         <div class="items">
                                             <div class="title-box">
                                                 <h3>YEARS OLD </h3>
