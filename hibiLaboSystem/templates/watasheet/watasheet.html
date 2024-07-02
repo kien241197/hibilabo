@@ -1052,7 +1052,9 @@
                         </div>
                     </div>
                 </div>
+
              <div class="position-relative">
+                {% if not disabled %}
                 <div class="button-chart">
                     <div class="px-3 sample mt-3 position-absolute start-0 left-0"  style="border-radius: 25px; display: none;" data-toggle="modal" data-target="#exampleModal" id="modal">
                         <button type="button" class="py-1 title-tab-watasheet mb-0 text-white" style="line-height: 8px; font-size: 18px; font-weight: 900; letter-spacing: 2px; border: none; background: none;">SAMPLE</button>
@@ -1060,13 +1062,14 @@
                     <div class="hidden container-checkbox">
                         <label class="checkbox d-flex align-items-center 提出する" style="gap: 5px;">
                             {{ form.flg_finished }} {{ form.flg_finished.label }}
-                        </label>
+                        </label>    
                         <div class="flex-chart">
                             <button class="btn-custom-button" type="submit">一時保存</button>
                             <button class="btn-custom-button" type="submit">保存</button>
                         </div>
                     </div>
                 </div>
+                {% endif %}
              </div>
             </form>
         </div>

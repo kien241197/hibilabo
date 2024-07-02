@@ -161,6 +161,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="button-chart">
+                        {% if not disabled %}
                         <label class="checkbox">
                             {{ form.flg_finished }}{{ form.flg_finished.label }}
                         </label>
@@ -168,6 +169,7 @@
                             <button class="btn-custom-button" type="submit">一時保存</button>
                             <button class="btn-custom-button" type="submit">保存</button>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
         </section>
