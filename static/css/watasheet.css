@@ -239,3 +239,11 @@ input[type=number] {
         font-size: 12px !important;
     }
 }
+
+@media (max-width: 600px) {
+
+    .sample {
+
+        top: -25px;
+    }
+}
