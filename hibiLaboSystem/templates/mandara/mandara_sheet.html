@@ -31,15 +31,17 @@
                             <div class="w-100 wrapper-content-top">
                                 <h3><a href="#">MANDARA</a></h3>
                             </div>
+                            {% if mandara %}
                             <div class="w-100">
                                 <div class="mb-2">
                                     <span class="date">実施期間</span>
                                 </div>
                                 <div class="mb-2">
-                                    <p class="date date-bottom text-nowrap">2024/6/1 ~ 2024/9/30</p>
+                                    <p class="date date-bottom text-nowrap">{{ start|date:"Y/n/j" }} ~ {{ end|date:"Y/n/j" }}</p>
                                 </div>
-                                <a class="btn-custom btn-white" href="{% url 'mandara_create' %}">CHECK</a>
+                                <a class="btn-custom btn-white" href="{% url 'mandara_reuse' %}">CHECK</a>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -57,7 +59,8 @@
                                 <div class="mb-2">
                                     <p class="date date-bottom text-nowrap">2024/9/1 ~ 2024/9/30</p>
                                 </div>
-                                <a class="btn-custom btn-white text-white" href="{% url 'mandara_reuse' %}" style="background: #9e9e9e;">
+                                
+                                <a class="btn-custom btn-white text-white" href="{% url 'mandara_create' %}" style="background: #9e9e9e;">
                                     WAIT
                                 </a>
                                 <!-- <a class="btn-custom btn-white" href="{% url 'mandara_reuse' %}">

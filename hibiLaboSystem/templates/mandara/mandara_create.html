@@ -467,20 +467,10 @@
                                     <div class="content-body-right">
                                         <p class="title-content-body-left">目標期間は 1 年</p>
                                         <div class="item-select">
-                                            <select name="start_YYYYMM" id="id_start_YYYYMM" class="select" onchange="selectEndDate()" tabindex="2">
-                                                <option value="">----</option>
-                                                {% for time in mandara_periods %}
-                                                <option value="{{ time.id }}" {% if time.id == mandara.mandara_period_id %}selected{% endif %}>{{ time.display_time_start }}</option>
-                                                {% endfor %}
-                                            </select>
+                                            <input type="text" class="select mandara-date" value="{{ mandara_periods.start_date }}" readonly>
                                             <p class="to">～</p>
-                                            <select name="end_YYYYMM" id="id_end_YYYYMM" class="select" disabled tabindex="-1">
-                                                <option value="">----</option>
-                                                {% for time in mandara_periods %}
-                                                <option value="{{ time.id }}" {% if time.id == mandara.mandara_period_id %}selected{% endif %}>{{ time.display_time_end }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <!-- <button class="button">表示</button> -->
+                                            <input type="text" class="select mandara-date" value="{{ mandara_periods.end_date }}" readonly>
+                                            <input name="start_YYYYMM" id="id_start_YYYYMM" type="text" value="{{ mandara_periods.id }}" hidden>
                                         </div>
                                     </div>
 

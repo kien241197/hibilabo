@@ -9,7 +9,7 @@ const OPTION_LIST = [
     [2, 16, 23],
     [7, 56, 64],
 ];
-const sort_fields = ['start_YYYYMM', 'A_keyword', 'A_dueto', 'B_keyword', 'B_dueto', 'C_keyword', 'C_dueto',
+const sort_fields = ['A_keyword', 'A_dueto', 'B_keyword', 'B_dueto', 'C_keyword', 'C_dueto',
     'D_keyword', 'D_dueto', 'E_keyword', 'E_dueto', 'F_keyword', 'F_dueto', 'G_keyword', 'G_dueto', 'H_keyword', 'H_dueto',
     'A1_content', 'A2_content', 'A3_content', 'A4_content', 'A5_content', 'A6_content', 'A7_content', 'A8_content',
     'B1_content', 'B2_content', 'B3_content', 'B4_content', 'B5_content', 'B6_content', 'B7_content', 'B8_content',
@@ -57,7 +57,6 @@ if (buttonTitle) {
         const inputValueTab = document.querySelectorAll(".input-value-tab");
         const titleValueTableScore = document.querySelectorAll(".title-value-table-score");
         const titleMainScore = document.querySelectorAll(".title-main-score");
-        const timeSelects = document.querySelectorAll(".select");
         valueInput.forEach(element => {
             if (element.value) {
                 element.value = "";
@@ -82,10 +81,6 @@ if (buttonTitle) {
 
                 element.textContent = ""
             }
-        })
-
-        timeSelects.forEach(element => {
-            element.value = "";
         })
     })
 }
@@ -136,8 +131,8 @@ $(document).ready(function () {
         if (e.which === 9) { // Tab key code is 9
             let index = sort_fields.indexOf($(e.target).attr('name'));
             if ($(e.target).attr('name') == 'total_mission') {
-                $(`#id_start_YYYYMM`).focus().select();
-                $('#id_field_stop').val('start_YYYYMM');
+                $(`#id_A_keyword`).focus().select();
+                $('#id_field_stop').val('A_keyword');
                 findFieldStop();
                 e.preventDefault();
             }

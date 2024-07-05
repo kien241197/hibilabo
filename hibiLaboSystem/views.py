@@ -1133,7 +1133,7 @@ class MandaraCreate(TemplateView):
         ).order_by('mandara_period__start_date').first()
         kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
         mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gt=today)
-        ).order_by('start_date')
+        ).order_by('start_date').first()
         kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
         if mandara is not None:
             kwargs['form'] = self.form_class(instance=mandara)
@@ -1194,7 +1194,17 @@ class MandaraSheet(TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        today = datetime.date.today()
+        mandara = MandaraBase.objects.select_related('mandara_period').filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True).first()
+        if mandara is not None:
+            kwargs['start'] = mandara.mandara_period.start_date
+            kwargs['end'] = mandara.mandara_period.end_date
+
+        kwargs['mandara'] = mandara
         kwargs["title_header"] = "MANDARA" 
+        
         return kwargs
     
 @method_decorator(login_required, name='dispatch')
