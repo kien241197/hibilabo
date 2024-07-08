@@ -1139,8 +1139,8 @@ class MandaraCreate(TemplateView):
             kwargs['form'] = self.form_class(instance=mandara)
         else:
             mandara_old = MandaraBase.objects.all().filter(
-                    Q(user_id=user_id) & Q(company_id=company_id) & (Q(mandara_period__start_date__lt=today))
-                ).order_by('mandara_period__start_date').first()
+                    Q(user_id=user_id) & Q(company_id=company_id) & Q(mandara_period__start_date__lte=today)
+                ).order_by('-mandara_period__start_date').first()
             if mandara_old is not None:
                 kwargs['form'] = self.form_class(instance=mandara_old)
 
