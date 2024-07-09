@@ -1159,14 +1159,20 @@ class MandaraCreate(TemplateView):
         context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
         end_YYYYMM = request.POST.get('end_YYYYMM')
-        status_mandara = request.POST.get('status')
+        today = datetime.date.today()
+        flag = False
 
         if form.is_valid():
-            if status_mandara == "CHECK":
-                mandara_period = None
-                if start_YYYYMM:
-                    mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
+            mandara_period = None
+            if start_YYYYMM:
+                mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
+            
+            if not mandara_period.input_start_date and not mandara_period.input_end_date or not mandara_period.input_start_date and today < mandara_period.input_end_date or not mandara_period.input_end_date and today > mandara_period.input_start_date:
+                flag = True
+            elif mandara_period.input_start_date <= today and today <= mandara_period.input_end_date:
+                flag = True
                 
+            if flag:
                 mandara = form.save(commit=False)
                 mandara.user_id = user_id
                 mandara.company_id = company_id

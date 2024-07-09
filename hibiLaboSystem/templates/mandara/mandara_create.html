@@ -629,13 +629,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {% if not mandara_periods.input_start_date and not mandara_periods.input_end_date or not mandara_periods.input_start_date and today < mandara_periods.input_end_date or not mandara_periods.input_end_date and today > mandara_periods.input_start_date %}
-                                <input type="text" name="status" value="CHECK" hidden>
-                            {% elif mandara_periods.input_start_date <= today and today <= mandara_periods.input_end_date %}
-                                <input type="text" name="status" value="CHECK" hidden>
-                            {% else %}
-                                <input type="text" name="status" value="WAIT" hidden>
-                            {% endif %}
                         </form>
                     </div>
                 </div>
