@@ -795,6 +795,8 @@ class MandaraPeriod(models.Model):
 	)
 	start_date = models.DateField(verbose_name="評価開始時間")
 	end_date = models.DateField(verbose_name="評価終了時間")
+	input_start_date = models.DateField(blank=True, null=True, verbose_name="評価入力開始時間")
+	input_end_date = models.DateField(blank=True, null=True, verbose_name="評価入力終了時間")
 
 	class Meta:
 		db_table = 'mandara_periods'
