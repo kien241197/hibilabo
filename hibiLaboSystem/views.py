@@ -1167,11 +1167,16 @@ class MandaraCreate(TemplateView):
             if start_YYYYMM:
                 mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
             
+            if not mandara_period:
+                context["message"] = '-- 入場許可時間外です。--'
+                context["message_class"] = 'text-danger'
+                return self.render_to_response(context)
+
             if not mandara_period.input_start_date and not mandara_period.input_end_date or not mandara_period.input_start_date and today < mandara_period.input_end_date or not mandara_period.input_end_date and today > mandara_period.input_start_date:
                 flag = True
             elif mandara_period.input_start_date <= today and today <= mandara_period.input_end_date:
                 flag = True
-                
+
             if flag:
                 mandara = form.save(commit=False)
                 mandara.user_id = user_id
