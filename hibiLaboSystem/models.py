@@ -820,17 +820,14 @@ class MandaraPeriod(models.Model):
 		if check_time is True:
 			raise ValidationError("日付が重複しています。")
 
-		if self.input_start_date and self.input_end_date:
-			if self.input_start_date > self.input_end_date:
-				raise ValidationError("日付が間違っています。")
+		if self.input_start_date and self.input_end_date and self.input_start_date > self.input_end_date:
+			raise ValidationError("日付が間違っています。")
 
-		if self.input_start_date:
-			if self.input_start_date > self.end_date:
-				raise ValidationError("日付が間違っています。")
+		if self.input_start_date and self.input_start_date > self.end_date:
+			raise ValidationError("日付が間違っています。")
 		
-		if self.input_end_date:
-			if self.input_end_date > self.end_date:
-				raise ValidationError("日付が間違っています。")
+		if self.input_end_date and self.input_end_date > self.end_date:
+			raise ValidationError("日付が間違っています。")
 
 
 	def display_time_start(self):
