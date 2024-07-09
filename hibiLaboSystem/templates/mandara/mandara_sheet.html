@@ -52,12 +52,23 @@
                             <div class="w-100 wrapper-content-top">
                                 <h3><a href="#">NEXT <br/> MANDARA</a></h3>
                             </div>
+                            {% if mandara_periods %}
                             <div class="w-100">
                                 <div class="mb-2">
                                     <span class="date">入力期間</span>
                                 </div>
                                 <div class="mb-2">
-                                    <p class="date date-bottom text-nowrap">2024/9/1 ~ 2024/9/30</p>
+                                    <p class="date date-bottom text-nowrap">
+                                        {% if mandara_periods.input_start_date %}
+                                            {{ mandara_periods.input_start_date|date:"Y/n/j" }}
+                                        {% endif %}
+                                        {% if mandara_periods.input_start_date and mandara_periods.input_end_date  %}
+                                        ~
+                                        {% endif %}
+                                        {% if mandara_periods.input_end_date %}
+                                             {{ mandara_periods.input_end_date|date:"Y/n/j" }}
+                                        {% endif %}
+                                    </p>
                                 </div>
                                 
                                 <a class="btn-custom btn-white text-white" href="{% url 'mandara_create' %}" style="background: #9e9e9e;">
@@ -67,6 +78,8 @@
                                    CHECK
                                 </a> -->
                             </div>
+                            {% endif %}
+                        
                         </div>
                     </div>
                 </div>
