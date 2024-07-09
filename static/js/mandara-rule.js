@@ -4,7 +4,6 @@ function check() {
 
 		if (field_stop.includes('_content')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
 		if (field_stop.includes('_dueto')) $(`textarea[name="${field_stop}"]`).addClass('box-required');
-		if (field_stop.includes('_YYYYMM')) $(`select[name="${field_stop}"]`).addClass('box-required');
 		if (field_stop.includes('_keyword')) $(`input[name="${field_stop}"]`).addClass('box-required');
 }
 
@@ -19,14 +18,6 @@ $('input[name="save_tmp"').click(function () {
 	$('.input-table').removeAttr('required');
 	$('.select').removeAttr('required');
 	$('.input-value-tab').removeAttr('required');
-});
-
-
-$('select[name="start_YYYYMM"]').change(function () {
-	$('#id_field_stop').val('start_YYYYMM');
-	$(`#id_start_YYYYMM`).focus().select();
-	findFieldStop();
-
 });
 
 var key_array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];

@@ -795,6 +795,8 @@ class MandaraPeriod(models.Model):
 	)
 	start_date = models.DateField(verbose_name="評価開始時間")
 	end_date = models.DateField(verbose_name="評価終了時間")
+	input_start_date = models.DateField(blank=True, null=True, verbose_name="評価入力開始時間")
+	input_end_date = models.DateField(blank=True, null=True, verbose_name="評価入力終了時間")
 
 	class Meta:
 		db_table = 'mandara_periods'
@@ -805,6 +807,7 @@ class MandaraPeriod(models.Model):
 		return str("")
 
 	def clean(self):
+
 		if self.start_date < datetime.date.today() and self.pk is None:
 			raise ValidationError("今日より始まりは大きくなければなりません。")
 		if self.start_date > self.end_date:
@@ -816,6 +819,16 @@ class MandaraPeriod(models.Model):
 
 		if check_time is True:
 			raise ValidationError("日付が重複しています。")
+
+		if self.input_start_date and self.input_end_date and self.input_start_date > self.input_end_date:
+			raise ValidationError("日付が間違っています。")
+
+		if self.input_start_date and self.input_start_date > self.end_date:
+			raise ValidationError("日付が間違っています。")
+		
+		if self.input_end_date and self.input_end_date > self.end_date:
+			raise ValidationError("日付が間違っています。")
+
 
 	def display_time_start(self):
 		return f'{self.start_date.year}年{self.start_date.month}月'

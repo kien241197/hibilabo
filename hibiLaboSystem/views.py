@@ -1133,14 +1133,21 @@ class MandaraCreate(TemplateView):
         ).order_by('mandara_period__start_date').first()
         kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
         mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gt=today)
-        ).order_by('start_date')
+        ).order_by('start_date').first()
         kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
         if mandara is not None:
             kwargs['form'] = self.form_class(instance=mandara)
+        else:
+            mandara_old = MandaraBase.objects.all().filter(
+                    Q(user_id=user_id) & Q(company_id=company_id) & Q(mandara_period__start_date__lte=today)
+                ).order_by('-mandara_period__start_date').first()
+            if mandara_old is not None:
+                kwargs['form'] = self.form_class(instance=mandara_old)
+
         kwargs['mandara'] = mandara
         kwargs['mandara_periods'] = mandara_periods
         kwargs['title_header'] = "MASMASMANDARA"
-        print(mandara)
+        kwargs['today'] = today
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1152,36 +1159,52 @@ class MandaraCreate(TemplateView):
         context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
         end_YYYYMM = request.POST.get('end_YYYYMM')
+        today = datetime.date.today()
+        flag = False
 
         if form.is_valid():
             mandara_period = None
             if start_YYYYMM:
                 mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
             
-            mandara = form.save(commit=False)
-            mandara.user_id = user_id
-            mandara.company_id = company_id
-            mandara.mandara_period = mandara_period
-            if 'save' in request.POST:
-                mandara.flg_finished = True
-                if context["mandara"] is not None:
-                    MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
-                if mandara_period is not None:
-                    sdate = mandara_period.start_date   # start date
-                    edate = mandara_period.end_date   # end date
-                    delta = edate - sdate
-                    bulk_list = list()
-                    for i in range(delta.days + 1):
-                        day = sdate + datetime.timedelta(days=i)
-                        bulk_list.append(
-                            MandaraProgress(date=day, mandara_base_id=mandara.id)
-                        )
+            if not mandara_period:
+                context["message"] = '-- 入場許可時間外です。--'
+                context["message_class"] = 'text-danger'
+                return self.render_to_response(context)
 
-                    bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
-            mandara.save()
-            context['mandara'] = mandara
-            context["message"] = '-- 保存しました。--'
-            context["message_class"] = 'text-success'
+            if not mandara_period.input_start_date and not mandara_period.input_end_date or not mandara_period.input_start_date and today < mandara_period.input_end_date or not mandara_period.input_end_date and today > mandara_period.input_start_date:
+                flag = True
+            elif mandara_period.input_start_date <= today and today <= mandara_period.input_end_date:
+                flag = True
+
+            if flag:
+                mandara = form.save(commit=False)
+                mandara.user_id = user_id
+                mandara.company_id = company_id
+                mandara.mandara_period = mandara_period
+                if 'save' in request.POST:
+                    mandara.flg_finished = True
+                    if context["mandara"] is not None:
+                        MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
+                    if mandara_period is not None:
+                        sdate = mandara_period.start_date   # start date
+                        edate = mandara_period.end_date   # end date
+                        delta = edate - sdate
+                        bulk_list = list()
+                        for i in range(delta.days + 1):
+                            day = sdate + datetime.timedelta(days=i)
+                            bulk_list.append(
+                                MandaraProgress(date=day, mandara_base_id=mandara.id)
+                            )
+
+                        bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
+                mandara.save()
+                context['mandara'] = mandara
+                context["message"] = '-- 保存しました。--'
+                context["message_class"] = 'text-success'
+            else:
+                context["message"] = '-- 入場許可時間外です。--'
+                context["message_class"] = 'text-danger'
         else:
             context["message"] = form.errors.as_data()
 
@@ -1194,7 +1217,20 @@ class MandaraSheet(TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+        today = datetime.date.today()
+        mandara = MandaraBase.objects.select_related('mandara_period').filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True).first()
+        mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gt=today)
+        ).order_by('start_date').first()
+        if mandara is not None:
+            kwargs['start'] = mandara.mandara_period.start_date
+            kwargs['end'] = mandara.mandara_period.end_date   
+
+        kwargs['mandara'] = mandara
         kwargs["title_header"] = "MANDARA" 
+        kwargs["mandara_periods"] = mandara_periods
+        kwargs["today"] = today
         return kwargs
     
 @method_decorator(login_required, name='dispatch')
