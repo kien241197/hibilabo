@@ -1147,6 +1147,7 @@ class MandaraCreate(TemplateView):
         kwargs['mandara'] = mandara
         kwargs['mandara_periods'] = mandara_periods
         kwargs['title_header'] = "MASMASMANDARA"
+        kwargs['today'] = today
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -1158,36 +1159,41 @@ class MandaraCreate(TemplateView):
         context["message_class"] = 'text-danger'
         start_YYYYMM = request.POST.get('start_YYYYMM')
         end_YYYYMM = request.POST.get('end_YYYYMM')
+        status_mandara = request.POST.get('status')
 
         if form.is_valid():
-            mandara_period = None
-            if start_YYYYMM:
-                mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
-            
-            mandara = form.save(commit=False)
-            mandara.user_id = user_id
-            mandara.company_id = company_id
-            mandara.mandara_period = mandara_period
-            if 'save' in request.POST:
-                mandara.flg_finished = True
-                if context["mandara"] is not None:
-                    MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
-                if mandara_period is not None:
-                    sdate = mandara_period.start_date   # start date
-                    edate = mandara_period.end_date   # end date
-                    delta = edate - sdate
-                    bulk_list = list()
-                    for i in range(delta.days + 1):
-                        day = sdate + datetime.timedelta(days=i)
-                        bulk_list.append(
-                            MandaraProgress(date=day, mandara_base_id=mandara.id)
-                        )
+            if status_mandara == "CHECK":
+                mandara_period = None
+                if start_YYYYMM:
+                    mandara_period = MandaraPeriod.objects.filter(id=start_YYYYMM,company_id=company_id).first()
+                
+                mandara = form.save(commit=False)
+                mandara.user_id = user_id
+                mandara.company_id = company_id
+                mandara.mandara_period = mandara_period
+                if 'save' in request.POST:
+                    mandara.flg_finished = True
+                    if context["mandara"] is not None:
+                        MandaraProgress.objects.filter(mandara_base_id=context["mandara"].id).delete()
+                    if mandara_period is not None:
+                        sdate = mandara_period.start_date   # start date
+                        edate = mandara_period.end_date   # end date
+                        delta = edate - sdate
+                        bulk_list = list()
+                        for i in range(delta.days + 1):
+                            day = sdate + datetime.timedelta(days=i)
+                            bulk_list.append(
+                                MandaraProgress(date=day, mandara_base_id=mandara.id)
+                            )
 
-                    bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
-            mandara.save()
-            context['mandara'] = mandara
-            context["message"] = '-- 保存しました。--'
-            context["message_class"] = 'text-success'
+                        bulk_msj = MandaraProgress.objects.bulk_create(bulk_list)
+                mandara.save()
+                context['mandara'] = mandara
+                context["message"] = '-- 保存しました。--'
+                context["message_class"] = 'text-success'
+            else:
+                context["message"] = '-- 入場許可時間外です。--'
+                context["message_class"] = 'text-danger'
         else:
             context["message"] = form.errors.as_data()
 
