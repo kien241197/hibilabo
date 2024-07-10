@@ -118,6 +118,9 @@ $(document).ready(function () {
     // Xử lý sự kiện click cho các button tab
     $('.button-tab').click(function () {
 
+        setTimeout(() => {
+            adjustHeight();
+        }, 300)
         // Loại bỏ class active từ tất cả các button tab
         $('.button-tab').removeClass('active');
 
@@ -185,14 +188,48 @@ $(document).ready(function () {
         }
     });
 
-    $('.textarea-watasheet').each(function() {
-        
+    $('.textarea-watasheet').each(function () {
+
         const textarea = $(this);
         const text = textarea.val();
-        
+
         const lineCount = (text.match(/\n/g) || []).length + 1;
 
         textarea.attr('rows', lineCount || 1);
     });
+
+    function adjustHeight() {
+        if (window.innerWidth > 600) {
+            let pairs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+            pairs.forEach(function (pair) {
+                let elements = $(`.items[data-pair="${pair}"]`);
+                let maxHeight = 0;
+
+                elements.each(function () {
+                    var thisHeight = $(this).outerHeight();
+                    if (thisHeight > maxHeight) {
+                        maxHeight = thisHeight;
+                    }
+                });
+                console.log(`${pairs} - ${maxHeight}`);
+                elements.css('min-height', maxHeight);
+            });
+        }
+    }
+
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            adjustHeight();
+        });
+    });
+
+    const config = { attributes: true, childList: true, subtree: true };
+    $('.items').each(function () {
+        observer.observe(this, config);
+    });
+
+    // Chạy hàm khi trang được tải lần đầu
+    adjustHeight();
 });
 
