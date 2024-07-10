@@ -196,6 +196,11 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
     actions = []
     success = True
 
+    def has_import_permission(self, request):
+        if not request.user.is_superuser and request.user.role.role not in [RoleEnum.日々研.value, RoleEnum.Partner.value, RoleEnum.Company_SuperVisor.value]:
+            return False
+        return True
+
     def add_view(self, request, form_url='', extra_context=None):
         response  = super().add_view(request, form_url, extra_context)
         if response.status_code == 302:
@@ -298,78 +303,108 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         import_object_status = []
         create_new_characters = []
         if request.method == "POST":
-            validators = [validate.MinimumLengthValidator, validate.NumberValidator, validate.UppercaseValidator, validate.LowercaseValidator, validate.SymbolValidator]
-            # clear the list for every new request
-            create_new_characters = []
-            # capture payload from request
-            csv_file = json.loads(request.POST.get("file_name"))
-            reader = json.loads(request.POST.get("rows"))
-            
-            column_headers = json.loads(request.POST.get("csv_headers"))
-            format_column_headers = [row.replace('\r', '') for row in column_headers]
-            
-            # helper class for validation and other stuff
-            # look into git repo
-            util_obj = utils.ImportUtils(format_column_headers)
-            array_user = []
-            for row in reader:
-                username = row[util_obj.get_column("username")]
-                first_name = row[util_obj.get_column("first_name")]
-                last_name = row[util_obj.get_column("last_name")] 
-                password = row[util_obj.get_column("password")] 
-                branch_code = row[util_obj.get_column("branch_code")]
-
-                if request.user.is_superuser:
-                    company_id = row[util_obj.get_column("company_id")]
-
-                branch = Branch.objects.filter(code=branch_code, company_id=company_id).first()
+            try:
+                validators = [validate.MinimumLengthValidator, validate.NumberValidator, validate.UppercaseValidator, validate.LowercaseValidator, validate.SymbolValidator]
+                # clear the list for every new request
+                create_new_characters = []
+                # capture payload from request
+                csv_file = json.loads(request.POST.get("file_name"))
+                reader = json.loads(request.POST.get("rows"))
                 
-                if User.objects.filter(username=username).exists() or username in array_user:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                                "msg": "username already exist!"}) 
-                    
-                elif request.user.is_superuser and not Company.objects.filter(id=company_id).exists():
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                            "msg": "Company is not already exist!"})
+                column_headers = json.loads(request.POST.get("csv_headers"))
+                format_column_headers = [row.replace('\r', '').strip() for row in column_headers]
+                
+                # helper class for validation and other stuff
+                # look into git repo
+                util_obj = utils.ImportUtils(format_column_headers)
+                array_user = []
 
-                elif branch is None:
-                    import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                            "msg": "Branch is not already exist!"})
-                    
+                users = list(User.objects.values_list('username', flat=True))
+                if request.user.is_superuser:
+                    companies = list(Company.objects.values_list('id', flat=True))
+                    branches = list(Branch.objects.values_list('id', 'company_id', 'code'))
                 else:
-                    brach_id = branch.id
-                    array_user.append(username)
-                    try:
-                        for validator in validators:
-                            validator().validate(password)
-                        create_new_characters.append(
-                            User(
-                                username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=brach_id, role_id=role_id
-                            )
-                        )
-                        
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code,"status": "FINISHED",
-                                                "msg": "User created successfully!"})
-                        
-                    except ValidationError as e:
-                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
-                                                "msg": str(e.args[0])})
-            User.objects.bulk_create(create_new_characters)
+                    branches = list(Branch.objects.filter(company_id=company_id).values_list('id', 'company_id', 'code'))
+                
+                for row in reader:
+                    username = row[util_obj.get_column("username")]
+                    first_name = row[util_obj.get_column("first_name")]
+                    last_name = row[util_obj.get_column("last_name")] 
+                    password = row[util_obj.get_column("password")] 
+                    branch_code = row[util_obj.get_column("branch_code")].replace('\r', '')
 
-            context = {
-                "file": csv_file,
-                "entries": len(import_object_status),
-                "results": import_object_status
-            }
-            return HttpResponse(json.dumps(context), content_type="application/json")
+                    if request.user.is_superuser:
+                        company_id = row[util_obj.get_column("company_id")]
+
+                    branch_detail = []
+                    if branch_code != '' and company_id != '':
+                        branch_detail = [item for item in branches if int(item[1]) == int(company_id) and int(item[2]) == int(branch_code)]
+                    if username == '':
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                    "msg": "Username is required!"})
+                    elif company_id == '':
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                    "msg": "Company_id is required!"})
+                    elif username in users:
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                    "msg": "Username already exist!"}) 
+                        
+                    elif request.user.is_superuser and int(company_id) not in companies:
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                "msg": "Company is not already exist!"})
+
+                    elif branch_code != '' and len(branch_detail) == 0:
+                        import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                "msg": "Branch is not already exist!"})
+                        
+                    else:
+                        brach_id = None
+                        if len(branch_detail) > 0:
+                            brach_id = branch_detail[0][0]
+
+                        try:
+                            for validator in validators:
+                                validator().validate(password)
+                            create_new_characters.append(
+                                User(
+                                    username=username, password=make_password(password), created_by=request.user.id, first_name=first_name, last_name=last_name, company_id=company_id, branch_id=brach_id, role_id=role_id
+                                )
+                            )
+                            
+                            import_object_status.append({"username": username, "company": company_id, "branch": branch_code,"status": "FINISHED",
+                                                    "msg": "User created successfully!"})
+                            users.append(username)
+                            
+                        except ValidationError as e:
+                            import_object_status.append({"username": username, "company": company_id, "branch": branch_code, "status": "ERROR",
+                                                    "msg": str(e.args[0])})
+                User.objects.bulk_create(create_new_characters)
+
+                context = {
+                    "file": csv_file,
+                    "entries": len(import_object_status),
+                    "results": import_object_status
+                }
+                return HttpResponse(json.dumps(context), content_type="application/json")
+                pass
+            except Exception as e:
+                return HttpResponse(e, content_type="application/json", status=500)
+                raise e
         # print(make_password('123456'));
         form = forms.CsvImportForm()
    
-        context = {"form": form, "form_title": "Upload users csv file.",
-                "description": "The file should have following headers: "
-                                "[username,first_name,last_name,password, company_id, branch_code]."
-                                " The Following rows should contain information for the same.",
-                                "endpoint": "/admin/hibiLaboSystem/user/import/"}
+        context = {
+            "title": "インポート",
+            "form": form, 
+            "form_title": "Upload users csv file.",
+            "description": "The file should have following headers: "
+                            "[username,first_name,last_name,password,company_id,branch_code]."
+                            " The Following rows should contain information for the same.",
+            "endpoint": "/admin/hibiLaboSystem/user/import/",
+            "is_nav_sidebar_enabled": self.admin_site.each_context(request).get("is_nav_sidebar_enabled"),
+            "has_permission": self.admin_site.each_context(request).get("has_permission"),
+            'available_apps': self.admin_site.each_context(request).get("available_apps")
+        }
 
         return render(
             request, "admin/import_users.html", context
@@ -394,7 +429,14 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
                         
         return render(request,
                       'admin/select_branch.html',
-                      context={'users':queryset, 'branches': branches})
+                      context={
+                        'users':queryset, 
+                        'branches': branches,
+                        "title": "新しい支店を選択",
+                        "is_nav_sidebar_enabled": self.admin_site.each_context(request).get("is_nav_sidebar_enabled"),
+                        "has_permission": self.admin_site.each_context(request).get("has_permission"),
+                        'available_apps': self.admin_site.each_context(request).get("available_apps")
+                        })
 
     update_branch.short_description = "新しい支店を選択"
 

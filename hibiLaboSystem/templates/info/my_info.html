@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 <!-- コンテンツ -->
+{% load static %}
 {% block content %}
 <div class="container">
     <h1>My page</h1>
@@ -9,7 +10,7 @@
         <div class="col">
             <h4>■　登録情報</h4>
         </div>
-        <div class="col text-right"><a href="{% url 'info_update' %}">更新</a></div>
+        <div class="col text-right"><a href="{% url 'info_update' %}">編集</a></div>
     </div>
     <table class="table table-bordered">
         <tbody>
@@ -33,7 +34,13 @@
                 <td>アバター</td>
                 <td>
                     {% if user.image %}
-                        <img src = "{{ user.image.url }}" />
+                        <div class="d-flex justify-content-center">
+                            <img src = "{{ user.image.url }}" />
+                        </div>
+                        {% else %}
+                        <div class="d-flex justify-content-center">
+                            <img src = "{% static '/assets/images/avatar_default.jpg' %}" width="300" height="300" />
+                        </div>
                     {% endif %}
                 </td>
             </tr>
@@ -44,7 +51,7 @@
         <div class="col">
             <h4>■　パスワード</h4>
         </div>
-        <div class="col text-right"><a href="{% url 'password_change' %}">更新</a></div>
+        <div class="col text-right"><a href="{% url 'password_change' %}">編集</a></div>
     </div>
     <table class="table table-bordered">
         <tbody>

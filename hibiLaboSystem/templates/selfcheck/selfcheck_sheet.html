@@ -81,18 +81,19 @@
                             </div>
                         </div>
                     </div>
+                    {% if not disabled %}
                     <div class="col-md-12">
                         <div class="button-chart">
                             <div class="checkbox">
                                 {{ form.flg_finished }}{{ form.flg_finished.label }}
                             </div>
-
                             <div class="flex-chart">
                                 <button class="btn-custom-button" type="submit">一時保存</button>
                                 <button class="btn-custom-button" type="submit">保存</button>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </section>

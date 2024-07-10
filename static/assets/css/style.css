@@ -195,6 +195,11 @@ select {
   background-image: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(rgba(255, 255, 255, 0.5)), to(transparent));
   background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent); }
 
+.btn-custom-complete {
+
+  background: #1D2088 !important;
+  color: white !important;
+}
 @media screen and (device-aspect-ratio: 2 / 3) {
   select,
   textarea,
@@ -260,6 +265,7 @@ select {
   input[type="tel"],
   input[type="url"] {
     font-size: 16px; } }
+
 @media screen and (min-width: 1200px) {
   .container {
     max-width: 1200px; }
@@ -411,8 +417,8 @@ select {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   margin-right: 20px;
-  letter-spacing: 7px;
-  text-indent: 1em;
+  letter-spacing: 4px;
+  /* text-indent: 1em; */
   font-size: 12px; 
   cursor: pointer;
 }
@@ -601,7 +607,6 @@ select {
   background: #F0EE80;
   padding: 5px 20px; 
   letter-spacing: 3px;
-
 }
 
 .content-chart .title h3 {
@@ -670,6 +675,17 @@ select {
   background: var(--color-yellow);
   vertical-align: middle;
   text-align: center; }
+
+  .button-tab-left {
+    width: 50px !important;
+    height: 26px !important;
+  }
+
+  .button-tab-right {
+    width: 101px !important;
+    height: 26px !important;
+  }
+  
   @media screen and (min-width: 1200px) {
     .honne-table table tr th {
       white-space: unset !important; }
@@ -1232,9 +1248,9 @@ select {
   margin-left: 15px;
 }
 
-@media (min-width: 768px) {
-  .col-sm-5-cols {
-      width: 20%;
+@media (min-width: 601px) {
+  .col-md-5-cols {
+      width: 33%;
       float: left;
   }
 }
@@ -1245,6 +1261,30 @@ select {
       float: left;
   }
 }
+
+@media (max-width: 1025px) {
+
+  .col-md-5-cols {
+      padding: 0px 5px;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .h-220 {
+
+    height: 220px;
+  }
+
+  .col-md-5-cols {
+      width: 50%;
+      float: left;
+  }
+}
+
+
+
 
 
 

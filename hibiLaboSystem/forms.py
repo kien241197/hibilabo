@@ -31,7 +31,6 @@ class RegisterForm(UserCreationForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['required'] = ""
-
             if field.label == '姓':
                 field.widget.attrs['autofocus'] = ""
                 field.widget.attrs['placeholder'] = 'なかしま'
@@ -216,14 +215,13 @@ class HonneEvaluationUnitForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         super(HonneEvaluationUnitForm, self).__init__(*args, **kwargs)
         queryset_evaluation = models.HonneEvaluationPeriod.objects.all()
-        if request.user:
-            #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
-                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
-            # Company_Admin
-            if request.user.role.role == RoleEnum.Company_Admin.value:
-                queryset = models.User.objects.filter(company_id=request.user.company.id)
+        if request.user:
+            queryset = models.User.objects.filter(company_id=request.user.company.id)
+            #Company_Supervisor
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
+                if request.user.branch:
+                    queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
             
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
@@ -250,17 +248,15 @@ class SelfcheckEvaluationUnitForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(SelfcheckEvaluationUnitForm, self).__init__(*args, **kwargs)
-
         queryset_evaluation = models.SelfcheckEvaluationPeriod.objects.all()
-        if request.user:
-            #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
-                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
-            # Company_Admin
-            if request.user.role.role == RoleEnum.Company_Admin.value:
-                queryset = models.User.objects.filter(company_id=request.user.company.id)
-            # queryset = queryset.filter(company_id=request.user.company_id)
+        if request.user:
+            queryset = models.User.objects.filter(company_id=request.user.company.id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
+                if request.user.branch:
+                    queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+              
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
@@ -281,7 +277,7 @@ class BonknowForm(forms.Form):
         self.fields['evaluation_unit'].queryset = queryset_evaluation
 
 class CsvImportForm(forms.Form):
-    csv_file = forms.FileField()
+    csv_file = forms.FileField(widget=forms.FileInput(attrs={'accept':'.csv, text/csv'}))
 
 class MandaraCreateForm(forms.ModelForm):
     class Meta:
@@ -1330,15 +1326,14 @@ class MandaraChartForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(MandaraChartForm, self).__init__(*args, **kwargs)
-        # queryset = models.User.objects.all()
-        if request.user:
-            #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
-                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
-            # Company_Admin
-            if request.user.role.role == RoleEnum.Company_Admin.value:
-                queryset = models.User.objects.filter(company_id=request.user.company.id)
+        if request.user:
+            queryset = models.User.objects.filter(company_id=request.user.company.id)
+            #Company_Supervisor 
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
+                if request.user.branch:
+                    queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
         self.fields['user_id'].queryset = queryset
 
 class MandaraForm(forms.Form):
@@ -1354,15 +1349,14 @@ class MandaraForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         super(MandaraForm, self).__init__(*args, **kwargs)
-        # queryset = models.User.objects.all()
+        
         if request.user:
+            queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
-                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
+                if request.user.branch:
+                    queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
-            # Company_Admin
-            if request.user.role.role == RoleEnum.Company_Admin.value:
-                queryset = models.User.objects.filter(company_id=request.user.company.id)
         self.fields['user_id'].queryset = queryset
 
 class UserAdminForm(forms.ModelForm):
@@ -1410,13 +1404,11 @@ class WatasheetTypeForm(forms.Form):
         queryset_evaluation = models.WatasheetEvaluationPeriod.objects.all()
         
         if request.user:
+            queryset = models.User.objects.filter(company_id=request.user.company.id)
             #Company_Supervisor 
-            if request.user.role.role == RoleEnum.Company_SuperVisor.value:
-                queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
-
-            # Company_Admin
-            if request.user.role.role == RoleEnum.Company_Admin.value:
-                queryset = models.User.objects.filter(company_id=request.user.company.id)
+            if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
+                if request.user.branch:
+                    queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
 
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
         self.fields['user_id'].queryset = queryset

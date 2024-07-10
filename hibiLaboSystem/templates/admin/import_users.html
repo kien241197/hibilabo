@@ -1,5 +1,5 @@
-{% extends 'admin/base_site.html' %} 
-{% load static %} 
+{% extends 'admin/base_site.html' %}
+{% load static %}
 {% block content %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -20,6 +20,39 @@
     });
   }
 </script>
+<style>
+  .loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid gray;
+    width: 30px;
+    height: 30px;
+    -webkit-animation: spin 2s linear infinite;
+    /* Safari */
+    animation: spin 2s linear infinite;
+  }
+
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
 
 <div>
   <h1>{{form_title}}</h1>
@@ -27,33 +60,26 @@
   <br />
   <br />
   <form method="POST" id="csv-form" enctype="multipart/form-data">
+    <p class="errornote hidden"></p>
     {% csrf_token %}
-    <label for="csvfile">Select a CSV file:</label>
-    <input type="file" id="csvfile" name="csvfile" />
+    <label for="csv_file">Select a CSV file:</label>
+    {{ form.csv_file }}
     <br /><br />
     <button class="uploadBtn" id="submit" disabled>Upload CSV</button>
-    <button
-      class="cancelBtn"
-      type="button"
-      onclick="javascript:history.back();"
-    >
+    <button class="cancelBtn" type="button" onclick="javascript:history.back();">
       Cancel
     </button>
   </form>
   <br />
   <br />
   <h1>Upload results for file <span id="file_name"></span></h1>
-  <div
-    style="display: flex; justify-content: space-between; margin-bottom: 10px"
-  >
-    <span style="font-weight: bold; font-size: 18px"
-      >Total entries: <span id="entries"></span
-    ></span>    
+  <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+    <span style="font-weight: bold; font-size: 18px">Total entries: <span id="entries"></span></span>
     <!-- <button class="downloadBtn" id="downloadReport" style="display: none">
       Download Report
     </button> -->
   </div>
-  <table>
+  <table class="table">
     <tr>
       <th>Username</th>
       <th>Status</th>
@@ -62,7 +88,9 @@
       <th>Message</th>
     </tr>
   </table>
-  <div id="spinner" class="loader" style="display: none"></div>
+  <div style="margin-top: 20px; width: 370px; display: none;" id="loader" >
+    <div class="loader" style="margin: auto;"></div>
+  </div>
 </div>
 <br />
 {{endpoint|json_script:"endpoint"}}
@@ -106,10 +134,10 @@
 
     //<!--  read csv file and perform pagination of rows-->
 
-    $("#csvfile").change((e) => {
+    $("#id_csv_file").change((e) => {
       // regex to validate file name and extension
       var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/;
-      if (regex.test($("#csvfile").val().toLowerCase())) {
+      if (regex.test($("#id_csv_file").val().toLowerCase())) {
         // initialize javascript's FileReader
         // Read more here https://developer.mozilla.org/en-US/docs/Web/API/FileReader
         var reader = new FileReader();
@@ -163,35 +191,30 @@
           action: "post",
         },
         beforeSend: () => {
-          $("#spinner").show();
+          $("#loader").show();
         },
         success: function (data) {
           // here we will update our DOM to show the object status
           $("#file_name").text(data.file);
           totalentries += data.entries;
           $("#entries").text(totalentries);
-          $("table").append(
-            `<tr class="parent" onclick="handlecollapse($(this))"><td class="checkpoint">Entries: ${offset} to ${limit}</td><td></td><td></td></tr>`
+          $(".table").append(
+            `<tr class="parent" onclick="handlecollapse($(this))"><td class="checkpoint">Entries: ${offset} to ${limit}</td><td></td><td></td><td></td><td></td></tr>`
           );
-          
-          // const roleUser = {% if user.is_superuser %} true {% else %} false {% endif%}
 
           data.results.forEach((obj) => {
             let style = obj.status == 'ERROR' ? 'red' : 'green';
-            // if(roleUser){
-              $("table").append(
+              $(".table").append(
                 `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.company}</td><td>${obj.branch}</td><td>${obj.msg}</td></tr>`
               );
-            // } else {
-            //   $("table").append(
-            //     `<tr class="child" style="color: ${style};"><td>${obj.username}</td><td>${obj.status}</td><td>${obj.branch}</td><td>${obj.msg}</td></tr>`
-            //   );
-            // }
           });
           deferred.resolve(data);
         },
+        error: function(data){
+          deferred.resolve(data);
+        },
         complete: () => {
-          $("#spinner").hide();
+          $("#loader").hide();
         },
       });
       return deferred.promise();
@@ -201,6 +224,8 @@
 
     let looper = $.Deferred().resolve();
     $("#submit").click((e) => {
+      $(".errornote").addClass("hidden");
+      $(".errornote").text('');
       e.preventDefault();
       // $.when.apply is the way to call multiple AJAX calls
       // apply functions accepts two arguments => (this,array of requests)
@@ -222,18 +247,22 @@
           // $("#downloadReport").show();
         })
         .catch((err) => {
+          if (err.status == 500) {
+            $(".errornote").removeClass("hidden");
+            $(".errornote").text(err.responseText);
+          }
           console.log(err);
         });
     });
 
     $("#downloadReport").click(() => {
-      var html = document.querySelector("table").outerHTML;
+      var html = document.querySelector(".table").outerHTML;
       export_table_to_csv(html, file_name.split(".csv")[0] + "_report.csv");
     });
 
     function export_table_to_csv(html, filename) {
       var csv = [];
-      var rows = document.querySelectorAll("table tr");
+      var rows = document.querySelectorAll(".table tr");
 
       for (var i = 0; i < rows.length; i++) {
         var row = [],
