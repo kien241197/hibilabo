@@ -1933,8 +1933,7 @@ class Watasheet(TemplateView):
         flg_finished = self.request.POST.get("flg_finished") or False
         questions = self.request.POST.getlist("questions")
         form = self.form_class(request.POST, instance=context_get["watasheet_type_result"])
-
-        if self.request.POST.get("watasheet_context") is not None:
+        if self.request.POST.get("watasheet_context") is None:
 
             WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id, user_id=user_id).delete()
             bulk_list = list()
