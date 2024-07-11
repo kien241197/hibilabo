@@ -1953,7 +1953,6 @@ class Watasheet(TemplateView):
         kwargs['type_D'] = obj_type.watasheet_type_d if obj_type is not None else 0
         kwargs['type_E'] = obj_type.watasheet_type_e if obj_type is not None else 0
         kwargs['type_F'] = obj_type.watasheet_type_f if obj_type is not None else 0
-        kwargs['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
         kwargs['disabled'] = 'disabled' if initial_values['flg_finished'] else ''
         kwargs['form'] = self.form_class(initial_values)
         kwargs['team_concept'] = company
@@ -1970,64 +1969,53 @@ class Watasheet(TemplateView):
         questions = self.request.POST.getlist("questions")
         form = self.form_class(request.POST, instance=context_get["watasheet_type_result"])
 
-        if self.request.POST.get("watasheet_context") is not None:
-
-            WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id, user_id=user_id).delete()
-            bulk_list = list()
-            types = {
-                "A" : 0,
-                "B" : 0,
-                "C" : 0,
-                "D" : 0,
-                "E" : 0,
-                "F" : 0,
-            }
-            for q in questions:
-                question = next(
-                    (obj for obj in context_get['watasheet_questions'] if int(obj.id) == int(q)),
-                    None
-                )
-                if question is not None:
-                    types[question.group] = int(types[question.group]) + 1
-                    bulk_list.append(
-                        WatasheetResult(
-                            company_id=company_id,
-                            user_id=user_id,
-                            evaluation_period_id=context_get["evaluation_period"].id,
-                            watasheet_question_id=q,
-                        )
-                    )
-
-            bulk_msj = WatasheetResult.objects.bulk_create(bulk_list)
-            
-            if form.is_valid():
-                watasheet_type_result=form.save(commit=False)
-                watasheet_type_result.user_id = user_id
-                watasheet_type_result.company_id = company_id
-                watasheet_type_result.watasheet_type_a = types['A']
-                watasheet_type_result.watasheet_type_b = types['B']
-                watasheet_type_result.watasheet_type_c = types['C']
-                watasheet_type_result.watasheet_type_d = types['D']
-                watasheet_type_result.watasheet_type_e = types['E']
-                watasheet_type_result.watasheet_type_f = types['F']
-                watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
-                if form.cleaned_data['vision_1_year']:
-                    watasheet_type_result.vision_1_year = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_1_year']))
-                if form.cleaned_data['vision_5_years']:
-                    watasheet_type_result.vision_5_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_5_years']))
-                if form.cleaned_data['vision_10_years']:
-                    watasheet_type_result.vision_10_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_10_years']))
-                watasheet_type_result.save()
-                
-        else:
-            obj = WatasheetTypeResult.objects.update_or_create(
-                company_id=company_id,
-                user_id=user_id,
-                evaluation_period_id=context_get["evaluation_period"].id,
-                defaults={
-                    "flg_finished": bool(flg_finished),
-                }
+        WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id, user_id=user_id).delete()
+        bulk_list = list()
+        types = {
+            "A" : 0,
+            "B" : 0,
+            "C" : 0,
+            "D" : 0,
+            "E" : 0,
+            "F" : 0,
+        }
+        for q in questions:
+            question = next(
+                (obj for obj in context_get['watasheet_questions'] if int(obj.id) == int(q)),
+                None
             )
+            if question is not None:
+                types[question.group] = int(types[question.group]) + 1
+                bulk_list.append(
+                    WatasheetResult(
+                        company_id=company_id,
+                        user_id=user_id,
+                        evaluation_period_id=context_get["evaluation_period"].id,
+                        watasheet_question_id=q,
+                    )
+                )
+
+        bulk_msj = WatasheetResult.objects.bulk_create(bulk_list)
+        
+        if form.is_valid():
+            watasheet_type_result=form.save(commit=False)
+            watasheet_type_result.user_id = user_id
+            watasheet_type_result.company_id = company_id
+            watasheet_type_result.watasheet_type_a = types['A']
+            watasheet_type_result.watasheet_type_b = types['B']
+            watasheet_type_result.watasheet_type_c = types['C']
+            watasheet_type_result.watasheet_type_d = types['D']
+            watasheet_type_result.watasheet_type_e = types['E']
+            watasheet_type_result.watasheet_type_f = types['F']
+            watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
+            if form.cleaned_data['vision_1_year']:
+                watasheet_type_result.vision_1_year = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_1_year']))
+            if form.cleaned_data['vision_5_years']:
+                watasheet_type_result.vision_5_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_5_years']))
+            if form.cleaned_data['vision_10_years']:
+                watasheet_type_result.vision_10_years = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_10_years']))
+            watasheet_type_result.save()
+                
         context = self.get_context_data(**kwargs)
         context["message"] = '-- 保存しました。--'
         return self.render_to_response(context)
@@ -2079,7 +2067,6 @@ class WatasheetType(TemplateView):
         context['type_D'] = obj_type.watasheet_type_d if obj_type is not None else 0
         context['type_E'] = obj_type.watasheet_type_e if obj_type is not None else 0
         context['type_F'] = obj_type.watasheet_type_f if obj_type is not None else 0
-        context['type_content'] = obj_type.watasheet_context if obj_type is not None else ''
         context['form'] = self.form_class(request, request.POST)
         context['watasheet_type_result'] = obj_type
         context['team_concept'] = team_concept
