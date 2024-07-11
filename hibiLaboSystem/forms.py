@@ -1373,7 +1373,7 @@ class UserAdminForm(forms.ModelForm):
 class WatasheetForm(forms.ModelForm):
     class Meta:
         model = models.WatasheetTypeResult
-        fields = "__all__"
+        exclude = ['watasheet_context']
 
     flg_finished = forms.BooleanField(
         initial=False,
