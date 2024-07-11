@@ -55,9 +55,7 @@
                                             onchange='func_count(this, {{ q_list|safe }});' {{ disabled }}>
                                             <option value="">-</option>
                                             {% for choice in answer_choices %}
-                                            <option value="{{ choice.0 }}" {% if
-                                                q.answer_value|floatformat:"0"==choice.0|floatformat:"0" %}selected{%
-                                                endif %}>{{ choice.1 }}</option>
+                                            <option value="{{ choice.0 }}" {% if q.answer_value|floatformat:"0" == choice.0|floatformat:"0" %} selected {% endif %}>{{ choice.1 }}</option>
                                             {% endfor %}
                                         </select>
                                         <input type="hidden" id="index-{{q.id}}" value="{{q.category_id}}">

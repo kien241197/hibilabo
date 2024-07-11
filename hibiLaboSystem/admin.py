@@ -176,14 +176,30 @@ class CompanyAdmin(admin.ModelAdmin):
 
 class SelfcheckQuestionCustom(admin.ModelAdmin):
     list_filter = ["selfcheck_roles", "industries"]
+    search_fields = ["question"]
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
+class ThinkQuestionCustom(admin.ModelAdmin):
+    search_fields = ["question"]
+
+
+class WatasheetQuestionCustom(admin.ModelAdmin):
+    search_fields = ["question"]
+
+
+class ResponsQuestionCustom(admin.ModelAdmin):
+    search_fields = ["question"]
+
+
+class HonneQuestionCustom(admin.ModelAdmin):
+    search_fields = ["question"]
+
 class RoleCustom(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
-    }
+    }    
 
 class IndustryCustom(admin.ModelAdmin):
     filter_horizontal = ('Selfcheck_questions',)
@@ -477,16 +493,16 @@ admin.site.register(Partner)
 admin.site.register(Branch, BranchAdmin)
 admin.site.register(Role, RoleCustom)
 # Honne
-admin.site.register(HonneQuestion)
+admin.site.register(HonneQuestion, HonneQuestionCustom)
 # Selfcheck
 admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
 admin.site.register(SelfcheckRole)
 admin.site.register(Industry, IndustryCustom)
 # Bonknow
-admin.site.register(ResponsQuestion)
-admin.site.register(ThinkQuestion)
+admin.site.register(ResponsQuestion, ResponsQuestionCustom)
+admin.site.register(ThinkQuestion, ThinkQuestionCustom)
 # Watasheet
-admin.site.register(WatasheetQuestion)
+admin.site.register(WatasheetQuestion, WatasheetQuestionCustom)
 #Remove Group Permission
 admin.site.unregister(Group)
 
