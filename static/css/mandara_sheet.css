@@ -4,7 +4,7 @@
 }
 
 .items_content .date {
-    
+
     margin: unset !important;
 }
 
@@ -23,5 +23,27 @@
     .col-md-5-cols {
 
         width: 33% !important;
+    }
+}
+
+@media (max-width: 820px){
+
+    .col-md-5-cols {
+
+        width: 50% !important;
+    }
+
+}
+
+@media (max-width: 700px){
+
+    .col-md-5-cols {
+
+        width: 100% !important;
+    }
+
+    .mb-mobile {
+
+        margin-bottom: 1.5rem;
     }
 }
