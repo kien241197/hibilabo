@@ -15,6 +15,14 @@ function func_count_type(element) {
 function auto_grow(element) {
     element.style.height = "5px";
     element.style.height = (element.scrollHeight) + "px";
+
+    let pairs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    pairs.forEach(function (pair) {
+        let elements = $(`.items[data-pair="${pair}"]`);
+
+        elements.css('min-height', 0);
+    });
 }
 
 $(document).ready(function () {
