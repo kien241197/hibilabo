@@ -220,7 +220,6 @@ $(document).ready(function () {
                         maxHeight = thisHeight;
                     }
                 });
-                console.log(`${pairs} - ${maxHeight}`);
                 elements.css('min-height', maxHeight);
             });
         }
