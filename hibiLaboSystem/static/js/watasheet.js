@@ -238,5 +238,26 @@ $(document).ready(function () {
 
     // Chạy hàm khi trang được tải lần đầu
     adjustHeight();
+
+    $('#SAMPLE').click(function () {
+
+        setTimeout(() => {
+            
+            const hashValue = window.location.hash;
+            const cleanHashValue = hashValue.slice(1);
+
+            if (cleanHashValue == "tab-2") {
+
+                $('#tab2').css('display', 'block')
+                $('#tab3').css('display', 'none')
+            }
+
+            if (cleanHashValue == "tab-3") {
+
+                $('#tab2').css('display', 'none')
+                $('#tab3').css('display', 'block')
+            }
+        }, 200)
+    })
 });
 
