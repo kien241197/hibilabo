@@ -288,8 +288,8 @@ class HonneEvaluationPeriod(models.Model):
 	    null=True
 	)
 	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
-	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
-	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始期間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了期間')
 	honne_questions = models.ManyToManyField(
 		HonneQuestion,
 	    related_name='honne_evaluation_periods',
@@ -456,8 +456,8 @@ class SelfcheckEvaluationPeriod(models.Model):
 	    null=True
 	)
 	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
-	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
-	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始期間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了期間')
 	selfcheck_questions = models.ManyToManyField(
 		SelfcheckQuestion,
 	    related_name='selfcheck_evaluation_periods',
@@ -636,8 +636,8 @@ class BonknowEvaluationPeriod(models.Model):
 	    null=True
 	)
 	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
-	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
-	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始期間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了期間')
 	respons_questions = models.ManyToManyField(
 		ResponsQuestion,
 	    related_name='bonknow_evaluation_periods',
@@ -793,10 +793,10 @@ class MandaraPeriod(models.Model):
 	    blank=True,
 	    null=True
 	)
-	start_date = models.DateField(verbose_name="評価開始時間")
-	end_date = models.DateField(verbose_name="評価終了時間")
-	input_start_date = models.DateField(blank=True, null=True, verbose_name="評価入力開始時間")
-	input_end_date = models.DateField(blank=True, null=True, verbose_name="評価入力終了時間")
+	start_date = models.DateField(verbose_name="評価開始期間")
+	end_date = models.DateField(verbose_name="評価終了期間")
+	input_start_date = models.DateField(verbose_name="評価入力開始期間")
+	input_end_date = models.DateField(verbose_name="評価入力終了期間")
 
 	class Meta:
 		db_table = 'mandara_periods'
@@ -1089,8 +1089,8 @@ class WatasheetEvaluationPeriod(models.Model):
 	    null=True
 	)
 	evaluation_name = models.CharField(max_length=255, verbose_name='評価名')
-	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始時間')
-	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了時間')
+	evaluation_start = models.DateField(blank=True, null=True, verbose_name='評価開始期間')
+	evaluation_end = models.DateField(blank=True, null=True, verbose_name='評価終了期間')
 	watasheet_questions = models.ManyToManyField(
 		WatasheetQuestion,
 	    related_name='watasheet_evaluation_periods',
