@@ -43,7 +43,7 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('last_name', 'first_name', 'email', 'username', 'image')
+        fields = ('last_name', 'first_name', 'romanization_name', 'email', 'username', 'image')
 
     # bootstrap4対応
     def __init__(self, *args, **kwargs):

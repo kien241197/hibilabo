@@ -208,6 +208,7 @@ class User(AbstractUser):
 	
 	hierarchy = models.ManyToManyField('self', through='Hierarchy', symmetrical=False, blank=True)
 	created_by = models.IntegerField(blank=True, null=True, editable=False)
+	romanization_name = models.CharField(blank=True, null=True, max_length=50, verbose_name="ローマ字名")
 
 	class Meta:
 		db_table = 'users'
