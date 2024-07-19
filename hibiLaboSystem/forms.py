@@ -51,7 +51,7 @@ class UserUpdateForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
             
-            if field.label != "アバター" and field.label != "メールアドレス":
+            if field.label != "アバター" and field.label != "メールアドレス" and field.label != "ローマ字名":
                 field.widget.attrs['required'] = ""
             else:
                 field.widget.attrs['required'] = False

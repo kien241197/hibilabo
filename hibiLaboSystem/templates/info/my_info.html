@@ -24,7 +24,7 @@
             </tr>
              <tr>
                 <td>ローマ字名</td>
-                <td>{{ user.romanization_name }}</td>
+                <td>{{ user.romanization_name|default_if_none:"" }}</td>
             </tr>
             <tr>
                 <td>メールアドレス</td>
