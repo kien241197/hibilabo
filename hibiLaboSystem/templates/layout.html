@@ -35,7 +35,13 @@
                 <a href="#">
                     <img src="{% static 'assets/images/logotype_h_en.png' %}" alt="">
                 </a>
-                <h2 class="d-flex items-center">WATASHEET {% if title_header  %} <p class="pb-0 mb-0 title-header">{{ title_header }}</p> {% endif %} </h2>
+                <h2 class="d-flex items-center align-items-center"> 
+                  <div>
+                    <div>WATASHEET</div>
+                    {% block title_top %}
+                    {% endblock %}
+                  </div>
+                  {% if title_header  %} <p class="pb-0 mb-0 title-header">{{ title_header }}</p> {% endif %} </h2>
             </div>
         </div>
     </div>

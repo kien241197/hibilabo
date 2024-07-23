@@ -200,6 +200,15 @@ select {
   background: #1D2088 !important;
   color: white !important;
 }
+
+.fan {
+
+  font-size: 14px;
+  font-weight: 400;
+  top: 0;
+  right: 0;
+}
+
 @media screen and (device-aspect-ratio: 2 / 3) {
   select,
   textarea,
