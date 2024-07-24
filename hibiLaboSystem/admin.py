@@ -497,7 +497,7 @@ admin.site.register(HonneQuestion, HonneQuestionCustom)
 # Selfcheck
 admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
 admin.site.register(SelfcheckRole)
-# admin.site.register(Industry, IndustryCustom)
+admin.site.register(Industry, IndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion, ResponsQuestionCustom)
 admin.site.register(ThinkQuestion, ThinkQuestionCustom)
