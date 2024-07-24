@@ -229,29 +229,6 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             user.save()
         return response
 
-    def change_view(self, request, object_id, form_url='', extra_context=None):
-        response = super().change_view(request, object_id, form_url, extra_context)
-        if response.status_code == 302:
-            user = User.objects.get(id=object_id)
-            user.groups.set([])
-            user.user_permissions.set([])
-            if user.role is not None:
-                permissions_list = []
-                if user.role.role == RoleEnum.日々研.value:
-                    user.is_superuser = True
-                elif user.role.role == RoleEnum.Partner.value:
-                    permissions_list = RolePermission.Partner.value
-                elif user.role.role == RoleEnum.Company_Admin.value:
-                    permissions_list = RolePermission.Company_Admin.value
-                elif user.role.role == RoleEnum.Company_Director.value:
-                    permissions_list = RolePermission.Company_Director.value
-                elif user.role.role == RoleEnum.Company_SuperVisor.value:
-                    permissions_list = RolePermission.Company_SuperVisor.value
-                permissions = Permission.objects.filter(codename__in=permissions_list)
-                user.user_permissions.add(*permissions)
-            user.save()
-        return response
-
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "branch":
             if request.user.is_superuser:
@@ -259,8 +236,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             else:
                 if request.user.company_id:
                     kwargs["queryset"] = Branch.objects.filter(company_id=request.user.company_id)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-   
+        return super().formfield_for_foreignkey(db_field, request, **kwargs) 
 
     def save_model(self, request, obj, form, change):
         if not change:
@@ -270,6 +246,25 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             obj.company_id = request.user.company_id
             obj.add(request.user.company_id)
+
+        obj.save()
+
+        obj.groups.set([])
+        obj.user_permissions.set([])
+        if obj.role is not None:
+            permissions_list = []
+            if obj.role.role == RoleEnum.日々研.value:
+                obj.is_superuser = True
+            elif obj.role.role == RoleEnum.Partner.value:
+                permissions_list = RolePermission.Partner.value
+            elif obj.role.role == RoleEnum.Company_Admin.value:
+                permissions_list = RolePermission.Company_Admin.value
+            elif obj.role.role == RoleEnum.Company_Director.value:
+                permissions_list = RolePermission.Company_Director.value
+            elif obj.role.role == RoleEnum.Company_SuperVisor.value:
+                permissions_list = RolePermission.Company_SuperVisor.value
+            permissions = Permission.objects.filter(codename__in=permissions_list)
+            obj.user_permissions.add(*permissions)
 
         obj.save()
                
