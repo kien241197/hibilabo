@@ -10,7 +10,11 @@
             <div class="wrapper-body-top">
                 <div class="item-body-top body-avatar">
                     <p class="text-avatar ">社員No 001</p>
-                    <img src="{% static '/assets/images/avatart.jpg' %}" alt="dummy" class="avatar mb-3">
+                    {% if user.image %}
+                    <img src="{{ user.image.url }}" alt="dummy" class="avatar mb-3" onerror="this.onerror=null; this.src='{% static '/assets/images/avatar_default.jpg' %}'">
+                    {% else %}
+                    <img src = "{% static '/assets/images/avatar_default.jpg' %}" class="avatar mb-3"/>
+                    {% endif %}
                     <p class="text-avatar">氏名：中島幸一</p>
                     <p class="name-avatar">KOUICHI NAKASHIMA</p>
                 </div>
@@ -634,5 +638,6 @@
         }
 
     });
+    
 </script>
 {% endblock %}
