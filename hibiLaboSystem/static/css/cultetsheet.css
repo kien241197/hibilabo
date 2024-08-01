@@ -14,6 +14,11 @@
 }
 */
 
+.wrapper-canvas-totalChart {
+
+    height: 438px;
+}
+
 .custom-text {
     text-align: center;
     /* Căn giữa theo chiều ngang */
@@ -187,7 +192,6 @@ select {
     gap: 10%;
     padding-left: 45px;
     padding-right: 35px;
-    margin-bottom: 55px;
     flex-wrap: wrap;
 }
 
@@ -763,6 +767,17 @@ select {
 
 @media print {
 
+    .wrapper-canvas-totalChart {
+
+        height: 180px !important;
+    }
+
+    #totalChart {
+
+        width: 100%;
+        height: 100% !important;
+    }
+
     #stackedChart1 {
 
         height: 180px !important;
@@ -1102,6 +1117,14 @@ select {
     }
 }
 
+@media (max-width: 1050px) {
+
+    .wrapper-canvas-totalChart {
+
+        height: 231px;
+    }
+}
+
 @media (max-width: 850px) {
 
     .wrapper-body-top {
@@ -1119,12 +1142,17 @@ select {
     .item-body-top-mb {
 
         width: 45%;
-        
+
     }
-    
+
     .title-chart {
 
         width: 100%;
+    }
+
+    .wrapper-canvas-totalChart {
+
+        height: 172px;
     }
 }
 
@@ -1138,6 +1166,11 @@ select {
     .item-body-top-mb {
 
         width: 100%;
-        
+
+    }
+
+    .wrapper-canvas-totalChart {
+
+        height: 182px;
     }
 }
