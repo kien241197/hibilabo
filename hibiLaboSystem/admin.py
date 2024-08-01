@@ -151,7 +151,6 @@ class WatasheetInline(admin.TabularInline):
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
-    exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years"]
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline]
     def save_model(self, request, obj, form, change):
         if not change:
@@ -167,8 +166,9 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         cache.clear()
+        self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years"]
         if not request.user.is_superuser:
-            self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner"]
+            self.exclude.extend(["name", "date_start", "date_end", "active_flag", "partner"])
             # self.inlines = []
             self.readonly_fields = ["industry"]
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
@@ -208,7 +208,6 @@ class IndustryCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
-    exclude = ['created_by', 'image', 'groups', "user_permissions", "is_superuser"]
     actions = []
     success = True
 
@@ -272,7 +271,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
 
         cache.clear()
         obj = obj.id if obj else False
-
+        self.exclude = ['created_by', 'image', 'groups', "user_permissions", "is_superuser"]
         if obj:
             if not request.user.is_superuser:
                 self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', 'groups', 'image']
