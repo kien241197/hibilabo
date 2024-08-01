@@ -9,14 +9,14 @@
         <div class="container-fluid">
             <div class="wrapper-body-top">
                 <div class="item-body-top body-avatar">
-                    <p class="text-avatar ">社員No 001</p>
+                    <p class="text-avatar ">社員No {{ user.id }}</p>
                     {% if user.image %}
                     <img src="{{ user.image.url }}" alt="dummy" class="avatar mb-3" onerror="this.onerror=null; this.src='{% static '/assets/images/avatar_default.jpg' %}'">
                     {% else %}
                     <img src = "{% static '/assets/images/avatar_default.jpg' %}" class="avatar mb-3"/>
                     {% endif %}
-                    <p class="text-avatar">氏名：中島幸一</p>
-                    <p class="name-avatar">KOUICHI NAKASHIMA</p>
+                    <p class="text-avatar">氏名：{{ user.username }}</p>
+                    <p class="name-avatar">{{ user.romanization_name|default_if_none:"" }}</p>
                 </div>
                 <div class="item-body-top item-body-top-mb">
                     <!-- <p class="title-chart">DO YOU KNOW &nbsp; <span class="gray-text">THINK</span></p> -->
