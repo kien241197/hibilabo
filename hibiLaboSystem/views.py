@@ -2173,3 +2173,11 @@ def test_mandara_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+class Cultetsheet(TemplateView):
+    template_name = "cultetsheet/cultetsheet.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs['title_header'] = "fan℃"
+        return kwargs
