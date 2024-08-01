@@ -32,14 +32,19 @@
       <div class="header">
         <div class="container">
             <div class="logo">
-                <h2 class="d-flex items-center align-items-center"> 
-                  <div>
+                <h2 class="d-flex items-center align-items-center position-relative"> 
+                  <div class=" {% if title_header  %} title-header-right {% endif %}">
                     <div>WATASHEET</div>
                     {% if user.is_authenticated %}
                     <p class="fan text-right mb-0">by fan℃</p>
                     {% endif %}
                   </div>
-                  {% if title_header  %} <p class="pb-0 mb-0 title-header">{{ title_header }}</p> {% endif %} </h2>
+                  {% if title_header  %}
+                  <div>
+                    <p class="pb-0 mb-0 title-header position-absolute top-0 text-nowrap">{{ title_header }}</p> 
+                  </div> 
+                  {% endif %}
+                </h2>
             </div>
         </div>
     </div>
