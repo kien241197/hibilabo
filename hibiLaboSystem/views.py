@@ -2174,10 +2174,93 @@ def test_mandara_pdf(request, id):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.CultetsheetMiddleware, name='dispatch')
 class Cultetsheet(TemplateView):
     template_name = "cultetsheet/cultetsheet.html"
+    form_class = forms.CultetsheetDateForm
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        company_id = self.request.user.company_id
+        honne_date = HonneEvaluationPeriod.objects.all().filter(company_id=company_id).order_by('-evaluation_start')
+
+        kwargs['form'] = self.form_class(company_id)
         kwargs['title_header'] = "fan℃"
+        kwargs['honne_date'] = honne_date 
         return kwargs
+
+@login_required
+def CultetsheetHonne(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            user_id = request.user.id
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            
+            honne_index_total = HonneIndexResult.objects.all().filter(user_id=user_id, evaluation_period__evaluation_start__range=(start_date, end_date)).annotate(
+                kartet_index_total=Coalesce(
+                    Sum('kartet_index1') + Sum('kartet_index2') + Sum('kartet_index3') +
+                    Sum('kartet_index4') + Sum('kartet_index5') + Sum('kartet_index6') +
+                    Sum('kartet_index7') + Sum('kartet_index8'),
+                    0
+                ),
+                date=F('evaluation_period__evaluation_start')
+            )
+
+            
+            list_resp = list(honne_index_total.values())
+            return JsonResponse({'context': list_resp})
+
+@login_required
+def CultetsheetSelfcheck(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            user_id = request.user.id
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            
+            selfcheck_total = SelfcheckIndexResult.objects.all().filter(user_id=user_id, evaluation_period__evaluation_start__range=(start_date, end_date)).annotate(
+                kartet_index_total=Coalesce(
+                    Sum('selfcheck_index1') + Sum('selfcheck_index2') + Sum('selfcheck_index3') +
+                    Sum('selfcheck_index4') + Sum('selfcheck_index5') + Sum('selfcheck_index6') +
+                    Sum('selfcheck_index7') + Sum('selfcheck_index8') + Sum('selfcheck_index9') +
+                    Sum('selfcheck_index10') + Sum('selfcheck_index11') + Sum('selfcheck_index12'),
+                    0
+                ),
+                date=F('evaluation_period__evaluation_start')
+            )
+
+            list_resp = list(selfcheck_total.values())
+            return JsonResponse({'context': list_resp})
+
+@login_required
+def CultetsheetMandara(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            company_id = request.user.company_id
+            user_id = request.user.id
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+
+            mandara_total = MandaraBase.objects.select_related('mandara_period').filter(user_id=user_id, company_id=company_id, mandara_period__start_date__range=(start_date, end_date)).annotate(
+                date=F('mandara_period__start_date'),
+                total=Coalesce(Sum('A_result'), 0)
+                  
+            )
+
+            list_resp = list(mandara_total.values())
+                
+            return JsonResponse({'context': list_resp})
+
+
+
+
+
+

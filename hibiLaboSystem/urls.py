@@ -50,5 +50,11 @@ urlpatterns = [
 	path('watasheet', views.Watasheet.as_view(), name="watasheet"),
 	path('watasheet-type', views.WatasheetType.as_view(), name="watasheet_type"),
     
-	path('cultetsheet', views.Cultetsheet.as_view(), name="cultetsheet")
+	path('cultetsheet', views.Cultetsheet.as_view(), name="cultetsheet"),
+	path('cultetsheet/ajax/honne', views.CultetsheetHonne, name="cultetsheet_honne_ajax"),
+	path('cultetsheet/ajax/selfcheck', views.CultetsheetSelfcheck, name="cultetsheet_selfcheck_ajax"),
+	path('cultetsheet/ajax/mandara', views.CultetsheetMandara, name="cultetsheet_mandara_ajax"),
+    
+    
+    
 ]

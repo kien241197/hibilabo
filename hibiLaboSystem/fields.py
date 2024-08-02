@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
-import datetime
+from datetime import datetime
+import calendar
 
 JAPANESE_MONTHS = {
     1: "1月", 2: "2月", 3: "3月", 4: "4月",
@@ -61,7 +62,6 @@ class MandaraMonthYearSelectWidget(forms.Widget):
                 ).order_by('start_date')
         output = '<select name="%s" class="select border-0">' % name
         output += '<option value="" selected>%s</option>' % self.empty_label
-        print(value)
         for period in mandara_periods:
             date = period.start_date.strftime("%Y-%m-%d")
             date_text = period.display_time_start()
@@ -70,6 +70,153 @@ class MandaraMonthYearSelectWidget(forms.Widget):
                 date_text = period.display_time_end()
             month_selected = "selected" if date == value else ""
             output += '<option value="%s" %s>%s</option>' % (date, month_selected, date_text)
+
+        output += '</select>'
+        return output
+    
+class CultetSheetMonthYearSelectWidget(forms.Widget):
+    def __init__(self, company_id=None, attrs=None, empty_label="----"):
+        self.empty_label = empty_label
+        self.company_id = company_id
+        super().__init__(attrs)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        output = '<select name="%s" class="select border-0">' % name
+        output += '<option value="" selected>%s</option>' % self.empty_label
+
+        # Lấy evaluation_start đầu tiên
+        first_period = HonneEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('evaluation_start').first()
+        last_period = HonneEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('-evaluation_end').first()
+        if first_period and last_period:
+            first_date = first_period.evaluation_start
+            last_date = last_period.evaluation_end
+
+            current_date = datetime.now().date()
+
+            # Tạo danh sách các tháng từ first_date đến current_date hoặc last_date
+            year, month = first_date.year, first_date.month
+
+            if name == "honne_start":
+                end_date = current_date
+            else:
+                end_date = last_date
+
+            while first_date <= end_date:
+                date_text = f'{year}年{month}月'
+                if name == "honne_start":
+                    date = f'{year}-{str(month).zfill(2)}-01'
+                else:
+                    last_day = calendar.monthrange(year, month)[1]
+                    date = f'{year}-{str(month).zfill(2)}-{last_day}'
+                    
+                month_selected = "selected" if date == value else ""
+                output += '<option value="%s" %s>%s</option>' % (date, month_selected, date_text)
+
+                # Chuyển sang tháng tiếp theo
+                if month == 12:
+                    month = 1
+                    year += 1
+                else:
+                    month += 1
+                first_date = datetime(year, month, 1).date()
+
+        output += '</select>'
+        return output
+
+class SelfcheckMonthYearSelectWidget(forms.Widget):
+    def __init__(self, company_id=None, attrs=None, empty_label="----"):
+        self.empty_label = empty_label
+        self.company_id = company_id
+        super().__init__(attrs)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        output = '<select name="%s" class="select border-0">' % name
+        output += '<option value="" selected>%s</option>' % self.empty_label
+
+        # Lấy evaluation_start đầu tiên
+        first_period = SelfcheckEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('evaluation_start').first()
+        last_period = SelfcheckEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('-evaluation_end').first()
+        if first_period and last_period:
+            first_date = first_period.evaluation_start
+            last_date = last_period.evaluation_end
+
+            current_date = datetime.now().date()
+
+            # Tạo danh sách các tháng từ first_date đến current_date hoặc last_date
+            year, month = first_date.year, first_date.month
+
+            if name == "selfcheck_start":
+                end_date = current_date
+            else:
+                end_date = last_date
+
+            while first_date <= end_date:
+                date_text = f'{year}年{month}月'
+                if name == "selfcheck_start":
+                    date = f'{year}-{str(month).zfill(2)}-01'
+                else:
+                    last_day = calendar.monthrange(year, month)[1]
+                    date = f'{year}-{str(month).zfill(2)}-{last_day}'
+                    
+                month_selected = "selected" if date == value else ""
+                output += '<option value="%s" %s>%s</option>' % (date, month_selected, date_text)
+
+                # Chuyển sang tháng tiếp theo
+                if month == 12:
+                    month = 1
+                    year += 1
+                else:
+                    month += 1
+                first_date = datetime(year, month, 1).date()
+
+        output += '</select>'
+        return output
+
+class MandaraMonthYearSelectWidget(forms.Widget):
+    def __init__(self, company_id=None, attrs=None, empty_label="----"):
+        self.empty_label = empty_label
+        self.company_id = company_id
+        super().__init__(attrs)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        output = '<select name="%s" class="select border-0">' % name
+        output += '<option value="" selected>%s</option>' % self.empty_label
+
+        # Lấy evaluation_start đầu tiên
+        first_period = MandaraPeriod.objects.filter(company_id=self.company_id).order_by('start_date').first()
+        last_period = MandaraPeriod.objects.filter(company_id=self.company_id).order_by('-end_date').first()
+        if first_period and last_period:
+            first_date = first_period.start_date
+            last_date = last_period.end_date
+
+            current_date = datetime.now().date()
+
+            # Tạo danh sách các tháng từ first_date đến current_date hoặc last_date
+            year, month = first_date.year, first_date.month
+
+            if name == "mandara_start":
+                end_date = current_date
+            else:
+                end_date = last_date
+
+            while first_date <= end_date:
+                date_text = f'{year}年{month}月'
+                if name == "mandara_start":
+                    date = f'{year}-{str(month).zfill(2)}-01'
+                else:
+                    last_day = calendar.monthrange(year, month)[1]
+                    date = f'{year}-{str(month).zfill(2)}-{last_day}'
+                    
+                month_selected = "selected" if date == value else ""
+                output += '<option value="%s" %s>%s</option>' % (date, month_selected, date_text)
+
+                # Chuyển sang tháng tiếp theo
+                if month == 12:
+                    month = 1
+                    year += 1
+                else:
+                    month += 1
+                first_date = datetime(year, month, 1).date()
 
         output += '</select>'
         return output

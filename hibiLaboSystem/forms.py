@@ -1423,3 +1423,72 @@ class TeamConceptForm(forms.Form):
 class CheckboxSelectMultipleWithSelectAll(forms.CheckboxSelectMultiple):
     class Media:
         js = ('js/select_all.js',)  
+
+class CultetsheetDateForm(forms.Form):
+    def __init__(self, company_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Dynamically set the widget choices based on company_id
+        honne_start_periods = HonneEvaluationPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('evaluation_start')
+
+        honne_end_periods = HonneEvaluationPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('evaluation_end')
+
+        honne_start_choices = [(period.evaluation_start) for period in honne_start_periods]
+        honne_end_choices = [(period.evaluation_end) for period in honne_end_periods]
+
+        self.fields['honne_start'] = forms.ChoiceField(
+            choices=[('', '----')] + honne_start_choices,
+            widget=fields.CultetSheetMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['honne_end'] = forms.ChoiceField(
+            choices=[('', '----')] + honne_end_choices,
+            widget=fields.CultetSheetMonthYearSelectWidget(company_id=company_id),
+        )
+
+        selfcheck_start_periods = SelfcheckEvaluationPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('evaluation_start')
+
+        selfcheck_end_periods = SelfcheckEvaluationPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('evaluation_end')
+
+        selfcheck_start_choices = [(period.evaluation_start) for period in selfcheck_start_periods]
+        selfcheck_end_choices = [(period.evaluation_end) for period in selfcheck_end_periods]
+
+        self.fields['selfcheck_start'] = forms.ChoiceField(
+            choices=[('', '----')] + selfcheck_start_choices,
+            widget=fields.SelfcheckMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['selfcheck_end'] = forms.ChoiceField(
+            choices=[('', '----')] + selfcheck_end_choices,
+            widget=fields.SelfcheckMonthYearSelectWidget(company_id=company_id),
+        )
+
+        # 
+        mandara_start_periods = MandaraPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('start_date')
+
+        mandara_end_periods = MandaraPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('end_date')
+
+        honne_start_choices = [(period.start_date) for period in mandara_start_periods]
+        honne_end_choices = [(period.end_date) for period in mandara_end_periods]
+
+        self.fields['mandara_start'] = forms.ChoiceField(
+            choices=[('', '----')] + honne_start_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['mandara_end'] = forms.ChoiceField(
+            choices=[('', '----')] + honne_end_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )

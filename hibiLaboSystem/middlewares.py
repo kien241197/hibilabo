@@ -4,6 +4,12 @@ from django.core.exceptions import PermissionDenied
 from django.utils.deprecation import MiddlewareMixin
 from .enums import RoleEnum
 
+class CultetsheetMiddleware(MiddlewareMixin):
+    def __call__(self, request, *args, **kwargs):
+        # if request.user.role is None or request.user.role.role not in [RoleEnum.日々研.value, RoleEnum.Company_SuperVisor.value, RoleEnum.Company_Staff.value]:
+        #     raise PermissionDenied()
+        return super().__call__(request)
+
 class HonneMiddleware(MiddlewareMixin):
     def __call__(self, request, *args, **kwargs):
         # if request.user.role is None or request.user.role.role not in [RoleEnum.日々研.value, RoleEnum.Company_SuperVisor.value, RoleEnum.Company_Staff.value]:
