@@ -16,7 +16,7 @@
 
 .向け {
 
-    display: none;
+    display: none !important;
 }
 
 .menu ul {
@@ -1145,7 +1145,6 @@ select {
     .wrapper-body-top {
 
         justify-content: center;
-        justify-content: space-between;
     }
 
     .item-body-top {
@@ -1172,6 +1171,12 @@ select {
 }
 
 @media (max-width: 600px) {
+   
+    .name-mb {
+
+        display: flex;
+        align-items: center;
+    }
 
     .wrapper-body-top {
 
@@ -1189,3 +1194,4 @@ select {
         height: 182px;
     }
 }
+
