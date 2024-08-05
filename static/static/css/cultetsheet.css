@@ -13,6 +13,12 @@
     --background-rgba: linear-gradient(90.07deg, #F68121 -0.48%, #F86E54 100.22%);
 }
 */
+
+.向け {
+
+    display: none;
+}
+
 .menu ul {
 
     display: none !important;
@@ -331,7 +337,6 @@ select {
 
 .text-title-bottom {
     font-size: 230%;
-    color: #85878b;
     font-weight: 600;
     font-family: var(--font-text);
     padding: 3px 10px 3px 10px;
