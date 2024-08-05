@@ -13,6 +13,16 @@
     --background-rgba: linear-gradient(90.07deg, #F68121 -0.48%, #F86E54 100.22%);
 }
 */
+.menu ul {
+
+    display: none !important;
+} 
+
+.menu p {
+
+    width: 100% !important;
+    text-align: right;
+}
 
 .wrapper-canvas-totalChart {
 
