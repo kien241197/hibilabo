@@ -56,14 +56,9 @@
                     <div>
                         <p class="text-cultetsheet px-lg-5 px-1">fan℃ TOTAL</p>
                         <div class="item-select">
-                            <select class="select" name="" id=""
-                                style="background-image: '{% static 'assets/images/icon.png'%}';">
-                                <option value="">2023年3月</option>
-                            </select>
+                            {{ form.total_start|safe }}
                             <p class="to">～</p>
-                            <select class="select" name="" id="">
-                                <option value="">2023年9月</option>
-                            </select>
+                            {{ form.total_end|safe }}
                             <button class="button">表示</button>
                         </div>
                     </div>
@@ -111,14 +106,10 @@
                         <p class="text-cultetsheet px-lg-5 px-1">DO YOU KNOW &nbsp; <span class="gray-text">THINK /
                                 RESPONS</span></p>
                         <div class="item-select" style="display: flex;">
-                            <select class="select" name="" id="">
-                                <option value="">2023年3月</option>
-                            </select>
+                            {{ form.bonknow_start|safe }}
                             <p class="to">～</p>
-                            <select class="select" name="" id="">
-                                <option value="">2023年9月</option>
-                            </select>
-                            <button class="button">表示</button>
+                            {{ form.bonknow_end|safe }}
+                            <button class="button" id="buttonBonknow">表示</button>
                         </div>
                     </div>
                     <canvas data-type="bar" width="100%" data-color-datalabels="#ffffff" id="stackedChart2"
@@ -143,6 +134,13 @@
 </main>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script>
+    const urlHonne = "{% url 'cultetsheet_honne_ajax' %}"
+    const urlSelfCheck = "{% url 'cultetsheet_selfcheck_ajax' %}"
+    const urlMandara = "{% url 'cultetsheet_mandara_ajax' %}"
+    const urlBonknow = "{% url 'cultetsheet_bonknow_ajax' %}"
+
+</script>
 <script src="{% static 'js/cultetsheet.js' %}"></script>
 
 {% endblock %}

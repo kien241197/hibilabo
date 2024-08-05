@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    const charts = {};
 
     Chart.register(ChartDataLabels);
 
@@ -162,21 +163,34 @@ $(document).ready(function () {
 
 
     // 
-    function doubleColumsBar(id) {
+    function doubleColumsBar(id, result) {
 
-        new Chart(id, {
+        
+        if (charts[id]) {
+            charts[id].destroy(); // Phá hủy biểu đồ cũ nếu có
+        }
+
+        let listLabel = result?.map(item => item.date) || []
+
+        while(listLabel.length < 6){
+            listLabel.push("")
+        }
+
+        
+
+        charts[id] = new Chart(document.getElementById(id).getContext('2d'), {
             type: 'bar',
             data: {
-                labels: ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"],
+                labels: listLabel,
                 datasets: [{
                     label: '',
-                    data: [48, 47, 66, 78, 73, 70, 82],
+                    data: result?.map(item => item.total_logic_must) || [],
                     backgroundColor: '#2CAEB5',
                     borderWidth: 0
                 },
                 {
                     label: '',
-                    data: [52, 53, 34, 22, 27, 30, 18],
+                    data: result?.map(item => item.total_sense_want) || [],
                     backgroundColor: '#EAA9CA',
                     borderWidth: 0
                 }
@@ -233,11 +247,10 @@ $(document).ready(function () {
         });
     }
 
-    doubleColumsBar(document.getElementById('stackedChart2').getContext('2d'))
+    doubleColumsBar('stackedChart2')
 
     // 
     // Biến để lưu trữ các biểu đồ theo ID của canvas
-    const charts = {};
 
     // Cập nhật hàm oneColumBar
     function oneColumBar(id, labels, data, type) {
@@ -309,7 +322,7 @@ $(document).ready(function () {
         return charts[id];
     }
 
-    oneColumBar('barChart1', ["2022/3", "2022/4", "2022/5", "2022/6", "2022/7", "2022/8", "2022/9"], [48, 53, 66, 78, 73, 70, 85], "MANDARA and SELFCHECK and HONNE");
+    oneColumBar('barChart1', [], [], "MANDARA and SELFCHECK and HONNE");
     oneColumBar('stackedChart1', [], [], "MANDARA and SELFCHECK and HONNE");
     oneColumBar('barChart2', [], [], "MANDARA and SELFCHECK and HONNE");
     oneColumBar('totalChart', ["2022/3", "2022/6", "2022/9", "2022/12", "2023/3", "2023/6", "2023/9", "2023/12", "2024/3", "2024/6", "2024/9", "2024/12", "2025/3", "2025/6"], [48, 53, 66, 78, 73, 70, 82, 73, 78, 66, 66, 70], "TOTAL");
@@ -341,7 +354,7 @@ $(document).ready(function () {
             beforeSend: function (request) {
                 request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             },
-            url: '/cultetsheet/ajax/honne',
+            url: urlHonne,
             data: {
                 start_date,
                 end_date,
@@ -372,13 +385,14 @@ $(document).ready(function () {
             beforeSend: function (request) {
                 request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             },
-            url: '/cultetsheet/ajax/selfcheck',
+            url: urlSelfCheck,
             data: {
                 start_date,
                 end_date,
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (res) {
+                
                 
                 const labels = res.context.map(item =>  {
 
@@ -392,7 +406,6 @@ $(document).ready(function () {
         })
     })
 
-    // Chưa hoàn thiện
     $("#buttonMandara").click(function () {
 
         const start_date = $('select[name="mandara_start"]').val()
@@ -404,7 +417,7 @@ $(document).ready(function () {
             beforeSend: function (request) {
                 request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             },
-            url: '/cultetsheet/ajax/mandara',
+            url: urlMandara,
             data: {
                 start_date,
                 end_date,
@@ -424,6 +437,40 @@ $(document).ready(function () {
         })
     })
 
+    $("#buttonBonknow").click(function () {
+
+        const start_date = $('select[name="bonknow_start"]').val()
+        const end_date = $('select[name="bonknow_end"]').val()
+        const csrftoken = getCookie('csrftoken');
+        
+        $.ajax({
+            type: "POST",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            },
+            url: urlBonknow,
+            data: {
+                start_date,
+                end_date,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (res) {
+                
+                const result  = res.context.context.map(item =>  {
+
+                    const date = new Date(item.date)
+                    return {
+                        date: `${date.getFullYear()}/${date.getMonth() + 1}`,
+                        total_logic_must: item.total_logic_must,
+                        total_sense_want: item.total_sense_want
+                    }
+                });
+
+               doubleColumsBar('stackedChart2', result)
+            }
+        })
+    })
+
 
 
     window.addEventListener('resize', () => {
@@ -436,28 +483,16 @@ $(document).ready(function () {
 
             chart1.options.plugins.datalabels.font.size = 8;
             chart2.options.plugins.datalabels.font.size = 8;
-            chart3.options.plugins.datalabels.font.size = 14;
-            chart4.options.plugins.datalabels.font.size = 14;
-            chart5.options.plugins.datalabels.font.size = 14;
-            chart6.options.plugins.datalabels.font.size = 14;
         }
         if (window.innerWidth >= 960) {
 
             chart1.options.plugins.datalabels.font.size = 10;
             chart2.options.plugins.datalabels.font.size = 10;
-            chart3.options.plugins.datalabels.font.size = 16;
-            chart4.options.plugins.datalabels.font.size = 16;
-            chart5.options.plugins.datalabels.font.size = 16;
-            chart6.options.plugins.datalabels.font.size = 16;
         }
         if (window.innerWidth >= 1097) {
 
             chart1.options.plugins.datalabels.font.size = 12;
             chart2.options.plugins.datalabels.font.size = 12;
-            chart3.options.plugins.datalabels.font.size = 22;
-            chart4.options.plugins.datalabels.font.size = 22;
-            chart5.options.plugins.datalabels.font.size = 20;
-            chart6.options.plugins.datalabels.font.size = 20;
         }
         if (window.innerWidth >= 1280) {
             chart1.options.plugins.datalabels.font.size = 12;
@@ -466,21 +501,15 @@ $(document).ready(function () {
         if (window.innerWidth >= 1536) {
             chart1.options.plugins.datalabels.font.size = 16;
             chart2.options.plugins.datalabels.font.size = 16;
-            chart5.options.plugins.datalabels.font.size = 24;
-            chart6.options.plugins.datalabels.font.size = 24;
         }
         if (window.innerWidth >= 1745) {
             chart1.options.plugins.datalabels.font.size = 18;
             chart2.options.plugins.datalabels.font.size = 18;
-            chart5.options.plugins.datalabels.font.size = 25;
-            chart6.options.plugins.datalabels.font.size = 25;
         }
 
         if (window.innerWidth >= 1920) {
             chart1.options.plugins.datalabels.font.size = 20;
             chart2.options.plugins.datalabels.font.size = 20;
-            chart5.options.plugins.datalabels.font.size = 30;
-            chart6.options.plugins.datalabels.font.size = 30;
         }
 
         if (window.innerWidth >= 2400) {
@@ -509,12 +538,7 @@ $(document).ready(function () {
         if (window.innerWidth >= 3840) {
             chart1.options.plugins.datalabels.font.size = 40;
             chart2.options.plugins.datalabels.font.size = 40;
-            chart3.options.plugins.datalabels.font.size = 50;
-            chart4.options.plugins.datalabels.font.size = 50;
-            chart5.options.plugins.datalabels.font.size = 50;
-            chart6.options.plugins.datalabels.font.size = 50;
         }
-
     });
 
 })

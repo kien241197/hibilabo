@@ -54,7 +54,5 @@ urlpatterns = [
 	path('cultetsheet/ajax/honne', views.CultetsheetHonne, name="cultetsheet_honne_ajax"),
 	path('cultetsheet/ajax/selfcheck', views.CultetsheetSelfcheck, name="cultetsheet_selfcheck_ajax"),
 	path('cultetsheet/ajax/mandara', views.CultetsheetMandara, name="cultetsheet_mandara_ajax"),
-    
-    
-    
+	path('cultetsheet/ajax/bonknow', views.CultetsheetBonknow, name="cultetsheet_bonknow_ajax"),
 ]
