@@ -65,11 +65,14 @@
                          </li>
                       {% endif %}
                 </ul>
-                <p>
+                
+                <p class="name-mb">
                   {% if not user.is_authenticated %}
                     こんにちは！ ゲスト さん
                   {% else %}
-                    {{ user.last_name }}  {{ user.first_name }} さん　向け
+                  {% block name %}
+                  {% endblock %}  
+                  {{ user.last_name }}  {{ user.first_name }} さん　<span class="向け">向け</span>
                   {% endif %}
                 </p>
 
