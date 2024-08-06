@@ -31,8 +31,9 @@ from django.conf import settings
 import os
 from django.template.loader import get_template
 import pdfkit
-from django.db.models import Q, F
+from django.db.models import Q, F, Value
 import jaconv
+from django.db.models.functions import Concat
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
@@ -443,7 +444,8 @@ class HonneIndexStaticks(TemplateView):
             if key_user_id != '':
                 result_queryset = result_queryset.filter(user_id=key_user_id)
 
-            result_queryset = result_queryset.annotate(sum_kartet=F('kartet_index1') + F('kartet_index2') + F('kartet_index3') + F('kartet_index4') + F('kartet_index5') + F('kartet_index6') + F('kartet_index7') + F('kartet_index8'))
+            result_queryset = result_queryset.annotate(sum_kartet=F('kartet_index1') + F('kartet_index2') + F('kartet_index3') + F('kartet_index4') + F('kartet_index5') + F('kartet_index6') + F('kartet_index7') + F('kartet_index8')).values()
+            
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
@@ -504,7 +506,6 @@ class HonneQrStaticks(TemplateView):
 
                 rowidx = 0
                 result_list = [[[] for i in range(len(staff_list) + 1)] for j in range(len(question_list))]
-                print(result_list)
                 # pdb.set_trace()
                 for mst in question_list:
                     result_list[rowidx][0] = mst.question
@@ -2173,3 +2174,162 @@ def test_mandara_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class TestHonne(TemplateView):
+    template_name = "honne/honne.html"
+    form_class = forms.HonneEvaluationUnitForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super(TestHonne, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request)
+
+        list_result = {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+        }
+        kwargs['result'] = list_result
+        kwargs['title_header'] = "HONNE"
+        return kwargs
+
+@login_required
+def HonneTotalAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                company_id = request.user.company_id
+                key_evaluation_unit = request.POST.get('evaluation_unit')
+
+                evaluation_unit = HonneEvaluationPeriod.objects.filter(
+                id=key_evaluation_unit,
+                honne_type_results__company_id=company_id
+                ).annotate(
+                total_a=Sum('honne_type_results__kartet_type_a'),
+                total_b=Sum('honne_type_results__kartet_type_b'),
+                total_c=Sum('honne_type_results__kartet_type_c'),
+                total_d=Sum('honne_type_results__kartet_type_d'),
+                ).first()
+
+                context = {'result': {}}
+
+                if evaluation_unit is not None:
+                    context['result']["A"] = evaluation_unit.total_a or 0
+                    context['result']["B"] = evaluation_unit.total_b or 0
+                    context['result']["C"] = evaluation_unit.total_c or 0
+                    context['result']["D"] = evaluation_unit.total_d or 0
+
+                if sum(context['result'].values()) > 0:
+                    context['max_type'] = max(context['result'], key=context['result'].get)
+                
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def HonneTypeStaticksAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_user_id = request.POST.get('user_id')
+                key_evaluation_unit = request.POST.get('evaluation_unit')
+                result_queryset = HonneTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+                if key_user_id != '':
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+
+                list_resp = list(result_queryset.values())
+                return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    
+@login_required
+def HonneIndexStaticksAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+
+                key_evaluation_unit = request.POST['evaluation_unit']
+                key_user_id = request.POST['user_id']
+                result_queryset = HonneIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
+                if key_user_id != '':
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+
+                result_queryset = result_queryset.annotate(sum_kartet=F('kartet_index1') + F('kartet_index2') + F('kartet_index3') + F('kartet_index4') + F('kartet_index5') + F('kartet_index6') + F('kartet_index7') + F('kartet_index8'),
+                                                        full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name'))
+                                                        )
+                list_resp = list(result_queryset.values())
+                return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def HonneChartAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                key_user_id = request.POST['user_id']
+                result_queryset = HonneIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+                if key_user_id != '':
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+                list_resp = list(result_queryset.values())
+                return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def HonneQrStaticksAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                key_user_id = request.POST['user_id']
+
+                question_list = HonneEvaluationPeriod.objects.filter(id=key_evaluation_unit).first().honne_questions.all()
+
+                if len(question_list) > 0:
+                    result_queryset = HonneAnswerResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
+                    staff_list = User.objects.filter(company_id=request.user.company_id,id__in=result_queryset.values('user_id')).order_by('id')
+                    if key_user_id != '':
+                        result_queryset = result_queryset.filter(user_id=key_user_id)
+                        staff_list = staff_list.filter(id=key_user_id)
+
+                    rowidx = 0
+                    result_list = [[[] for i in range(len(staff_list) + 1)] for j in range(len(question_list))]
+                    # pdb.set_trace()
+                    for mst in question_list:
+                        result_list[rowidx][0] = mst.question
+                        colidx = 1
+                        for i in staff_list:
+                            get_result = result_queryset.filter(honne_question_id=mst.id, user_id=i.id).first()
+                            if get_result is None:
+                                result_list[rowidx][colidx] = ''
+                            else:
+                                if get_result.answer == 1:
+                                    result_list[rowidx][colidx] = '○'
+                                else:
+                                    result_list[rowidx][colidx] = '✕'
+                            colidx = colidx + 1
+                        rowidx = rowidx + 1
+                    context = {
+                        "staff_list": list(staff_list.values()),
+                        "qr_list":  list(result_list)
+                    }
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+

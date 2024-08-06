@@ -1,0 +1,359 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="{% static 'js/honne-chart.js' %}"></script>
+
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/honne_nav.html" %}
+                <div class="col-md-10 tab" id="tab0" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>HONNE FEEDBACK</h2>
+                                    <p>カルテット分析総合結果</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        <p hidden>{{ form.user_id }}</p>
+                                        <button type="submit" name="submit" id="submitHonneTotal">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content">
+                                    <p class="text">あなたの会社はTYPE
+                                        <label class="total_type" id="type_sum">
+                                            {% if max_type %}{{ max_type }}{% else %}?{% endif %}
+                                        </label>
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="number-custom">
+                                            <span class="text-ab ab1">COTO</span>
+                                            <span class="text-ab ab2">HITO</span>
+                                            <ul>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>A</span>
+                                                        <h3 id="type-a">{{ result.A }}</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>B</span>
+                                                        <h3 id="type-b">{{ result.B }}</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>C</span>
+                                                        <h3 id="type-c">{{ result.C }}</h3>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items">
+                                                        <span>D</span>
+                                                        <h3 id="type-d">{{ result.D }}</h3>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="number-custom">
+                                            <span class="text-ab ab1">COTO</span>
+                                            <span class="text-ab ab2">HITO</span>
+                                            <ul>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>A</span>
+                                                        <h3>TYPE A</h3>
+                                                        <p>人望高・革命的<br>
+                                                            思考的・信用高</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>B</span>
+                                                        <h3>TYPE B</h3>
+                                                        <p>共同体感覚・価値<br>
+                                                            コミュニティ高</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>C</span>
+                                                        <h3>TYPE C</h3>
+                                                        <p>MUST 業務高<br>
+                                                            のびしろ・期待度高</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="items items2">
+                                                        <span>D</span>
+                                                        <h3>TYPE D</h3>
+                                                        <p>WANT 業務高<br>
+                                                            機械的・信用高</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab1" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>HONNE FEEDBACK</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm1">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2">
+                                    <table class="table table2">
+                                        <tr>
+                                            <th>{{key_Usercd}}</th>
+                                            <th>社 員 名</th>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
+                                        </tr>
+                                        <tbody id="tableHonneTypeStaticks">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab2" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>HONNE TABLE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm2">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2 content-chart-vetical">
+                                    <table class="table table2">
+                                        <tr>
+                                            <th>
+                                                <div class="px-3"></div>
+                                            </th>
+                                            <th>
+                                                <div style="min-width: 80px;">名<br />前</div>
+                                            </th>
+                                            <th>
+                                                <div class="title-honne-table">合</br>計</br>点</br>数</div>
+                                            </th>
+
+                                            <th>
+                                                <div class="title-honne-table">
+                                                    H<br />P<br />の<br />見<br />え<br />る<br />化</div>
+                                            </th>
+                                            <th>
+                                                <div class="title-honne-table"><span
+                                                        class="d-flex m-0 justify-content-center align-items-center">
+                                                        <p class="m-0">ビ<br />ジ<br />ョ<br />ン</p>
+                                                        <p class="m-0">コ<br />ン<br />セ<br />プ<br />ト</p>
+                                                    </span></div>
+                                            </th>
+                                            <th><span
+                                                    class="d-flex align-items-center m-0 justify-content-center title-honne-table">
+                                                    <p class="m-0">
+                                                    <p class="m-0">リ<br />|<br />ダ<br />|<br />育<br />成</p>
+                                                    幹<br />部<br />育<br />成</p>
+                                                </span></th>
+                                            <th>
+                                                <div
+                                                    class="title-honne-table d-flex align-items-center m-0 justify-content-center">
+                                                    <p class="m-0">面<br />接</p>
+                                                    <p class="m-0">人<br />生<br />設<br />計</p>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="title-honne-table">社<br />内<br />共<br />有<br />指<br />数
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="title-honne-table">組<br />織<br />力<br />指<br />数</div>
+                                            </th>
+                                            <th>
+                                                <div class="title-honne-table">評<br />価<br />制<br />度<br />指<br />数
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="title-honne-table"><span
+                                                        class="d-flex align-items-center m-0 justify-content-center">
+                                                        <p class="m-0">自<br />己<br />分<br />析<br />指<br />数</p>
+                                                        <p class="m-0">個<br />人<br />チ<br />ャ<br />|<br />ト</p>
+                                                    </span></div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>80満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                            <th>10満点</th>
+                                        </tr>
+                                        <tbody id="tableIndexTypeStaticks">
+                                            {% for record in orderby_records %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="text-center text-nowrap">
+                                                    {% if user.company.visble_flag == True %}
+                                                    {{ record.user.full_name|truncatechars:25 }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ record.sum_kartet }}</td>
+                                                <td>{{ record.kartet_index1 }}</td>
+                                                <td>{{ record.kartet_index2 }}</td>
+                                                <td>{{ record.kartet_index3 }}</td>
+                                                <td>{{ record.kartet_index4 }}</td>
+                                                <td>{{ record.kartet_index5 }}</td>
+                                                <td>{{ record.kartet_index6 }}</td>
+                                                <td>{{ record.kartet_index7 }}</td>
+                                                <td>{{ record.kartet_index8 }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab3" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>HONNE INDEX</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter mb-0">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm3">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+
+                                <div class="content-chart mt-5">
+                                    <div class="row justify-content-between">
+                                        <div style="width: 590px; height: 400px;" class="mt-5">
+                                            <canvas id="mycanvas-sample" width="300" height="300"></canvas>
+                                        </div>
+                                        <div class="col-md-4 mx-3" id="imagesHonneChart">
+                                        </div>
+                                        <script>window.onload = createGraphSample()</script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab4" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>QUESTION TABLE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm4">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2">
+                                    <table class="table table2">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>質問</th>
+                                            <th id="tableHonneQrStaticks">
+
+                                            </th>
+                                        </tr>
+                                        <tbody id="tbodyHonneQrStaticks">
+                                            <!-- 質問結果のデータを展開する -->
+                                            {% for obj in qr_list %}
+                                            <tr>
+                                                <td class="tatefixed">{{ forloop.counter }}</td>
+                                                {% for i in obj %}
+                                                <td class="tatefixed {% if forloop.counter == 1 %}text-left{% endif %}">
+                                                    {{ i }}</td>
+                                                <!-- 回答内容を展開 -->
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    const showName = `{{ user.company.visble_flag }}`
+    const urlHonneTotalAjax = "{% url 'honne_total_ajax' %}"
+    const urlHonneTypeStaticksAjax = "{% url 'honne_type_staticks_ajax' %}"
+    const urlHonneIndexStaticksAjax = "{% url 'honne_index_staticks_ajax' %}"
+    const urlHonneChartAjax = "{% url 'honne_chart_ajax' %}"
+    const urlHonneQrStaticksAjax = "{% url 'honne_qr_staticks_ajax' %}"
+</script>
+<script src="{% static 'js/honne.js'%}"></script>
+{% endblock %}

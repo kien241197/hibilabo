@@ -1,6 +1,12 @@
+let charts = {};
+
 function createChart(ctx, data, label) {
 
-  new Chart(ctx, {
+  if (charts[ctx]) {
+            charts[ctx].destroy(); // Phá hủy biểu đồ cũ nếu có
+        }
+
+  charts[ctx] = new Chart(document.getElementById(ctx), {
     type: 'radar',
     data: {
       labels: label ? ['HP見える化', 'コンセプト・ヴィジョン', 'リーダー育成・　幹部育成', '面接・人生設計', '社内共有', '組織力', '評価制度', '個人チャート・自己分析'] : ['', '', '', '', '', '', '', ''],
@@ -61,18 +67,15 @@ function createChart(ctx, data, label) {
     },
   });
 }
+
 function create_graph(id, data) {
 
   var strname = "mycanvas-" + id;
-  var ctx = document.getElementById(strname);
-
-  createChart(ctx, data, false)
+  createChart(strname, data, false)
 }
 
 function createGraphSample() {
 
   var strname = "mycanvas-sample"
-  var ctx1 = document.getElementById(strname);
-
-  createChart(ctx1, [6, 3, 7, 5, 1, 2, 4, 6], true)
+  createChart(strname, [6, 3, 7, 5, 1, 2, 4, 6], true)
 }
