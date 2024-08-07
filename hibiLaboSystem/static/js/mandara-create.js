@@ -189,4 +189,10 @@ $(document).ready(function () {
         })
         .trigger('input')
         .focus();
+
+    $('input').on('keydown', function (event) {
+        if (event.which == 13) {
+            event.preventDefault(); // Ngăn chặn sự kiện submit
+        }
+    });
 });
