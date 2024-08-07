@@ -1,0 +1,309 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+	integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+	crossorigin="anonymous"></script>
+  	<script
+	src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="{% static 'js/selfcheck.js' %}"></script>
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray overflow-auto">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+				{% include "component/selfcheck_nav.html" %}
+                <div class="col-md-10 tab" id="tab0" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>SELF CHECK BY TYPE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2 content-chart-2-gray">
+                                    <table class="table table2" id="td1" >
+                                        <tr>
+                                            <th colspan="2" rowspan="2">TYPE</th>
+                                            <th><img src="{% static 'assets/circle.png' %}"></th>
+                                            <th><img src="{% static 'assets/squer.png' %}"></th>
+                                            <th><img src="{% static 'assets/triangle.png' %}"></th>
+                                        </tr>
+                                        <tr>
+                                            <th>人に合わせるタイプ</th>
+                                            <th>バランスタイプ</th>
+                                            <th>自分の感情を大事にするタイプ</th>
+                                        </tr>
+                                        <tbody>
+                                            {% for record in orderby_records %}
+                                            <tr>
+                                              <td>{{ forloop.counter }}</td>
+	                                          <td style="text-wrap: nowrap;">
+                                                {% if user.company.visble_flag == True %} 
+                                                    {{ record.user.full_name|truncatechars:25 }}
+                                                {% endif %}
+                                            </td>
+                                              <td >{{ record.selfcheck_circl }}</td>
+                                              <td >{{ record.selfcheck_square }}</td>
+                                              <td >{{ record.selfcheck_traiangle }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab1" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>SELF CHECK INDEX</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter mb-0">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2 content-chart-2-gray">
+                                    <div>
+                                      <table class="table_statics" id="td1" hidden >
+                                        <tr><th></th><th>タイプ</th><th>人に合わせるタイプ</th><th>バランスタイプ</th><th>自分の感情を大事にするタイプ</th></tr>
+                                        <tbody>
+                                            {% for record in orderby_records %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td >{{ record.user.full_name }}</td>
+                                                <td >{{ record.selfcheck_circl }}</td>
+                                                <td >{{ record.selfcheck_square }}</td>
+                                                <td >{{ record.selfcheck_traiangle }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class="content-chart">
+                                        <div class="row">
+                                            <div style="width: 450px; height: 450px;">
+                                                <canvas id="mycanvas-sample"></canvas>
+                                            </div>
+                                            {% for record in orderby_records %}
+                                            <div class="col-md-4 mx-5 pt-5">
+                                                <div class="images">
+                                                    {% if user.company.visble_flag == True %}
+                                                        <p>{{ record.user.full_name }}</p>
+                                                    {% endif %}
+                                                    <canvas id="mycanvas-{{ record.user.id }}"></canvas>
+                                                </div>
+                                            </div>
+                                           
+                                            <script>window.onload=create_chart1({{ record.user.id }}, {{ record.type_list|safe }})</script>
+                                            {% endfor %}
+                                            <script>window.onload=createChartSample1()</script>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab2" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>SELF CHECK TABLE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2">
+                                    <table class="table table2" id="td1" style="width:100%">
+                                        <tr>
+                                            <th><div class="px-3"></div></th>
+                                            <th><div>名</br>前</div></th>
+                                            <th><div class="title-selfcheck-table-index">合</br>計</br>点</br>数</div></th>
+                                            <th><div class="title-selfcheck-table-index">決<br/>断<br/>力</div></th>
+                                            <th><div class="title-selfcheck-table-index">専<br/>門<br/>性</div></th>
+                                            <th><div class="title-selfcheck-table-index">自<br/>己<br/>管<br/>理</div></th>
+                                            <th><div class="title-selfcheck-table-index">広<br/>報<br/>力</div></th>
+                                            <th><div class="title-selfcheck-table-index">連<br/>携<br/>力</div></th>
+                                            <th><div class="title-selfcheck-table-index">人<br/>間<br/>関<br/>係</div></th>
+                                            <th><div class="title-selfcheck-table-index">患<br/>者<br/>対<br/>応</div></th>
+                                            <th><div class="title-selfcheck-table-index">チ<br/>❘<br/>ム<br/>ワ<br/>❘<br/>ク</div></th>
+                                            <th><div class="title-selfcheck-table-index">総<br/>合<br/>管<br/>理</div></th>
+                                            <th><div class="title-selfcheck-table-index">理<br/>念<br/>浸<br/>透</div></th>
+                                            <th><div class="title-selfcheck-table-index">自<br/>己<br/>啓<br/>発</div></th>
+                                            <th><div class="title-selfcheck-table-index">思<br/>考</div></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center"></th>
+                                            <th class="text-center">180満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                            <th class="text-center">15満点</th>
+                                        </tr>
+                                        <tbody>
+                                            {% for record in orderby_records %}
+                                              <tr>
+                                                  <td>{{ forloop.counter }}</td>
+                                                  <td class="text-nowrap text-center">
+                                                        {% if user.company.visble_flag == True %}
+                                                            {{ record.user.full_name|truncatechars:25 }}
+                                                        {% endif %}
+                                                  </td>
+                                                  <td class="text-center">{{ record.sum_selfcheck_index }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index1 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index2 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index3 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index4 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index5 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index6 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index7 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index8 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index9 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index10 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index11 }}</td>
+                                                  <td class="text-center">{{ record.selfcheck_index12 }}</td>
+                                              </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab3" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>SELF CHECK INDEX</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter mb-0">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2 content-chart-2-gray">
+                                    <div class="content-chart">
+                                        
+                                        <div class="row align-items-center">
+                                            <div style="width: 350px; height: 350px;">
+                                                <canvas id="mycanvas-spamle"></canvas>
+                                            </div>
+                                            {% for record in orderby_records %}
+                                            <div class="col-md-4 mx-5 pt-4">
+                                                <div class="images"  style="width: 320px; height: 320px;">
+                                                    {% if user.company.visble_flag == True %}
+                                                        <p>{{ record.user.full_name }}</p>
+                                                    {% endif %}
+                                                    <canvas id="mycanvas-{{ record.user.id }}"></canvas>
+                                                </div>
+                                            </div>
+                                            <script>window.onload=create_chart2({{ record.user.id }}, {{ record.index_list|safe }})</script>
+                                            {% endfor %}
+                                            <script>window.onload=createChartSample2()</script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab4" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2>QUESTION TABLE</h2>
+                                    <p>タイプ別分析</p>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="content-chart content-chart-2">
+                                    <table class="table table2">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>質問</th>
+                                            <!--取得した人員数の値分列ヘッダーを追加する-->
+                                            {% for obj in staff_list %}
+                                              <th>
+                                                {% if user.company.visble_flag == True %}
+                                                 {{ obj.full_name|truncatechars:25 }}
+                                                {% endif %}
+                                            </th>
+                                            {% endfor %}
+                                        </tr>
+                                        <tbody>
+                                            <!-- 質問結果のデータを展開する -->
+                                            {% for obj in qr_list %}
+                                              <tr>
+                                                <td class="tatefixed">{{ forloop.counter }}</td>
+                                                {% for i in obj %}
+                                                <td class="tatefixed {% if forloop.counter == 1 %}text-left{% endif %}">{{ i }}</td>
+                                                {% endfor %}
+                                              </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

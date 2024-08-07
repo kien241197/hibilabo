@@ -2332,4 +2332,15 @@ def HonneQrStaticksAjax(request):
                 HttpResponseBadRequest('Invalid request')
         return JsonResponse({'status': 'Invalid request'}, status=400)
 
+class TestSelfcheck(TemplateView):
+    template_name = "selfcheck/selfcheck.html"
+    form_class = forms.SelfcheckEvaluationUnitForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super(TestSelfcheck, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "SELFCHECK"
+        return kwargs
+
+
 

@@ -57,4 +57,5 @@ urlpatterns = [
 	path('honne-chart-ajax', views.HonneChartAjax, name="honne_chart_ajax"),
 	path('honne-qr-staticks-ajax', views.HonneQrStaticksAjax, name="honne_qr_staticks_ajax"),
     
+	path('test-selfcheck', views.TestSelfcheck.as_view(), name="test-selfcheck"),
 ]
