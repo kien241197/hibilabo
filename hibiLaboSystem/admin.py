@@ -22,6 +22,9 @@ import jaconv
 from django.utils.html import format_html
 from django.contrib.auth.models import Group, Permission
 from . import forms
+from django.urls import path
+from . import views
+
 
 
 thread_local = threading.local()
@@ -481,6 +484,38 @@ class BranchAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             return qs.filter(company_id=request.user.company_id)
         return qs 
+    
+class CustomAdminSite(admin.AdminSite):
+    def get_urls(self):
+        custom_urls = [
+            path('some-custom-url/', self.admin_view(views.SomeCustomView.as_view(admin=self))),
+        ]
+        admin_urls = super().get_urls()
+        return custom_urls + admin_urls
+    
+    def get_app_list(self, request, app_label=None):
+        app_list = super().get_app_list(request, app_label)
+        if app_label is None or app_label == 'システム設定':
+            app_list.append(
+                {
+                    "name": "システム設定",
+                    "app_label": "システム設定",
+                    "models": [
+                        {
+                            "name": "Settings",
+                            "object_name": "settings",
+                            "admin_url": "/admin/some-custom-url",
+                            "view_only": True,
+                        }
+                    ],
+                }
+            )
+        return app_list
+
+site = CustomAdminSite(name="my-fancy-url")
+admin.site = site
+
+admin.site.register(Group)
 
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
@@ -491,14 +526,13 @@ admin.site.register(HonneQuestion, HonneQuestionCustom)
 # Selfcheck
 admin.site.register(SelfcheckQuestion, SelfcheckQuestionCustom)
 admin.site.register(SelfcheckRole)
-admin.site.register(Industry, IndustryCustom)
+# admin.site.register(Industry, IndustryCustom)
 # Bonknow
 admin.site.register(ResponsQuestion, ResponsQuestionCustom)
 admin.site.register(ThinkQuestion, ThinkQuestionCustom)
 # Watasheet
 admin.site.register(WatasheetQuestion, WatasheetQuestionCustom)
 #Remove Group Permission
-admin.site.unregister(Group)
 
 
 

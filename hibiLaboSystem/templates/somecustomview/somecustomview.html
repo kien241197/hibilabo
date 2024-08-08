@@ -1,0 +1,11 @@
+{% extends 'admin/base.html' %}
+{% block extrahead %}
+    {{ block.super }}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/somecustomview.css' %}">
+{% endblock %}
+
+{% block content %}
+<p class="text">Hello World 1231231234 1231233</p>
+<input type="text">
+{% endblock %}
