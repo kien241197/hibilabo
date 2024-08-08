@@ -2173,15 +2173,3 @@ def test_mandara_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
-class SomeCustomView(ListView):
-    admin = {}
-
-    def get(self, request):
-        ctx = self.admin.each_context(request)
-        return render(request, 'somecustomview/somecustomview.html', context={
-                        "title": "新しい支店を選択",
-                        "is_nav_sidebar_enabled": self.admin.each_context(request).get("is_nav_sidebar_enabled"),
-                        "has_permission": self.admin.each_context(request).get("has_permission"),
-                        'available_apps': self.admin.each_context(request).get("available_apps")
-                        })

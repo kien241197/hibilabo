@@ -24,13 +24,9 @@ from django.contrib.auth.models import Group, Permission
 from . import forms
 from django.urls import path
 from . import views
-
-
-
-thread_local = threading.local()
+from django.template.response import TemplateResponse
 
 thread_local = threading.local()
-
 
 # Register your models here.
 CustomeUser = get_user_model()
@@ -488,7 +484,7 @@ class BranchAdmin(admin.ModelAdmin):
 class CustomAdminSite(admin.AdminSite):
     def get_urls(self):
         custom_urls = [
-            path('some-custom-url/', self.admin_view(views.SomeCustomView.as_view(admin=self))),
+            path('some-custom-url/', self.admin_view(self.some_custom_view)),
         ]
         admin_urls = super().get_urls()
         return custom_urls + admin_urls
@@ -512,10 +508,32 @@ class CustomAdminSite(admin.AdminSite):
             )
         return app_list
 
+    def some_custom_view(self, request):
+        context = self.each_context(request)
+        company_id = request.user.company_id
+            
+        if request.method == "POST":
+            show_name = request.POST.get('show-name', 'off') == 'on'
+            
+            Company.objects.filter(id=company_id).update(visble_flag=show_name)
+            context["message"] = "Lưu thành công..!"
+
+        context.update({
+            "title": "新しい支店を選択",
+            "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
+            "has_permission": context.get("has_permission"),
+            'available_apps': context.get("available_apps")
+        })
+        company = Company.objects.filter(
+                id=company_id
+            ).first()
+        
+        context["company"] = company
+        return TemplateResponse(request, 'somecustomview/somecustomview.html', context)
+
 site = CustomAdminSite(name="my-fancy-url")
 admin.site = site
 
-admin.site.register(Group)
 
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
@@ -533,6 +551,8 @@ admin.site.register(ThinkQuestion, ThinkQuestionCustom)
 # Watasheet
 admin.site.register(WatasheetQuestion, WatasheetQuestionCustom)
 #Remove Group Permission
+admin.site.register(Group)
+
 
 
 

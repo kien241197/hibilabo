@@ -1,11 +1,18 @@
 {% extends 'admin/base.html' %}
 {% block extrahead %}
-    {{ block.super }}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/somecustomview.css' %}">
+{{ block.super }}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/somecustomview.css' %}">
 {% endblock %}
 
 {% block content %}
-<p class="text">Hello World 1231231234 1231233</p>
-<input type="text">
+<form action="" method="post">
+    {% csrf_token %}
+    <label class="show-name" for="html">
+        <input type="checkbox" name="show-name" id="html" {% if company.visble_flag %} checked {% endif %}>
+        <span >Hiện thị tên nhân viên</span>
+    </label>
+    <button type="submit">Lưu</button>
+</form>
+{{ message }}
 {% endblock %}
