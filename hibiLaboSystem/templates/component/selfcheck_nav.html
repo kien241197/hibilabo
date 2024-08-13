@@ -3,32 +3,32 @@
     <div class="sidebar">
         <ul class="nav">
             <li class="nav-items">
-                <a class="nav-link {% if url_name == 'selfcheck_type' %}active{% endif %} honne-nav"  href="#selfcheck_type">
+                <a class="nav-link {% if url_name == 'selfcheck_type' %}active{% endif %}"  href="{% url 'selfcheck_type' %}">
                     <p>SELFCHECK BY TYPE</p>
                     <span>タイプ別分析</span>
                 </a>
             </li>
             <li class="nav-items">
-                <a class="nav-link {% if url_name == 'selfcheck_type_chart' %}active{% endif %} honne-nav" href="#selfcheck_type_chart">
+                <a class="nav-link {% if url_name == 'selfcheck_type_chart' %}active{% endif %}" href="{% url 'selfcheck_type_chart' %}">
                     <p>SELFCHECK INDEX</p>
                     <span>セルフチェックタイプチャート</span>
                 </a>
             </li>
             <li class="nav-items">
-                <a class="nav-link {% if url_name == 'selfcheck_index' %}active{% endif %} honne-nav" href="#selfcheck_index">
+                <a class="nav-link {% if url_name == 'selfcheck_index' %}active{% endif %}" href="{% url 'selfcheck_index' %}">
                     <p>SELFCHECK TABLE INDEX</p>
                     <span>セルフチェック指数分布表</span>
                 </a>
             </li>
             <li class="nav-items">
-                <a class="nav-link {% if url_name == 'selfcheck_index_chart' %}active{% endif %} honne-nav" href="#selfcheck_index_chart">
+                <a class="nav-link {% if url_name == 'selfcheck_index_chart' %}active{% endif %}" href="{% url 'selfcheck_index_chart' %}">
                     <p>SELFCHECK TABLE INDEX</p>
                     <span>セルフチェック指数分布</span>
                 </a>
             </li>
 
             <li class="nav-items">
-                <a class="nav-link {% if url_name == 'selfcheck_questions' %}active{% endif %} honne-nav" href="#selfcheck_questions">
+                <a class="nav-link {% if url_name == 'selfcheck_questions' %}active{% endif %}" href="{% url 'selfcheck_questions' %}">
                     <p>QUESTION TABLE</p>
                     <span>質問分布表</span>
                 </a>

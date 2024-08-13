@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     if (hash === "#honne_total" || !hash) {
 
-        $(`#tab1`).css("display", "block");
+        $(`#tab0`).css("display", "block");
         $('.honne-nav').eq(0).addClass('active')
     }
 
@@ -203,14 +203,12 @@ $(document).ready(function () {
     })
 
     $("#myForm3").submit(function (event) {
-
         event.preventDefault();
-
-        const evaluation_unit = $(this).find('select[name="evaluation_unit"]').val()
-        const user_id = $(this).find('select[name="user_id"]').val()
-
+    
+        const evaluation_unit = $(this).find('select[name="evaluation_unit"]').val();
+        const user_id = $(this).find('select[name="user_id"]').val();
         const csrftoken = getCookie('csrftoken');
-
+    
         $.ajax({
             type: "POST",
             beforeSend: function (request) {
@@ -223,40 +221,42 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (res) {
-                let html = ''
+                let html = '';
                 if (res?.context && res?.context?.length > 0) {
-                    res?.context?.map((item, index) => {
-
-                        const data = [item.kartet_index1, item.kartet_index2, item.kartet_index3, item.kartet_index4, item.kartet_index5, item.kartet_index5, item.kartet_index7, item.kartet_index8]
-
+                    res.context.map((item) => {
+    
                         html += `
-                        <div>
-                            <div class="images">
-                            <p>
-                                ${showName === 'True' ? item.full_name : ''}
-                            </p>
-                            <div style="width: 400px; height: 400px;">
-                                <canvas id="mycanvas-${item.user_id}" style="width: 100%; height: 100%;"></canvas>
+                            <div>
+                                <div class="images">
+                                    <p>${showName === 'True' ? item.full_name : ''}</p>
+                                    <div style="width: 400px; height: 400px;">
+                                        <canvas id="mycanvas-${item.user_id}" style="width: 100%; height: 100%;"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `
-                        $("#imagesHonneChart").html(html)
-                        create_graph(item.user_id, data)
-                    })
+                        `;
+                    });
+    
+                    $("#imagesHonneChart").html(html);
+    
+                    res.context.map((item) => {
+                        const data = [
+                            item.kartet_index1, item.kartet_index2, item.kartet_index3, 
+                            item.kartet_index4, item.kartet_index5, item.kartet_index6, 
+                            item.kartet_index7, item.kartet_index8
+                        ];
+                        create_graph(item.user_id, data);
+                    });
+                    
                 } else {
-
-                    $("#imagesHonneChart").html(html)
+                    $("#imagesHonneChart").html(html);
                 }
-
-
             },
             error: function (error) {
-
                 console.log(error);
             }
-        })
-    })
+        });
+    });
 
     $("#myForm4").submit(function (event) {
 
