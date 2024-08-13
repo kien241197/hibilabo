@@ -26,8 +26,25 @@ from . import forms
 
 thread_local = threading.local()
 
-thread_local = threading.local()
+class MandaraBasePeriodInline(admin.TabularInline):
+    model = MandaraBase
+    fields = ["flg_finished"]
 
+class ResponsResultPeriodInline(admin.TabularInline):
+    model = ResponsResult
+    fields = ["flg_finished"]
+
+class WatasheetTypeResultPeriodInline(admin.TabularInline):
+    model = WatasheetTypeResult
+    fields = ["flg_finished"]
+
+class HonneTypeResultPeriodInline(admin.TabularInline):
+    model = HonneTypeResult
+    fields = ["flg_finished"]
+
+class SelfcheckTypeResultPeriodInline(admin.TabularInline):
+    model = SelfcheckTypeResult
+    fields = ["flg_finished"]
 
 # Register your models here.
 CustomeUser = get_user_model()
@@ -208,7 +225,9 @@ class IndustryCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
+    inlines=[]
     actions = []
+    
     success = True
 
     def has_import_permission(self, request):
@@ -303,6 +322,9 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             self.list_display = ["id", "username", "branch", "role"]
             self.actions = ['update_branch']
+            self.inlines = [HonneTypeResultPeriodInline, SelfcheckTypeResultPeriodInline, WatasheetTypeResultPeriodInline, ResponsResultPeriodInline, MandaraBasePeriodInline]
+        else:
+            self.inlines = []
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
     def import_action(self,request):
