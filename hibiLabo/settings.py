@@ -152,3 +152,5 @@ DEBUG_TOOLBAR_CONFIG = {
 THUMBNAIL_DEBUG = True
 
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
