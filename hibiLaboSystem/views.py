@@ -1129,10 +1129,10 @@ class MandaraCreate(TemplateView):
         company_id = self.request.user.company_id
         user_id = self.request.user.id
         mandara = MandaraBase.objects.all().filter(
-            Q(user_id=user_id) & Q(company_id=company_id) & (Q(mandara_period__start_date__gt=today) | Q(flg_finished=False))
+            Q(user_id=user_id) & Q(company_id=company_id) & (Q(mandara_period__start_date__gte=today) | Q(flg_finished=False))
         ).order_by('mandara_period__start_date').first()
         kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
-        mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gt=today)
+        mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gte=today)
         ).order_by('start_date').first()
         kwargs['form'] = self.form_class(initial={'field_stop': 'total_mission'})
         if mandara is not None:
@@ -1221,7 +1221,7 @@ class MandaraSheet(TemplateView):
         user_id = self.request.user.id
         today = datetime.date.today()
         mandara = MandaraBase.objects.select_related('mandara_period').filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True).first()
-        mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gt=today)
+        mandara_periods = MandaraPeriod.objects.all().filter(Q(company_id=company_id) & Q(start_date__gte=today)
         ).order_by('start_date').first()
         if mandara is not None:
             kwargs['start'] = mandara.mandara_period.start_date
