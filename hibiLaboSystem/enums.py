@@ -40,12 +40,6 @@ class RolePermission(Enum):
 		"add_selfcheckevaluationperiod", "change_selfcheckevaluationperiod", "delete_selfcheckevaluationperiod", "view_selfcheckevaluationperiod",
 		"add_mandaraperiod", "change_mandaraperiod", "delete_mandaraperiod", "view_mandaraperiod",
 		"add_watasheetevaluationperiod", "change_watasheetevaluationperiod", "delete_watasheetevaluationperiod", "view_watasheetevaluationperiod",
-		"change_honnetyperesult", "view_honnetyperesult",
-		"change_selfchecktyperesult", "view_selfchecktyperesult",
-		"change_watasheettyperesult", "view_watasheettyperesult",
-		"change_responsresult", "view_responsResult",
-		"change_mandarabase", "view_mandarabase"
-
 	]
 	Company_Director = [
 		"change_company", "view_company",

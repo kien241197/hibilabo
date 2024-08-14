@@ -402,13 +402,10 @@ class HonneTypeResult(models.Model):
 	kartet_type_b = models.IntegerField(blank=True, null=True)
 	kartet_type_c = models.IntegerField(blank=True, null=True)
 	kartet_type_d = models.IntegerField(blank=True, null=True)
-	flg_finished = models.BooleanField(default=False, verbose_name = 'HONNE提出取消')
+	flg_finished = models.BooleanField(default=False)
 
 	class Meta:
 		db_table = 'honne_type_results'
-	
-	def __str__(self):
-		return f"{self.evaluation_period.evaluation_name}"
 
 # SELFCHECK
 class SelfcheckQuestion(models.Model):
@@ -576,16 +573,13 @@ class SelfcheckTypeResult(models.Model):
 	selfcheck_circl = models.IntegerField(blank=True, null=True, default=0)
 	selfcheck_square = models.IntegerField(blank=True, null=True, default=0)
 	selfcheck_traiangle = models.IntegerField(blank=True, null=True, default=0)
-	flg_finished = models.BooleanField(default=False, verbose_name="SELFCHECK提出取消")
+	flg_finished = models.BooleanField(default=False)
 
 	def type_list(self):
 		return [self.selfcheck_circl, self.selfcheck_square, self.selfcheck_traiangle]
 
 	class Meta:
 		db_table = 'selfcheck_type_results'
-	
-	def __str__(self):
-		return f"{self.evaluation_period}"
 
 # BONKNOW
 class ResponsQuestion(models.Model):
@@ -757,12 +751,10 @@ class ResponsResult(models.Model):
 	logic = models.FloatField(blank=True, null=True, default=0)
 	sense = models.FloatField(blank=True, null=True, default=0)
 	review_date = models.DateField(blank=True, null=True)
-	flg_finished = models.BooleanField(default=False, verbose_name="BONKNOW提出取消")
+	flg_finished = models.BooleanField(default=False)
 
 	class Meta:
 		db_table = 'respons_results'
-	def __str__(self):
-		return f"{self.evaluation_period.evaluation_name}"
 
 class ThinkResult(models.Model):
 	company = models.ForeignKey(
@@ -963,7 +955,7 @@ class MandaraBase(models.Model):
 	H6_content = models.CharField(max_length=20, blank=True, null=True)
 	H7_content = models.CharField(max_length=20, blank=True, null=True)
 	H8_content = models.CharField(max_length=20, blank=True, null=True)
-	flg_finished = models.BooleanField(default=False, verbose_name="MANDARA提出取消")
+	flg_finished = models.BooleanField(default=False)
 	field_stop = models.CharField(max_length=20, blank=True, null=True)
 
 	def total_result(self):
@@ -971,9 +963,6 @@ class MandaraBase(models.Model):
 
 	class Meta:
 		db_table = 'mandara_base'
-	
-	def __str__(self):
-		return f'{self.mandara_period}'
 
 class MandaraProgress(models.Model):
 	mandara_base = models.ForeignKey(
@@ -1307,14 +1296,10 @@ class WatasheetTypeResult(models.Model):
 	years_old_50_70 = models.TextField(blank=True, null=True)
 	years_old_70_100 = models.TextField(blank=True, null=True)
 
-	flg_finished = models.BooleanField(default=False, verbose_name="WATASHEET提出取消")
+	flg_finished = models.BooleanField(default=False)
 	
 	class Meta:
 		db_table = 'watasheet_type_results'
-	
-	def __str__(self):
-		return f"{self.evaluation_period.evaluation_name}"
-		
 
 @receiver(pre_delete, sender=User)
 def delete_image_on_user_delete(sender, instance, **kwargs):

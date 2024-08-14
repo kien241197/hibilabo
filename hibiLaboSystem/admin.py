@@ -22,29 +22,12 @@ import jaconv
 from django.utils.html import format_html
 from django.contrib.auth.models import Group, Permission
 from . import forms
+from django.template.response import TemplateResponse
+from django.urls import path, resolve, reverse
+from django.urls import resolve
 
 
 thread_local = threading.local()
-
-class MandaraBasePeriodInline(admin.TabularInline):
-    model = MandaraBase
-    fields = ["flg_finished"]
-
-class ResponsResultPeriodInline(admin.TabularInline):
-    model = ResponsResult
-    fields = ["flg_finished"]
-
-class WatasheetTypeResultPeriodInline(admin.TabularInline):
-    model = WatasheetTypeResult
-    fields = ["flg_finished"]
-
-class HonneTypeResultPeriodInline(admin.TabularInline):
-    model = HonneTypeResult
-    fields = ["flg_finished"]
-
-class SelfcheckTypeResultPeriodInline(admin.TabularInline):
-    model = SelfcheckTypeResult
-    fields = ["flg_finished"]
 
 # Register your models here.
 CustomeUser = get_user_model()
@@ -225,9 +208,7 @@ class IndustryCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
-    inlines=[]
     actions = []
-    
     success = True
 
     def has_import_permission(self, request):
@@ -322,9 +303,6 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
         if not request.user.is_superuser:
             self.list_display = ["id", "username", "branch", "role"]
             self.actions = ['update_branch']
-            self.inlines = [HonneTypeResultPeriodInline, SelfcheckTypeResultPeriodInline, WatasheetTypeResultPeriodInline, ResponsResultPeriodInline, MandaraBasePeriodInline]
-        else:
-            self.inlines = []
         return super(UsersAdmin, self).changelist_view(request, extra_context)
 
     def import_action(self,request):
@@ -502,8 +480,235 @@ class BranchAdmin(admin.ModelAdmin):
         qs = super(BranchAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
             return qs.filter(company_id=request.user.company_id)
-        return qs 
+        return qs
 
+class CustomAdminSite(admin.AdminSite):
+    def get_urls(self):
+        custom_urls = [
+            path('honne-custom/', self.admin_view(self.some_custom_view), name='honne-custom'),
+            path('selfcheck-custom/', self.admin_view(self.some_custom_view), name='selfcheck-custom'),
+            path('watasheet-custom/', self.admin_view(self.some_custom_view), name='watasheet-custom'),
+            path('bonknow-custom/', self.admin_view(self.some_custom_view), name='bonknow-custom'),
+            path('mandara-custom/', self.admin_view(self.some_custom_view), name='mandara-custom'),
+        ]
+        admin_urls = super().get_urls()
+        return custom_urls + admin_urls
+    
+    def get_app_list(self, request, app_label=None):
+        app_list = super().get_app_list(request, app_label)
+        if app_label is None and not request.user.is_superuser:
+            app_list.append({
+                "name": "Settings",
+                "app_label": "HONNE提出取消",
+                "models": [
+                    {
+                        "name": "HONNE提出取消",
+                        "object_name": "HONNE提出取消",
+                        "admin_url": reverse('admin:honne-custom'),
+                        "view_only": True,
+                    },
+                    {
+                        "name": "SELFCHECK提出取消",
+                        "object_name": "SELFCHECK提出取消",
+                        "admin_url": reverse('admin:selfcheck-custom'),
+                        "view_only": True,
+                    },
+                    {
+                        "name": "WATASHEET提出取消",
+                        "object_name": "WATASHEET提出取消",
+                        "admin_url": reverse('admin:watasheet-custom'),
+                        "view_only": True,
+                    },
+                    {
+                        "name": "BONKNOW提出取消",
+                        "object_name": "BONKNOW提出取消",
+                        "admin_url": reverse('admin:bonknow-custom'),
+                        "view_only": True,
+                    },
+                      {
+                        "name": "MANDARA提出取消",
+                        "object_name": "MANDARA提出取消",
+                        "admin_url": reverse('admin:mandara-custom'),
+                        "view_only": True,
+                    },
+                ],
+            })
+        return app_list
+
+    def get_template_for_view(self, view_name):
+
+        template_map = {
+            'honne-custom': 'admin/honne.html',
+            'selfcheck-custom': 'admin/selfcheck.html',
+            'watasheet-custom': 'admin/watasheet.html',
+            'bonknow-custom': 'admin/bonknow.html',
+            'mandara-custom': 'admin/mandara.html',
+        }
+        return template_map.get(view_name, '')
+
+    def some_custom_view(self, request, *args, **kwargs):
+
+        if request.user.is_superuser:
+            return redirect(reverse('admin:index'))
+
+        view_name = resolve(request.path_info).url_name
+        template_name = self.get_template_for_view(view_name)
+
+        context = self.each_context(request)
+        company_id = request.user.company_id
+        today = datetime.date.today()
+
+        if template_name == "admin/honne.html":
+            honne = HonneTypeResult.objects.filter(
+                company_id=company_id, 
+                evaluation_period__evaluation_start__lte=today, 
+                evaluation_period__evaluation_end__gte=today
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")
+            
+            if request.method == "POST":
+                user_ids = request.POST.getlist('user_ids[]')
+                honne_ids = request.POST.getlist('honne_ids[]')
+
+                flg_finished = []
+                for idx in range(len(user_ids)):
+                    flg = request.POST.get(f'flg_finished_{idx}', 'off') == 'on'
+                    flg_finished.append(flg)
+                
+                for user_id, honne_id, flg in zip(user_ids, honne_ids, flg_finished):
+                    HonneTypeResult.objects.filter(id=honne_id, user__id=user_id).update(flg_finished=flg)
+
+                context['message'] = "を変更しました"
+
+            context.update({
+                "title": "HONNE提出取消",
+                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
+                "has_permission": context.get("has_permission"),
+                'available_apps': context.get("available_apps"),
+                "honne": honne,
+            })
+        
+        if template_name == "admin/selfcheck.html":
+            selfcheck = SelfcheckTypeResult.objects.filter(
+                company_id=company_id, 
+                evaluation_period__evaluation_start__lte=today, 
+                evaluation_period__evaluation_end__gte=today
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")
+
+            context.update({
+                "title": "SELFCHECK提出取消",
+                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
+                "has_permission": context.get("has_permission"),
+                'available_apps': context.get("available_apps"),
+                "selfcheck": selfcheck,
+            })
+            if request.method == "POST":
+                user_ids = request.POST.getlist('user_ids[]')
+                selfcheck_ids = request.POST.getlist('selfcheck_ids[]')
+
+                flg_finished = []
+                for idx in range(len(user_ids)):
+                    flg = request.POST.get(f'flg_finished_{idx}', 'off') == 'on'
+                    flg_finished.append(flg)
+                
+                for user_id, selfcheck_id, flg in zip(user_ids, selfcheck_ids, flg_finished):
+                    SelfcheckTypeResult.objects.filter(id=selfcheck_id, user__id=user_id).update(flg_finished=flg)
+
+                context['message'] = "を変更しました"
+
+        if  template_name == "admin/watasheet.html":
+            watasheet = WatasheetTypeResult.objects.filter(
+                company_id=company_id, 
+                evaluation_period__evaluation_start__lte=today, 
+                evaluation_period__evaluation_end__gte=today
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")  
+
+            context.update({
+                "title": "WATASHEET提出取消",
+                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
+                "has_permission": context.get("has_permission"),
+                'available_apps': context.get("available_apps"),
+                "watasheet": watasheet,
+            })
+
+            if request.method == "POST":
+                user_ids = request.POST.getlist('user_ids[]')
+                watasheet_ids = request.POST.getlist('watasheet_ids[]')
+
+                flg_finished = []
+
+                for idx in range(len(user_ids)):
+                    flg = request.POST.get(f'flg_finished_{idx}', 'off') == 'on'
+                    flg_finished.append(flg)
+                
+                for user_id, watasheet_id, flg in zip(user_ids, watasheet_ids, flg_finished):
+                    WatasheetTypeResult.objects.filter(id=watasheet_id, user__id=user_id).update(flg_finished=flg)
+
+                context['message'] = "を変更しました"
+            
+        if template_name == "admin/bonknow.html":
+            bonknow = ResponsResult.objects.filter(
+                company_id=company_id, 
+                evaluation_period__evaluation_start__lte=today, 
+                evaluation_period__evaluation_end__gte=today
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")  
+
+            context.update({
+                "title": "BONKNOW提出取消",
+                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
+                "has_permission": context.get("has_permission"),
+                'available_apps': context.get("available_apps"),
+                "bonknow": bonknow,
+            })
+
+            if request.method == "POST":
+                user_ids = request.POST.getlist('user_ids[]')
+                bonknow_ids = request.POST.getlist('bonknow_ids[]')
+
+                flg_finished = []
+                for idx in range(len(user_ids)):
+                    flg = request.POST.get(f'flg_finished_{idx}', 'off') == 'on'
+                    flg_finished.append(flg)
+
+                for user_id, bonknow_id, flg in zip(user_ids, bonknow_ids, flg_finished):
+                    ResponsResult.objects.filter(id=bonknow_id, user__id=user_id).update(flg_finished=flg)
+
+                context['message'] = "を変更しました"
+
+        if template_name == "admin/mandara.html":
+            mandara = MandaraBase.objects.filter(
+                company_id=company_id, 
+                mandara_period__input_start_date__lte=today, 
+                mandara_period__input_end_date__gte=today
+            ).values_list("user__id", "user__username", "flg_finished", "id") 
+
+            context.update({
+                "title": "MANDARA提出取消",
+                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
+                "has_permission": context.get("has_permission"),
+                'available_apps': context.get("available_apps"),
+                "mandara": mandara,
+            })
+
+            if request.method == "POST":
+                user_ids = request.POST.getlist('user_ids[]')
+                mandara_ids = request.POST.getlist('mandara_ids[]')
+
+                flg_finished = []
+                for idx in range(len(user_ids)):
+                    flg = request.POST.get(f'flg_finished_{idx}', 'off') == 'on'
+                    flg_finished.append(flg)
+
+                for user_id, mandara_id, flg in zip(user_ids, mandara_ids, flg_finished):
+                    MandaraBase.objects.filter(id=mandara_id, user__id=user_id).update(flg_finished=flg)
+
+                context['message'] = "を変更しました"
+            
+        return TemplateResponse(request, template_name, context)
+
+site = CustomAdminSite(name="admin-custom")
+admin.site = site
+
+admin.site.register(User, UsersAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Partner)
 admin.site.register(Branch, BranchAdmin)
@@ -520,8 +725,7 @@ admin.site.register(ThinkQuestion, ThinkQuestionCustom)
 # Watasheet
 admin.site.register(WatasheetQuestion, WatasheetQuestionCustom)
 #Remove Group Permission
-admin.site.unregister(Group)
-
+# admin.site.unregister(Group)
 
 
 
