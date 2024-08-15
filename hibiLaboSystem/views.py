@@ -593,51 +593,100 @@ class SelfcheckQuestions(TemplateView):
         context["form"] = form
         context["qr_list"] = ""
         if form.is_valid():
-            key_evaluation_unit = request.POST['evaluation_unit']
-            key_user_id = request.POST['user_id']
-            key_selfcheck_role = request.POST['selfcheck_role']
-
+            key_evaluation_unit = request.POST.get('evaluation_unit')
+            key_user_id = request.POST.get('user_id')
+            key_selfcheck_role = request.POST.get('selfcheck_role')
             question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit)
-
+            
             if key_selfcheck_role:
-                question_list = question_list.filter(id=key_evaluation_unit, selfcheck_questions__selfcheck_roles__id__in=key_selfcheck_role).first()
+                question_list = question_list.filter(selfcheck_questions__selfcheck_roles__id__in=key_selfcheck_role).first()
                 if question_list:
                     question_list = question_list.selfcheck_questions.filter(selfcheck_roles__id__in=key_selfcheck_role).order_by('category_id', 'sort_no')
+                else: 
+                    context["message"] = "データがありません"
             else:
                 question_list = question_list.first().selfcheck_questions.all().order_by('category_id', 'sort_no')
 
             if question_list:
-                if len(question_list) > 0:
-                    result_queryset = SelfcheckAnswerResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
-                    staff_list = User.objects.filter(company_id=request.user.company_id,id__in=result_queryset.values('user_id')).order_by('id')
-                    if key_user_id != '':
-                        result_queryset = result_queryset.filter(user_id=key_user_id)
-                        if key_selfcheck_role:
-                            result_queryset = result_queryset.filter(selfcheck_question__selfcheck_roles__id__in=key_selfcheck_role)
-                        staff_list = staff_list.filter(id=key_user_id)
-                    
-                    rowidx = 0
-                    result_list = [[[] for i in range(len(staff_list) + 1)] for j in range(len(question_list))]
+                result_queryset = SelfcheckAnswerResult.objects.select_related('user').filter(evaluation_period_id=key_evaluation_unit)
+                staff_list = User.objects.filter(company_id=request.user.company_id, id__in=result_queryset.values('user_id')).order_by('id')
+                if key_user_id:
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+                    if key_selfcheck_role:
+                        result_queryset = result_queryset.filter(selfcheck_question__selfcheck_roles__id__in=key_selfcheck_role)
+                    staff_list = staff_list.filter(id=key_user_id)
 
-                    for i in question_list:
-                        colidx = 1
-                        result_list[rowidx][0] = i.question
-                        for staff in staff_list:
-                            get_result = result_queryset.filter(selfcheck_question_id=i.id, user_id=staff.id).first()
+                rowidx = 0
+                result_list = [[[] for _ in range(len(staff_list) + 1)] for _ in range(len(question_list))]
+
+                staff_results = {staff.id: {} for staff in staff_list}
+
+                for i in question_list:
+                    colidx = 1
+                    result_list[rowidx][0] = i.question
+                    for staff in staff_list:
+                        get_result = result_queryset.filter(selfcheck_question_id=i.id, user_id=staff.id).first()
+                        if get_result:
+                            answer = '*'
+                            for element in SELFCHECK_ANSWER:
+                                if int(element[0]) == get_result.selfcheck_answer:
+                                    answer = element[1]
+                            result_list[rowidx][colidx] = answer
+                            staff_results[staff.id][i.id] = answer
+                        else:
                             result_list[rowidx][colidx] = '*'
-                            if get_result is not None:
-                                for element in SELFCHECK_ANSWER:
-                                    if int(element[0]) == get_result.selfcheck_answer:
-                                        result_list[rowidx][colidx] = element[1]
-                            colidx = colidx + 1
-                        rowidx = rowidx + 1
+                            staff_results[staff.id][i.id] = '*'
+                        colidx += 1
+                    rowidx += 1
 
-                    
-                if question_list and staff_list:
-                    context["staff_list"] = staff_list
-                    context["qr_list"] = result_list
-                    
+                # Xử lý các trường hợp để ẩn dữ liệu
+
+                # Trường hợp 1: key_user_id và key_selfcheck_role đều tồn tại
+                if key_user_id and key_selfcheck_role:
+                    print()
+                    all_results_are_stars = all(
+                        result == '*' for staff in staff_list for result in staff_results[staff.id].values()
+                    )
+                    if all_results_are_stars:
+                        context["staff_list"] = []  # Ẩn tên staff
+                        context["qr_list"] = []  # Ẩn câu hỏi
+                        context["message"] = "データがありません"
+                    else:
+                        context["staff_list"] = staff_list
+                        context["qr_list"] = result_list
+
+                # Trường hợp 2: key_evaluation_unit và key_selfcheck_role tồn tại, nhưng không có key_user_id
+                elif key_evaluation_unit and key_selfcheck_role:
+                    # Xác định các nhân viên có tất cả kết quả là '*'
+                    staff_results_are_stars = {
+                        staff.id: all(result == '*' for result in results.values())
+                        for staff.id, results in staff_results.items()
+                    }
+                    filtered_staff_list = [staff for staff in staff_list if not staff_results_are_stars.get(staff.id, False)]
+
+                    # Tạo danh sách kết quả được lọc
+                    filtered_result_list = []
+                    for i in range(len(question_list)):
+                        row = [result_list[i][0]]  # Giữ câu hỏi ở cột đầu tiên
+                        for j, staff in enumerate(staff_list):
+                            if staff.id in [s.id for s in filtered_staff_list]:
+                                row.append(result_list[i][j + 1])
+                        filtered_result_list.append(row)
+
+                    all_filtered_staff_results_are_stars = all(
+                        all(result == '*' for result in staff_results[staff.id].values()) 
+                        for staff in filtered_staff_list
+                    )
+                    if all_filtered_staff_results_are_stars:
+                        context["staff_list"] = []
+                        context["qr_list"] = []
+                        context["message"] = "データがありません"
+                    else:
+                        context["staff_list"] = filtered_staff_list
+                        context["qr_list"] = filtered_result_list
+
         return self.render_to_response(context)
+
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
