@@ -7,43 +7,39 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+
+<style>
+    table {
+        caption-side: top !important;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 {% if message %}
 <ul class="messagelist">
     <li class="success">を変更しました。</li>
-  </ul>
+</ul>
 {% endif %}
 <form action="" method="post">
     {% csrf_token %}
-    {% for item in mandara %}
     <table class="w-100 mb-5">
         <tr class="module">
-            <th class="px-0"><h2 class="px-2">Display Title</h2></th>
-            <th class="px-0"><h2 class="px-2">Data Sourece</h2></th>
-            <th class="px-0"><h2 class="px-2">Display Object</h2></th>
+            <th class="px-0">
+                <h2 class="px-2">User Id</h2>
+            </th>
+            <th class="px-0">
+                <h2 class="px-2">ユーザー名</h2>
+            </th>
+            <th class="px-0 text-nowrap">
+                <h2 class="px-2">提出済フラグ(チェック=済)</h2>
+            </th>
         </tr>
+        {% for item in mandara %}
         <tr>
-            <td style="width: 30%;">user_id</td>
             <td style="width: 30%;">{{ item.0 }}</td>
-            <td style="width: 30%;"></td>
-        </tr>
-        <tr>
-            <td style="width: 30%;">ユーザー名</td>
             <td style="width: 30%;">{{ item.1 }}</td>
-            <td style="width: 30%;"></td>
-        </tr>
-        <tr>
-            <td style="width: 30%;">評価期間タイトル</td>
-            <td style="width: 30%;"></td>
-            <td style="width: 30%;"></td>
-        </tr>
-        <tr>
-            <td style="width: 30%;">提出済フラグ(チェック=済)</td>
-            <td style="width: 30%;">{{ item.2 }}</td>
             <td style="width: 30%;">
-                
                 <input type="hidden" name="flg_finished_{{ forloop.counter0 }}" value="off">
                 <input name="flg_finished_{{ forloop.counter0 }}" type="checkbox" value="on" {% if item.2 %} checked {% endif %}>
             </td>
@@ -52,11 +48,12 @@
     <input type="hidden" name="user_ids[]" value="{{item.0}}">
     <input type="hidden" name="mandara_ids[]" value="{{item.3}}">
     {% endfor %}
+    </table>
     {% if mandara %}
     <input type="submit" value="保存" class="default" name="_save">
     {% else %}
     <div class="text-center">利用可能なデータがありません</p>
-    {% endif %}
+        {% endif %}
 </form>
 
 
