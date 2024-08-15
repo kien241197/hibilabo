@@ -558,6 +558,15 @@ class CustomAdminSite(admin.AdminSite):
         company_id = request.user.company_id
         today = datetime.date.today()
 
+        common_context = {
+            "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
+            "has_permission": context.get("has_permission"),
+            'available_apps': context.get("available_apps"),
+        }
+
+        if request.method == "POST":
+            user_ids = request.POST.getlist('user_ids[]')
+
         if template_name == "admin/honne.html":
             honne = HonneTypeResult.objects.filter(
                 company_id=company_id, 
@@ -566,7 +575,6 @@ class CustomAdminSite(admin.AdminSite):
             ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")
             
             if request.method == "POST":
-                user_ids = request.POST.getlist('user_ids[]')
                 honne_ids = request.POST.getlist('honne_ids[]')
 
                 flg_finished = []
@@ -579,12 +587,10 @@ class CustomAdminSite(admin.AdminSite):
 
                 context['message'] = "を変更しました"
 
+            context.update(common_context)
             context.update({
                 "title": "HONNE提出取消",
-                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
-                "has_permission": context.get("has_permission"),
-                'available_apps': context.get("available_apps"),
-                "honne": honne,
+                "honne": honne
             })
         
         if template_name == "admin/selfcheck.html":
@@ -594,15 +600,13 @@ class CustomAdminSite(admin.AdminSite):
                 evaluation_period__evaluation_end__gte=today
             ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")
 
+            context.update(common_context)
             context.update({
                 "title": "SELFCHECK提出取消",
-                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
-                "has_permission": context.get("has_permission"),
-                'available_apps': context.get("available_apps"),
-                "selfcheck": selfcheck,
+                "selfcheck": selfcheck
             })
+
             if request.method == "POST":
-                user_ids = request.POST.getlist('user_ids[]')
                 selfcheck_ids = request.POST.getlist('selfcheck_ids[]')
 
                 flg_finished = []
@@ -622,16 +626,13 @@ class CustomAdminSite(admin.AdminSite):
                 evaluation_period__evaluation_end__gte=today
             ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")  
 
+            context.update(common_context)
             context.update({
                 "title": "WATASHEET提出取消",
-                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
-                "has_permission": context.get("has_permission"),
-                'available_apps': context.get("available_apps"),
-                "watasheet": watasheet,
+                "watasheet": watasheet
             })
 
             if request.method == "POST":
-                user_ids = request.POST.getlist('user_ids[]')
                 watasheet_ids = request.POST.getlist('watasheet_ids[]')
 
                 flg_finished = []
@@ -652,16 +653,13 @@ class CustomAdminSite(admin.AdminSite):
                 evaluation_period__evaluation_end__gte=today
             ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")  
 
+            context.update(common_context)
             context.update({
                 "title": "BONKNOW提出取消",
-                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
-                "has_permission": context.get("has_permission"),
-                'available_apps': context.get("available_apps"),
-                "bonknow": bonknow,
+                "bonknow": bonknow
             })
 
             if request.method == "POST":
-                user_ids = request.POST.getlist('user_ids[]')
                 bonknow_ids = request.POST.getlist('bonknow_ids[]')
 
                 flg_finished = []
@@ -681,16 +679,13 @@ class CustomAdminSite(admin.AdminSite):
                 mandara_period__input_end_date__gte=today
             ).values_list("user__id", "user__username", "flg_finished", "id") 
 
+            context.update(common_context)
             context.update({
                 "title": "MANDARA提出取消",
-                "is_nav_sidebar_enabled": context.get("is_nav_sidebar_enabled"),
-                "has_permission": context.get("has_permission"),
-                'available_apps': context.get("available_apps"),
-                "mandara": mandara,
+                "mandara": mandara
             })
 
             if request.method == "POST":
-                user_ids = request.POST.getlist('user_ids[]')
                 mandara_ids = request.POST.getlist('mandara_ids[]')
 
                 flg_finished = []
