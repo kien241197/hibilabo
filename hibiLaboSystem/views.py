@@ -596,7 +596,7 @@ class SelfcheckQuestions(TemplateView):
             key_evaluation_unit = request.POST.get('evaluation_unit')
             key_user_id = request.POST.get('user_id')
             key_selfcheck_role = request.POST.get('selfcheck_role')
-            question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit)
+            question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit, selfcheck_questions__industries__id=request.user.company.industry_id)
             
             if key_selfcheck_role:
                 question_list = question_list.filter(selfcheck_questions__selfcheck_roles__id__in=key_selfcheck_role).first()
@@ -643,7 +643,6 @@ class SelfcheckQuestions(TemplateView):
 
                 # Trường hợp 1: key_user_id và key_selfcheck_role đều tồn tại
                 if key_user_id and key_selfcheck_role:
-                    print()
                     all_results_are_stars = all(
                         result == '*' for staff in staff_list for result in staff_results[staff.id].values()
                     )
