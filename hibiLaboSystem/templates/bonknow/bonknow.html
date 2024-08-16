@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/bonknow_think_and_respons.css' %}">
+<link rel="stylesheet" href="{% static 'css/resultstyle.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+    integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/bonknow_nav_test.html" %}
+                <div class="col-md-10 tab" id="tab0" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2 class="text-dark">DO YOU KNOW <span class="text-muted">&nbsp;THINK</span></h2>
+                                </div>
+                                <div class="filter">
+                                    <form action=""  method="post" enctype="multipart/form-data" id="myForm">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div>
+                                    <canvas id="mycanvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab1" style="display: none;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title">
+                                    <h2 class="text-dark"> DO YOU KNOW <span class="text-muted">&nbsp;RESPONS</span></h2>
+                                </div>
+                                <div class="filter">
+                                    <form action=""  method="post" enctype="multipart/form-data" id="myForm1">
+                                        {% csrf_token %}
+                                        {{ form.evaluation_unit }}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div>
+                                    <canvas id="mycanvas1"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% load static %}
+<script>
+    const urlBonknowThinkAjax = "{% url 'bonknow_think_ajax' %}"
+    const urlBonknowResponsAjax = "{% url 'bonknow_respons_ajax' %}"
+</script>
+<script src="{% static 'js/bonknow.js' %}"></script>
+{% endblock %}

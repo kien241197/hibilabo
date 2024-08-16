@@ -2341,6 +2341,73 @@ class TestSelfcheck(TemplateView):
         kwargs['form'] = self.form_class(self.request)
         kwargs['title_header'] = "SELFCHECK"
         return kwargs
+    
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class TestBonknow(TemplateView):
+    template_name="bonknow/bonknow.html"
+    form_class = forms.BonknowForm
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        kwargs = super(TestBonknow, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request.GET or None)
+        kwargs['title_header'] = 'BONKNOW'
+        return kwargs
+    
+@login_required
+def BonknowThinkAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                results = ThinkResult.objects.all().filter(id=key_evaluation_unit,user_id=request.user.id).order_by('review_date')
+                times = []
+                must = []
+                want = []
+                for result in results:
+                    # str_time = result.review_date.strftime('%Y/%m')
+                    times.append(result.evaluation_period.evaluation_name)
+                    must.append(result.must)
+                    want.append(result.want)
+                context = {
+                    "times": times,
+                    "must": must,
+                    "want": want
+                }
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def BonknowResponsAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                results = ResponsResult.objects.all().filter(id=key_evaluation_unit,user_id=request.user.id).order_by('review_date')
+                times = []
+                logic = []
+                sense = []
+                for result in results:
+                    times.append(result.evaluation_period.evaluation_name)
+                    logic.append(result.logic)
+                    sense.append(result.sense)
+                context = {
+                    "times": times,
+                    "logic": logic,
+                    "sense": sense
+                }
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
 
 
 

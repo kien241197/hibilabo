@@ -76,8 +76,6 @@ const chart = new Chart(mycanvas, {
     },
 });
 
-console.log(window.innerWidth)
-
 window.addEventListener('resize', () => {
 
     if (window.innerWidth <= 500) {

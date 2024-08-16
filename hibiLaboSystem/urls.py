@@ -58,4 +58,9 @@ urlpatterns = [
 	path('honne-qr-staticks-ajax', views.HonneQrStaticksAjax, name="honne_qr_staticks_ajax"),
     
 	path('test-selfcheck', views.TestSelfcheck.as_view(), name="test-selfcheck"),
+	path('bonknow', views.TestBonknow.as_view(), name="test-bonknow"),
+    
+	path('bonknow-think-ajax', views.BonknowThinkAjax, name="bonknow_think_ajax"),
+	path('bonknow-respons-ajax', views.BonknowResponsAjax, name="bonknow_respons_ajax"),
+    
 ]

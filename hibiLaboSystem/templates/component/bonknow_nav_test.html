@@ -1,0 +1,22 @@
+{% with request.resolver_match.url_name as url_name %}
+<div class="col-md-2">
+    <div class="sidebar">
+        <ul class="nav">
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'bonknow_think' %}active{% endif %} bonknow-nav"  href="#bonknow_think">
+                    <p>BONKNOW</p>
+                    <span class="mb-1">DO YOU KNOW THINK</span>
+                    <span>総合分析</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'bonknow_respons' %}active{% endif %} bonknow-nav" href="#bonknow_respons">
+                    <p>BONKNOW</p>
+                    <span class="mb-1">DO YOU KNOW RESPONS</span>
+                    <span>タイプ別分析</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endwith %}
