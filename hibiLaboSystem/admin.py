@@ -489,7 +489,7 @@ class CustomAdminSite(admin.AdminSite):
             path('selfcheck-custom/', self.admin_view(self.some_custom_view), name='selfcheck-custom'),
             path('watasheet-custom/', self.admin_view(self.some_custom_view), name='watasheet-custom'),
             path('bonknow-custom/', self.admin_view(self.some_custom_view), name='bonknow-custom'),
-            path('mandara-custom/', self.admin_view(self.some_custom_view), name='mandara-custom'),
+            # path('mandara-custom/', self.admin_view(self.some_custom_view), name='mandara-custom'),
         ]
         admin_urls = super().get_urls()
         return custom_urls + admin_urls
@@ -525,12 +525,12 @@ class CustomAdminSite(admin.AdminSite):
                         "admin_url": reverse('admin:bonknow-custom'),
                         "view_only": True,
                     },
-                      {
-                        "name": "MANDARA提出取消",
-                        "object_name": "MANDARA提出取消",
-                        "admin_url": reverse('admin:mandara-custom'),
-                        "view_only": True,
-                    },
+                    # {
+                    #     "name": "MANDARA提出取消",
+                    #     "object_name": "MANDARA提出取消",
+                    #     "admin_url": reverse('admin:mandara-custom'),
+                    #     "view_only": True,
+                    # },
                 ],
             })
         return app_list
@@ -542,7 +542,7 @@ class CustomAdminSite(admin.AdminSite):
             'selfcheck-custom': 'admin/selfcheck.html',
             'watasheet-custom': 'admin/watasheet.html',
             'bonknow-custom': 'admin/bonknow.html',
-            'mandara-custom': 'admin/mandara.html',
+            # 'mandara-custom': 'admin/mandara.html',
         }
         return template_map.get(view_name, '')
 
@@ -672,31 +672,31 @@ class CustomAdminSite(admin.AdminSite):
 
                 context['message'] = "を変更しました"
 
-        if template_name == "admin/mandara.html":
-            mandara = MandaraBase.objects.filter(
-                company_id=company_id, 
-                mandara_period__input_start_date__lte=today, 
-                mandara_period__input_end_date__gte=today
-            ).values_list("user__id", "user__username", "flg_finished", "id") 
+        # if template_name == "admin/mandara.html":
+        #     mandara = MandaraBase.objects.filter(
+        #         company_id=company_id, 
+        #         mandara_period__input_start_date__lte=today, 
+        #         mandara_period__input_end_date__gte=today
+        #     ).values_list("user__id", "user__username", "flg_finished", "id") 
 
-            context.update(common_context)
-            context.update({
-                "title": "MANDARA提出取消",
-                "mandara": mandara
-            })
+        #     context.update(common_context)
+        #     context.update({
+        #         "title": "MANDARA提出取消",
+        #         "mandara": mandara
+        #     })
 
-            if request.method == "POST":
-                mandara_ids = request.POST.getlist('mandara_ids[]')
+        #     if request.method == "POST":
+        #         mandara_ids = request.POST.getlist('mandara_ids[]')
 
-                flg_finished = []
-                for idx in range(len(user_ids)):
-                    flg = request.POST.get(f'flg_finished_{idx}', 'off') == 'on'
-                    flg_finished.append(flg)
+        #         flg_finished = []
+        #         for idx in range(len(user_ids)):
+        #             flg = request.POST.get(f'flg_finished_{idx}', 'off') == 'on'
+        #             flg_finished.append(flg)
 
-                for user_id, mandara_id, flg in zip(user_ids, mandara_ids, flg_finished):
-                    MandaraBase.objects.filter(id=mandara_id, user__id=user_id).update(flg_finished=flg)
+        #         for user_id, mandara_id, flg in zip(user_ids, mandara_ids, flg_finished):
+        #             MandaraBase.objects.filter(id=mandara_id, user__id=user_id).update(flg_finished=flg)
 
-                context['message'] = "を変更しました"
+        #         context['message'] = "を変更しました"
             
         return TemplateResponse(request, template_name, context)
 
