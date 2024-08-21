@@ -1,0 +1,26 @@
+{% with request.resolver_match.url_name as url_name %}
+<div class="col-md-2">
+    <div class="sidebar">
+        <ul class="nav">
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'mandara_personal' %}active{% endif %} mandara-nav"  href="#mandara_personal">
+                    <p>PERSONAL<br/>MANDARA </p>
+                    <span>現状個人別分析</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'mandara_masmas_chart' %}active{% endif %} mandara-nav" href="#mandara_masmas_chart">
+                    <p>MANDARA CHART</p>
+                    <span>推移グラフ</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'mandara_completion_tab' %}active{% endif %} mandara-nav" href="#mandara_completion_tab">
+                    <p>COMPLETION <br/> MANDARA</p>
+                    <span>完了マンダラ</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endwith %}

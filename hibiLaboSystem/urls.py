@@ -59,8 +59,13 @@ urlpatterns = [
     
 	path('test-selfcheck', views.TestSelfcheck.as_view(), name="test-selfcheck"),
 	path('bonknow', views.TestBonknow.as_view(), name="test-bonknow"),
+	path('mandara', views.TestMandara.as_view(), name="test-mandara"),
+    
     
 	path('bonknow-think-ajax', views.BonknowThinkAjax, name="bonknow_think_ajax"),
 	path('bonknow-respons-ajax', views.BonknowResponsAjax, name="bonknow_respons_ajax"),
     
+	path('mandara-personal-ajax', views.MandaraPersonalAjax, name="mandara_personal_ajax"),
+	path('mandara-masmas-chart-ajax', views.MasMasMandaraChartAjax, name="mandara_masmas_chart_ajax"),
+	path('mandara-completion-tab-ajax', views.MandaraCompletionTabAjax, name="mandara_completion_tab_ajax"),
 ]

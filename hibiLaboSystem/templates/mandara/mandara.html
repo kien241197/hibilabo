@@ -1,0 +1,335 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"
+    integrity="sha512-uzOpZ74myvXTYZ+mXUsPhDF+/iL/n32GDxdryI2SJronkEyKC8FBFRLiBQ7l7U/PTYebDbgTtbqTa6/vGtU23A=="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/mandara_personal.css' %}">
+<link rel="stylesheet" href="{% static 'css/mandara_masmas_chart.css' %}">
+<link rel="stylesheet" href="{% static 'css/mandara_completion_tab.css' %}">
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-feedback pd-main">
+        <div class="container-fluid">
+            <div class="row">
+                {% include "component/mandara_nav_test.html" %}
+                <div class="col-md-10 row justify-content-between tab" id="tab0" style="display: none;">
+                    <div class="tab-content col-md-8">
+                        <div class="tab-pane fade active show">
+                            <div class="feedback-content">
+                                <div class="title mb-5">
+                                    <h2>MANDARA CHART</h2>
+                                </div>
+                                <div class="filter">
+                                    <form action="" method="post" id="myForm">
+                                        {% csrf_token %}
+                                        {{ form.user_id }}
+                                        <button type="submit" name="submit">表示</button>
+                                    </form>
+                                </div>
+                                <div class="data" id="mandaraPersonal" hidden>
+                                    <div class="body-bottom-left" id="value-body-bottom-left">
+                                    {% load custom_filters %}
+                                    {% with 'F C G B' as list %}
+                                    {% for key in list.split %}
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="canvas-personal">
+                                            <canvas class="canvas" id="mycanvas{{key}}"
+                                                style="width: 100%; height: 100%;"></canvas>
+                                        </div>
+                                        {% with content=key|add:'1_content' %}
+                                        {% with result=key|add:'1_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'2_content' %}
+                                        {% with result=key|add:'2_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'3_content' %}
+                                        {% with result=key|add:'3_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'8_content' %}
+                                        {% with result=key|add:'8_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with result=key|add:'_result' %}
+                                        <div class="value-table-score SCORE">
+                                            <p>SCORE</p>
+                                            <span class="value-score value-score{{key}}">{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% with content=key|add:'4_content' %}
+                                        {% with result=key|add:'4_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'7_content' %}
+                                        {% with result=key|add:'7_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'6_content' %}
+                                        {% with result=key|add:'6_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'5_content' %}
+                                        {% with result=key|add:'5_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                    </div>
+                                    {% endfor %}
+                                    {% endwith %}
+                                    <div class="wrapper-item-body-bottom-left">
+                                        {% with 'F C G B' as list %}
+                                        {% for key in list.split %}
+                                            {% with keyword=key|add:'_keyword' %}
+                                            {% with result=key|add:'_result' %}
+                                            <div class="value-table-score SCORE-text">
+                                                <div class="title-main-score title-main-score{{key}}" style="top: 0px">
+                                                    <p>{{ mandara|get_custom_name:keyword }}</p>
+                                                </div>
+                                                <span class="value-score value-score{{key}}">{{ mandara|get_custom_name:result }}</span>
+                                            </div>
+                                            {% endwith %}
+                                            {% endwith %}
+                                        {% endfor %}
+                                        {% endwith %}
+                                        <div class="value-table-score SCORE-MAIN">
+                                            <p class="title-main-score title-main-score-center">1年後の目標</p>
+                                            <span class="value-score value-score-center">{{ mandara.total_result }}</span>
+                                            <p class="title-main-score-bottom">1年後の目標</p>
+                                        </div>
+                                        {% with 'D E A H' as list %}
+                                        {% for key in list.split %}
+                                            {% with keyword=key|add:'_keyword' %}
+                                            {% with result=key|add:'_result' %}
+                                            <div class="value-table-score SCORE-text">
+                                                <div class="title-main-score title-main-score{{key}}">
+                                                    <p>{{ mandara|get_custom_name:keyword }}</p>
+                                                </div>
+                                                <span class="value-score value-score{{key}}">{{ mandara|get_custom_name:result }}</span>
+                                            </div>
+                                            {% endwith %}
+                                            {% endwith %}
+                                        {% endfor %}
+                                        {% endwith %}
+                                    </div>
+
+                                    {% with 'D E A H' as list %}
+                                    {% for key in list.split %}
+                                    <div class="wrapper-item-body-bottom-left">
+                                        <div class="canvas-personal">
+                                            <canvas class="canvas" id="mycanvas{{ key }}"
+                                                style="width: 100%; height: 100%;"></canvas>
+                                        </div>
+                                        {% with content=key|add:'1_content' %}
+                                        {% with result=key|add:'1_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'2_content' %}
+                                        {% with result=key|add:'2_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'3_content' %}
+                                        {% with result=key|add:'3_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'8_content' %}
+                                        {% with result=key|add:'8_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with result=key|add:'_result' %}
+                                        <div class="value-table-score SCORE">
+                                            <p>SCORE</p>
+                                            <span class="value-score value-score{{key}}">{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% with content=key|add:'4_content' %}
+                                        {% with result=key|add:'4_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'7_content' %}
+                                        {% with result=key|add:'7_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'6_content' %}
+                                        {% with result=key|add:'6_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% with content=key|add:'5_content' %}
+                                        {% with result=key|add:'5_result' %}
+                                        <div class="value-table value-table{{key}}">
+                                            <p>{{ mandara|get_custom_name:content }}</p>
+                                            <span>{{ mandara|get_custom_name:result }}</span>
+                                        </div>
+                                        {% endwith %}
+                                        {% endwith %}
+                                    </div>
+                                    {% endfor %}
+                                    {% endwith %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab1" style="display: none;">
+                    <div class="tab-content">
+                        <div class="">
+                            <div class="tab-pane fade active show">
+                                <div class="feedback-content">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <div class="title mb-5">
+                                                <h2>MASMAS MANDARA CHART</h2>
+                                            </div>
+                                            <div class="filter">
+                                                <form action="" method="post" id="myForm1">
+                                                    {% csrf_token %}
+                                                    <div class="item-select d-flex align-items-center gap-2"
+                                                        style="display: flex;">
+                                                        <label name="start" class="d-lfex items-center select font-weight-bold select-label border-1 bg-white" style="width: 150px; height: 40px;">
+                                                            {{ start }}
+                                                        </label>
+                                                        <p class="to m-0 px-3">～</p>
+                                                        <label name="end" class="d-lfex select mr-3 items-center font-weight-bold select-label border-1 bg-white" style="width: 150px; height: 40px;">
+                                                            {{ end }}
+                                                        </label>
+                                                        {{ form.user_id }}
+                                                        <button class="mx-3" type="submit" name="submit">表示</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <canvas id="barChart" class="chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 tab" id="tab2" style="display: none;">
+                    <div class="tab-content">
+                        <div class="h-100">
+                            <div class="tab-pane fade active show">
+                                <div class="feedback-content">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <div class="title mb-5">
+                                                <h2>COMPLETION MANDARA</h2>
+                                            </div>
+                                            <div class="filter">
+                                                <form action="" method="post" enctype="multipart/form-data" id="myForm2">
+                                                    {% csrf_token %}
+                                                    <div class="item-select d-flex align-items-center gap-2"
+                                                        style="display: flex;">
+                                                        <label name="start"
+                                                            class="d-lfex items-center select font-weight-bold select-label border-1 bg-white"
+                                                            style="width: 150px; height: 40px;">
+                                                            {{ start }}
+                                                        </label>
+                                                        <p class="to m-0 px-3">～</p>
+                                                        <label name="end"
+                                                            class="d-lfex select mr-3 items-center font-weight-bold select-label border-1 bg-white"
+                                                            style="width: 150px; height: 40px;">
+                                                            {{ end }}
+                                                        </label>
+                                                        {{ form.user_id }}
+                                                        <button class="mx-3" type="submit" name="submit">表示</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="item-date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    const urlMandaraPersonalAjax = "{% url 'mandara_personal_ajax' %}"
+    const urlMasMasMandaraChartAjax = "{% url 'mandara_masmas_chart_ajax' %}"
+    const urlMandaraCompletionTabAjax = "{% url 'mandara_completion_tab_ajax' %}"
+</script>
+<script src="{% static 'js/mandara.js' %}"></script>
+{% endblock %}

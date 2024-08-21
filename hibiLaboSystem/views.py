@@ -34,6 +34,7 @@ import pdfkit
 from django.db.models import Q, F, Value
 import jaconv
 from django.db.models.functions import Concat
+from django.forms.models import model_to_dict
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
@@ -1735,6 +1736,7 @@ class MandaraMasMasChart(TemplateView):
     form_class = forms.MandaraChartForm
 
     def get_context_data(self, **kwargs):
+        
         company_id = self.request.user.company_id
         today = datetime.date.today()
         user_id = self.request.POST.get("user_id")
@@ -1776,6 +1778,7 @@ class MandaraMasMasChart(TemplateView):
         context = self.get_context_data(**kwargs)
         form = self.form_class(request, request.POST)
         context['form'] = form
+        print("vào đây1")
 
         return self.render_to_response(context)
 
@@ -2343,7 +2346,7 @@ class TestSelfcheck(TemplateView):
         return kwargs
     
 @method_decorator(login_required, name='dispatch')
-@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+@method_decorator(middlewares.BonknowMiddleware, name='dispatch')
 class TestBonknow(TemplateView):
     template_name="bonknow/bonknow.html"
     form_class = forms.BonknowForm
@@ -2407,7 +2410,183 @@ def BonknowResponsAjax(request):
             except:
                 HttpResponseBadRequest('Invalid request')
         return JsonResponse({'status': 'Invalid request'}, status=400)
+    
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')
+class TestMandara(TemplateView):
+    template_name="mandara/mandara.html"
+    form_class = forms.MandaraForm
 
+    def get_context_data(self, **kwargs):
+        kwargs = super(TestMandara, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = 'MASMASMANDARA'
+        return kwargs
 
+@login_required
+def MandaraPersonalAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                user_id = request.POST["user_id"]
+                company_id = request.user.company_id
+
+                today = datetime.date.today()
+                mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True).annotate(
+                    A1_result=Sum('mandara_progress__A1_result'),
+                    A2_result=Sum('mandara_progress__A2_result'),
+                    A3_result=Sum('mandara_progress__A3_result'),
+                    A4_result=Sum('mandara_progress__A4_result'),
+                    A5_result=Sum('mandara_progress__A5_result'),
+                    A6_result=Sum('mandara_progress__A6_result'),
+                    A7_result=Sum('mandara_progress__A7_result'),
+                    A8_result=Sum('mandara_progress__A8_result'),
+                    B1_result=Sum('mandara_progress__B1_result'),
+                    B2_result=Sum('mandara_progress__B2_result'),
+                    B3_result=Sum('mandara_progress__B3_result'),
+                    B4_result=Sum('mandara_progress__B4_result'),
+                    B5_result=Sum('mandara_progress__B5_result'),
+                    B6_result=Sum('mandara_progress__B6_result'),
+                    B7_result=Sum('mandara_progress__B7_result'),
+                    B8_result=Sum('mandara_progress__B8_result'),
+                    C1_result=Sum('mandara_progress__C1_result'),
+                    C2_result=Sum('mandara_progress__C2_result'),
+                    C3_result=Sum('mandara_progress__C3_result'),
+                    C4_result=Sum('mandara_progress__C4_result'),
+                    C5_result=Sum('mandara_progress__C5_result'),
+                    C6_result=Sum('mandara_progress__C6_result'),
+                    C7_result=Sum('mandara_progress__C7_result'),
+                    C8_result=Sum('mandara_progress__C8_result'),
+                    D1_result=Sum('mandara_progress__D1_result'),
+                    D2_result=Sum('mandara_progress__D2_result'),
+                    D3_result=Sum('mandara_progress__D3_result'),
+                    D4_result=Sum('mandara_progress__D4_result'),
+                    D5_result=Sum('mandara_progress__D5_result'),
+                    D6_result=Sum('mandara_progress__D6_result'),
+                    D7_result=Sum('mandara_progress__D7_result'),
+                    D8_result=Sum('mandara_progress__D8_result'),
+                    E1_result=Sum('mandara_progress__E1_result'),
+                    E2_result=Sum('mandara_progress__E2_result'),
+                    E3_result=Sum('mandara_progress__E3_result'),
+                    E4_result=Sum('mandara_progress__E4_result'),
+                    E5_result=Sum('mandara_progress__E5_result'),
+                    E6_result=Sum('mandara_progress__E6_result'),
+                    E7_result=Sum('mandara_progress__E7_result'),
+                    E8_result=Sum('mandara_progress__E8_result'),
+                    F1_result=Sum('mandara_progress__F1_result'),
+                    F2_result=Sum('mandara_progress__F2_result'),
+                    F3_result=Sum('mandara_progress__F3_result'),
+                    F4_result=Sum('mandara_progress__F4_result'),
+                    F5_result=Sum('mandara_progress__F5_result'),
+                    F6_result=Sum('mandara_progress__F6_result'),
+                    F7_result=Sum('mandara_progress__F7_result'),
+                    F8_result=Sum('mandara_progress__F8_result'),
+                    G1_result=Sum('mandara_progress__G1_result'),
+                    G2_result=Sum('mandara_progress__G2_result'),
+                    G3_result=Sum('mandara_progress__G3_result'),
+                    G4_result=Sum('mandara_progress__G4_result'),
+                    G5_result=Sum('mandara_progress__G5_result'),
+                    G6_result=Sum('mandara_progress__G6_result'),
+                    G7_result=Sum('mandara_progress__G7_result'),
+                    G8_result=Sum('mandara_progress__G8_result'),
+                    H1_result=Sum('mandara_progress__H1_result'),
+                    H2_result=Sum('mandara_progress__H2_result'),
+                    H3_result=Sum('mandara_progress__H3_result'),
+                    H4_result=Sum('mandara_progress__H4_result'),
+                    H5_result=Sum('mandara_progress__H5_result'),
+                    H6_result=Sum('mandara_progress__H6_result'),
+                    H7_result=Sum('mandara_progress__H7_result'),
+                    H8_result=Sum('mandara_progress__H8_result'),
+                    ).values().first()
+
+                context = {
+                    "mandara": mandara
+                }
+
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def MasMasMandaraChartAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'GET':
+            company_id = request.user.company_id
+            today = datetime.date.today()
+            user_id = request.GET.get("user_id")
+            print("user_id", user_id)
+            mandaras = MandaraBase.objects.select_related('mandara_period').filter(company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True)
+            if user_id is not None and user_id != '':
+                mandaras = mandaras.filter(user_id=user_id)
+            first_mandara = mandaras.first()
+            results = MandaraProgress.objects.all().filter(mandara_base__in=mandaras).annotate(
+                month=ExtractMonth('date'),
+                year=ExtractYear('date')
+            )
+            data = {}
+            for i in results:
+                key = str(i.year) + '/' + str(i.month)
+                if key not in data:
+                    data[key] = i.sum_result()
+                else:
+                    data[key] += i.sum_result()
+            context = {}
+            list_month = []
+            list_value = []
+            for key, value in data.items():
+                list_month.append(key)
+                list_value.append(value)
+            
+            context.update({
+                "list_month" : list_month,
+                "list_value" : list_value
+            })
+            if first_mandara is not None:
+                start = first_mandara.mandara_period.display_time_start()
+                end = first_mandara.mandara_period.display_time_end()
+                context.update({
+                    "start": start,
+                    "end": end
+                })
+            return JsonResponse({'context': context})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required()
+def MandaraCompletionTabAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'GET':
+            company_id = request.user.company_id
+            today = datetime.date.today()
+            user_id = request.GET.get("user_id")
+            mandaras = MandaraBase.objects.select_related('mandara_period').filter(company_id=company_id,mandara_period__end_date__lt=today,flg_finished=True)
+            max_time = mandaras.order_by('-mandara_period__end_date').first()
+            min_time = mandaras.order_by('mandara_period__start_date').first()
+            start = None
+            end = None
+
+            context = {}
+            
+            if min_time is not None:
+                start = min_time.mandara_period.display_time_start()
+                context.update({
+                    "start": start
+                })
+            if max_time is not None:
+                end = max_time.mandara_period.display_time_end()
+                context.update({
+                    "end": end
+                })
+            if user_id is not None and user_id != '':
+                mandaras = mandaras.filter(user_id=user_id)
+                context.update({
+                    "mandaras": list(mandaras.values())
+                })
+                
+            return JsonResponse({'context': context})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
 
 
