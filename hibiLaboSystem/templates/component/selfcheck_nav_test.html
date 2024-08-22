@@ -1,0 +1,39 @@
+{% with request.resolver_match.url_name as url_name %}
+<div class="col-md-2">
+    <div class="sidebar">
+        <ul class="nav">
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'selfcheck_type' %}active{% endif %} selfcheck_nav"  href="#selfcheck_type">
+                    <p>SELFCHECK BY TYPE</p>
+                    <span>タイプ別分析</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'selfcheck_type_chart' %}active{% endif %} selfcheck_nav" href="#selfcheck_type_chart">
+                    <p>SELFCHECK INDEX</p>
+                    <span>セルフチェックタイプチャート</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'selfcheck_index' %}active{% endif %} selfcheck_nav" href="#selfcheck_index">
+                    <p>SELFCHECK TABLE INDEX</p>
+                    <span>セルフチェック指数分布表</span>
+                </a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'selfcheck_index_chart' %}active{% endif %} selfcheck_nav" href="#selfcheck_index_chart">
+                    <p>SELFCHECK TABLE INDEX</p>
+                    <span>セルフチェック指数分布</span>
+                </a>
+            </li>
+
+            <li class="nav-items">
+                <a class="nav-link {% if url_name == 'selfcheck_questions' %}active{% endif %} selfcheck_nav" href="#selfcheck_questions">
+                    <p>QUESTION TABLE</p>
+                    <span>質問分布表</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endwith %}

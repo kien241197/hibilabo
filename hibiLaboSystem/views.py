@@ -705,7 +705,9 @@ class SelfcheckType(TemplateView):
         context = self.get_context_data(**kwargs)
         form = self.form_class(request, request.POST)
         context["form"] = form
+        
         if form.is_valid():
+            print("vaof dday")
             key_evaluation_unit = request.POST['evaluation_unit']
             key_user_id = request.POST['user_id']
             result_queryset = SelfcheckTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
@@ -748,7 +750,10 @@ class SelfcheckSheet(TemplateView):
     def get_context_data(self, **kwargs):
         evaluation_unit = self.kwargs['evaluationUnit']
         company_id = self.request.user.company_id
+
         user_id = self.request.user.id
+        print("vaof dday", user_id)
+
         index_list = [0 for i in range(12)]
         type_list = [0 for i in range(3)]
         questions = [{} for i in range(12)]
@@ -811,6 +816,7 @@ class SelfcheckSheet(TemplateView):
             evaluation_start__lte=datetime.date.today(),
             evaluation_end__gte=datetime.date.today()
         )
+        print("evaluation_period", evaluation_period)
         selfcheck_roles = []
         if self.request.user.role is not None:
             selfcheck_roles = Role.objects.filter(id=self.request.user.role.id).first().selfcheck_roles.all()
@@ -832,6 +838,7 @@ class SelfcheckSheet(TemplateView):
             ).values('selfcheck_answer')[:1]
         ).order_by('sort_no').distinct()
 
+        print("selfcheck_questions", selfcheck_questions)
         obj_index = evaluation_period.selfcheck_index_results.filter(user_id=user_id,company_id=company_id).first()
         obj_type = evaluation_period.selfcheck_type_results.filter(user_id=user_id,company_id=company_id).first()
         if obj_index is not None :
@@ -2405,6 +2412,48 @@ class TestSelfcheck(TemplateView):
         kwargs['form'] = self.form_class(self.request)
         kwargs['title_header'] = "SELFCHECK"
         return kwargs
+
+@login_required()
+def SelfcheckTypeAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            key_evaluation_unit = request.POST['evaluation_unit']
+            key_user_id = request.POST['user_id']
+            result_queryset = SelfcheckTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+            
+            if key_user_id != '':
+                result_queryset = result_queryset.filter(user_id=key_user_id)
+            
+            context = {
+                "result_queryset": list(result_queryset.values())
+            }
+            return JsonResponse({'context': context})
+    
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
+@login_required()
+def SelfcheckTypeChartAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            key_evaluation_unit = request.POST['evaluation_unit']
+            key_user_id = request.POST['user_id']
+            result_queryset = SelfcheckTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+           
+            if key_user_id != '':
+                result_queryset = result_queryset.filter(user_id=key_user_id)
+            
+            context = {
+                "result_queryset": list(result_queryset.values())
+            }
+           
+            return JsonResponse({'context': context})
+    
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
     
 @method_decorator(login_required, name='dispatch')
 @method_decorator(middlewares.BonknowMiddleware, name='dispatch')

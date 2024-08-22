@@ -68,4 +68,9 @@ urlpatterns = [
 	path('mandara-personal-ajax', views.MandaraPersonalAjax, name="mandara_personal_ajax"),
 	path('mandara-masmas-chart-ajax', views.MasMasMandaraChartAjax, name="mandara_masmas_chart_ajax"),
 	path('mandara-completion-tab-ajax', views.MandaraCompletionTabAjax, name="mandara_completion_tab_ajax"),
+    
+	path('selfcheck-type-ajax', views.SelfcheckTypeAjax, name="selfcheck_type_ajax"),
+	path('selfcheck-type-chart-ajax', views.SelfcheckTypeChartAjax, name="selfcheck_type_chart_ajax"),
+    
+
 ]
