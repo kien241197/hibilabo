@@ -26,6 +26,8 @@
                                         {% csrf_token %}
                                         {{ form.evaluation_unit }}
                                         {{ form.user_id }}
+                                        {{ form.selfcheck_role }}
+
                                         <button type="submit" name="submit">表示</button>
                                     </form>
                                 </div>
@@ -55,6 +57,9 @@
                                             {% endfor %}
                                         </tbody>
                                     </table>
+                                    {% if message %} 
+                                    <p style="text-align: center;">{{ message }}</p>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -64,4 +69,7 @@
         </div>
     </section>
 </main>
+<script>
+    document.querySelector('#id_user_id option[value=""]').textContent = '----';
+</script>
 {% endblock %}

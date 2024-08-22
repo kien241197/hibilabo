@@ -246,6 +246,14 @@ class SelfcheckEvaluationUnitForm(forms.Form):
         queryset=models.User.objects.none()
     )
 
+    selfcheck_role = forms.ModelChoiceField(
+        empty_label='役割',
+        label='役割',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form'}),
+        queryset=models.SelfcheckRole.objects.none()
+    )
+
     def __init__(self, request, *args, **kwargs):
         super(SelfcheckEvaluationUnitForm, self).__init__(*args, **kwargs)
         queryset_evaluation = models.SelfcheckEvaluationPeriod.objects.all()
@@ -258,8 +266,13 @@ class SelfcheckEvaluationUnitForm(forms.Form):
                     queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
               
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
+            queryset_industry = models.SelfcheckRole.objects.all()
+
+
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
+        self.fields['selfcheck_role'].queryset = queryset_industry
+
 
 class BonknowForm(forms.Form):
 
