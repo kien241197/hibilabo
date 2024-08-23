@@ -249,7 +249,7 @@ class SelfcheckEvaluationUnitForm(forms.Form):
     selfcheck_role = forms.ModelChoiceField(
         empty_label='役割',
         label='役割',
-        required=True,
+        required=False,
         widget=forms.Select(attrs={'class': 'form'}),
         queryset=models.SelfcheckRole.objects.none()
     )
