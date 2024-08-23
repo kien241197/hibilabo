@@ -54,6 +54,7 @@
                                                     <canvas id="mycanvas-{{ record.user.id }}"></canvas>
                                                 </div>
                                             </div>
+                                            {{record.index_list|safe }}
                                             <script>window.onload=create_chart({{ record.user.id }}, {{ record.index_list|safe }})</script>
                                             {% endfor %}
                                             <script>window.onload=createChartSample()</script>

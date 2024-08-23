@@ -24,7 +24,7 @@ urlpatterns = [
 	path('selfcheck-sheet/<evaluationUnit>', views.SelfcheckSheet.as_view(), name='selfcheck_sheet'),
 	path('selfcheck-type', views.SelfcheckType.as_view(), name='selfcheck_type'),
 	path('selfcheck-type-chart', views.SelfcheckTypeChart.as_view(), name='selfcheck_type_chart'),
-	path('selfcheck', views.SelfcheckIndex.as_view(), name='selfcheck_index'),
+	# path('selfcheck', views.SelfcheckIndex.as_view(), name='selfcheck_index'),
 	path('selfcheck-index-chart', views.SelfcheckIndexChart.as_view(), name='selfcheck_index_chart'),
 	path('selfcheck-questions', views.SelfcheckQuestions.as_view(), name='selfcheck_questions'),
 
@@ -57,9 +57,9 @@ urlpatterns = [
 	path('honne-chart-ajax', views.HonneChartAjax, name="honne_chart_ajax"),
 	path('honne-qr-staticks-ajax', views.HonneQrStaticksAjax, name="honne_qr_staticks_ajax"),
     
-	path('test-selfcheck', views.TestSelfcheck.as_view(), name="test-selfcheck"),
-	path('bonknow', views.TestBonknow.as_view(), name="test-bonknow"),
-	path('mandara', views.TestMandara.as_view(), name="test-mandara"),
+	path('selfcheck', views.TestSelfcheck.as_view(), name="test_selfcheck"),
+	path('bonknow', views.TestBonknow.as_view(), name="test_bonknow"),
+	path('mandara', views.TestMandara.as_view(), name="test_mandara"),
     
     
 	path('bonknow-think-ajax', views.BonknowThinkAjax, name="bonknow_think_ajax"),
@@ -71,6 +71,12 @@ urlpatterns = [
     
 	path('selfcheck-type-ajax', views.SelfcheckTypeAjax, name="selfcheck_type_ajax"),
 	path('selfcheck-type-chart-ajax', views.SelfcheckTypeChartAjax, name="selfcheck_type_chart_ajax"),
+	path('selfcheck-index-ajax', views.SelfcheckIndexAjax, name="selfcheck_index_ajax"),
+	path('selfcheck-index-chart-ajax', views.SelfcheckIndexChartAjax, name="selfcheck_index_chart_ajax"),
+	path('selfcheck-question-ajax', views.SelfcheckQuestionAjax, name="selfcheck_question_ajax"),
+    
+    
+    
     
 
 ]

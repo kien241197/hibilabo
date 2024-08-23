@@ -14,6 +14,9 @@
     <script>
         const urlSelfCheckTypeAjax = "{% url 'selfcheck_type_ajax' %}"
         const urlSelfCheckTypeChartAjax = "{% url 'selfcheck_type_chart_ajax' %}"
+        const urlSelfcheckIndexAjax = "{% url 'selfcheck_index_ajax' %}"
+        const urlSelfcheckIndexChartAjax = "{% url 'selfcheck_index_chart_ajax' %}"
+        const urlSelfcheckQuestionAjax = "{% url 'selfcheck_question_ajax' %}"
 
         const visbleFlag = {% if user.company.visble_flag %} true {% else %} false  {% endif %}
         const userName = "{{ record.user.full_name|truncatechars:25 }}"
@@ -139,7 +142,7 @@
                                     <p>タイプ別分析</p>
                                 </div>
                                 <div class="filter">
-                                    <form action="" method="post" enctype="multipart/form-data">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm2">
                                         {% csrf_token %}
                                         {{ form.evaluation_unit }}
                                         {{ form.user_id }}
@@ -182,30 +185,7 @@
                                             <th class="text-center">15満点</th>
                                             <th class="text-center">15満点</th>
                                         </tr>
-                                        <tbody>
-                                            {% for record in orderby_records %}
-                                              <tr>
-                                                  <td>{{ forloop.counter }}</td>
-                                                  <td class="text-nowrap text-center">
-                                                        {% if user.company.visble_flag == True %}
-                                                            {{ record.user.full_name|truncatechars:25 }}
-                                                        {% endif %}
-                                                  </td>
-                                                  <td class="text-center">{{ record.sum_selfcheck_index }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index1 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index2 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index3 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index4 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index5 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index6 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index7 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index8 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index9 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index10 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index11 }}</td>
-                                                  <td class="text-center">{{ record.selfcheck_index12 }}</td>
-                                              </tr>
-                                            {% endfor %}
+                                        <tbody class="tbody-table-tab-2">
                                         </tbody>
                                     </table>
                                 </div>
@@ -222,7 +202,7 @@
                                     <p>タイプ別分析</p>
                                 </div>
                                 <div class="filter mb-0">
-                                    <form action="" method="post" enctype="multipart/form-data">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm3">
                                         {% csrf_token %}
                                         {{ form.evaluation_unit }}
                                         {{ form.user_id }}
@@ -232,21 +212,12 @@
                                 <div class="content-chart content-chart-2 content-chart-2-gray">
                                     <div class="content-chart">
                                         
-                                        <div class="row align-items-center">
+                                        <div class="row ">
                                             <div style="width: 350px; height: 350px;">
                                                 <canvas id="mycanvas-spamle"></canvas>
                                             </div>
-                                            {% for record in orderby_records %}
-                                            <div class="col-md-4 mx-5 pt-4">
-                                                <div class="images"  style="width: 320px; height: 320px;">
-                                                    {% if user.company.visble_flag == True %}
-                                                        <p>{{ record.user.full_name }}</p>
-                                                    {% endif %}
-                                                    <canvas id="mycanvas-{{ record.user.id }}"></canvas>
-                                                </div>
+                                            <div class="chart-tab-3 col-md-4 mx-5 pt-4">
                                             </div>
-                                            <script>window.onload=create_chart2({{ record.user.id }}, {{ record.index_list|safe }})</script>
-                                            {% endfor %}
                                             <script>window.onload=createChartSample2()</script>
                                         </div>
                                     </div>
@@ -264,28 +235,21 @@
                                     <p>タイプ別分析</p>
                                 </div>
                                 <div class="filter">
-                                    <form action="" method="post" enctype="multipart/form-data">
+                                    <form action="" method="post" enctype="multipart/form-data" id="myForm4">
                                         {% csrf_token %}
                                         {{ form.evaluation_unit }}
                                         {{ form.user_id }}
+                                        {{ form.selfcheck_role }}
                                         <button type="submit" name="submit">表示</button>
                                     </form>
                                 </div>
                                 <div class="content-chart content-chart-2">
                                     <table class="table table2">
-                                        <tr>
+                                        <tr class="user_name_tab4">
                                             <th>No.</th>
-                                            <th>質問</th>
-                                            <!--取得した人員数の値分列ヘッダーを追加する-->
-                                            {% for obj in staff_list %}
-                                              <th>
-                                                {% if user.company.visble_flag == True %}
-                                                 {{ obj.full_name|truncatechars:25 }}
-                                                {% endif %}
-                                            </th>
-                                            {% endfor %}
+                                            <th>質問</th>                                            
                                         </tr>
-                                        <tbody>
+                                        <tbody class="tbody-tab4">
                                             <!-- 質問結果のデータを展開する -->
                                             {% for obj in qr_list %}
                                               <tr>
@@ -297,6 +261,7 @@
                                             {% endfor %}
                                         </tbody>
                                     </table>
+                                    <p style="text-align: center;" class="message"></p>
                                 </div>
                             </div>
                         </div>
@@ -306,4 +271,7 @@
         </div>
     </section>
 </main>
+<script>
+    document.getElementById('id_selfcheck_role').setAttribute('required', true);
+</script>
 {% endblock %}

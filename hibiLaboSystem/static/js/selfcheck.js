@@ -141,7 +141,6 @@ $(document).ready(function () {
             success: function (res) {
 
                 let html = ''
-                console.log({ res });
                 if (res?.context?.result_queryset) {
 
                     res.context.result_queryset.map((item, index) => {
@@ -155,7 +154,7 @@ $(document).ready(function () {
                             </div>
                             `
                     })
-                    
+
                     $(".content-chart-tab-1").html(html)
 
                     res.context.result_queryset.map(item => {
@@ -175,13 +174,200 @@ $(document).ready(function () {
         })
     })
 
+    $("#myForm2").submit(function (event) {
+
+        event.preventDefault()
+
+        const evaluation_unit = $(this).find('select[name="evaluation_unit"]').val()
+        const user_id = $(this).find('select[name="user_id"]').val()
+
+        const csrftoken = getCookie('csrftoken')
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            },
+            url: urlSelfcheckIndexAjax,
+            data: {
+                user_id,
+                evaluation_unit,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (res) {
+
+                let html = "";
+
+                if (res?.context?.result_queryset) {
+
+                    res?.context?.result_queryset.map((item, index) => {
+
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td class="text-nowrap text-center">
+                                    ${visbleFlag ? item.full_name : ''}
+                                </td>
+                                <td class="text-center">${item.sum_selfcheck_index}</td>
+                                <td class="text-center">${item.selfcheck_index1}</td>
+                                <td class="text-center">${item.selfcheck_index2}</td>
+                                <td class="text-center">${item.selfcheck_index3}</td>
+                                <td class="text-center">${item.selfcheck_index4}</td>
+                                <td class="text-center">${item.selfcheck_index5}</td>
+                                <td class="text-center">${item.selfcheck_index6}</td>
+                                <td class="text-center">${item.selfcheck_index7}</td>
+                                <td class="text-center">${item.selfcheck_index8}</td>
+                                <td class="text-center">${item.selfcheck_index9}</td>
+                                <td class="text-center">${item.selfcheck_index10}</td>
+                                <td class="text-center">${item.selfcheck_index11}</td>
+                                <td class="text-center">${item.selfcheck_index12}</td>
+                            </tr>
+                        `
+                    })
+
+                    $(".tbody-table-tab-2").html(html)
+                } else {
+
+                    $(".tbody-table-tab-2").html(html)
+                }
+
+            },
+            error: function (error) {
+
+                console.log(error);
+            }
+        })
+
+    })
+
+    $("#myForm3").submit(function (event) {
+
+        event.preventDefault()
+
+        const evaluation_unit = $(this).find('select[name="evaluation_unit"]').val()
+        const user_id = $(this).find('select[name="user_id"]').val()
+
+        const csrftoken = getCookie('csrftoken')
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            },
+            url: urlSelfcheckIndexChartAjax,
+            data: {
+                user_id,
+                evaluation_unit,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (res) {
+
+                let html = "";
+                if (res?.context?.result_queryset) {
+                    // script>window.onload=create_chart2({{ record.user.id }}, {{ record.index_list|safe }})</script>
+                    res.context.result_queryset.map(item => {
+
+                        html += `
+                            <div>
+                                <div class="images"  style="width: 320px; height: 320px;">
+                                ${visbleFlag ? `<p>${item.full_name}</p>` : ''}
+                                <canvas id="mycanvas-${item.user_id}"></canvas>
+                                </div>
+                            </div>
+                        `
+                    })
+
+                    $(".chart-tab-3").html(html)
+
+                    res.context.result_queryset.map(item => {
+
+                        create_chart2(item.user_id, [item.selfcheck_index1, item.selfcheck_index2, item.selfcheck_index3, item.selfcheck_index4, item.selfcheck_index5, item.selfcheck_index6, item.selfcheck_index7, item.selfcheck_index8, item.selfcheck_index9, item.selfcheck_index10, item.selfcheck_index11, item.selfcheck_index12])
+                    })
+                } else {
+
+                    $(".chart-tab-3").html(html)
+                }
+
+
+            },
+            error: function (error) {
+
+                console.log(error);
+            }
+        })
+    })
+
+    $("#myForm4").submit(function (event) {
+
+        event.preventDefault()
+
+        const evaluation_unit = $(this).find('select[name="evaluation_unit"]').val()
+        const user_id = $(this).find('select[name="user_id"]').val()
+        const selfcheck_role = $(this).find('select[name="selfcheck_role"]').val()
+
+        const csrftoken = getCookie('csrftoken')
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            },
+            url: urlSelfcheckQuestionAjax,
+            data: {
+                user_id,
+                evaluation_unit,
+                selfcheck_role,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (res) {
+
+                let htmlTH = '<th>No.</th><th>質問</th>'
+                let htmlTR = ''
+
+                if (res?.context?.staff_list?.length > 0 & res?.context?.qr_list?.length > 0) {
+
+                    res.context.staff_list.map((item) => {
+
+                        htmlTH += `<th>${visbleFlag ? item.name : ''}</th>`
+                    })
+
+                    $('.user_name_tab4').html(htmlTH);
+
+                    res.context.qr_list.map((item, index) => {
+
+                        let row = `<tr>`;
+                        row += `<td class="tatefixed">${index + 1}</td>`;
+
+                        item.forEach((value, index) => {
+                            row += `<td class="tatefixed ${index === 0 ? 'text-left' : ''}">${value}</td>`;
+                        });
+
+                        row += `</tr>`;
+                        htmlTR += row;
+                    });
+
+                    $(".tbody-tab4").html(htmlTR)
+                } else {
+
+                    $('.user_name_tab4').html(htmlTH);
+                    $(".tbody-tab4").html(htmlTR)
+                    $(".message").html("データがありません")
+
+                }
+            },
+            error: function (error) {
+
+                console.log(error);
+            }
+        })
+    })
     function create_chart1(id, data) {
 
         var strname = "mycanvas-" + id;
-    
+
         //図を動的に生成
         var ctx = document.getElementById(strname);
-    
+
         createChart(ctx, data, false)
     }
 })
@@ -325,8 +511,6 @@ function createChart(ctx, data, labels) {
     });
 
 }
-
-
 
 function createChartSample1() {
 

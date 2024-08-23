@@ -204,11 +204,11 @@ $(document).ready(function () {
 
     $("#myForm3").submit(function (event) {
         event.preventDefault();
-    
+
         const evaluation_unit = $(this).find('select[name="evaluation_unit"]').val();
         const user_id = $(this).find('select[name="user_id"]').val();
         const csrftoken = getCookie('csrftoken');
-    
+
         $.ajax({
             type: "POST",
             beforeSend: function (request) {
@@ -224,7 +224,7 @@ $(document).ready(function () {
                 let html = '';
                 if (res?.context && res?.context?.length > 0) {
                     res.context.map((item) => {
-    
+
                         html += `
                             <div>
                                 <div class="images">
@@ -236,18 +236,18 @@ $(document).ready(function () {
                             </div>
                         `;
                     });
-    
+
                     $("#imagesHonneChart").html(html);
-    
+
                     res.context.map((item) => {
                         const data = [
-                            item.kartet_index1, item.kartet_index2, item.kartet_index3, 
-                            item.kartet_index4, item.kartet_index5, item.kartet_index6, 
+                            item.kartet_index1, item.kartet_index2, item.kartet_index3,
+                            item.kartet_index4, item.kartet_index5, item.kartet_index6,
                             item.kartet_index7, item.kartet_index8
                         ];
                         create_graph(item.user_id, data);
                     });
-                    
+
                 } else {
                     $("#imagesHonneChart").html(html);
                 }
@@ -280,29 +280,36 @@ $(document).ready(function () {
             },
             success: function (res) {
 
-                console.log({ res });
 
+                let htmlTH = ''
+                let htmlTR = ''
 
-                res.context.staff_list.map((item, index) => {
-                    if (showName === 'True') {
-                        $('#tableHonneQrStaticks').html(`${item.last_name} ${item.first_name}`)
-                    }
+                res.context.staff_list.map((item) => {
+                    htmlTH += `<th> ${showName ? `${item.last_name} ${item.first_name}` : ''}</th>`
                 })
 
-                let htmlTbody = ''
-                res.context.qr_list.map((item, index) => {
-                    console.log(item);
-
-                    htmlTbody += `
-                    <tr>
-                        <td class="tatefixed">${index}</td>
-                        <td class="tatefixed text-left">${item[0]}</td>
-                        <td class="tatefixed">${item[1] || ''}</td>
-                    </tr>
+                htmlTH = `
+                    <th>No.</th>
+                    <th>質問</th>
+                    ${htmlTH}
                 `
+                console.log("htmlTH", htmlTH);
+
+                $('#tableHonneQrStaticks').html(htmlTH)
+
+                res.context.qr_list.map((item, index) => {
+                    let row = `<tr>`;
+                    row += `<td class="tatefixed">${index + 1}</td>`;
+
+                    item.forEach((value, index) => {
+                        row += `<td class="tatefixed ${index === 0 ? 'text-left' : ''}">${value}</td>`;
+                    });
+
+                    row += `</tr>`;
+                    htmlTR += row;
                 })
 
-                $("#tbodyHonneQrStaticks").html(htmlTbody)
+                $("#tbodyHonneQrStaticks").html(htmlTR)
             },
             error: function (error) {
 
