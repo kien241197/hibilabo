@@ -33,6 +33,14 @@ $(document).ready(function () {
     $('.tab-pane fade').removeClass('show active');
     $('.button-tab').removeClass('active');
 
+    if(cleanHashValue === "tab-1" || cleanHashValue === "tab-2" || cleanHashValue === "tab-3"){
+
+        $("input[name='最終提出']").css("display", "none");
+    } else {
+
+        $("input[name='最終提出']").css("display", "block");
+    }
+
     if (cleanHashValue === "tab-2" || cleanHashValue === "tab-3") {
 
         $('#modal').css("display", 'block')
@@ -142,6 +150,8 @@ $(document).ready(function () {
             $('.desc-tab').text("わたしが望んでいる仕事を知る");
             $('.title-tab-h3').text("INTEREST");
             $('.desc-tab-p').text("リストアップされている項目の中から自身が求めていると思うものの□にチェックを入れてください （複数チェック可）");
+            $("input[name='最終提出']").css("display", "none");
+
         } else if (text === 'nav-tab-0') {
 
             $('.title-tab').text("TEAM CONCEPT");
@@ -155,6 +165,8 @@ $(document).ready(function () {
             $('.desc-tab').html("わたしの過去 ・ 現在 ・ 未来の年表を作ってみましょう！");
             $('.title-tab-h3').text("");
             $('.desc-tab-p').text("");
+            $("input[name='最終提出']").css("display", "block");
+
         } else if (text === 'nav-tab-my') {
 
             $('.title-tab').text("MY CONCEPT");
@@ -169,6 +181,8 @@ $(document).ready(function () {
             $('.desc-tab').html("私の●●を 3 つのポイントにまとめていきます。<br/> （＊ひとつのポイントでも多くても構いません）<br/> ＊自分の人生において仕事、 私事を含め記入してください <br/>（ライフワークバランス） <br/> ＊自分の書きやすい項目から記入可能です");
             $('.title-tab-h3').text("");
             $('.desc-tab-p').text("");
+            $("input[name='最終提出']").css("display", "none");
+
         }
 
         if (text !== "nav-tab-0" && text !== "nav-tab-my") {
