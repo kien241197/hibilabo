@@ -87,3 +87,30 @@ function drwa_chart(chatValue) {
         plugins: [ChartDataLabels],
     });
 }
+
+document.getElementById("save-temp").addEventListener("click", function() {
+    var checkbox = document.getElementById("checkbox-wrapper");
+    if (checkbox) {
+        checkbox.remove();
+    }
+});
+
+document.getElementById("submit-final").addEventListener("click", function() {
+    var checkbox = document.getElementById("checkbox-wrapper");
+    if (!checkbox) {
+        // Tạo lại checkbox nếu chưa có trong DOM
+        var checkboxWrapper = document.createElement('div');
+        checkboxWrapper.className = "checkbox";
+        checkboxWrapper.id = "checkbox-wrapper";
+
+        var checkboxInput = document.createElement('input');
+        checkboxInput.type = "hidden";
+        checkboxInput.name = "flg_finished";
+        checkboxInput.value = "False";
+        checkboxInput.setAttribute("aria-describedby", "id_flg_finished_helptext");
+        checkboxInput.id = "id_flg_finished";
+
+        checkboxWrapper.appendChild(checkboxInput);
+        document.body.appendChild(checkboxWrapper);
+    }
+});

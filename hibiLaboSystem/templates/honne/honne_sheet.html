@@ -68,12 +68,12 @@
                 {% if not disabled %}
                 <div class="col-md-12">
                     <div class="button-chart">
-                        <div class="checkbox">
+                        <div class="checkbox" id="checkbox-wrapper">
                             {{ form.flg_finished }}
                         </div>
                         <div class="flex-chart">
-                            <button class="btn-custom-button" type="submit">一時保存</button>
-                            <button class="btn-custom-button" type="submit" name="最終提出">最終提出</button>
+                            <button class="btn-custom-button" type="submit" id="save-temp">一時保存</button>
+                            <button class="btn-custom-button" type="submit" id="submit-final">最終提出</button>
                         </div>
                     </div>
                 </div>

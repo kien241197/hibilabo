@@ -31,8 +31,10 @@ from django.conf import settings
 import os
 from django.template.loader import get_template
 import pdfkit
-from django.db.models import Q, F
+from django.db.models import Q, F, Value
 import jaconv
+from django.db.models.functions import Concat
+from django.forms.models import model_to_dict
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
@@ -443,7 +445,8 @@ class HonneIndexStaticks(TemplateView):
             if key_user_id != '':
                 result_queryset = result_queryset.filter(user_id=key_user_id)
 
-            result_queryset = result_queryset.annotate(sum_kartet=F('kartet_index1') + F('kartet_index2') + F('kartet_index3') + F('kartet_index4') + F('kartet_index5') + F('kartet_index6') + F('kartet_index7') + F('kartet_index8'))
+            result_queryset = result_queryset.annotate(sum_kartet=F('kartet_index1') + F('kartet_index2') + F('kartet_index3') + F('kartet_index4') + F('kartet_index5') + F('kartet_index6') + F('kartet_index7') + F('kartet_index8')).values()
+            
             context['orderby_records'] = result_queryset
         return self.render_to_response(context)
 
@@ -504,7 +507,6 @@ class HonneQrStaticks(TemplateView):
 
                 rowidx = 0
                 result_list = [[[] for i in range(len(staff_list) + 1)] for j in range(len(question_list))]
-                print(result_list)
                 # pdb.set_trace()
                 for mst in question_list:
                     result_list[rowidx][0] = mst.question
@@ -593,38 +595,99 @@ class SelfcheckQuestions(TemplateView):
         context["form"] = form
         context["qr_list"] = ""
         if form.is_valid():
-            key_evaluation_unit = request.POST['evaluation_unit']
-            key_user_id = request.POST['user_id']
-            question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit).first().selfcheck_questions.all().order_by('category_id', 'sort_no')
+            key_evaluation_unit = request.POST.get('evaluation_unit')
+            key_user_id = request.POST.get('user_id')
+            key_selfcheck_role = request.POST.get('selfcheck_role')
+            question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit, selfcheck_questions__industries__id=request.user.company.industry_id)
+            
+            if key_selfcheck_role:
+                question_list = question_list.filter(selfcheck_questions__selfcheck_roles__id__in=key_selfcheck_role).first()
+                if question_list:
+                    question_list = question_list.selfcheck_questions.filter(selfcheck_roles__id__in=key_selfcheck_role).order_by('category_id', 'sort_no')
+                else: 
+                    context["message"] = "データがありません"
+            else:
+                question_list = question_list.first().selfcheck_questions.all().order_by('category_id', 'sort_no')
 
-            if len(question_list) > 0:
-                result_queryset = SelfcheckAnswerResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
-                staff_list = User.objects.filter(company_id=request.user.company_id,id__in=result_queryset.values('user_id')).order_by('id')
-                if key_user_id != '':
+            if question_list:
+                result_queryset = SelfcheckAnswerResult.objects.select_related('user').filter(evaluation_period_id=key_evaluation_unit)
+                staff_list = User.objects.filter(company_id=request.user.company_id, id__in=result_queryset.values('user_id')).order_by('id')
+                if key_user_id:
                     result_queryset = result_queryset.filter(user_id=key_user_id)
+                    if key_selfcheck_role:
+                        result_queryset = result_queryset.filter(selfcheck_question__selfcheck_roles__id__in=key_selfcheck_role)
                     staff_list = staff_list.filter(id=key_user_id)
-                context["staff_list"] = staff_list
-                # print(staff_list)
-                # pdb.set_trace()
 
                 rowidx = 0
-                result_list = [[[] for i in range(len(staff_list) + 1)] for j in range(len(question_list))]
+                result_list = [[[] for _ in range(len(staff_list) + 1)] for _ in range(len(question_list))]
+
+                staff_results = {staff.id: {} for staff in staff_list}
 
                 for i in question_list:
                     colidx = 1
                     result_list[rowidx][0] = i.question
                     for staff in staff_list:
                         get_result = result_queryset.filter(selfcheck_question_id=i.id, user_id=staff.id).first()
-                        result_list[rowidx][colidx] = '*'
-                        if get_result is not None:
+                        if get_result:
+                            answer = '*'
                             for element in SELFCHECK_ANSWER:
                                 if int(element[0]) == get_result.selfcheck_answer:
-                                    result_list[rowidx][colidx] = element[1]
-                        colidx = colidx + 1
-                    rowidx = rowidx + 1
+                                    answer = element[1]
+                            result_list[rowidx][colidx] = answer
+                            staff_results[staff.id][i.id] = answer
+                        else:
+                            result_list[rowidx][colidx] = '*'
+                            staff_results[staff.id][i.id] = '*'
+                        colidx += 1
+                    rowidx += 1
 
-                context["qr_list"] = result_list
+                # Xử lý các trường hợp để ẩn dữ liệu
+
+                # Trường hợp 1: key_user_id và key_selfcheck_role đều tồn tại
+                if key_user_id and key_selfcheck_role:
+                    all_results_are_stars = all(
+                        result == '*' for staff in staff_list for result in staff_results[staff.id].values()
+                    )
+                    if all_results_are_stars:
+                        context["staff_list"] = []  # Ẩn tên staff
+                        context["qr_list"] = []  # Ẩn câu hỏi
+                        context["message"] = "データがありません"
+                    else:
+                        context["staff_list"] = staff_list
+                        context["qr_list"] = result_list
+
+                # Trường hợp 2: key_evaluation_unit và key_selfcheck_role tồn tại, nhưng không có key_user_id
+                elif key_evaluation_unit and key_selfcheck_role:
+                    # Xác định các nhân viên có tất cả kết quả là '*'
+                    staff_results_are_stars = {
+                        staff.id: all(result == '*' for result in results.values())
+                        for staff.id, results in staff_results.items()
+                    }
+                    filtered_staff_list = [staff for staff in staff_list if not staff_results_are_stars.get(staff.id, False)]
+
+                    # Tạo danh sách kết quả được lọc
+                    filtered_result_list = []
+                    for i in range(len(question_list)):
+                        row = [result_list[i][0]]  # Giữ câu hỏi ở cột đầu tiên
+                        for j, staff in enumerate(staff_list):
+                            if staff.id in [s.id for s in filtered_staff_list]:
+                                row.append(result_list[i][j + 1])
+                        filtered_result_list.append(row)
+
+                    all_filtered_staff_results_are_stars = all(
+                        all(result == '*' for result in staff_results[staff.id].values()) 
+                        for staff in filtered_staff_list
+                    )
+                    if all_filtered_staff_results_are_stars:
+                        context["staff_list"] = []
+                        context["qr_list"] = []
+                        context["message"] = "データがありません"
+                    else:
+                        context["staff_list"] = filtered_staff_list
+                        context["qr_list"] = filtered_result_list
+
         return self.render_to_response(context)
+
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
@@ -642,7 +705,9 @@ class SelfcheckType(TemplateView):
         context = self.get_context_data(**kwargs)
         form = self.form_class(request, request.POST)
         context["form"] = form
+        
         if form.is_valid():
+            print("vaof dday")
             key_evaluation_unit = request.POST['evaluation_unit']
             key_user_id = request.POST['user_id']
             result_queryset = SelfcheckTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
@@ -685,7 +750,9 @@ class SelfcheckSheet(TemplateView):
     def get_context_data(self, **kwargs):
         evaluation_unit = self.kwargs['evaluationUnit']
         company_id = self.request.user.company_id
+
         user_id = self.request.user.id
+
         index_list = [0 for i in range(12)]
         type_list = [0 for i in range(3)]
         questions = [{} for i in range(12)]
@@ -1734,6 +1801,7 @@ class MandaraMasMasChart(TemplateView):
     form_class = forms.MandaraChartForm
 
     def get_context_data(self, **kwargs):
+        
         company_id = self.request.user.company_id
         today = datetime.date.today()
         user_id = self.request.POST.get("user_id")
@@ -2173,3 +2241,613 @@ def test_mandara_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.HonneTotalMiddleware, name='dispatch')
+class TestHonne(TemplateView):
+    template_name = "honne/honne.html"
+    form_class = forms.HonneEvaluationUnitForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super(TestHonne, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request)
+
+        list_result = {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+        }
+        kwargs['result'] = list_result
+        kwargs['title_header'] = "HONNE"
+        return kwargs
+
+@login_required
+def HonneTotalAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                company_id = request.user.company_id
+                key_evaluation_unit = request.POST.get('evaluation_unit')
+
+                evaluation_unit = HonneEvaluationPeriod.objects.filter(
+                id=key_evaluation_unit,
+                honne_type_results__company_id=company_id
+                ).annotate(
+                total_a=Sum('honne_type_results__kartet_type_a'),
+                total_b=Sum('honne_type_results__kartet_type_b'),
+                total_c=Sum('honne_type_results__kartet_type_c'),
+                total_d=Sum('honne_type_results__kartet_type_d'),
+                ).first()
+
+                context = {'result': {}}
+
+                if evaluation_unit is not None:
+                    context['result']["A"] = evaluation_unit.total_a or 0
+                    context['result']["B"] = evaluation_unit.total_b or 0
+                    context['result']["C"] = evaluation_unit.total_c or 0
+                    context['result']["D"] = evaluation_unit.total_d or 0
+
+                if sum(context['result'].values()) > 0:
+                    context['max_type'] = max(context['result'], key=context['result'].get)
+                
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def HonneTypeStaticksAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_user_id = request.POST.get('user_id')
+                key_evaluation_unit = request.POST.get('evaluation_unit')
+                result_queryset = HonneTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+                if key_user_id != '':
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+
+                list_resp = list(result_queryset.values())
+                return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    
+@login_required
+def HonneIndexStaticksAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+
+                key_evaluation_unit = request.POST['evaluation_unit']
+                key_user_id = request.POST['user_id']
+                result_queryset = HonneIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
+                if key_user_id != '':
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+
+                result_queryset = result_queryset.annotate(sum_kartet=F('kartet_index1') + F('kartet_index2') + F('kartet_index3') + F('kartet_index4') + F('kartet_index5') + F('kartet_index6') + F('kartet_index7') + F('kartet_index8'),
+                                                        full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name'))
+                                                        )
+                list_resp = list(result_queryset.values())
+                return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def HonneChartAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                key_user_id = request.POST['user_id']
+                result_queryset = HonneIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+                if key_user_id != '':
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+                list_resp = list(result_queryset.values())
+                return JsonResponse({'context': list_resp})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def HonneQrStaticksAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                key_user_id = request.POST['user_id']
+
+                question_list = HonneEvaluationPeriod.objects.filter(id=key_evaluation_unit).first().honne_questions.all()
+
+                if len(question_list) > 0:
+                    result_queryset = HonneAnswerResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
+                    staff_list = User.objects.filter(company_id=request.user.company_id,id__in=result_queryset.values('user_id')).order_by('id')
+                    if key_user_id != '':
+                        result_queryset = result_queryset.filter(user_id=key_user_id)
+                        staff_list = staff_list.filter(id=key_user_id)
+
+                    rowidx = 0
+                    result_list = [[[] for i in range(len(staff_list) + 1)] for j in range(len(question_list))]
+                    # pdb.set_trace()
+                    for mst in question_list:
+                        result_list[rowidx][0] = mst.question
+                        colidx = 1
+                        for i in staff_list:
+                            get_result = result_queryset.filter(honne_question_id=mst.id, user_id=i.id).first()
+                            if get_result is None:
+                                result_list[rowidx][colidx] = ''
+                            else:
+                                if get_result.answer == 1:
+                                    result_list[rowidx][colidx] = '○'
+                                else:
+                                    result_list[rowidx][colidx] = '✕'
+                            colidx = colidx + 1
+                        rowidx = rowidx + 1
+                    context = {
+                        "staff_list": list(staff_list.values()),
+                        "qr_list":  list(result_list)
+                    }
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+class TestSelfcheck(TemplateView):
+    template_name = "selfcheck/selfcheck.html"
+    form_class = forms.SelfcheckEvaluationUnitForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super(TestSelfcheck, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = "SELFCHECK"
+        return kwargs
+
+@login_required()
+def SelfcheckTypeAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            key_evaluation_unit = request.POST['evaluation_unit']
+            key_user_id = request.POST['user_id']
+            result_queryset = SelfcheckTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+            
+            if key_user_id != '':
+                result_queryset = result_queryset.filter(user_id=key_user_id)
+            
+            context = {
+                "result_queryset": list(result_queryset.values())
+            }
+            return JsonResponse({'context': context})
+    
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
+@login_required()
+def SelfcheckTypeChartAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            key_evaluation_unit = request.POST['evaluation_unit']
+            key_user_id = request.POST['user_id']
+            result_queryset = SelfcheckTypeResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+           
+            if key_user_id != '':
+                result_queryset = result_queryset.filter(user_id=key_user_id)
+            
+            context = {
+                "result_queryset": list(result_queryset.values())
+            }
+           
+            return JsonResponse({'context': context})
+    
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
+@login_required()
+def SelfcheckIndexAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            key_evaluation_unit = request.POST['evaluation_unit']
+            key_user_id = request.POST['user_id']
+            result_queryset = SelfcheckIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+            if key_user_id != '':
+                result_queryset = result_queryset.filter(user_id=key_user_id)
+            result_queryset = result_queryset.annotate(sum_selfcheck_index=F('selfcheck_index1') + F('selfcheck_index2') + F('selfcheck_index3') + F('selfcheck_index4') + F('selfcheck_index5') + F('selfcheck_index6') + F('selfcheck_index7') + F('selfcheck_index8') + F('selfcheck_index9') + F('selfcheck_index10') + F('selfcheck_index11') + F('selfcheck_index12'))
+            context = {
+                "result_queryset" : list(result_queryset.values())
+            }
+            return JsonResponse({"context": context})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+    
+@login_required()
+def SelfcheckIndexChartAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            key_evaluation_unit = request.POST['evaluation_unit']
+            key_user_id = request.POST['user_id']
+            result_queryset = SelfcheckIndexResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit).annotate(full_name=Concat(F('user__last_name'), Value(' '), F('user__first_name')))
+            if key_user_id != '':
+                result_queryset = result_queryset.filter(user_id=key_user_id)
+            context = {
+                "result_queryset" : list(result_queryset.values())
+            }
+            return JsonResponse({"context": context})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required()
+def SelfcheckQuestionAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            key_evaluation_unit = request.POST.get('evaluation_unit')
+            key_user_id = request.POST.get('user_id')
+            key_selfcheck_role = request.POST.get('selfcheck_role')
+            question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit, selfcheck_questions__industries__id=request.user.company.industry_id)
+            context = {}
+            if key_selfcheck_role:
+                question_list = question_list.filter(selfcheck_questions__selfcheck_roles__id__in=key_selfcheck_role).first()
+                if question_list:
+                    question_list = question_list.selfcheck_questions.filter(selfcheck_roles__id__in=key_selfcheck_role).order_by('category_id', 'sort_no')
+                else: 
+                    context.update({
+                        "message": "データがありません"
+                    })
+            else:
+                question_list = question_list.first().selfcheck_questions.all().order_by('category_id', 'sort_no')
+
+            if question_list:
+                result_queryset = SelfcheckAnswerResult.objects.select_related('user').filter(evaluation_period_id=key_evaluation_unit)
+                staff_list = User.objects.filter(company_id=request.user.company_id, id__in=result_queryset.values('user_id')).order_by('id')
+                if key_user_id:
+                    result_queryset = result_queryset.filter(user_id=key_user_id)
+                    if key_selfcheck_role:
+                        result_queryset = result_queryset.filter(selfcheck_question__selfcheck_roles__id__in=key_selfcheck_role)
+                    staff_list = staff_list.filter(id=key_user_id)
+
+                rowidx = 0
+                result_list = [[[] for _ in range(len(staff_list) + 1)] for _ in range(len(question_list))]
+
+                staff_results = {staff.id: {} for staff in staff_list}
+
+                for i in question_list:
+                    colidx = 1
+                    result_list[rowidx][0] = i.question
+                    for staff in staff_list:
+                        get_result = result_queryset.filter(selfcheck_question_id=i.id, user_id=staff.id).first()
+                        if get_result:
+                            answer = '*'
+                            for element in SELFCHECK_ANSWER:
+                                if int(element[0]) == get_result.selfcheck_answer:
+                                    answer = element[1]
+                            result_list[rowidx][colidx] = answer
+                            staff_results[staff.id][i.id] = answer
+                        else:
+                            result_list[rowidx][colidx] = '*'
+                            staff_results[staff.id][i.id] = '*'
+                        colidx += 1
+                    rowidx += 1
+
+                # Xử lý các trường hợp để ẩn dữ liệu
+                # Trường hợp 1: key_user_id và key_selfcheck_role đều tồn tại
+                if key_user_id and key_selfcheck_role:
+                    all_results_are_stars = all(
+                        result == '*' for staff in staff_list for result in staff_results[staff.id].values()
+                    )
+                    if all_results_are_stars:
+                        staff_list= []
+                        qr_list=[]
+                        message="データがありません"
+                        context.update({
+                            "staff_list": list(staff_list),
+                            "qr_list": list(qr_list),
+                            "message": message
+                        })
+                    else:
+                        context.update({
+                            "staff_list": list(staff_list.values()),
+                            "qr_list": list(result_list),
+                        })
+
+                # Trường hợp 2: key_evaluation_unit và key_selfcheck_role tồn tại, nhưng không có key_user_id
+                elif key_evaluation_unit and key_selfcheck_role:
+                    # Xác định các nhân viên có tất cả kết quả là '*'
+                    staff_results_are_stars = {
+                        staff.id: all(result == '*' for result in results.values())
+                        for staff.id, results in staff_results.items()
+                    }
+                    filtered_staff_list = [staff for staff in staff_list if not staff_results_are_stars.get(staff.id, False)]
+
+                    # Tạo danh sách kết quả được lọc
+                    filtered_result_list = []
+                    for i in range(len(question_list)):
+                        row = [result_list[i][0]]  # Giữ câu hỏi ở cột đầu tiên
+                        for j, staff in enumerate(staff_list):
+                            if staff.id in [s.id for s in filtered_staff_list]:
+                                row.append(result_list[i][j + 1])
+                        filtered_result_list.append(row)
+
+                    all_filtered_staff_results_are_stars = all(
+                        all(result == '*' for result in staff_results[staff.id].values()) 
+                        for staff in filtered_staff_list
+                    )
+                    if all_filtered_staff_results_are_stars:
+                        staff_list= []
+                        qr_list=[]
+                        message="データがありません"
+                        context.update({
+                            "staff_list": list(staff_list),
+                            "qr_list": list(qr_list),
+                            "message": message
+                        })
+                    else:
+                        filtered_staff_list_data = [
+                            {"id": staff.id, "name": staff.last_name + " " + staff.first_name} 
+                            for staff in filtered_staff_list
+                        ]
+                        filtered_result_list_data = [
+                            [row[0]] + row[1:]
+                            for row in filtered_result_list
+                        ]
+                        context.update({
+                            "staff_list": list(filtered_staff_list_data),
+                            "qr_list": list(filtered_result_list_data),
+                        })
+                    
+            return JsonResponse({"context": context})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
+    
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.BonknowMiddleware, name='dispatch')
+class TestBonknow(TemplateView):
+    template_name="bonknow/bonknow.html"
+    form_class = forms.BonknowForm
+
+    def get_context_data(self, **kwargs):
+        company_id = self.request.user.company_id
+        user_id = self.request.user.id
+
+        kwargs = super(TestBonknow, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request.GET or None)
+        kwargs['title_header'] = 'BONKNOW'
+        return kwargs
+    
+@login_required
+def BonknowThinkAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                results = ThinkResult.objects.all().filter(id=key_evaluation_unit,user_id=request.user.id).order_by('review_date')
+                times = []
+                must = []
+                want = []
+                for result in results:
+                    # str_time = result.review_date.strftime('%Y/%m')
+                    times.append(result.evaluation_period.evaluation_name)
+                    must.append(result.must)
+                    want.append(result.want)
+                context = {
+                    "times": times,
+                    "must": must,
+                    "want": want
+                }
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def BonknowResponsAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                key_evaluation_unit = request.POST['evaluation_unit']
+                results = ResponsResult.objects.all().filter(id=key_evaluation_unit,user_id=request.user.id).order_by('review_date')
+                times = []
+                logic = []
+                sense = []
+                for result in results:
+                    times.append(result.evaluation_period.evaluation_name)
+                    logic.append(result.logic)
+                    sense.append(result.sense)
+                context = {
+                    "times": times,
+                    "logic": logic,
+                    "sense": sense
+                }
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.MandaraTotalMiddleware, name='dispatch')
+class TestMandara(TemplateView):
+    template_name="mandara/mandara.html"
+    form_class = forms.MandaraForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super(TestMandara, self).get_context_data(**kwargs)
+        kwargs['form'] = self.form_class(self.request)
+        kwargs['title_header'] = 'MASMASMANDARA'
+        return kwargs
+
+@login_required
+def MandaraPersonalAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            try:
+                user_id = request.POST["user_id"]
+                company_id = request.user.company_id
+
+                today = datetime.date.today()
+                mandara = MandaraBase.objects.all().filter(user_id=user_id,company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True).annotate(
+                    A1_result=Sum('mandara_progress__A1_result'),
+                    A2_result=Sum('mandara_progress__A2_result'),
+                    A3_result=Sum('mandara_progress__A3_result'),
+                    A4_result=Sum('mandara_progress__A4_result'),
+                    A5_result=Sum('mandara_progress__A5_result'),
+                    A6_result=Sum('mandara_progress__A6_result'),
+                    A7_result=Sum('mandara_progress__A7_result'),
+                    A8_result=Sum('mandara_progress__A8_result'),
+                    B1_result=Sum('mandara_progress__B1_result'),
+                    B2_result=Sum('mandara_progress__B2_result'),
+                    B3_result=Sum('mandara_progress__B3_result'),
+                    B4_result=Sum('mandara_progress__B4_result'),
+                    B5_result=Sum('mandara_progress__B5_result'),
+                    B6_result=Sum('mandara_progress__B6_result'),
+                    B7_result=Sum('mandara_progress__B7_result'),
+                    B8_result=Sum('mandara_progress__B8_result'),
+                    C1_result=Sum('mandara_progress__C1_result'),
+                    C2_result=Sum('mandara_progress__C2_result'),
+                    C3_result=Sum('mandara_progress__C3_result'),
+                    C4_result=Sum('mandara_progress__C4_result'),
+                    C5_result=Sum('mandara_progress__C5_result'),
+                    C6_result=Sum('mandara_progress__C6_result'),
+                    C7_result=Sum('mandara_progress__C7_result'),
+                    C8_result=Sum('mandara_progress__C8_result'),
+                    D1_result=Sum('mandara_progress__D1_result'),
+                    D2_result=Sum('mandara_progress__D2_result'),
+                    D3_result=Sum('mandara_progress__D3_result'),
+                    D4_result=Sum('mandara_progress__D4_result'),
+                    D5_result=Sum('mandara_progress__D5_result'),
+                    D6_result=Sum('mandara_progress__D6_result'),
+                    D7_result=Sum('mandara_progress__D7_result'),
+                    D8_result=Sum('mandara_progress__D8_result'),
+                    E1_result=Sum('mandara_progress__E1_result'),
+                    E2_result=Sum('mandara_progress__E2_result'),
+                    E3_result=Sum('mandara_progress__E3_result'),
+                    E4_result=Sum('mandara_progress__E4_result'),
+                    E5_result=Sum('mandara_progress__E5_result'),
+                    E6_result=Sum('mandara_progress__E6_result'),
+                    E7_result=Sum('mandara_progress__E7_result'),
+                    E8_result=Sum('mandara_progress__E8_result'),
+                    F1_result=Sum('mandara_progress__F1_result'),
+                    F2_result=Sum('mandara_progress__F2_result'),
+                    F3_result=Sum('mandara_progress__F3_result'),
+                    F4_result=Sum('mandara_progress__F4_result'),
+                    F5_result=Sum('mandara_progress__F5_result'),
+                    F6_result=Sum('mandara_progress__F6_result'),
+                    F7_result=Sum('mandara_progress__F7_result'),
+                    F8_result=Sum('mandara_progress__F8_result'),
+                    G1_result=Sum('mandara_progress__G1_result'),
+                    G2_result=Sum('mandara_progress__G2_result'),
+                    G3_result=Sum('mandara_progress__G3_result'),
+                    G4_result=Sum('mandara_progress__G4_result'),
+                    G5_result=Sum('mandara_progress__G5_result'),
+                    G6_result=Sum('mandara_progress__G6_result'),
+                    G7_result=Sum('mandara_progress__G7_result'),
+                    G8_result=Sum('mandara_progress__G8_result'),
+                    H1_result=Sum('mandara_progress__H1_result'),
+                    H2_result=Sum('mandara_progress__H2_result'),
+                    H3_result=Sum('mandara_progress__H3_result'),
+                    H4_result=Sum('mandara_progress__H4_result'),
+                    H5_result=Sum('mandara_progress__H5_result'),
+                    H6_result=Sum('mandara_progress__H6_result'),
+                    H7_result=Sum('mandara_progress__H7_result'),
+                    H8_result=Sum('mandara_progress__H8_result'),
+                    ).values().first()
+
+                context = {
+                    "mandara": mandara
+                }
+
+                return JsonResponse({'context': context})
+            except:
+                HttpResponseBadRequest('Invalid request')
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required
+def MasMasMandaraChartAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'GET':
+            company_id = request.user.company_id
+            today = datetime.date.today()
+            user_id = request.GET.get("user_id")
+            mandaras = MandaraBase.objects.select_related('mandara_period').filter(company_id=company_id,mandara_period__end_date__gte=today,mandara_period__start_date__lte=today,flg_finished=True)
+            if user_id is not None and user_id != '':
+                mandaras = mandaras.filter(user_id=user_id)
+            first_mandara = mandaras.first()
+            results = MandaraProgress.objects.all().filter(mandara_base__in=mandaras).annotate(
+                month=ExtractMonth('date'),
+                year=ExtractYear('date')
+            )
+            data = {}
+            for i in results:
+                key = str(i.year) + '/' + str(i.month)
+                if key not in data:
+                    data[key] = i.sum_result()
+                else:
+                    data[key] += i.sum_result()
+            context = {}
+            list_month = []
+            list_value = []
+            for key, value in data.items():
+                list_month.append(key)
+                list_value.append(value)
+            
+            context.update({
+                "list_month" : list_month,
+                "list_value" : list_value
+            })
+            if first_mandara is not None:
+                start = first_mandara.mandara_period.display_time_start()
+                end = first_mandara.mandara_period.display_time_end()
+                context.update({
+                    "start": start,
+                    "end": end
+                })
+            return JsonResponse({'context': context})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+@login_required()
+def MandaraCompletionTabAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'GET':
+            company_id = request.user.company_id
+            today = datetime.date.today()
+            user_id = request.GET.get("user_id")
+            mandaras = MandaraBase.objects.select_related('mandara_period').filter(company_id=company_id,mandara_period__end_date__lt=today,flg_finished=True)
+            max_time = mandaras.order_by('-mandara_period__end_date').first()
+            min_time = mandaras.order_by('mandara_period__start_date').first()
+            start = None
+            end = None
+
+            context = {}
+            
+            if min_time is not None:
+                start = min_time.mandara_period.display_time_start()
+                context.update({
+                    "start": start
+                })
+            if max_time is not None:
+                end = max_time.mandara_period.display_time_end()
+                context.update({
+                    "end": end
+                })
+            if user_id is not None and user_id != '':
+                mandaras = mandaras.filter(user_id=user_id)
+                context.update({
+                    "mandaras": list(mandaras.values())
+                })
+                
+            return JsonResponse({'context': context})
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
