@@ -149,7 +149,7 @@ $(document).ready(function () {
                             <div>
                                 <div class="images">
                                     ${visbleFlag ? `<p>${item.full_name}</p>` : ""}
-                                    <canvas id="mycanvas-${item.user_id}"></canvas>
+                                    <canvas id="mycanvas1-${item.user_id}"></canvas>
                                 </div>
                             </div>
                             `
@@ -363,12 +363,22 @@ $(document).ready(function () {
     })
     function create_chart1(id, data) {
 
-        var strname = "mycanvas-" + id;
+        var strname = "mycanvas1-" + id;
 
         //図を動的に生成
         var ctx = document.getElementById(strname);
 
         createChart(ctx, data, false)
+    }
+
+    function create_chart2(id, data) {
+
+        var strname = "mycanvas-" + id;
+    
+        //図を動的に生成
+        var ctx = document.getElementById(strname);
+    
+        chart(ctx, data, false)
     }
 })
 
@@ -431,15 +441,7 @@ function chart(ctx, data, labels) {
     });
 }
 
-function create_chart2(id, data) {
 
-    var strname = "mycanvas-" + id;
-
-    //図を動的に生成
-    var ctx = document.getElementById(strname);
-
-    chart(ctx, data, false)
-}
 
 function createChartSample2() {
 
