@@ -89,28 +89,33 @@ function drwa_chart(chatValue) {
 }
 
 document.getElementById("save-temp").addEventListener("click", function() {
-    var checkbox = document.getElementById("checkbox-wrapper");
-    if (checkbox) {
-        checkbox.remove();
+    // Xóa checkbox khỏi DOM
+    var checkboxWrapper = document.getElementById("checkbox-wrapper");
+    if (checkboxWrapper) {
+        checkboxWrapper.remove();
     }
+    // Gửi form sau khi xóa checkbox
+    document.getElementById("honne-form").submit();
 });
 
 document.getElementById("submit-final").addEventListener("click", function() {
-    var checkbox = document.getElementById("checkbox-wrapper");
-    if (!checkbox) {
-        // Tạo lại checkbox nếu chưa có trong DOM
-        var checkboxWrapper = document.createElement('div');
-        checkboxWrapper.className = "checkbox";
-        checkboxWrapper.id = "checkbox-wrapper";
+    // Kiểm tra nếu checkbox không tồn tại trong DOM thì tạo lại
+    var checkboxWrapper = document.getElementById("checkbox-wrapper");
+    if (!checkboxWrapper) {
+        var newCheckboxWrapper = document.createElement('div');
+        newCheckboxWrapper.className = "checkbox";
+        newCheckboxWrapper.id = "checkbox-wrapper";
 
         var checkboxInput = document.createElement('input');
         checkboxInput.type = "hidden";
         checkboxInput.name = "flg_finished";
-        checkboxInput.value = "False";
+        checkboxInput.value = "True";
         checkboxInput.setAttribute("aria-describedby", "id_flg_finished_helptext");
         checkboxInput.id = "id_flg_finished";
 
-        checkboxWrapper.appendChild(checkboxInput);
-        document.body.appendChild(checkboxWrapper);
+        newCheckboxWrapper.appendChild(checkboxInput);
+        document.body.appendChild(newCheckboxWrapper);
     }
+    // Gửi form sau khi thêm checkbox
+    document.getElementById("honne-form").submit();
 });
