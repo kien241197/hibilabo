@@ -146,7 +146,7 @@
                                             {% with keyword=key|add:'_keyword' %}
                                             {% with result=key|add:'_result' %}
                                             <div class="value-table-score SCORE-text">
-                                                <div class="title-main-score title-main-score{{key}}">
+                                                <div class="title-main-score title-main-score{{key}}" style="top: 0px">
                                                     <p>{{ mandara|get_custom_name:keyword }}</p>
                                                 </div>
                                                 <span class="value-score value-score{{key}}">{{ mandara|get_custom_name:result }}</span>

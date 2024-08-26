@@ -15,7 +15,7 @@ $(document).ready(function () {
 
         $(`#tab1`).css("display", "block");
         $('.mandara-nav').eq(1).addClass('active')
-        getMasMasMandaraAjax()
+        getMasMasMandaraAjax('', 1)
     }
 
     if (hash === "#mandara_completion_tab") {
@@ -36,16 +36,16 @@ $(document).ready(function () {
         $(`#tab${index}`).css("display", "block");
         $(this).addClass("active");
 
-        
+
         if (index === 1) {
             const user_id = $('select[name="user_id"]').eq(1).val()
-            getMasMasMandaraAjax(user_id)
+            getMasMasMandaraAjax(user_id, 1)
         }
 
 
-        if (index === 2){
+        if (index === 2) {
 
-            const user_id = $('select[name="user_id"]').eq(2).val()            
+            const user_id = $('select[name="user_id"]').eq(2).val()
             getMandaraCompletionTabAjax(user_id)
         }
     })
@@ -347,7 +347,7 @@ $(document).ready(function () {
         })
     });
 
-    function getMasMasMandaraAjax(user_id) {
+    function getMasMasMandaraAjax(user_id, type) {
 
         $.ajax({
             type: "GET",
@@ -364,48 +364,50 @@ $(document).ready(function () {
                     $('label[name="start"]').eq(0).text(res.context.start);
                     $('label[name="end"]').eq(0).text(res.context.end);
 
-                    const barChart1 = document.getElementById('barChart').getContext('2d');
-                    new Chart(barChart1, {
-                        type: 'bar',
-                        data: {
-                            labels: res.context.list_month.length >= 5 ? res.context.list_month : [...res.context.list_month, "", "", "", "", "", ""],
-                            datasets: [{
-                                label: '', // Bỏ label
-                                data: res.context.list_value,
-                                backgroundColor: '#C8C9CA',
-                            }]
-                        },
-                        options: {
-                            plugins: {
-                                datalabels: {
-                                    anchor: 'end',
-                                    align: 'top',
-                                    offset: -5,
-                                    color: "#2CAEB5",
-                                    font: { size: 22, weight: 700 },
-                                    formatter: function (value, context) {
-                                        return value;
-                                    },
-                                },
-                               
-                            },
-                            legend: {
-                                display: false
-                            },
-                            scales: {
-                                xAxes: [{
-                                    gridLines: {
-                                        drawOnChartArea: false
-                                    }
-                                }],
-                                yAxes: [{
-                                    gridLines: {
-                                        drawOnChartArea: false
-                                    }
+                    if (type !== 1) {
+                        const barChart1 = document.getElementById('barChart').getContext('2d');
+                        new Chart(barChart1, {
+                            type: 'bar',
+                            data: {
+                                labels: res.context.list_month.length >= 5 ? res.context.list_month : [...res.context.list_month, "", "", "", "", "", ""],
+                                datasets: [{
+                                    label: '', // Bỏ label
+                                    data: res.context.list_value,
+                                    backgroundColor: '#C8C9CA',
                                 }]
-                            }
-                        },
-                    });
+                            },
+                            options: {
+                                plugins: {
+                                    datalabels: {
+                                        anchor: 'end',
+                                        align: 'top',
+                                        offset: -5,
+                                        color: "#2CAEB5",
+                                        font: { size: 22, weight: 700 },
+                                        formatter: function (value, context) {
+                                            return value;
+                                        },
+                                    },
+
+                                },
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        gridLines: {
+                                            drawOnChartArea: false
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        gridLines: {
+                                            drawOnChartArea: false
+                                        }
+                                    }]
+                                }
+                            },
+                        });
+                    }
                 }
 
             },
@@ -421,7 +423,7 @@ $(document).ready(function () {
         event.preventDefault()
         const user_id = $(this).find('select[name="user_id"]').val()
 
-        getMasMasMandaraAjax(user_id);
+        getMasMasMandaraAjax(user_id, 0);
     })
 
     function getMandaraCompletionTabAjax(user_id) {
@@ -437,7 +439,7 @@ $(document).ready(function () {
                 user_id
             },
             success: function (res) {
-                
+
                 if (res?.context?.start && res?.context?.end) {
                     $('label[name="start"]').eq(1).text(res.context.start);
                     $('label[name="end"]').eq(1).text(res.context.end);
