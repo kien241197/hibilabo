@@ -175,20 +175,18 @@ class BonknowSheetForm(forms.Form):
 
 class HonneForm(forms.Form):
     flg_finished = forms.BooleanField(
-        initial=True,
+        initial=False,
         label='提出する',
         required=False,
-        help_text='提出する',
-        widget=forms.HiddenInput()
+        help_text='提出する'
     )
 
 class SelfcheckForm(forms.Form):
     flg_finished = forms.BooleanField(
-        initial=True,
+        initial=False,
         label='提出する',
         required=False,
-        help_text='提出する',
-        widget=forms.HiddenInput()
+        help_text='提出する'
     )
     
 

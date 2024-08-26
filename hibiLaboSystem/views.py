@@ -223,6 +223,9 @@ class HonneSheet(TemplateView):
             company_id = self.request.user.company_id
             user_id = self.request.user.id
             flg_finished = self.request.POST.get("flg_finished") or False
+            button_submit = self.request.POST.get("最終提出")
+            if button_submit:
+                flg_finished=True
             honne_questions = HonneEvaluationPeriod.objects.filter(
                 id=key_evaluation_unit,
                 company_id=company_id
@@ -872,6 +875,9 @@ class SelfcheckSheet(TemplateView):
             company_id = self.request.user.company_id
             user_id = self.request.user.id
             flg_finished = self.request.POST.get("flg_finished") or False
+            button_submit = self.request.POST.get("最終提出")
+            if button_submit:
+                flg_finished=True
             selfcheck_questions = SelfcheckEvaluationPeriod.objects.filter(
                 id=key_evaluation_unit,
                 company_id=company_id

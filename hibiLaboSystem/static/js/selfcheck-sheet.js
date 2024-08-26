@@ -163,17 +163,22 @@ function func_count(elem, listQ){
     });
  }
 
- document.getElementById("save-temp").addEventListener("click", function() {
+ document.getElementById("save-temp").addEventListener("click", function(event) {
+    event.preventDefault();  // Ngăn form gửi ngay lập tức
+
     // Xóa checkbox khỏi DOM
-    var checkboxWrapper = document.getElementById("checkbox-wrapper");
-    if (checkboxWrapper) {
-        checkboxWrapper.remove();
-    }
-    // Gửi form sau khi xóa checkbox
-    document.getElementById("selfcheck-form").submit();
+    // var checkboxWrapper = document.getElementById("checkbox-wrapper");
+    // if (checkboxWrapper) {
+    //     checkboxWrapper.remove();
+    // }
+    
+    // // Gửi form sau khi xóa checkbox
+    // document.getElementById("selfcheck-form").submit();
 });
 
-document.getElementById("submit-final").addEventListener("click", function() {
+document.getElementById("submit-final").addEventListener("click", function(event) {
+    event.preventDefault();  // Ngăn form gửi ngay lập tức
+
     // Kiểm tra nếu checkbox không tồn tại trong DOM thì tạo lại
     var checkboxWrapper = document.getElementById("checkbox-wrapper");
     if (!checkboxWrapper) {
@@ -191,6 +196,7 @@ document.getElementById("submit-final").addEventListener("click", function() {
         newCheckboxWrapper.appendChild(checkboxInput);
         document.body.appendChild(newCheckboxWrapper);
     }
+    
     // Gửi form sau khi thêm checkbox
     document.getElementById("selfcheck-form").submit();
 });
