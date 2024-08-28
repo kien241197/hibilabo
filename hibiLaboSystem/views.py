@@ -1061,9 +1061,10 @@ class BonknowSheet(TemplateView):
             )
 
         flg_finished = self.request.POST.get('flg_finished') or False
-        if flg_finished:
-            flg_finished  = True
-       
+        button_submit = self.request.POST.get('最終提出')
+        if button_submit:
+            flg_finished = True
+
         obj = ResponsResult.objects.update_or_create(
             company_id=company_id,
             user_id=user_id,
