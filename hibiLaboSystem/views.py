@@ -2237,7 +2237,6 @@ def test_mandara_pdf(request, id):
 
     pdf = pdfkit.from_string(html, False,configuration=config, options=options)
 
-    # Generate download
     response = HttpResponse(pdf, content_type='application/pdf')
 
     response['Content-Disposition'] = 'attachment; filename="wkhtml_to_pdf.pdf"'
@@ -2245,6 +2244,3 @@ def test_mandara_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
-
-
