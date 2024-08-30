@@ -25,9 +25,7 @@
                                     <form action="" method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         {{ form.evaluation_unit }}
-                                        {{ form.user_id }}
-                                        {{ form.selfcheck_role }}
-
+                                        {{ form.combined_select }}
                                         <button type="submit" name="submit">表示</button>
                                     </form>
                                 </div>
@@ -69,8 +67,4 @@
         </div>
     </section>
 </main>
-<script>
-    document.querySelector('#id_user_id option[value=""]').textContent = '----';
-    document.getElementById('id_selfcheck_role').setAttribute('required', true);
-</script>
 {% endblock %}
