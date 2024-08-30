@@ -302,8 +302,8 @@ $(document).ready(function () {
         event.preventDefault()
 
         const evaluation_unit = $(this).find('select[name="evaluation_unit"]').val()
-        const user_id = $(this).find('select[name="user_id"]').val()
-        const selfcheck_role = $(this).find('select[name="selfcheck_role"]').val()
+        const combined_select = $(this).find('select[name="combined_select"]').val()
+
 
         const csrftoken = getCookie('csrftoken')
 
@@ -314,21 +314,20 @@ $(document).ready(function () {
             },
             url: urlSelfcheckQuestionAjax,
             data: {
-                user_id,
                 evaluation_unit,
-                selfcheck_role,
+                combined_select,
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (res) {
 
                 let htmlTH = '<th>No.</th><th>質問</th>'
                 let htmlTR = ''
-
+                
                 if (res?.context?.staff_list?.length > 0 & res?.context?.qr_list?.length > 0) {
 
                     res.context.staff_list.map((item) => {
 
-                        htmlTH += `<th>${visbleFlag ? item.name : ''}</th>`
+                        htmlTH += `<th>${visbleFlag ? `${item.last_name} ${item.first_name}` : ''}</th>`
                     })
 
                     $('.user_name_tab4').html(htmlTH);
