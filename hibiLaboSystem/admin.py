@@ -572,7 +572,7 @@ class CustomAdminSite(admin.AdminSite):
                 company_id=company_id, 
                 evaluation_period__evaluation_start__lte=today, 
                 evaluation_period__evaluation_end__gte=today
-            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id", "user__last_name", "user__first_name")
             
             if request.method == "POST":
                 honne_ids = request.POST.getlist('honne_ids[]')
@@ -598,7 +598,7 @@ class CustomAdminSite(admin.AdminSite):
                 company_id=company_id, 
                 evaluation_period__evaluation_start__lte=today, 
                 evaluation_period__evaluation_end__gte=today
-            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id", "user__last_name", "user__first_name")
 
             context.update(common_context)
             context.update({
@@ -624,7 +624,7 @@ class CustomAdminSite(admin.AdminSite):
                 company_id=company_id, 
                 evaluation_period__evaluation_start__lte=today, 
                 evaluation_period__evaluation_end__gte=today
-            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")  
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id", "user__last_name", "user__first_name")  
 
             context.update(common_context)
             context.update({
@@ -651,7 +651,7 @@ class CustomAdminSite(admin.AdminSite):
                 company_id=company_id, 
                 evaluation_period__evaluation_start__lte=today, 
                 evaluation_period__evaluation_end__gte=today
-            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id")  
+            ).values_list("user__id", "user__username", "evaluation_period__evaluation_name", "flg_finished", "id", "user__last_name", "user__first_name")  
 
             context.update(common_context)
             context.update({
