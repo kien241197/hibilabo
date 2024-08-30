@@ -151,7 +151,6 @@ class WatasheetInline(admin.TabularInline):
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', ]
-    exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years"]
     inlines = [HonneEvaluationPeriodInline, SelfcheckEvaluationPeriodInline, WatasheetInline, BonknowEvaluationPeriodInline, MandaraPeriosInline]
     def save_model(self, request, obj, form, change):
         if not change:
@@ -167,8 +166,9 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         cache.clear()
+        self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years"]
         if not request.user.is_superuser:
-            self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years", "name", "date_start", "date_end", "active_flag", "partner"]
+            self.exclude.extend(["name", "date_start", "date_end", "active_flag", "partner"])
             # self.inlines = []
             self.readonly_fields = ["industry"]
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
@@ -208,7 +208,6 @@ class IndustryCustom(admin.ModelAdmin):
 class UsersAdmin(ImportMixin,admin.ModelAdmin):
     list_display = ["id","username", "company", "branch", "role"]
     list_filter = ['company',]
-    exclude = ['created_by', 'image', 'groups', "user_permissions", "is_superuser"]
     actions = []
     success = True
 
@@ -229,29 +228,6 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             user.save()
         return response
 
-    def change_view(self, request, object_id, form_url='', extra_context=None):
-        response = super().change_view(request, object_id, form_url, extra_context)
-        if response.status_code == 302:
-            user = User.objects.get(id=object_id)
-            user.groups.set([])
-            user.user_permissions.set([])
-            if user.role is not None:
-                permissions_list = []
-                if user.role.role == RoleEnum.日々研.value:
-                    user.is_superuser = True
-                elif user.role.role == RoleEnum.Partner.value:
-                    permissions_list = RolePermission.Partner.value
-                elif user.role.role == RoleEnum.Company_Admin.value:
-                    permissions_list = RolePermission.Company_Admin.value
-                elif user.role.role == RoleEnum.Company_Director.value:
-                    permissions_list = RolePermission.Company_Director.value
-                elif user.role.role == RoleEnum.Company_SuperVisor.value:
-                    permissions_list = RolePermission.Company_SuperVisor.value
-                permissions = Permission.objects.filter(codename__in=permissions_list)
-                user.user_permissions.add(*permissions)
-            user.save()
-        return response
-
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "branch":
             if request.user.is_superuser:
@@ -259,8 +235,7 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             else:
                 if request.user.company_id:
                     kwargs["queryset"] = Branch.objects.filter(company_id=request.user.company_id)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-   
+        return super().formfield_for_foreignkey(db_field, request, **kwargs) 
 
     def save_model(self, request, obj, form, change):
         if not change:
@@ -272,12 +247,31 @@ class UsersAdmin(ImportMixin,admin.ModelAdmin):
             obj.add(request.user.company_id)
 
         obj.save()
+
+        obj.groups.set([])
+        obj.user_permissions.set([])
+        if obj.role is not None:
+            permissions_list = []
+            if obj.role.role == RoleEnum.日々研.value:
+                obj.is_superuser = True
+            elif obj.role.role == RoleEnum.Partner.value:
+                permissions_list = RolePermission.Partner.value
+            elif obj.role.role == RoleEnum.Company_Admin.value:
+                permissions_list = RolePermission.Company_Admin.value
+            elif obj.role.role == RoleEnum.Company_Director.value:
+                permissions_list = RolePermission.Company_Director.value
+            elif obj.role.role == RoleEnum.Company_SuperVisor.value:
+                permissions_list = RolePermission.Company_SuperVisor.value
+            permissions = Permission.objects.filter(codename__in=permissions_list)
+            obj.user_permissions.add(*permissions)
+
+        obj.save()
                
     def get_form(self, request, obj=None, **kwargs):
 
         cache.clear()
         obj = obj.id if obj else False
-
+        self.exclude = ['created_by', 'image', 'groups', "user_permissions", "is_superuser"]
         if obj:
             if not request.user.is_superuser:
                 self.exclude = ["user_permissions", "is_superuser", "is_active",'created_by', 'company', 'password', 'groups', 'image']
