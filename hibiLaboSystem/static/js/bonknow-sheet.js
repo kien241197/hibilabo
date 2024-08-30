@@ -213,20 +213,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 $(document).ready(function(){
-
     $("#select_response select").attr('required', true)
     
-    $("#nav-respons-tab").click(function(){
+    $("#nav-respons-tab").click(function() {
+        $("#buttonRight").remove(); 
+        $("#select_response select").attr('required', true);
+        $("#select_think select").attr('required', false);
+    });
 
-       $("#select_response select").attr('required', true)
-       $("#select_think select").attr('required', false)
-
-    })
-
-    $("#nav-think-tab").click(function(){
-
-        $("#select_think select").attr('required', true)
-       $("#select_response select").attr('required', false)
-
-    })
+    $("#nav-think-tab").click(function() {
+        if ($("#buttonRight").length === 0) { 
+            
+            var buttonRightHtml = `
+                <div id="buttonRight">
+                    <div class="text-center mb-2" style="font-size: 10px; color: red; font-weight: 700;">
+                        <span class="ml-2">最終提出：良く見直して提出を</span>
+                    </div>
+                    <input class="btn-custom-button" type="submit" name="最終提出" value="最終提出"/>
+                </div>`;
+            
+            $(".flex-chart").append(buttonRightHtml);
+        }
+        
+        $("#select_think select").attr('required', true);
+        $("#select_response select").attr('required', false);
+    });
 })
