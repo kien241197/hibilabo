@@ -167,10 +167,13 @@ class CompanyAdmin(admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
         cache.clear()
         self.exclude = ["created_by", "team_action_1_year", "team_action_5_years", "team_action_10_years"]
+        
         if not request.user.is_superuser:
             self.exclude.extend(["name", "date_start", "date_end", "active_flag", "partner"])
             # self.inlines = []
             self.readonly_fields = ["industry"]
+        else:
+            self.readonly_fields = []
         form = super(CompanyAdmin,self).get_form(request, obj, **kwargs)
         return form
 
