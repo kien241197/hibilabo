@@ -8,6 +8,7 @@ from . import models, fields
 from .enums import *
 import PIL
 from django.utils.safestring import mark_safe
+from django.core.validators import FileExtensionValidator
 
 User = get_user_model()
 
@@ -41,6 +42,9 @@ class RegisterForm(UserCreationForm):
 
 class UserUpdateForm(forms.ModelForm):
 
+    image = forms.ImageField(
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])]
+    )
     class Meta:
         model = User
         fields = ('last_name', 'first_name', 'romanization_name', 'email', 'username', 'image')
