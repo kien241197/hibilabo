@@ -48,6 +48,11 @@ urlpatterns = [
     path('mandara-completion-tab-detail/<id>', views.MandaraCompletionTabDetail.as_view(), name='mandara_completion_tab_detail'), #Display Detail
     
 	path('watasheet', views.Watasheet.as_view(), name="watasheet"),
-	path('watasheet-type', views.WatasheetType.as_view(), name="watasheet_type")
+	path('watasheet-type', views.WatasheetType.as_view(), name="watasheet_type"),
     
+	path('cultetsheet', views.Cultetsheet.as_view(), name="cultetsheet"),
+	path('cultetsheet/ajax/honne', views.CultetsheetHonne, name="cultetsheet_honne_ajax"),
+	path('cultetsheet/ajax/selfcheck', views.CultetsheetSelfcheck, name="cultetsheet_selfcheck_ajax"),
+	path('cultetsheet/ajax/mandara', views.CultetsheetMandara, name="cultetsheet_mandara_ajax"),
+	path('cultetsheet/ajax/bonknow', views.CultetsheetBonknow, name="cultetsheet_bonknow_ajax"),
 ]

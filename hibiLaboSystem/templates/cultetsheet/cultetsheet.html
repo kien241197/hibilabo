@@ -1,0 +1,149 @@
+{% extends 'layout.html'%}
+{% block header %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cultetsheet.css' %}">
+{% endblock %}
+{% block name %}
+<span class="mr-3" style="color: #595b61;">NAME</span>
+{% endblock %}
+{% block content %}
+<main class="bg-main bg-gray">
+    <section class="site-chart pd-main">
+        <div class="container-fluid">
+            <div class="wrapper-body-top">
+                <div class="item-body-top body-avatar">
+                    <p class="text-avatar ">社員No {{ user.id }}</p>
+                    {% if user.image %}
+                    <img src="{{ user.image.url }}" alt="dummy" class="avatar mb-3"
+                        onerror="this.onerror=null; this.src='{% static '/assets/images/avatar_default.jpg' %}'">
+                    {% else %}
+                    <img src="{% static '/assets/images/avatar_default.jpg' %}" class="avatar mb-3" />
+                    {% endif %}
+                    <p class="text-avatar">氏名：{{ user.last_name }}  {{ user.first_name }}</p>
+                    <p class="name-avatar">{{ user.romanization_name|default_if_none:"" }}</p>
+                </div>
+                <div class="item-body-top item-body-top-mb">
+                    <!-- <p class="title-chart">DO YOU KNOW &nbsp; <span class="gray-text">THINK</span></p> -->
+                    <p class="title-chart pb-0 gray-text">AT THE START</p>
+                    <div class="wrapper-image">
+                        <canvas id="pipChart1" width="100%" class="chart"></canvas>
+                        <span id="data-label"></span>
+                        <div class="content-pip-chart">
+                            <p class="desc-content-top">fan℃</p>
+                            <p class="desc-content-mid">51</p>
+                            <div class="">
+                                <p class="desc-content-bottom mb-0 text-right">MAX</p>
+                                <P class="desc-content-bottom">/ 5978</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-body-top item-body-top-mb">
+                    <!-- <p class="title-chart title-chart-right">DO YOU KNOW &nbsp; <span class="gray-text">RESPONS</span></p> -->
+                    <p class="title-chart title-chart-right gray-text">AT THE NOW</p>
+                    <div class="wrapper-image">
+                        <canvas id="pipChart2" width="100%" class="chart"></canvas>
+                        <div class="content-pip-chart">
+                            <p class="desc-content-top">fan℃</p>
+                            <p class="desc-content-mid">3128</p>
+                            <div>
+                                <p class="desc-content-bottom mb-0 text-right">MAX</p>
+                                <P class="desc-content-bottom">/ 5978</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-mid-and-bottom width-100">
+                <div class="item-content-mid-and-bottom mb-sm-0 mb-3 w-100">
+                    <div>
+                        <p class="text-cultetsheet px-lg-5 px-1">fan℃ TOTAL</p>
+                        <div class="item-select">
+                            {{ form.total_start|safe }}
+                            <p class="to">～</p>
+                            {{ form.total_end|safe }}
+                            <button class="button">表示</button>
+                        </div>
+                    </div>
+                    <div class="wrapper-canvas-totalChart">
+                        <canvas data-type="bar" data-color-datalabels="#ffffff" id="totalChart" class="chart" style="height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="content-mid-and-bottom">
+                <div class="item-content-mid-and-bottom mb-sm-0 mb-3">
+                    <div>
+                        <p class="text-cultetsheet px-lg-5 px-1">
+                            HONNE 
+                            <!-- <span class="fan font-weight-bold">by
+                                fan℃
+                            </span> -->
+                        </p>
+                        <div class="item-select">
+                            {{ form.honne_start|safe }}
+                            <p class="to">～</p>
+                            {{ form.honne_end|safe }}
+                            <button class="button" id="buttonHonne">表示</button>
+                        </div>
+                    </div>
+                    <canvas data-type="bar" width="100%" data-color-datalabels="#ffffff" id="stackedChart1"
+                        class="chart"></canvas>
+                </div>
+                <div class="item-content-mid-and-bottom">
+                    <div>
+                        <p class="text-title-bottom px-lg-5 px-1">SELF CHECK</p>
+                        <div class="item-select" style="display: flex;">
+                            {{ form.selfcheck_start|safe }}
+                            <p class="to">～</p>
+                            {{ form.selfcheck_end|safe }}
+                            <button class="button" id="buttonSelfCheck">表示</button>
+                        </div>
+                    </div>
+                    <canvas data-type="bar" width="100%" data-color-datalabels="#ffffff" id="barChart2"
+                        class="chart"></canvas>
+                </div>
+            </div>
+            <div class="content-mid-and-bottom">
+                <div class="item-content-mid-and-bottom">
+                    <div>
+                        <p class="text-cultetsheet px-lg-5 px-1">DO YOU KNOW &nbsp; <span class="gray-text">THINK /
+                                RESPONS</span></p>
+                        <div class="item-select" style="display: flex;">
+                            {{ form.bonknow_start|safe }}
+                            <p class="to">～</p>
+                            {{ form.bonknow_end|safe }}
+                            <button class="button" id="buttonBonknow">表示</button>
+                        </div>
+                    </div>
+                    <canvas data-type="bar" width="100%" data-color-datalabels="#ffffff" id="stackedChart2"
+                        class="chart"></canvas>
+                </div>
+                <div class="item-content-mid-and-bottom mb-sm-0 mb-3">
+                    <div>
+                        <p class="text-title-bottom px-lg-5 px-1">MASMAS MANDARA CHART</p>
+                        <div class="item-select">
+                            {{ form.mandara_start|safe }}
+                            <p class="to">～</p>
+                            {{ form.mandara_end|safe }}
+                            <button class="button" id="buttonMandara">表示</button>
+                        </div>
+                    </div>
+                    <canvas id="barChart1" class="chart"></canvas>
+                </div>
+            
+            </div>
+        </div>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script>
+    const urlHonne = "{% url 'cultetsheet_honne_ajax' %}"
+    const urlSelfCheck = "{% url 'cultetsheet_selfcheck_ajax' %}"
+    const urlMandara = "{% url 'cultetsheet_mandara_ajax' %}"
+    const urlBonknow = "{% url 'cultetsheet_bonknow_ajax' %}"
+
+</script>
+<script src="{% static 'js/cultetsheet.js' %}"></script>
+
+{% endblock %}

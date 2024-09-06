@@ -32,10 +32,17 @@
       <div class="header">
         <div class="container">
             <div class="logo">
-                <a href="#">
-                    <img src="{% static 'assets/images/logotype_h_en.png' %}" alt="">
-                </a>
-                <h2 class="d-flex items-center">WATASHEET {% if title_header  %} <p class="pb-0 mb-0 title-header">{{ title_header }}</p> {% endif %} </h2>
+                <h2 class="d-flex items-center align-items-center position-relative"> 
+                  <div class=" {% if title_header  %} title-header-right {% endif %}">
+                    <div>WATASHEET</div>
+                    <p class="fan text-right mb-0">by fan℃</p>
+                  </div>
+                  {% if title_header  %}
+                  <div>
+                    <p class="pb-0 mb-0 title-header position-absolute top-0 text-nowrap">{{ title_header }}</p> 
+                  </div> 
+                  {% endif %}
+                </h2>
             </div>
         </div>
     </div>
@@ -44,25 +51,30 @@
             <div class="menu">
                 <ul>
                     <li><a href="{% url 'home' %}">TOP</a></li>
-                      {% if not user.is_authenticated %}
-                         <li>
-                          <a class="border-0" href="{% url 'login' %}">Log in</a>
-                         </li>
-                        
-                      {% else %}
-                         <li>
-                           <a href="{% url 'my_info' %}">My Info</a>
-                         </li>
-                         <li>
-                          <a href="{% url 'logout' %}">Log out</a>
-                         </li>
-                      {% endif %}
+                    {% if not user.is_authenticated %}
+                    <li>
+                    <a class="border-0" href="{% url 'login' %}">Log in</a>
+                    </li>
+                    {% else %}
+                    <li>
+                    <a href="{% url 'my_info' %}">My Info</a>
+                    </li>
+                    <li>
+                    <a href="{% url 'cultetsheet' %}">Print</a>
+                    </li>
+                    <li>
+                    <a href="{% url 'logout' %}">Log out</a>
+                    </li>
+                    {% endif %}
                 </ul>
-                <p>
+                
+                <p class="name-mb">
                   {% if not user.is_authenticated %}
                     こんにちは！ ゲスト さん
                   {% else %}
-                    {{ user.last_name }}  {{ user.first_name }} さん　向け
+                  {% block name %}
+                  {% endblock %}  
+                  {{ user.last_name }}  {{ user.first_name }} さん　<span class="向け">向け</span>
                   {% endif %}
                 </p>
 
@@ -77,11 +89,7 @@
 <footer class="footer">
     <div class="container">
         <div class="text">
-                    <img src="{% static 'assets/images/logotype_h_ja.png' %}" alt="" style="width: 150px;">
-
-            <!-- <p></p>
-            <p>サービス提供：日々研究所</p>
-            <p></p> -->
+                    <img src="{% static 'assets/images/logotype_h_en.png' %}" alt="" style="width: 150px;">
         </div>
     </div>
 </footer>

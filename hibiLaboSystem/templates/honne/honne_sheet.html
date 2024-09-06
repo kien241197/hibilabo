@@ -23,7 +23,7 @@
 {% block content %}
 <main class="bg-main bg-gray">
   <div class="text-center text-danger"><label><h5>{{ message }}</h5></label></div>
-  <form  class="" action="" method="POST" enctype="multipart/form-data">
+  <form id="honne-form"  class="" action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
     <section class="site-chart pd-main" >
         <div class="container">
@@ -68,12 +68,15 @@
                 {% if not disabled %}
                 <div class="col-md-12">
                     <div class="button-chart">
-                        <div class="checkbox">
-                            {{ form.flg_finished }}{{ form.flg_finished.label }}
-                        </div>
-                        <div class="flex-chart">
-                            <button class="btn-custom-button" type="submit">一時保存</button>
-                            <button class="btn-custom-button" type="submit">保存</button>
+                        <div class="flex-chart align-items-end">
+                            <input class="btn-custom-button" type="submit" name="一時保存" value="一時保存" />
+                            <div>
+                                <div class="text-center mb-2" style="font-size: 10px; color: red; font-weight: 700;">
+                                    <span class="ml-2">最終提出：良く見直して提出を</span>
+                                </div>
+                            <input class="btn-custom-button" type="submit" name="最終提出" value="最終提出"/>
+
+                            </div>
                         </div>
                     </div>
                 </div>

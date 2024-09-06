@@ -15,7 +15,7 @@
 {% endblock %}
 {% block content %}
 <main class="bg-main bg-gray">
-    <section class="site-chart pd-main">
+    <section class="site-chart pd-main" style="padding-bottom: 25px;">
         <div class="container-fluid">
             <div class="section-title">
                 <div class="row align-items-baseline">
@@ -35,43 +35,44 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="content-chart content-chart-2 content-chart-page3">
-                            <div class="title">
-                                <div class="d-flex align-items-center justify-content-end">
+                            <div class="title d-flex flex-column justify-content-end align-items-end">
+                                <div class="" style="width: fit-content;">
                                     <div class="number d-flex align-items-center">
-                                           
                                         <ul class="list-1 nav" id="myTab" role="tablist" style="user-select: none;">
                                             <!--  <li class="number-1">1</li>
                                             <li class="number-2">2</li> -->
-                                          
                                             <a href="#team-concept">
-                                                <li class="button-tab px-3" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                                <li class="button-tab px-3 nav-tab-0" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
                                                     <p class="py-1 title-tab-watasheet" style="line-height: 8px; font-size: 18px; font-weight: 900; letter-spacing: 3px;">TEAM <br />
                                                         <p style="font-size: 11px; " class="font-weight-bold">CONCEPT</p>
                                                     </p>
                                                 </li>
                                             </a>
                                             <a href="#my-concept">
-                                                <li class="button-tab px-3" id="nav-tab-my" data-bs-toggle="tab" data-bs-target="#nav-my" type="button" role="tab" aria-controls="nav-my" aria-selected="false" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                                <li class="button-tab px-3 nav-tab-my" id="nav-tab-my" data-bs-toggle="tab" data-bs-target="#nav-my" type="button" role="tab" aria-controls="nav-my" aria-selected="false" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
                                                     <p class="py-1 title-tab-watasheet" style="line-height: 8px; font-size: 18px; font-weight: 900; letter-spacing: 3px;">MY <br />
                                                         <p style="font-size: 11px; " class="font-weight-bold">CONCEPT</p>
                                                     </p>
                                                 </li>
                                             </a>
                                             <a href="#tab-1">
-                                                <li class="button-tab" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">1</li>
+                                                <li class="button-tab nav-tab-3" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">1</li>
                                             </a>
                                             <a href="#tab-2">
-                                                <li class="button-tab" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
+                                                <li class="button-tab nav-tab-4" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
                                             </a>
                                             <a href="#tab-3">
-                                                <li class="button-tab" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
+                                                <li class="button-tab nav-tab-5" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
                                             </a>
                                             <!-- <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">4</li>
                                             <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">5</li> -->
                                             <a href="#tab-4">
-                                                <li class="button-tab" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">4</li>
+                                                <li class="button-tab nav-tab-8" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">4</li>
                                             </a>
                                         </ul>
+                                    </div>
+                                    <div class="mt-2 fw-bold" style="color: red; font-size: 12px; font-weight: 700;">
+                                        ＊CONCEPTは自動反映の為入力不要
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +87,7 @@
                 {% csrf_token %}
                 <div class="tab-content" id="nav-tabContent">
                     <!-- tab 0 -->
-                    <div class="tab-pane fade" id="nav-0" role="tabpanel">
+                    <div class="tab-pane fade mb-30" id="nav-0" role="tabpanel">
                         <div id="page4" class="content-chart">
                             <!-- <div class="title title-page4" style="margin-bottom:30px;">
                                 <h2>KNOW MYSELF </h2>
@@ -239,7 +240,7 @@
                         </div>
                     </div>
                     <!-- tab my concept -->
-                    <div class="tab-pane fade" id="nav-my" role="tabpanel">
+                    <div class="tab-pane fade mb-30" id="nav-my" role="tabpanel">
                         <div id="page4" class="content-chart">
                             <div class="content-box">
                                 <div class="row justify-content-between">
@@ -523,7 +524,7 @@
                                                     <td id="type_D">{{ type_D }}</td>
                                                     <td class="text-center">
                                                         <h3>CONTROLLER </h3>
-                                                        コントーラー
+                                                        コントローラー
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -730,9 +731,9 @@
                                                     <p class="pl-0">好きなことや得意なことを記入してください</p>
                                                 </div>
                                                 <ul class=" pl-0">
-                                                    <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_1st" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_1st}}</textarea></li>
-                                                    <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_2nd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_2nd}}</textarea></li>
-                                                    <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_go_3rd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_go_3rd}}</textarea></li>
+                                                    <li class="d-flex w-100 min-h-30"><span class="numerical">(1)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_think_1st" oninput="auto_grow(this)">{{watasheet_type_result.dwt_think_1st}}</textarea></li>
+                                                    <li class="d-flex w-100 min-h-30"><span class="numerical">(2)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_think_2nd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_think_2nd}}</textarea></li>
+                                                    <li class="d-flex w-100 min-h-30"><span class="numerical">(3)</span> <textarea rows="1" class="textarea-watasheet" {{ disabled }} type="text" name="dwt_think_3rd" oninput="auto_grow(this)">{{watasheet_type_result.dwt_think_3rd}}</textarea></li>
                                                     <h3 class="position-absolute" style="bottom: 15px; right: 15px;">5 </h3>
                                                 </ul>
                                             </div>
@@ -1135,26 +1136,72 @@
 
              <div class="position-relative">
                 {% if not disabled %}
-                <div class="button-chart">
+                <div class="button-chart pb-0">
                     <div class="px-3 sample mt-3 position-absolute start-0 left-0"  style="border-radius: 25px; display: none;" data-toggle="modal" data-target="#exampleModal" id="modal">
                         <button type="button" class="py-1 title-tab-watasheet mb-0 text-white" style="line-height: 8px; font-size: 18px; font-weight: 900; letter-spacing: 2px; border: none; background: none;" id="SAMPLE">SAMPLE</button>
                     </div>
                     <div class="hidden container-checkbox">
-                        <label class="checkbox d-flex align-items-center 提出する" style="gap: 5px;">
-                            {{ form.flg_finished }} {{ form.flg_finished.label }}
-                        </label>    
-                        <div class="flex-chart">
-                            <button class="btn-custom-button" type="submit">一時保存</button>
-                            <button class="btn-custom-button" type="submit">保存</button>
+                        <div class="flex-chart flex-column">
+                            <input class="btn-custom-button" type="submit" name="一時保存" value="一時保存" />
+                            <div class="mt-3 flex-column align-items-center justify-content-center wrapper-最終提出">
+                                <div class="mb-1 fw-bold" style="color: red; font-size: 10px; font-weight: 700;">
+                                    最終提出：良く見直して提出を
+                                </div>
+                                <input class="btn-custom-button" type="submit" name="最終提出" value="最終提出" style="background-color: red; color: white;" />
+                            </div>
                         </div>
                     </div>
                 </div>
                 {% endif %}
              </div>
+
+           
             </form>
         </div>
+       
     </section>
-
+    <div class="mb-2">
+        <div class="content-chart content-chart-2 content-chart-page3">
+            <div class="title d-flex flex-column justify-content-end align-items-center">
+                <div class="" style="width: fit-content;">
+                    <div class="number d-flex align-items-center">
+                        <ul class="list-1 nav" id="myTab" role="tablist" style="user-select: none;">
+                            <!--  <li class="number-1">1</li>
+                            <li class="number-2">2</li> -->
+                            <a href="#team-concept">
+                                <li class="button-tab px-3 nav-tab-0" id="nav-tab-0" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="true" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                    <p class="py-1 title-tab-watasheet" style="line-height: 8px; font-size: 18px; font-weight: 900; letter-spacing: 3px;">TEAM <br />
+                                        <p style="font-size: 11px; " class="font-weight-bold">CONCEPT</p>
+                                    </p>
+                                </li>
+                            </a>
+                            <a href="#my-concept">
+                                <li class="button-tab px-3 nav-tab-my" id="nav-tab-my" data-bs-toggle="tab" data-bs-target="#nav-my" type="button" role="tab" aria-controls="nav-my" aria-selected="false" style="display: inline-block; width: 60px !important; width: unset !important; height: unset !important; border-radius: 25px ;">
+                                    <p class="py-1 title-tab-watasheet" style="line-height: 8px; font-size: 18px; font-weight: 900; letter-spacing: 3px;">MY <br />
+                                        <p style="font-size: 11px; " class="font-weight-bold">CONCEPT</p>
+                                    </p>
+                                </li>
+                            </a>
+                            <a href="#tab-1">
+                                <li class="button-tab nav-tab-3" id="nav-tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">1</li>
+                            </a>
+                            <a href="#tab-2">
+                                <li class="button-tab nav-tab-4" id="nav-tab-4" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">2</li>
+                            </a>
+                            <a href="#tab-3">
+                                <li class="button-tab nav-tab-5" id="nav-tab-5" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">3</li>
+                            </a>
+                            <!-- <li class="button-tab" id="nav-tab-6" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">4</li>
+                            <li class="button-tab" id="nav-tab-7" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">5</li> -->
+                            <a href="#tab-4">
+                                <li class="button-tab nav-tab-8" id="nav-tab-8" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">4</li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
 <div class="modal fade px-0 h-100" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog m-0 h-100" role="document" style="max-width: 100%;">

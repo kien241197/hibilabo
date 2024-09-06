@@ -330,7 +330,6 @@ openPopup.forEach((element, index) => {
 
                         mycanvas1.destroy();
                         mycanvas1 = createCanvas("mycanvas1", newArray);
-
                     }
 
                     if (group2) {

@@ -220,7 +220,10 @@ class HonneSheet(TemplateView):
             key_evaluation_unit = self.kwargs['evaluationUnit']
             company_id = self.request.user.company_id
             user_id = self.request.user.id
-            flg_finished = self.request.POST.get("flg_finished") or False
+            flg_finished = False
+            button_submit = self.request.POST.get("最終提出")
+            if button_submit:
+                flg_finished=True
             honne_questions = HonneEvaluationPeriod.objects.filter(
                 id=key_evaluation_unit,
                 company_id=company_id
@@ -593,38 +596,60 @@ class SelfcheckQuestions(TemplateView):
         context["form"] = form
         context["qr_list"] = ""
         if form.is_valid():
-            key_evaluation_unit = request.POST['evaluation_unit']
-            key_user_id = request.POST['user_id']
-            question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit).first().selfcheck_questions.all().order_by('category_id', 'sort_no')
+            key_evaluation_unit = request.POST.get('evaluation_unit')
+            key_combined_select = request.POST.get('combined_select')
 
-            if len(question_list) > 0:
-                result_queryset = SelfcheckAnswerResult.objects.select_related('user').all().filter(evaluation_period_id=key_evaluation_unit)
-                staff_list = User.objects.filter(company_id=request.user.company_id,id__in=result_queryset.values('user_id')).order_by('id')
-                if key_user_id != '':
-                    result_queryset = result_queryset.filter(user_id=key_user_id)
-                    staff_list = staff_list.filter(id=key_user_id)
-                context["staff_list"] = staff_list
-                # print(staff_list)
-                # pdb.set_trace()
+            question_list = SelfcheckEvaluationPeriod.objects.filter(id=key_evaluation_unit, selfcheck_questions__industries__id=request.user.company.industry_id)
+            
+            if "industry" in key_combined_select:
+                id_key_combined_select = key_combined_select.replace('_industry', '')
+                question_list = question_list.filter(selfcheck_questions__selfcheck_roles__id__in=id_key_combined_select).first()
+                if question_list:
+                    question_list = question_list.selfcheck_questions.filter(selfcheck_roles__id__in=id_key_combined_select).order_by('category_id', 'sort_no')
+                else: 
+                    context.update({
+                        "message": "データがありません"
+                    })
+            else:
+                question_list = question_list.first().selfcheck_questions.all().order_by('category_id', 'sort_no')
 
+            if question_list:
+                result_queryset = SelfcheckAnswerResult.objects.select_related('user').filter(evaluation_period_id=key_evaluation_unit)
+                staff_list = User.objects.filter(company_id=request.user.company_id, id__in=result_queryset.values('user_id')).order_by('id')
+                if "industry" not in key_combined_select:
+                    result_queryset = result_queryset.filter(user_id=key_combined_select)
+                    staff_list = staff_list.filter(id=key_combined_select)
+
+                context['staff_list'] = staff_list
                 rowidx = 0
-                result_list = [[[] for i in range(len(staff_list) + 1)] for j in range(len(question_list))]
+                result_list = [[[] for _ in range(len(staff_list) + 1)] for _ in range(len(question_list))]
 
                 for i in question_list:
                     colidx = 1
                     result_list[rowidx][0] = i.question
                     for staff in staff_list:
                         get_result = result_queryset.filter(selfcheck_question_id=i.id, user_id=staff.id).first()
-                        result_list[rowidx][colidx] = '*'
-                        if get_result is not None:
+                        if get_result:
+                            answer = '*'
                             for element in SELFCHECK_ANSWER:
                                 if int(element[0]) == get_result.selfcheck_answer:
-                                    result_list[rowidx][colidx] = element[1]
-                        colidx = colidx + 1
-                    rowidx = rowidx + 1
+                                    answer = element[1]
+                            result_list[rowidx][colidx] = answer
+                        else:
+                            result_list[rowidx][colidx] = '*'
+                        colidx += 1
+                    rowidx += 1
+                
+                if staff_list:
+                    context["qr_list"] = result_list
+                else: 
+                    context["qr_list"] = ""
+                    context.update({
+                        "message": "データがありません"
+                    })
 
-                context["qr_list"] = result_list
         return self.render_to_response(context)
+
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(middlewares.SelfcheckTotalMiddleware, name='dispatch')
@@ -804,7 +829,10 @@ class SelfcheckSheet(TemplateView):
             key_evaluation_unit = self.kwargs['evaluationUnit']
             company_id = self.request.user.company_id
             user_id = self.request.user.id
-            flg_finished = self.request.POST.get("flg_finished") or False
+            flg_finished = False
+            button_submit = self.request.POST.get("最終提出")
+            if button_submit:
+                flg_finished = True
             selfcheck_questions = SelfcheckEvaluationPeriod.objects.filter(
                 id=key_evaluation_unit,
                 company_id=company_id
@@ -1000,9 +1028,10 @@ class BonknowSheet(TemplateView):
             )
 
         flg_finished = self.request.POST.get('flg_finished') or False
-        if flg_finished:
-            flg_finished  = True
-       
+        button_submit = self.request.POST.get('最終提出')
+        if button_submit:
+            flg_finished = True
+
         obj = ResponsResult.objects.update_or_create(
             company_id=company_id,
             user_id=user_id,
@@ -1968,7 +1997,7 @@ class Watasheet(TemplateView):
         flg_finished = self.request.POST.get("flg_finished") or False
         questions = self.request.POST.getlist("questions")
         form = self.form_class(request.POST, instance=context_get["watasheet_type_result"])
-
+        button_submit = self.request.POST.get("最終提出")
         WatasheetResult.objects.filter(evaluation_period_id=context_get["evaluation_period"].id, user_id=user_id).delete()
         bulk_list = list()
         types = {
@@ -2007,6 +2036,8 @@ class Watasheet(TemplateView):
             watasheet_type_result.watasheet_type_d = types['D']
             watasheet_type_result.watasheet_type_e = types['E']
             watasheet_type_result.watasheet_type_f = types['F']
+            if button_submit:
+                watasheet_type_result.flg_finished = True
             watasheet_type_result.evaluation_period_id=context_get["evaluation_period"].id
             if form.cleaned_data['vision_1_year']:
                 watasheet_type_result.vision_1_year = jaconv.zenkaku2hankaku(str(form.cleaned_data['vision_1_year']))
@@ -2173,3 +2204,155 @@ def test_mandara_pdf(request, id):
     if response.status_code != 200:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(middlewares.CultetsheetMiddleware, name='dispatch')
+class Cultetsheet(TemplateView):
+    template_name = "cultetsheet/cultetsheet.html"
+    form_class = forms.CultetsheetDateForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        company_id = self.request.user.company_id
+        honne_date = HonneEvaluationPeriod.objects.all().filter(company_id=company_id).order_by('-evaluation_start')
+
+        kwargs['form'] = self.form_class(company_id)
+        kwargs['title_header'] = "fan℃"
+        kwargs['honne_date'] = honne_date 
+        return kwargs
+
+@login_required
+def CultetsheetHonne(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            user_id = request.user.id
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            if start_date and end_date: 
+
+                honne_index_total = HonneIndexResult.objects.all().filter(user_id=user_id, evaluation_period__evaluation_start__range=(start_date, end_date)).annotate(
+                    kartet_index_total=Coalesce(
+                        Sum('kartet_index1') + Sum('kartet_index2') + Sum('kartet_index3') +
+                        Sum('kartet_index4') + Sum('kartet_index5') + Sum('kartet_index6') +
+                        Sum('kartet_index7') + Sum('kartet_index8'),
+                        0
+                    ),
+                    date=F('evaluation_period__evaluation_start')
+                )
+
+                
+                list_resp = list(honne_index_total.values())
+                return JsonResponse({'context': list_resp})
+            else:
+                return HttpResponseBadRequest('Invalid request')
+
+@login_required
+def CultetsheetSelfcheck(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            user_id = request.user.id
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+
+            if start_date and end_date:
+                selfcheck_total = SelfcheckIndexResult.objects.all().filter(user_id=user_id, evaluation_period__evaluation_start__range=(start_date, end_date)).annotate(
+                    kartet_index_total=Coalesce(
+                        Sum('selfcheck_index1') + Sum('selfcheck_index2') + Sum('selfcheck_index3') +
+                        Sum('selfcheck_index4') + Sum('selfcheck_index5') + Sum('selfcheck_index6') +
+                        Sum('selfcheck_index7') + Sum('selfcheck_index8') + Sum('selfcheck_index9') +
+                        Sum('selfcheck_index10') + Sum('selfcheck_index11') + Sum('selfcheck_index12'),
+                        0
+                    ),
+                    date=F('evaluation_period__evaluation_start')
+                )
+
+                list_resp = list(selfcheck_total.values())
+                return JsonResponse({'context': list_resp})
+            else:
+                return HttpResponseBadRequest('Invalid request')
+
+@login_required
+def CultetsheetMandara(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    if is_ajax:
+        if request.method == 'POST':
+            company_id = request.user.company_id
+            user_id = request.user.id
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+
+            if start_date and end_date:
+                mandara_total = MandaraBase.objects.select_related('mandara_period').filter(user_id=user_id, company_id=company_id, mandara_period__start_date__range=(start_date, end_date)).annotate(
+                    date=F('mandara_period__start_date'),
+                    total=Coalesce(Sum('A_result') + 
+                                    Sum('B_result') + 
+                                    Sum('C_result') + 
+                                    Sum('D_result') + 
+                                    Sum('E_result') + 
+                                    Sum('F_result') +
+                                    Sum('G_result') + 
+                                    Sum('H_result'), 0 
+                                )
+                    
+                )
+
+                list_resp = list(mandara_total.values())
+                return JsonResponse({'context': list_resp})
+            else:
+                return HttpResponseBadRequest('Invalid request')
+
+@login_required
+def CultetsheetBonknow(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'POST':
+            company_id = request.user.company_id
+            user_id = request.user.id
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+
+            if start_date and end_date:
+                bonknow_think_total = ThinkResult.objects.select_related('evaluation_period').filter(user_id=user_id, company_id=company_id, evaluation_period__evaluation_start__range=(start_date, end_date)).annotate(
+                    date=F('evaluation_period__evaluation_start') 
+                )
+                bonknow_respons_total = ResponsResult.objects.select_related('evaluation_period').filter(user_id=user_id, company_id=company_id, evaluation_period__evaluation_start__range=(start_date, end_date)).annotate(
+                    date=F('evaluation_period__evaluation_start') 
+                )
+
+                think_total_list = list(bonknow_think_total.values())
+                respons_total_list = list(bonknow_respons_total.values())
+                
+                new_context = []
+                for think in think_total_list:
+                    for respons in respons_total_list:
+                        think_date = think['date']
+                        respons_date = respons['date']
+
+                        if think_date.month == respons_date.month and think_date.year == respons_date.year:
+                            total_logic_must = respons['logic'] + think['must']
+                            total_sense_want = respons['sense'] + think['want']
+                            new_context.append({
+                            'total_logic_must': total_logic_must,
+                            'total_sense_want': total_sense_want,
+                            'date': respons['date']
+                            })
+
+                context = {
+                    "context": new_context
+                }            
+                return JsonResponse({'context': context})
+            else:
+                return HttpResponseBadRequest('Invalid request')
+
+
+
+
+
+
+

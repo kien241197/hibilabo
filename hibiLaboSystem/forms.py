@@ -8,6 +8,7 @@ from . import models, fields
 from .enums import *
 import PIL
 from django.utils.safestring import mark_safe
+from django.core.validators import FileExtensionValidator
 
 User = get_user_model()
 
@@ -41,6 +42,9 @@ class RegisterForm(UserCreationForm):
 
 class UserUpdateForm(forms.ModelForm):
 
+    image = forms.ImageField(
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif'])]
+    )
     class Meta:
         model = User
         fields = ('last_name', 'first_name', 'romanization_name', 'email', 'username', 'image')
@@ -246,20 +250,43 @@ class SelfcheckEvaluationUnitForm(forms.Form):
         queryset=models.User.objects.none()
     )
 
+    selfcheck_role = forms.ModelChoiceField(
+        empty_label='役割',
+        label='役割',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form'}),
+        queryset=models.SelfcheckRole.objects.none()
+    )
+
+    combined_select = forms.ChoiceField(
+        label='対象社員 / 役割',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form'}),
+        choices=[]  # Sẽ được thiết lập trong __init__
+    )
+
     def __init__(self, request, *args, **kwargs):
         super(SelfcheckEvaluationUnitForm, self).__init__(*args, **kwargs)
         queryset_evaluation = models.SelfcheckEvaluationPeriod.objects.all()
 
         if request.user:
             queryset = models.User.objects.filter(company_id=request.user.company.id)
+            queryset_industry = models.SelfcheckRole.objects.all()
             #Company_Supervisor 
             if request.user.role.role == RoleEnum.Company_SuperVisor.value or request.user.role.role == RoleEnum.Company_Admin.value:
                 if request.user.branch:
                     queryset = models.User.objects.filter(branch=request.user.branch.id, company_id=request.user.company.id)
+
+            combined_choices = [(f"{role.id}_industry", f"{role}") for role in queryset_industry]
+            combined_choices += [(user.id, f"{user}") for user in queryset]
               
             queryset_evaluation = queryset_evaluation.filter(company_id=request.user.company_id)
+            
+        self.fields['combined_select'].choices = combined_choices
         self.fields['user_id'].queryset = queryset
         self.fields['evaluation_unit'].queryset = queryset_evaluation
+        self.fields['selfcheck_role'].queryset = queryset_industry
+
 
 class BonknowForm(forms.Form):
 
@@ -1423,3 +1450,85 @@ class TeamConceptForm(forms.Form):
 class CheckboxSelectMultipleWithSelectAll(forms.CheckboxSelectMultiple):
     class Media:
         js = ('js/select_all.js',)  
+
+class CultetsheetDateForm(forms.Form):
+    def __init__(self, company_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Dynamically set the widget choices based on company_id
+        honne_start_periods = HonneEvaluationPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('evaluation_start')
+
+        honne_start_choices = [(period.evaluation_start) for period in honne_start_periods]
+
+        self.fields['honne_start'] = forms.ChoiceField(
+            choices=[('', '----')] + honne_start_choices,
+            widget=fields.CultetSheetMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['honne_end'] = forms.ChoiceField(
+            choices=[('', '----')] + honne_start_choices,
+            widget=fields.CultetSheetMonthYearSelectWidget(company_id=company_id),
+        )
+
+        selfcheck_start_periods = SelfcheckEvaluationPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('evaluation_start')
+
+
+        selfcheck_start_choices = [(period.evaluation_start) for period in selfcheck_start_periods]
+
+        self.fields['selfcheck_start'] = forms.ChoiceField(
+            choices=[('', '----')] + selfcheck_start_choices,
+            widget=fields.SelfcheckMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['selfcheck_end'] = forms.ChoiceField(
+            choices=[('', '----')] + selfcheck_start_choices,
+            widget=fields.SelfcheckMonthYearSelectWidget(company_id=company_id),
+        )
+
+        # 
+        mandara_start_periods = MandaraPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('start_date')
+
+        mandara_start_choices = [(period.start_date) for period in mandara_start_periods]
+
+        self.fields['mandara_start'] = forms.ChoiceField(
+            choices=[('', '----')] + mandara_start_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['mandara_end'] = forms.ChoiceField(
+            choices=[('', '----')] + mandara_start_choices,
+            widget=fields.MandaraMonthYearSelectWidget(company_id=company_id),
+        )
+
+        # 
+        bonknow_start_periods = BonknowEvaluationPeriod.objects.filter(
+            company_id=company_id
+        ).order_by('evaluation_start')
+
+        bonknow_start_choices = [(period.evaluation_start) for period in bonknow_start_periods]
+
+        self.fields['bonknow_start'] = forms.ChoiceField(
+            choices=[('', '----')] + bonknow_start_choices,
+            widget=fields.BonknowMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['bonknow_end'] = forms.ChoiceField(
+            choices=[('', '----')] + bonknow_start_choices,
+            widget=fields.BonknowMonthYearSelectWidget(company_id=company_id),
+        )
+    # 
+        self.fields['total_start'] = forms.ChoiceField(
+            choices=[('', '----')],
+            widget=fields.FanTotalMonthYearSelectWidget(company_id=company_id),
+        )
+
+        self.fields['total_end'] = forms.ChoiceField(
+            choices=[('', '----')],
+            widget=fields.FanTotalMonthYearSelectWidget(company_id=company_id),
+        )

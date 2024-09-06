@@ -39,7 +39,7 @@
                 <td>
                     {% if user.image %}
                         <div class="d-flex justify-content-center">
-                            <img src = "{{ user.image.url }}" />
+                            <img src = "{{ user.image.url }}" onerror="this.onerror=null; this.src='{% static '/assets/images/avatar_default.jpg' %}';"/>
                         </div>
                         {% else %}
                         <div class="d-flex justify-content-center">

@@ -200,6 +200,15 @@ select {
   background: #1D2088 !important;
   color: white !important;
 }
+
+.fan {
+
+  font-size: 10px;
+  font-weight: 400;
+  top: 0;
+  right: 0;
+}
+
 @media screen and (device-aspect-ratio: 2 / 3) {
   select,
   textarea,
@@ -1242,9 +1251,15 @@ select {
 
 .title-header {
 
-  padding-left: 15px;
-  border-left: 2px solid #fff;
-  margin-left: 15px;
+  top: 0;
+}
+
+.title-header-right {
+
+  padding-right: 15px;
+  border-right: 2px solid #fff;
+  margin-right: 15px;
+
 }
 
 @media (min-width: 601px) {
