@@ -33,6 +33,7 @@ from django.template.loader import get_template
 import pdfkit
 from django.db.models import Q, F
 import jaconv
+from datetime import date
 
 User = get_user_model()
 wkhtml_to_pdf = os.path.join(
@@ -2216,6 +2217,31 @@ class Cultetsheet(TemplateView):
         company_id = self.request.user.company_id
         honne_date = HonneEvaluationPeriod.objects.all().filter(company_id=company_id).order_by('-evaluation_start')
 
+        date1 = date(2024, 6, 1)
+        date2 = date(2024, 9, 30)
+        delta = date2 - date1
+
+        date3 = date(2024, 9, 1)
+        date4 = date(2024, 12, 31)
+        deltb = date4 - date3
+
+        honne_question_start = HonneQuestion.objects.filter().count()
+        selfcheck_question_start = SelfcheckQuestion.objects.all().count()
+        think_question_start = ThinkQuestion.objects.filter().count()
+        response_question_start = ResponsQuestion.objects.filter().count()
+        mandara_base_start = 8 * 8 * (delta.days + 1)
+        mandara_base_end = 8 * 8 * (deltb.days + 1)
+
+        max_total_start = honne_question_start + selfcheck_question_start + think_question_start + response_question_start + mandara_base_start
+        max_total_end = honne_question_start + selfcheck_question_start + think_question_start + response_question_start + mandara_base_end
+
+        percent_start = (max_total_start / 2) * 100
+        percent_end = (max_total_end / 2) * 100
+
+        kwargs["max_total_start"] = max_total_start
+        kwargs["max_total_end"] = max_total_end
+        kwargs["percent_start"] = percent_start
+        kwargs["percent_end"] = percent_end
         kwargs['form'] = self.form_class(company_id)
         kwargs['title_header'] = "fan℃"
         kwargs['honne_date'] = honne_date 
