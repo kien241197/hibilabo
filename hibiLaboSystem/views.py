@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from pprint import pprint
-from django.db.models import Q, Count, Prefetch, OuterRef, FilteredRelation, Sum
+from django.db.models import Q, Count, Prefetch, OuterRef, FilteredRelation, Sum, Count
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -2215,16 +2215,72 @@ class Cultetsheet(TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
         company_id = self.request.user.company_id
-        honne_date = HonneEvaluationPeriod.objects.all().filter(company_id=company_id).order_by('-evaluation_start')
+        user_id = self.request.user.id
 
+        honne_date = HonneEvaluationPeriod.objects.all().filter(company_id=company_id).order_by('-evaluation_start')
+    
         date1 = date(2024, 6, 1)
         date2 = date(2024, 9, 30)
         delta = date2 - date1
 
         date3 = date(2024, 9, 1)
         date4 = date(2024, 12, 31)
-        deltb = date4 - date3
 
+        # logic ① - "Center value of G-1 & G-2
+        honne_answer_start = HonneAnswerResult.objects.filter(user_id=user_id,answer=True, evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).count()
+        selfcheck_answer_result_start = SelfcheckAnswerResult.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).exclude(selfcheck_answer=0).count()
+        think_answer_start = ThinkAnswer.objects.filter(user_id=user_id,evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).exclude(answer=0).count()
+        response_answer_start = ResponsAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).exclude(answer=0).count()
+        mandara_progress_start = MandaraProgress.objects.filter(mandara_base__user_id=user_id,mandara_base__mandara_period__start_date__gte=date1, mandara_base__mandara_period__end_date__lte=date2).annotate(
+            total = (
+                Count("A1_result") + Count("A2_result") + Count("A3_result") + Count("A4_result") + Count("A5_result") + Count("A6_result") + Count("A7_result") + Count("A8_result")
+                + Count("B1_result") + Count("B2_result") + Count("B3_result") + Count("B4_result") + Count("B5_result") + Count("B6_result") + Count("B7_result") + Count("B8_result")
+                + Count("C1_result") + Count("C2_result") + Count("C3_result") + Count("C4_result") + Count("C5_result") + Count("C6_result") + Count("C7_result") + Count("C8_result")
+                + Count("D1_result") + Count("D2_result") + Count("D3_result") + Count("D4_result") + Count("D5_result") + Count("D6_result") + Count("D7_result") + Count("D8_result")
+                + Count("E1_result") + Count("E2_result") + Count("E3_result") + Count("E4_result") + Count("E5_result") + Count("E6_result") + Count("E7_result") + Count("E8_result")
+                + Count("F1_result") + Count("F2_result") + Count("F3_result") + Count("F4_result") + Count("F5_result") + Count("F6_result") + Count("F7_result") + Count("F8_result")
+                + Count("G1_result") + Count("G2_result") + Count("G3_result") + Count("G4_result") + Count("G5_result") + Count("G6_result") + Count("G7_result") + Count("G8_result")
+                + Count("H1_result") + Count("H2_result") + Count("H3_result") + Count("H4_result") + Count("H5_result") + Count("H6_result") + Count("H7_result") + Count("H8_result")
+                )
+        )
+
+        if not mandara_progress_start:
+            total_mandara_progress_start = 0
+        else:
+            total_mandara_progress_start = 0
+            for item in mandara_progress_start.values():
+                total_mandara_progress_start += item['total']
+
+        total_G1 = honne_answer_start + selfcheck_answer_result_start + think_answer_start + response_answer_start + total_mandara_progress_start
+
+        honne_answer_end = HonneAnswerResult.objects.filter(user_id=user_id, answer=True, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).count()
+        selfcheck_answer_result_end = SelfcheckAnswerResult.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).exclude(selfcheck_answer=0).count()
+        think_answer_end = ThinkAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).exclude(answer=0).count()
+        response_answer_end = ResponsAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).exclude(answer=0).count()
+        mandara_progress_end = MandaraProgress.objects.filter(mandara_base__user_id=user_id, mandara_base__mandara_period__start_date__gte=date3, mandara_base__mandara_period__end_date__lte=date4).annotate(
+            total = (
+                Count("A1_result") + Count("A2_result") + Count("A3_result") + Count("A4_result") + Count("A5_result") + Count("A6_result") + Count("A7_result") + Count("A8_result")
+                + Count("B1_result") + Count("B2_result") + Count("B3_result") + Count("B4_result") + Count("B5_result") + Count("B6_result") + Count("B7_result") + Count("B8_result")
+                + Count("C1_result") + Count("C2_result") + Count("C3_result") + Count("C4_result") + Count("C5_result") + Count("C6_result") + Count("C7_result") + Count("C8_result")
+                + Count("D1_result") + Count("D2_result") + Count("D3_result") + Count("D4_result") + Count("D5_result") + Count("D6_result") + Count("D7_result") + Count("D8_result")
+                + Count("E1_result") + Count("E2_result") + Count("E3_result") + Count("E4_result") + Count("E5_result") + Count("E6_result") + Count("E7_result") + Count("E8_result")
+                + Count("F1_result") + Count("F2_result") + Count("F3_result") + Count("F4_result") + Count("F5_result") + Count("F6_result") + Count("F7_result") + Count("F8_result")
+                + Count("G1_result") + Count("G2_result") + Count("G3_result") + Count("G4_result") + Count("G5_result") + Count("G6_result") + Count("G7_result") + Count("G8_result")
+                + Count("H1_result") + Count("H2_result") + Count("H3_result") + Count("H4_result") + Count("H5_result") + Count("H6_result") + Count("H7_result") + Count("H8_result")
+                )
+        )
+
+        if not mandara_progress_end:
+            total_mandara_progress_end = 0
+        else:
+            total_mandara_progress_start = 0
+            for item in mandara_progress_end.values():
+                total_mandara_progress_end += item['total']
+
+        total_G2 = honne_answer_end + selfcheck_answer_result_end + think_answer_end + response_answer_end + total_mandara_progress_end
+
+        # logic ② - MAX
+        deltb = date4 - date3
         honne_question_start = HonneQuestion.objects.filter().count()
         selfcheck_question_start = SelfcheckQuestion.objects.all().count()
         think_question_start = ThinkQuestion.objects.filter().count()
@@ -2235,17 +2291,60 @@ class Cultetsheet(TemplateView):
         max_total_start = honne_question_start + selfcheck_question_start + think_question_start + response_question_start + mandara_base_start
         max_total_end = honne_question_start + selfcheck_question_start + think_question_start + response_question_start + mandara_base_end
 
-        percent_start = (max_total_start / 2) * 100
-        percent_end = (max_total_end / 2) * 100
+        # logic ③ - %
+        percent_start = round((total_G1 / max_total_start) * 100, 2)
+        percent_end = round((total_G2 / max_total_end / 2) * 100, 2)
 
-        kwargs["max_total_start"] = max_total_start
-        kwargs["max_total_end"] = max_total_end
-        kwargs["percent_start"] = percent_start
-        kwargs["percent_end"] = percent_end
+        # 
+        kwargs['total_G1'] = total_G1
+        kwargs['total_G2'] = total_G2
+        kwargs['max_total_start'] = max_total_start
+        kwargs['max_total_end'] = max_total_end
+        kwargs['percent_start'] = percent_start
+        kwargs['percent_end'] = percent_end
         kwargs['form'] = self.form_class(company_id)
-        kwargs['title_header'] = "fan℃"
+        kwargs['title_header'] = 'fan℃'
         kwargs['honne_date'] = honne_date 
+        kwargs['date1'] = date1
+        kwargs['date2'] = date2
+        kwargs['date3'] = date3
+        kwargs['date4'] = date4
         return kwargs
+
+@login_required
+def FantotalAjax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            company_id = request.POST.get("company_id")
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            honne_answer = HonneAnswerResult.objects.filter(company_id=company_id, answer=True, evaluation_period__evaluation_start__range=(start_date, end_date)).count()
+            selfcheck_answer_result = SelfcheckAnswerResult.objects.filter(company_id=company_id, evaluation_period__evaluation_start__range=(start_date, end_date)).exclude(selfcheck_answer=0).count()
+            think_answer = ThinkAnswer.objects.filter(company_id=company_id, evaluation_period__evaluation_start__range=(start_date, end_date)).exclude(answer=0).count()
+            response_answer = ResponsAnswer.objects.filter(company_id=company_id, evaluation_period__evaluation_start__range=(start_date, end_date)).exclude(answer=0).count()
+            mandara_progress = MandaraProgress.objects.filter(mandara_base__company_id=company_id, mandara_base__mandara_period__start_date__range=(start_date, end_date)).annotate(
+                total = (
+                    Count("A1_result") + Count("A2_result") + Count("A3_result") + Count("A4_result") + Count("A5_result") + Count("A6_result") + Count("A7_result") + Count("A8_result")
+                    + Count("B1_result") + Count("B2_result") + Count("B3_result") + Count("B4_result") + Count("B5_result") + Count("B6_result") + Count("B7_result") + Count("B8_result")
+                    + Count("C1_result") + Count("C2_result") + Count("C3_result") + Count("C4_result") + Count("C5_result") + Count("C6_result") + Count("C7_result") + Count("C8_result")
+                    + Count("D1_result") + Count("D2_result") + Count("D3_result") + Count("D4_result") + Count("D5_result") + Count("D6_result") + Count("D7_result") + Count("D8_result")
+                    + Count("E1_result") + Count("E2_result") + Count("E3_result") + Count("E4_result") + Count("E5_result") + Count("E6_result") + Count("E7_result") + Count("E8_result")
+                    + Count("F1_result") + Count("F2_result") + Count("F3_result") + Count("F4_result") + Count("F5_result") + Count("F6_result") + Count("F7_result") + Count("F8_result")
+                    + Count("G1_result") + Count("G2_result") + Count("G3_result") + Count("G4_result") + Count("G5_result") + Count("G6_result") + Count("G7_result") + Count("G8_result")
+                    + Count("H1_result") + Count("H2_result") + Count("H3_result") + Count("H4_result") + Count("H5_result") + Count("H6_result") + Count("H7_result") + Count("H8_result")
+                    )
+            )
+            if not mandara_progress:
+                mandara_progress = 0
+            else:
+                mandara_progress = mandara_progress.total
+
+            total_G1 = honne_answer + selfcheck_answer_result + think_answer + response_answer + mandara_progress
+        else:
+                return HttpResponseBadRequest('Invalid request')
+    HttpResponseBadRequest('Invalid request')
+
 
 @login_required
 def CultetsheetHonne(request):

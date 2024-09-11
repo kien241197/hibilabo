@@ -70,7 +70,7 @@ $(document).ready(function () {
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [50, 50],
+                data: [percent_start, 100 - percent_start],
                 backgroundColor: ['#2CAEB5', '#EAA9CA'],
                 borderWidth: 0,
                 hoverOffset: 4
@@ -94,7 +94,7 @@ $(document).ready(function () {
                     offset: 0,
                     formatter: (value, context) => {
                         if (context.dataIndex === 0) {
-                            return 'fan℃\n   ' + value.toString();
+                            return 'fan℃\n' + Number(value.toString()) + "%";
                         } else if (context.dataIndex === 1) {
 
                             // return 'fan℃\n   ' + value.toString();
@@ -120,7 +120,7 @@ $(document).ready(function () {
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [50, 50],
+                data: [percent_end, 100 - percent_end],
                 backgroundColor: ['#2CAEB5', '#EAA9CA'],
                 borderWidth: 0
             }]
@@ -140,7 +140,7 @@ $(document).ready(function () {
                     offset: 0,
                     formatter: (value, context) => {
                         if (context.dataIndex === 0) {
-                            return 'fan℃\n   ' + value.toString();
+                            return 'fan℃\n   ' + Number(value.toString()) + "%";
                         } else if (context.dataIndex === 1) {
                             // return ' fan℃\n   ' + value.toString();
                             return ''
