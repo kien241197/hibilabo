@@ -165,18 +165,18 @@ $(document).ready(function () {
     // 
     function doubleColumsBar(id, result) {
 
-        
+
         if (charts[id]) {
             charts[id].destroy(); // Phá hủy biểu đồ cũ nếu có
         }
 
         let listLabel = result?.map(item => item.date) || []
 
-        while(listLabel.length < 6){
+        while (listLabel.length < 6) {
             listLabel.push("")
         }
 
-        
+
 
         charts[id] = new Chart(document.getElementById(id).getContext('2d'), {
             type: 'bar',
@@ -258,10 +258,10 @@ $(document).ready(function () {
         if (charts[id]) {
             charts[id].destroy(); // Phá hủy biểu đồ cũ nếu có
         }
-        
+
         let listLabel = labels
 
-        while(listLabel.length < 6){
+        while (listLabel.length < 6) {
             listLabel.push("")
         }
         // Tạo biểu đồ mới
@@ -305,7 +305,80 @@ $(document).ready(function () {
                         }
                     },
                     y: {
-                        max: data?.length > 0  ? Math.max(...data) + 10 : 100,
+                        max: data?.length > 0 ? Math.max(...data) + 10 : 100,
+                        min: 0,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#000000',
+
+                        }
+                    }
+                }
+            },
+        });
+
+        return charts[id];
+    }
+
+    function oneColumBar1(id, labels, data, type) {
+        // Kiểm tra xem biểu đồ với ID này đã tồn tại chưa
+        if (charts[id]) {
+            charts[id].destroy(); // Phá hủy biểu đồ cũ nếu có
+        }
+
+        let listLabel = labels
+
+        while (listLabel.length < 15) {
+            listLabel.push("")
+        }
+        // Tạo biểu đồ mới
+        charts[id] = new Chart(document.getElementById(id), {
+            type: 'bar',
+            data: {
+                labels: listLabel,
+                datasets: [{
+                    label: '',
+                    data: data,
+                    backgroundColor: type === "TOTAL" ? "#2CAEB5" : '#C8C9CA',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        offset: type === "TOTAL" ? -50 : -10,
+                        color: type === "TOTAL" ? "#ffffff" : "#2CAEB5",
+                        font: { size: size1 || 16, weight: 700 },
+                        formatter: function (value, context) {
+                            if (value !== 0) {
+                                return value;
+                            } else {
+                                return ''
+                            }
+                        },
+
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#000000',
+
+                        }
+                    },
+                    y: {
+                        max: data?.length > 0 ? Math.max(...data) : 100,
                         min: 0,
                         grid: {
                             display: false
@@ -325,7 +398,7 @@ $(document).ready(function () {
     oneColumBar('barChart1', [], [], "MANDARA and SELFCHECK and HONNE");
     oneColumBar('stackedChart1', [], [], "MANDARA and SELFCHECK and HONNE");
     oneColumBar('barChart2', [], [], "MANDARA and SELFCHECK and HONNE");
-    oneColumBar('totalChart', ["2022/3", "2022/6", "2022/9", "2022/12", "2023/3", "2023/6", "2023/9", "2023/12", "2024/3", "2024/6", "2024/9", "2024/12", "2025/3", "2025/6"], [48, 53, 66, 78, 73, 70, 82, 73, 78, 66, 66, 70], "TOTAL");
+    oneColumBar1('totalChart', [], [], "TOTAL");
 
     function getCookie(name) {
         var cookieValue = null;
@@ -361,8 +434,8 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (res) {
-                
-                const labels = res.context.map(item =>  {
+
+                const labels = res.context.map(item => {
 
                     const date = new Date(item.date)
                     return `${date.getFullYear()}/${date.getMonth() + 1}`
@@ -392,9 +465,9 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (res) {
-                
-                
-                const labels = res.context.map(item =>  {
+
+
+                const labels = res.context.map(item => {
 
                     const date = new Date(item.date)
                     return `${date.getFullYear()}/${date.getMonth() + 1}`
@@ -411,7 +484,7 @@ $(document).ready(function () {
         const start_date = $('select[name="mandara_start"]').val()
         const end_date = $('select[name="mandara_end"]').val()
         const csrftoken = getCookie('csrftoken');
-        
+
         $.ajax({
             type: "POST",
             beforeSend: function (request) {
@@ -425,13 +498,13 @@ $(document).ready(function () {
             },
             success: function (res) {
 
-                const labels = res.context.map(item =>  {
+                const labels = res.context.map(item => {
 
                     const date = new Date(item.date)
                     return `${date.getFullYear()}/${date.getMonth() + 1}`
                 });
 
-                const total = res.context.map(item => item?.total != 0 ? item.total  : "");
+                const total = res.context.map(item => item?.total != 0 ? item.total : "");
                 oneColumBar('barChart1', labels, total, "MANDARA and SELFCHECK and HONNE")
             }
         })
@@ -442,7 +515,7 @@ $(document).ready(function () {
         const start_date = $('select[name="bonknow_start"]').val()
         const end_date = $('select[name="bonknow_end"]').val()
         const csrftoken = getCookie('csrftoken');
-        
+
         $.ajax({
             type: "POST",
             beforeSend: function (request) {
@@ -455,8 +528,8 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (res) {
-                
-                const result  = res.context.context.map(item =>  {
+
+                const result = res.context.context.map(item => {
 
                     const date = new Date(item.date)
                     return {
@@ -466,7 +539,7 @@ $(document).ready(function () {
                     }
                 });
 
-               doubleColumsBar('stackedChart2', result)
+                doubleColumsBar('stackedChart2', result)
             }
         })
     })
@@ -476,7 +549,7 @@ $(document).ready(function () {
         const start_date = $('select[name="total_start"]').val()
         const end_date = $('select[name="total_end"]').val()
         const csrftoken = getCookie('csrftoken');
-        
+
         $.ajax({
             type: "POST",
             beforeSend: function (request) {
@@ -489,15 +562,23 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (res) {
-                
-               
-                console.log(res);
-                
+
+                if (res.context) {
+
+                    const dateRanges = res.context.date_ranges.map(item => {
+                        let parts = item[0].split('-');
+                        let year = parts[0];
+                        let month = parts[1].replace(/^0+/, '');
+                        let yearMonth = `${year}/${month}`;
+                        return yearMonth
+                    })
+
+                    const totalSum = res.context.total_sum.map(item => item)
+                    oneColumBar1('totalChart', dateRanges, totalSum, "TOTAL");
+                }
             }
         })
     })
-
-
 
     window.addEventListener('resize', () => {
 

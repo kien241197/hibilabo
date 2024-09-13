@@ -266,7 +266,13 @@ class FanTotalMonthYearSelectWidget(forms.Widget):
         first_period_selfcheck = SelfcheckEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('evaluation_start').first()
         first_period_honne = HonneEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('evaluation_start').first() 
 
+        end_period_bonknow = BonknowEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('-evaluation_start').first()
+        end_period_mandara = MandaraPeriod.objects.filter(company_id=self.company_id).order_by('-start_date').first()
+        end_period_selfcheck = SelfcheckEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('-evaluation_start').first()
+        end_period_honne = HonneEvaluationPeriod.objects.filter(company_id=self.company_id).order_by('-evaluation_start').first() 
+
         dates = []
+        last_dates = []
 
         if first_period_bonknow:
             dates.append(first_period_bonknow.evaluation_start)
@@ -275,13 +281,23 @@ class FanTotalMonthYearSelectWidget(forms.Widget):
         if first_period_selfcheck:
             dates.append(first_period_selfcheck.evaluation_start)
         if first_period_honne:
-            dates.append(first_period_honne.evaluation_start)           
+            dates.append(first_period_honne.evaluation_start)  
+
+        if end_period_bonknow:
+            last_dates.append(end_period_bonknow.evaluation_start)
+        if end_period_mandara:
+            last_dates.append(end_period_mandara.start_date)
+        if end_period_selfcheck:
+            last_dates.append(end_period_selfcheck.evaluation_start)
+        if end_period_honne:
+            last_dates.append(end_period_honne.evaluation_start)           
 
         if dates:
 
             first_date = min(dates)
-            
-            current_date = datetime.now().date()
+            last_date = max(last_dates)
+
+            current_date = last_date
 
             # Tạo danh sách các tháng từ first_date đến current_date hoặc last_date
             year, month = first_date.year, first_date.month

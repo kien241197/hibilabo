@@ -33,8 +33,8 @@ from django.template.loader import get_template
 import pdfkit
 from django.db.models import Q, F
 import jaconv
-from datetime import date, timedelta, datetime
-from dateutil.parser import parse
+from datetime import timedelta
+from dateutil.relativedelta import relativedelta
 
 
 User = get_user_model()
@@ -2177,6 +2177,14 @@ def test_mandara_pdf(request, id):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+def process_dates(date_list, start_date_g1, end_date_g1, start_date_g2, end_date_g2):
+    if len(date_list) >= 1:
+        start_date_g2.append(date_list[0][0])
+        end_date_g2.append(date_list[0][1])
+    if len(date_list) == 2:
+        start_date_g1.append(date_list[1][0])
+        end_date_g1.append(date_list[1][1])
+
 @method_decorator(login_required, name='dispatch')
 @method_decorator(middlewares.CultetsheetMiddleware, name='dispatch')
 class Cultetsheet(TemplateView):
@@ -2190,19 +2198,71 @@ class Cultetsheet(TemplateView):
 
         honne_date = HonneEvaluationPeriod.objects.all().filter(company_id=company_id).order_by('-evaluation_start')
     
-        date1 = date(2024, 6, 1)
-        date2 = date(2024, 9, 30)
-        delta = date2 - date1
+        # logic date g1 & g2
+        # Chỉ lấy giá trị start và date
+        honne_answer_date = list(HonneEvaluationPeriod.objects.filter().order_by('-evaluation_start')[:2].values_list('evaluation_start', 'evaluation_end'))
+        selfcheck_answer_result_date = list(SelfcheckEvaluationPeriod.objects.filter(company_id=company_id).order_by('-evaluation_start')[:2].values_list('evaluation_start', 'evaluation_end'))
+        think_answer_start_date = list(SelfcheckEvaluationPeriod.objects.filter(company_id=company_id).order_by('-evaluation_start')[:2].values_list('evaluation_start', 'evaluation_end'))
+        response_answer_date = list(BonknowEvaluationPeriod.objects.filter(company_id=company_id).order_by('-evaluation_start')[:2].values_list('evaluation_start', 'evaluation_end'))
+        mandara_progress_date = list(MandaraPeriod.objects.filter(company_id=company_id).order_by("-start_date")[:2].values_list('start_date', 'end_date'))
+                
+        start_date_g1 = []
+        end_date_g1 = []
 
-        date3 = date(2024, 9, 1)
-        date4 = date(2024, 12, 31)
+        start_date_g2 = []
+        end_date_g2 = []
+
+        # nếu len == 2 thì đẩy giá trị thứ 2 vào mảng start_date_g1 và end_date_g1
+        # nếu len >= 1 thì đẩy giá trị thứ 1 vào mảng start_date_g2 và end_date_g2
+        if len(honne_answer_date) == 2:
+            start_date_g1.append(honne_answer_date[1][0])
+            end_date_g1.append(honne_answer_date[1][1])
+        if len(honne_answer_date) >= 1:
+            start_date_g2.append(honne_answer_date[0][0])
+            end_date_g2.append(honne_answer_date[0][1])
+        
+        if len(selfcheck_answer_result_date) == 2:
+            start_date_g1.append(selfcheck_answer_result_date[1][0])
+            end_date_g1.append(selfcheck_answer_result_date[1][1])
+        if len(selfcheck_answer_result_date) >= 1:
+            start_date_g2.append(selfcheck_answer_result_date[0][0])
+            end_date_g2.append(selfcheck_answer_result_date[0][1])
+
+        
+        if len(selfcheck_answer_result_date) == 2:
+            start_date_g1.append(think_answer_start_date[1][0])
+            end_date_g1.append(think_answer_start_date[1][1])   
+        if len(selfcheck_answer_result_date) >= 1:
+            start_date_g2.append(think_answer_start_date[0][0])
+            end_date_g2.append(think_answer_start_date[0][1])
+        
+        if len(response_answer_date) == 2:
+            start_date_g1.append(response_answer_date[1][0])
+            end_date_g1.append(response_answer_date[1][1])
+        if len(response_answer_date):
+            start_date_g2.append(response_answer_date[0][0])
+            end_date_g2.append(response_answer_date[0][1])
+            
+        
+        if len(mandara_progress_date) == 2:
+            start_date_g1.append(mandara_progress_date[1][0])
+            end_date_g1.append(mandara_progress_date[1][1])
+        if len(mandara_progress_date):
+            start_date_g2.append(mandara_progress_date[0][0])
+            end_date_g2.append(mandara_progress_date[0][1])
+            
+        min_start_date_g1 = min(start_date_g1)
+        max_end_date_g1 = max(end_date_g1)
+
+        min_start_date_g2 = min(start_date_g2)
+        max_end_date_g2 = max(end_date_g2)
 
         # logic ① - "Center value of G-1 & G-2
-        honne_answer_start = HonneAnswerResult.objects.filter(user_id=user_id,answer=True, evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).count()
-        selfcheck_answer_result_start = SelfcheckAnswerResult.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).exclude(selfcheck_answer=0).count()
-        think_answer_start = ThinkAnswer.objects.filter(user_id=user_id,evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).exclude(answer=0).count()
-        response_answer_start = ResponsAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date1, evaluation_period__evaluation_end__lte=date2).exclude(answer=0).count()
-        mandara_progress_start = MandaraProgress.objects.filter(mandara_base__user_id=user_id,mandara_base__mandara_period__start_date__gte=date1, mandara_base__mandara_period__end_date__lte=date2).annotate(
+        honne_answer_start = HonneAnswerResult.objects.filter(user_id=user_id,answer=True, evaluation_period__evaluation_start__gte=min_start_date_g1, evaluation_period__evaluation_end__lte=max_end_date_g1).count()
+        selfcheck_answer_result_start = SelfcheckAnswerResult.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=min_start_date_g1, evaluation_period__evaluation_end__lte=max_end_date_g1).exclude(selfcheck_answer=0).count()
+        think_answer_start = ThinkAnswer.objects.filter(user_id=user_id,evaluation_period__evaluation_start__gte=min_start_date_g1, evaluation_period__evaluation_end__lte=max_end_date_g1).exclude(answer=0).count()
+        response_answer_start = ResponsAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=min_start_date_g1, evaluation_period__evaluation_end__lte=max_end_date_g1).exclude(answer=0).count()
+        mandara_progress_start = MandaraProgress.objects.filter(mandara_base__user_id=user_id,mandara_base__mandara_period__start_date__gte=min_start_date_g1, mandara_base__mandara_period__end_date__lte=max_end_date_g1).annotate(
             total = (
                 Count("A1_result") + Count("A2_result") + Count("A3_result") + Count("A4_result") + Count("A5_result") + Count("A6_result") + Count("A7_result") + Count("A8_result")
                 + Count("B1_result") + Count("B2_result") + Count("B3_result") + Count("B4_result") + Count("B5_result") + Count("B6_result") + Count("B7_result") + Count("B8_result")
@@ -2224,11 +2284,11 @@ class Cultetsheet(TemplateView):
 
         total_G1 = honne_answer_start + selfcheck_answer_result_start + think_answer_start + response_answer_start + total_mandara_progress_start
 
-        honne_answer_end = HonneAnswerResult.objects.filter(user_id=user_id, answer=True, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).count()
-        selfcheck_answer_result_end = SelfcheckAnswerResult.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).exclude(selfcheck_answer=0).count()
-        think_answer_end = ThinkAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).exclude(answer=0).count()
-        response_answer_end = ResponsAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=date3, evaluation_period__evaluation_end__lte=date4).exclude(answer=0).count()
-        mandara_progress_end = MandaraProgress.objects.filter(mandara_base__user_id=user_id, mandara_base__mandara_period__start_date__gte=date3, mandara_base__mandara_period__end_date__lte=date4).annotate(
+        honne_answer_end = HonneAnswerResult.objects.filter(user_id=user_id, answer=True, evaluation_period__evaluation_start__gte=min_start_date_g2, evaluation_period__evaluation_end__lte=max_end_date_g2).count()
+        selfcheck_answer_result_end = SelfcheckAnswerResult.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=min_start_date_g2, evaluation_period__evaluation_end__lte=max_end_date_g2).exclude(selfcheck_answer=0).count()
+        think_answer_end = ThinkAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=min_start_date_g2, evaluation_period__evaluation_end__lte=max_end_date_g2).exclude(answer=0).count()
+        response_answer_end = ResponsAnswer.objects.filter(user_id=user_id, evaluation_period__evaluation_start__gte=min_start_date_g2, evaluation_period__evaluation_end__lte=max_end_date_g2).exclude(answer=0).count()
+        mandara_progress_end = MandaraProgress.objects.filter(mandara_base__user_id=user_id, mandara_base__mandara_period__start_date__gte=min_start_date_g2, mandara_base__mandara_period__end_date__lte=max_end_date_g2).annotate(
             total = (
                 Count("A1_result") + Count("A2_result") + Count("A3_result") + Count("A4_result") + Count("A5_result") + Count("A6_result") + Count("A7_result") + Count("A8_result")
                 + Count("B1_result") + Count("B2_result") + Count("B3_result") + Count("B4_result") + Count("B5_result") + Count("B6_result") + Count("B7_result") + Count("B8_result")
@@ -2240,18 +2300,26 @@ class Cultetsheet(TemplateView):
                 + Count("H1_result") + Count("H2_result") + Count("H3_result") + Count("H4_result") + Count("H5_result") + Count("H6_result") + Count("H7_result") + Count("H8_result")
                 )
         )
-
         if not mandara_progress_end:
             total_mandara_progress_end = 0
         else:
-            total_mandara_progress_start = 0
+            total_mandara_progress_end = 0
             for item in mandara_progress_end.values():
                 total_mandara_progress_end += item['total']
 
         total_G2 = honne_answer_end + selfcheck_answer_result_end + think_answer_end + response_answer_end + total_mandara_progress_end
 
         # logic ② - MAX
+        date1 = min_start_date_g1
+        date2 = max_end_date_g1
+        # tính số ngày từ date1 -> date2
+        delta = date2 - date1
+
+        date3 = min_start_date_g2
+        date4 = max_end_date_g2
+        # tính số ngày từ date3 -> date4
         deltb = date4 - date3
+
         honne_question_start = HonneQuestion.objects.filter().count()
         selfcheck_question_start = SelfcheckQuestion.objects.all().count()
         think_question_start = ThinkQuestion.objects.filter().count()
@@ -2276,23 +2344,24 @@ class Cultetsheet(TemplateView):
         kwargs['form'] = self.form_class(company_id)
         kwargs['title_header'] = 'fan℃'
         kwargs['honne_date'] = honne_date 
-        kwargs['date1'] = date1
-        kwargs['date2'] = date2
-        kwargs['date3'] = date3
-        kwargs['date4'] = date4
+        kwargs['date1'] = min_start_date_g1
+        kwargs['date2'] = max_end_date_g1
+        kwargs['date3'] = min_start_date_g2
+        kwargs['date4'] = max_end_date_g2
         return kwargs
-
+    
 @login_required
 def CultetsheetTotalAjax(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-    
+
     if is_ajax:
         if request.method == 'POST':
-            start_date_str = "2024-03-01"
-            end_date_str = "2024-10-31"
+            user_id = request.user.id
+            start_date_str = request.POST.get("start_date")
+            end_date_str = request.POST.get("end_date")
 
-            start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
-            end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+            start_date = datetime.datetime.strptime(start_date_str, '%Y-%m-%d')
+            end_date = datetime.datetime.strptime(end_date_str, '%Y-%m-%d')
 
             # Danh sách kết quả
             date_ranges = []
@@ -2301,29 +2370,82 @@ def CultetsheetTotalAjax(request):
 
             while current_start <= end_date:
                 # Tính ngày cuối của ba tháng từ current_start
-                month_end = (current_start + timedelta(days=89)).replace(day=1) + timedelta(days=-1)
-                if month_end > end_date:
-                    month_end = end_date
-
-                next_month_start = month_end + timedelta(days=1)
-                next_month_end = (next_month_start + timedelta(days=59)).replace(day=1) + timedelta(days=-1)
-                if next_month_end > end_date:
-                    next_month_end = end_date
+                next_end = (current_start + relativedelta(months=3)) - timedelta(days=1)
+                if next_end > end_date:
+                    next_end = end_date
 
                 # Thêm vào danh sách với định dạng [start_date, end_date]
                 date_ranges.append([
                     current_start.strftime('%Y-%m-%d'),
-                    next_month_end.strftime('%Y-%m-%d')
+                    next_end.strftime('%Y-%m-%d')
                 ])
-                
+
                 # Cập nhật ngày bắt đầu cho khoảng tiếp theo
-                current_start = next_month_end + timedelta(days=1)
-                
+                current_start = next_end + timedelta(days=1)
+
                 # Nếu khoảng tiếp theo không đủ ba tháng, dừng lại
                 if current_start > end_date:
                     break
+            count_honne_answer = []
+            count_selfcheck_answer = []
+            count_think_answer = []
+            count_response_answer = []
+            total_mandara_progress = []
+            for date_range in date_ranges:
+                start_date, end_date = date_range[0], date_range[1]
+    
+                honne_answer = HonneAnswerResult.objects.filter(
+                        user_id=user_id,
+                        answer=True,
+                        evaluation_period__evaluation_start__range=[start_date, end_date]
+                ).count()
+                selfcheck_answer_result = SelfcheckAnswerResult.objects.filter(
+                    user_id=user_id, 
+                    evaluation_period__evaluation_start__range=[start_date, end_date]
+                ).exclude(selfcheck_answer=0).count()
+                think_answer_start = ThinkAnswer.objects.filter(
+                    user_id=user_id,
+                    evaluation_period__evaluation_start__range=[start_date, end_date]
+                ).exclude(answer=0).count()
+                response_answer = ResponsAnswer.objects.filter(
+                    user_id=user_id, 
+                    evaluation_period__evaluation_start__range=[start_date, end_date]
+                ).exclude(answer=0).count()
+                mandara_progress = MandaraProgress.objects.filter(mandara_base__user_id=user_id, mandara_base__mandara_period__start_date__range=[start_date, end_date]).annotate(
+                    total = (
+                        Count("A1_result") + Count("A2_result") + Count("A3_result") + Count("A4_result") + Count("A5_result") + Count("A6_result") + Count("A7_result") + Count("A8_result")
+                        + Count("B1_result") + Count("B2_result") + Count("B3_result") + Count("B4_result") + Count("B5_result") + Count("B6_result") + Count("B7_result") + Count("B8_result")
+                        + Count("C1_result") + Count("C2_result") + Count("C3_result") + Count("C4_result") + Count("C5_result") + Count("C6_result") + Count("C7_result") + Count("C8_result")
+                        + Count("D1_result") + Count("D2_result") + Count("D3_result") + Count("D4_result") + Count("D5_result") + Count("D6_result") + Count("D7_result") + Count("D8_result")
+                        + Count("E1_result") + Count("E2_result") + Count("E3_result") + Count("E4_result") + Count("E5_result") + Count("E6_result") + Count("E7_result") + Count("E8_result")
+                        + Count("F1_result") + Count("F2_result") + Count("F3_result") + Count("F4_result") + Count("F5_result") + Count("F6_result") + Count("F7_result") + Count("F8_result")
+                        + Count("G1_result") + Count("G2_result") + Count("G3_result") + Count("G4_result") + Count("G5_result") + Count("G6_result") + Count("G7_result") + Count("G8_result")
+                        + Count("H1_result") + Count("H2_result") + Count("H3_result") + Count("H4_result") + Count("H5_result") + Count("H6_result") + Count("H7_result") + Count("H8_result")
+                        )
+                )
+                for item in mandara_progress.values():
+                    if item:
+                        total_mandara_progress.append(item['total'])
+                    else:
+                        total_mandara_progress.append(0)
+
+                count_honne_answer.append(honne_answer)
+                count_selfcheck_answer.append(selfcheck_answer_result)
+                count_think_answer.append(think_answer_start)
+                count_response_answer.append(response_answer)
+            
+            total_sum = []
+
+            for i in range(len(count_honne_answer)):
+                sum_value = count_honne_answer[i] + count_selfcheck_answer[i] + count_think_answer[i] + count_response_answer[i]
+                total_sum.append(sum_value)
+
+            context = {
+                "date_ranges": date_ranges,
+                "total_sum": total_sum
+            }
             print("date_ranges", date_ranges)
-            return JsonResponse({'context': date_ranges})
+            return JsonResponse({'context': context})
         else:
             return HttpResponseBadRequest('Invalid request method')
     else:
